@@ -1,0 +1,178 @@
+
+<div class="col s12">
+    <section class="users-list-wrapper section">
+        <div class="users-list-filter">
+
+            <!-- Header -->
+            <div class="card-panel"
+                style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                <div class="row">
+                    <div class="col l8 s12" (click)="isAdvanceSearch = !isAdvanceSearch">
+                        <i class="material-icons header-icon">
+                            filter_list
+                        </i>
+                        <span
+                            style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                            ตัวกรอง
+                        </span>
+                    </div>
+                    <div class="col l4 s12" style="text-align: right;">
+                        <cbtn [label]="'รีเซ็ต'" [color]="'gray'" [icon]="'cached'" (click)="reset()"></cbtn>
+                        <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="callBack.emit({code: 'search', data: searchModel})"></cbtn>
+                    </div>
+                </div>
+
+            </div>
+            <div [hidden]="isAdvanceSearch" class="card-panel" style="margin-top: 0px;">
+
+                <!-- BEGIN: Do Something This Here -->
+
+                <div class="row">
+                    <!-- <div class="col s12 l4">
+                    <cinum (cModel)="searchModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="searchModel.sequence || 0"></cinum>
+                </div> -->
+                    <div class="col l4 s12">
+                        <cdp (cModel)="searchModel.startDate = $event" [label]="'วันที่สร้าง'"
+                            [data]="searchModel.startDate">
+                        </cdp>
+                    </div>
+                    <div class="col l4 s12">
+                        <cdp (cModel)="searchModel.endDate = $event" [label]="'ถึงวันที่'"
+                            [data]="searchModel.endDate">
+                        </cdp>
+                    </div>
+                    <!-- <div class="col s4">
+                        <csop (cModel)="searchModel.tag = $event" [label]="'ประเภท'"
+                            [data]="searchModel.tag" [sources]="tagList">
+                        </csop>
+                    </div> -->
+                    <!-- <div class="col s4">
+                        <csop (cModel)="searchModel.status = $event" [label]="'สถานะ'"
+                            [data]="searchModel.status"
+                            [sources]="[{ value: '', display: 'ทั้งหมด' },{ value: 'N', display: 'รออนุมัติการเผยแพร่' }, { value: 'A', display: 'เผยแพร่แล้ว' }]">
+                        </csop>
+                    </div> -->
+                </div>
+
+                <div class="row">
+                    <div class="col l4 s12">
+                        <citxt (cModel)="searchModel.username = $event" [label]="'ชื่อผู้ใช้'"
+                            [data]="searchModel.username"></citxt>
+                    </div> 
+                    <div class="col l4 s12">
+                        <citxt (cModel)="searchModel.firstName = $event" [label]="'ชื่อ'"
+                            [data]="searchModel.firstName"></citxt>
+                    </div> 
+                    <div class="col l4 s12">
+                        <citxt (cModel)="searchModel.lastName = $event" [label]="'นามสกุล'"
+                            [data]="searchModel.lastName"></citxt>
+                    </div> 
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                    <chip-tag (callBack)="selectedTags($event)"></chip-tag>
+                    </div>
+                </div>
+
+                <!-- END: Do Something This Here -->
+
+            </div>
+
+        </div>
+    </section>
+    <div class="card-panel-header">
+      <div class="row">
+        <div class="col l6 s12">
+          <i class="material-icons">featured_play_list</i>
+          <span>รายการข้อมูล</span>
+        </div>
+        <div class="col l6 s12 text-right">
+            <cbtn [label]="'Export Excel'" [color]="'green'" [icon]="''" (click)="callBack.emit({code: 'export_excel', data: ''})"></cbtn>
+            <cbtn *ngIf="!isManageTag" [label]="'จัดการ Tag'" [color]="'blue'" [icon]="''" (click)="isManageTag = !isManageTag"></cbtn>
+            <cbtn *ngIf="isManageTag" [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="isManageTag = !isManageTag"></cbtn>
+            <cbtn *ngIf="isManageTag" [label]="'เพิ่ม Tag'" [color]="'gray'" [icon]="'add_circle_outline'" (click)="callBack.emit({code: 'tag', data: ''})"></cbtn>
+        </div>
+      </div>
+    </div>
+    <div class="card-panel-body">
+        <div class="row">
+            <div class="col l2 s12">
+                <csop [label]="'แสดง'" [data]="paginationModel.itemsPerPageString" (cModel)="callBack.emit({code: 'setPerPage', data: $event})" [sources]="pageList"></csop>
+            </div>
+            <div class="col l1 s1">
+            </div>
+            <div class="col l3 s12">
+                <citxt [label]="'ค้นหา'" [data]="searchModel.keySearch" (cModel)="searchModel.keySearch = $event" (keyup.enter)="callBack.emit({code: 'keySearch', data: searchModel.keySearch})"></citxt>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col l6 mb-1">
+                <label><input type="checkbox" [(ngModel)]="isShowImage" /><span>แสดงรูปภาพ</span></label>
+            </div>
+            <div class="col l6">
+                <div style="text-align: right;">
+                    <ul><li *ngFor="let item of [] | paginate: paginationModel"></li></ul>
+                    <pagination-controls (pageChange)="callBack.emit({code: 'changePage', data: $event})"previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                </div>
+            </div>
+        </div>
+        <div style="overflow-x:auto;">
+            <table id="users-list-datatable" class="bordered centered striped">
+                <thead>
+                    <tr>
+                        <th *ngIf="isManageTag"><span class="header-checkbox"><label><input type="checkbox" [(ngModel)]="itemSelected" (change)="selectedAll()" /><span style="padding-left: 20px;"></span></label></span></th>
+                        <th>ลำดับ</th>
+                        <th>จัดการ</th>
+                        <th *ngIf="isShowImage">รูปภาพ</th>
+                        <th>ชื่อผู้ใช้ (Line Display Name)</th>
+                        <th>ชื่อ</th>
+                        <th>นามสกุล</th>
+                        <!-- <th>อายุ</th>
+                        <th>ภาค</th>
+                        <th>จังหวัด</th>
+                        <th>เฝ้าระวังฝน</th>
+                        <th>เฝ้าระวังไฟ</th>
+                        <th>เฝ้าระวังภัยทางทะเล</th>
+                        <th>เฝ้าระวังแผ่นดินไหว</th> -->
+                        <th>วันที่เข้าร่วม</th>
+                        <th>วันที่อัพเดทล่าสุด</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let i of model; let idx = index">
+                        <td *ngIf="isManageTag"><div class="w20"><label><input type="checkbox" [(ngModel)]="i.isSelected" (change)="selected()" /><span></span></label></div></td>
+                        <!-- <td><div class="w30">1</div></td> -->
+                        <td><div class="w30">{{((paginationModel.currentPage - 1) * paginationModel.itemsPerPage) + (idx + 1)}}</div></td>
+                        <td><div class="w100"><cbtne [label]="'แก้ไขข้อมูล'" (click)="callBack.emit({code: 'form', data: i})"></cbtne></div></td>
+                        <td *ngIf="isShowImage"><div class="w75"><img [src]="i.imageUrl" style="width:75px !important; height:75px !important"></div></td>
+                        <td><div class="w200"><a href="javascript:void(0)"><p class="cut-text">{{i.username}}</p></a></div></td>
+                        <td><div class="w200"><a href="javascript:void(0)"><p class="cut-text">{{i.firstName}}</p></a></div></td>
+                        <td><div class="w200"><a href="javascript:void(0)"><p class="cut-text">{{i.lastName}}</p></a></div></td>
+                        <!-- <td><div class="w200"><a href="javascript:void(0)"><p class="cut-text">{{i.age}}</p></a></div></td>
+                        <td><div class="w200"><a href="javascript:void(0)"><p class="cut-text">{{i.zone}}</p></a></div></td>
+                        <td><div class="w200"><a href="javascript:void(0)"><p class="cut-text">{{i.province}}</p></a></div></td>
+                        <td><div class="w200"><a href="javascript:void(0)"><p class="cut-text">{{i.warnning1}}</p></a></div></td>
+                        <td><div class="w200"><a href="javascript:void(0)"><p class="cut-text">{{i.warnning2}}</p></a></div></td>
+                        <td><div class="w200"><a href="javascript:void(0)"><p class="cut-text">{{i.warnning3}}</p></a></div></td>
+                        <td><div class="w200"><a href="javascript:void(0)"><p class="cut-text">{{i.warnning4}}</p></a></div></td> -->
+                        <td><div class="w200">{{i.createDate | datetimeFormat}}</div></td>
+                        <td><div class="w200">{{i.updateDate | datetimeFormat}}</div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <ul><li>{{paginationModel.textPage}}</li></ul>
+            </div>
+            <div class="col s6">
+                <div style="text-align: right;">
+                    <ul><li *ngFor="let item of [] | paginate: paginationModel"></li></ul>
+                    <pagination-controls (pageChange)="callBack.emit({code: 'changePage', data: $event})"previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

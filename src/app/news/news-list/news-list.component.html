@@ -1,0 +1,206 @@
+<!-- BEGIN: Page Main-->
+
+<div class="col s12">
+    <div class="container">
+        <section class="users-list-wrapper section">
+            <div class="users-list-filter">
+
+                <!-- Header -->
+                <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                    <div class="row">
+                        <div class="col l4 s12">
+                            <i class="material-icons header-icon">
+                                featured_play_list
+                            </i>
+                            <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                                รายการข้อมูล
+                            </span>
+                        </div>
+                        <div class="col l8 s12" style="text-align: right;">
+                            <div class="col s12" style="margin-bottom: 10px;">
+                                <cbtn [label]="'ส่งข้อความ'" [color]="'blue'" [icon]="'add_circle_outline'" (click)="create(false)"></cbtn>
+                                <!-- <cbtn [label]="'ส่งหลายข้อความ'" [color]="'gray'" [icon]="'add_circle_outline'" (click)="create(true)"></cbtn> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col l6 12" style="padding-bottom: 10px !important;">
+                            <csop (cModel)="setTypeMessage($event)" [label]="'ประเภทการส่ง : '" [data]="searchModel.typeMessage" [sources]="[{ value: '', display: 'กรุณาเลือก' },
+                                { value: 'c', display: 'การ์ด' }, { value: 'i', display: 'รูปภาพ' }, { value: 'm', display: 'ข้อความ' }, { value: 'v', display: 'วิดีโอ' }]">
+                            </csop>
+                        </div>
+                        <div class="col l6 s12" style="text-align: right;">
+                            <div class="col s12" style="margin-bottom: 10px;">
+                                <cbtn style="margin-bottom: 5px;" [label]="'ส่งอีกครั้ง'" [color]="'yellow'" [icon]="'cached'" (click)="sendMessage()"></cbtn>
+                                <cbtn [label]="'ลบข้อมูล'" [color]="'red'" [icon]="'delete'" (click)="deleteAll()">
+                                </cbtn>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-panel" style="margin-top: 0px;">
+
+                    <!-- BEGIN: Do Something This Here -->
+
+                    <div class="row">
+
+                        <div class="col l2 s12">
+                            <csop (cModel)="setPerPage($event)" [label]="'แสดง'" [data]="paginationModel.itemsPerPageString" [sources]="[{ value: '5', display: '5'},{ value: '10', display: '10'},{ value: '50', display: '50'},{ value: '100', display: '100'}]">
+                            </csop>
+                        </div>
+                        <div class="col l7 s12">
+
+                        </div>
+                        <div class="col l3 s12">
+                            <citxt (keyup.enter)="search()" (cModel)="searchModel.keySearch = $event" [label]="'ค้นหา'" [data]="searchModel.keySearch"></citxt>
+                        </div>
+
+                    </div>
+
+                    <div style="overflow-x:auto;">
+                        <table id="users-list-datatable" class="bordered centered striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="header-checkbox">
+                                            <label>
+                                                <input type="checkbox" [(ngModel)]="itemSelected"
+                                                    (change)="checkUncheckAll()" />
+                                                <span style="padding-left: 20px;"></span>
+                                        </label>
+                                        </span>
+                                    </th>
+                                    <th>ลำดับ</th>
+                                    <th>จัดการ</th>
+                                    <!-- <th>สถานะ</th> -->
+                                    <th>รูปภาพ</th>
+                                    <!-- <th>ลำดับข้อมูล</th> -->
+                                    <th>หัวข้อ</th>
+                                    <th>จำนวนคนอ่าน/จำนวนทั้งหมด</th>
+                                    <!-- <th>หมวดหมู่</th> -->
+                                    <th>สร้างวันที่</th>
+                                    <th>สร้างโดย</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let i of messageInput; let idx = index">
+                                    <td>
+                                        <!-- [hidden]="!checkPermission(i.category, 'deleteAction')" -->
+                                        <div class="w20">
+                                            <label>
+                                                <input type="checkbox" [(ngModel)]="i.isSelected"
+                                                    (change)="isAllSelected(i.category, 'deleteAction')" />
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w30">
+                                            {{((paginationModel.currentPage - 1) * paginationModel.itemsPerPage) + (idx + 1)}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w100">
+                                            <cbtne [label]="'ดูรายละเอียด'" (click)="edit(i.code)"></cbtne>
+                                            <!-- [hidden]="!checkPermission(i.category, 'updateAction')" -->
+                                        </div>
+                                    </td>
+                                    <!-- <td>
+                                        <div class="w100" [hidden]="!i.isActive">
+                                            <span class="chip green lighten-5">
+                                                <span class="green-text">ตรวจสอบแล้ว</span>
+                                            </span>
+                                        </div>
+                                        <div class="w100" [hidden]="i.isActive">
+                                            <span class="chip red lighten-5">
+                                                <span class="red-text">รอตรวจสอบ</span>
+                                            </span>
+                                        </div>
+                                    </td> -->
+                                    <td>
+                                        <div class="w75">
+                                            <img [src]="i.imageUrl" style="width:75px !important; height:75px !important">
+                                        </div>
+                                    </td>
+                                    <!-- <td>
+                                        <div class="w75">
+                                            {{i.sequence}}
+                                        </div>
+                                    </td> -->
+                                    <td>
+                                        <div class="w200">
+                                            <a href="javascript:void(0)">
+                                                <p class="cut-text">{{i.title}}</p>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w100">
+                                            <a *ngIf="isUsername" href="javascript:void(0)" (click)="viewlist(i.code)">
+                                                <!-- <p> {{i.viewNews}} / {{i.totalViewNews}}</p> -->
+                                                <p> {{i.viewNews}}</p>
+                                            </a>
+                                            <a *ngIf="!isUsername">
+                                                <!-- <p> {{i.viewNews}} / {{i.totalViewNews}}</p> -->
+                                                <p> {{i.viewNews}}</p>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <!-- <td *ngIf="i.categoryList.length > 0">
+                                        <div class="w100">
+                                            {{i.categoryList[0].title}}
+                                        </div>
+                                    </td>
+                                    <td *ngIf="i.categoryList.length == 0">
+                                        <div class="w100">
+
+                                        </div>
+                                    </td> -->
+                                    <td>
+                                        <div class="w100">
+                                            {{i.createDate | datetimeFormat}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w100">
+                                            {{i.createBy}}
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col s6">
+                            <ul>
+                                <li>{{paginationModel.textPage}}</li>
+                            </ul>
+                        </div>
+                        <div class="col s6">
+                            <!-- <----- Pagination -->
+                            <div style="text-align: right;">
+                                <ul>
+                                    <li *ngFor="let item of [] | paginate: paginationModel"></li>
+                                </ul>
+                                <pagination-controls (pageChange)="paginationModel.currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- END: Do Something This Here -->
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- END: Page Main-->

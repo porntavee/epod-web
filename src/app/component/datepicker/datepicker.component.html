@@ -1,0 +1,30 @@
+<div *ngIf="label != '-'" class="input-field">
+    <div class="row">
+        <div class="col l3 s4" style="padding-left: 25px !important;">
+            <label>{{label}}</label>
+        </div>
+        <div class="col l8 s6" style="padding-right: 0px !important;">
+            <!-- placeholder="{{label}}" -->
+            <input style="height: 20px; margin-bottom: 0px !important;" [(ngModel)]="data" (ngModelChange)="emit($event)" matInput [matDatepicker]="picker" [formControl]="dateControl">
+        </div>
+        <div class="col s1" style="padding: 0 0px !important; margin-top: -10px !important;">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+    </div>
+</div>
+
+<!-- ใช้กับในตาราง และไม่ต้องการแสดง label -->
+<div *ngIf="label == '-'" class="row" style="padding-left: 30px;">
+    <div class="col l8 s7 p-0" style="padding-right: 10px !important;">
+        <!-- placeholder="{{label}}" -->
+        <input style="height: 20px; margin-bottom: 0px !important;" [(ngModel)]="data" (ngModelChange)="emit($event)" matInput [matDatepicker]="picker" [formControl]="dateControl">
+    </div>
+    <div class="col s2 p-0" style="padding: 0 0px !important; margin-top: -10px !important;">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </div>
+</div>
+<!-- <div class="input-field col s6">
+    value : {{dateControl.value}} / data : {{data}}
+</div> -->

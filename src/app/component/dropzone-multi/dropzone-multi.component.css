@@ -1,0 +1,30 @@
+.dropzone.single {
+    width: 210px; 
+    height: 210px;
+    font-size: 12px !important;
+}
+.dropzone.gallery {
+    height: 210px;
+    font-size: 12px !important;
+}
+.dropzone.label {
+    font-size: 10px;
+}
+.dropzone.image {
+    width: 100%; 
+    height: 100%;
+    opacity: .8;
+}
+.dropzone.preview {
+    align-items: center !important;
+    border-radius: 5px !important;
+    display: flex !important;
+    height: 180px !important;
+    justify-content: center !important;
+    margin: 10px !important;
+    max-width: 180px !important;
+    min-height: 140px !important;
+    min-width: 180px !important;
+    padding: 0px 30px !important;
+    position: relative !important;
+}

@@ -1,0 +1,31 @@
+<h5 class="breadcrumbs-title mt-0 mb-0 display-inline hide-on-small-and-down"><span>file-upload</span></h5>
+<ol class="breadcrumbs mb-0">
+    <li class="breadcrumb-item"><a href="index.html">Demo</a>
+    </li>
+    <!-- <li class="breadcrumb-item"><a href="#">File Upload</a>
+    </li> -->
+    <li class="breadcrumb-item active">file-upload
+    </li>
+</ol>
+<br>
+<br>
+<div class="continaer">
+    <div class="row">
+        <div class="col s8 offset-2">
+            <div class="card-panel teal lighten-2">
+                <h4 class="center white-test">Image Library</h4>
+            </div>
+            <form #imageForm=ngForm (ngSubmit)="OnSubmit(Caption, Image)">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" #Caption ngModel name="Caption" id="Caption" required>
+                        <label for="Caption">Caption</label>
+                    </div>
+                </div>
+                <img [src]="imageUrl" style="width:50%; height:50%">
+                <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
+                <button type="submit" class="btn-large btn-submit" [disabled]="Image.value == '' || !imageForm.valid">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

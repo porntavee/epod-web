@@ -1,0 +1,196 @@
+<div>
+    <div class="col s12">
+        <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l8 s12">
+                    <i class="material-icons header-icon">
+                        filter_list
+                    </i>
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                        <b>Time Sheet</b>
+                    </span>
+                </div>
+                <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;"> -->
+                <!-- (click)="reset()" -->
+                <!-- <cbtnl [label]="'Reset'" [color]="'gray'" [icon]="'cached'"></cbtnl> -->
+                <!-- </div> -->
+                <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
+                    <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+                </div> -->
+            </div>
+
+        </div>
+        <!-- [hidden]="isAdvanceSearch" -->
+        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
+            <div class="row">
+                <div class="col l5 s12" style="margin-top: -20px;">
+                    <cdp (cModel)="criteriaModel.TimeStampFrom = $event" [label]="'Date From'" [data]="criteriaModel.TimeStampFrom"></cdp>
+                </div>
+                <div class="col l1 s12"></div>
+                <div class="col l5 s12" style="margin-top: -20px;">
+                    <cdp (cModel)="criteriaModel.TimeStampTo = $event" [label]="'Date To'" [data]="criteriaModel.TimeStampTo"></cdp>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col l5 s12" style="margin-top: -10px;">
+                    <citxt (click)="chooseEmployee('from')" (cModel)="criteriaModel.CodeFrom = $event" [label]="'User From'" [data]="criteriaModel.CodeFrom" [readonly]="true"></citxt>
+                </div>
+                <div class="col l1 s12 p-0" style="margin-top: -10px;">
+                    <a (click)="chooseEmployee('from')" class="btn waves-effect waves-light light-blue lighten-1 p-0">
+                        <i class="material-icons" style="position: relative; float:left; font-size: 1.5em !important; margin-left: 5px; margin-right: 5px;">search</i>
+                    </a>
+                </div>
+                <div class="col l5 s12" style="margin-top: -10px;">
+                    <citxt (click)="chooseEmployee('to')" (cModel)="criteriaModel.CodeTo = $event" [label]="'User To'" [data]="criteriaModel.CodeTo" [readonly]="true"></citxt>
+                </div>
+                <div class="col l1 s12 p-0" style="margin-top: -10px;">
+                    <a (click)="chooseEmployee('to')" class="btn waves-effect waves-light light-blue lighten-1 p-0">
+                        <i class="material-icons" style="position: relative; float:left; font-size: 1.5em !important; margin-left: 5px; margin-right: 5px;">search</i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col l9 s12 p-0" style="margin-bottom: 5px;"></div>
+                <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
+                    <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+                </div>
+            </div>
+        </div>
+        <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
+            <div class="row">
+                <div class="col s12" style="margin-top: -20px;">
+                    <cdp (cModel)="criteriaModel.TimeStampFrom = $event" [label]="'Date From'" [data]="criteriaModel.TimeStampFrom"></cdp>
+                </div>
+                <div class="col s12" style="margin-top: -20px;">
+                    <cdp (cModel)="criteriaModel.TimeStampTo = $event" [label]="'Date To'" [data]="criteriaModel.TimeStampTo"></cdp>
+                </div>
+                <div class="col s10" style="margin-top: -10px;">
+                    <citxt (click)="chooseEmployee('from')" (cModel)="criteriaModel.CodeFrom = $event" [label]="'User From'" [data]="criteriaModel.CodeFrom" [readonly]="true"></citxt>
+                </div>
+                <div class="col s2 p-0" style="margin-top: -10px;">
+                    <a (click)="chooseEmployee('from')" class="btn waves-effect waves-light light-blue lighten-1 p-0">
+                        <i class="material-icons" style="position: relative; float:left; font-size: 1.5em !important; margin-left: 5px; margin-right: 5px;">search</i>
+                    </a>
+                </div>
+                <div class="col s10" style="margin-top: -10px;">
+                    <citxt (click)="chooseEmployee('to')" (cModel)="criteriaModel.CodeTo = $event" [label]="'User To'" [data]="criteriaModel.CodeTo" [readonly]="true"></citxt>
+                </div>
+                <div class="col s2 p-0" style="margin-top: -10px;">
+                    <a (click)="chooseEmployee('to')" class="btn waves-effect waves-light light-blue lighten-1 p-0">
+                        <i class="material-icons" style="position: relative; float:left; font-size: 1.5em !important; margin-left: 5px; margin-right: 5px;">search</i>
+                    </a>
+                </div>
+                <div class="col s12 p-0" style="margin-bottom: 5px;">
+                    <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- {{this.viewModel|json}} -->
+    <div class="col s12">
+        <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l2 s12">
+                    <i class="material-icons header-icon">
+                        featured_play_list
+                    </i>
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                        Data List
+                    </span>
+                </div>
+                <div class="col l8 s12">
+                    <cbtn [label]="'Export Excel'" [color]="'green'" [icon]="'file_download'" (click)="exportAsXLSX()"></cbtn>
+                    <!-- <cbtn [label]="'New+'" [color]="'blue'" [icon]="'add_circle_outline'" (click)="newTimeSheet()"></cbtn> -->
+                </div>
+            </div>
+        </div>
+        <div class="card-panel" style="margin-top: 0px;">
+            <div style="overflow-x: auto;">
+                <!-- min-height: 200px; max-height: 200px; -->
+                <table id="users-list-datatable" class="bordered centered striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Operation</th>
+                            <th>ClientName</th>
+                            <th>ClientIP</th>
+                            <th>empID</th>
+                            <th>Code</th>
+                            <th>userName</th>
+                            <th>dbName</th>
+                            <th>TimeStamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 50, currentPage: p }; let idx = index">
+                            <td>
+                                <div class="w30">
+                                    {{idx + 1}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Operation}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.ClientName}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.ClientIP}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w30">
+                                    {{i.empID}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Code}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.userName}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w200">
+                                    {{i.dbName}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w150">
+                                    {{i.TimeStamp}}
+                                </div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <!-- <ul>
+                        <li>paginationModel.textPage</li>
+                    </ul> -->
+                </div>
+                <div class="col s6">
+                    <div style="text-align: right;">
+                        <!-- <ul>
+                            <li *ngFor="let item of listModel | paginate: { itemsPerPage: 10, currentPage: p }">{{item}}</li>
+                        </ul> -->
+                        <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

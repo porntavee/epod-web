@@ -1,0 +1,243 @@
+
+.padding-left-10 {
+    padding-left: 10%;
+}
+
+.login {
+/* background-image: url('https://i.pinimg.com/originals/42/97/15/42971507604eed0ea9332dfd4993f3a1.jpg');  */
+/* background-image: url('https://www.itl.cat/pngfile/big/201-2018174_empire-state-building-in-morning-wallpaper-new-york.jpg'); */
+/* background-image: url('https://wallpapercave.com/wp/wp2149971.jpg'); */
+background-image: url('../assets/img/bg.jpg');
+height: 100%; 
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+
+    width: 800px;
+}
+
+<!-- BEGIN: Login-->
+<div class="row login" [hidden]="!isLogin">
+    <div class="container">
+        <div id="login-page" class="row">
+
+            <div [hidden]="isSignUp" class="z-depth-4 card-panel border-radius-6 login-card bg-opacity-8 centered">
+                <div class="col s6">
+                    <form class="login-form">
+                        
+                        <div class="row" style="text-align: center;">
+                            <div class="input-field col s12">
+                                <h1 class="ml-4">เข้าสู่ระบบ</h1>
+                                <h3 class="ml-4">เข้าสู่ระบบด้วยบัญชีของท่าน</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix pt-2">person_outline</i>
+                                <input id="username" type="text" [(ngModel)]="model.username"
+                                    (ngModelChange)="model.username = $event" name="model.username">
+                                <label for="username" class="center-align">ชื่อเข้าระบบ</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12" style="margin-top: -5px !important;">
+                                <i class="material-icons prefix pt-2">lock_outline</i>
+                                <input id="password" type="password" [(ngModel)]="model.password"
+                                    (ngModelChange)="model.password = $event" name="model.password"
+                                    (keyup.enter)="login(model.username, model.password)">
+                                <label for="password">รหัสผ่าน</label>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col s12 m12 l12 ml-2 mt-1">
+                                <p>
+                                    <label>
+                                        <input type="checkbox" />
+                                        <span>จดจำไว้</span>
+                                    </label>
+                                </p>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <a href="JavaScript:void(0)"
+                                    class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12"
+                                    (click)="login(model.username, model.password)">เข้าสู่ระบบ</a>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="input-field col s6 m6 l6">
+                                <p (click)="showSignUp()" class="margin medium-small"><a href="javascript:void(0)">ลงทะเบียน
+                                        ตอนนี้</a></p>
+                            </div>
+                            <div class="input-field col s6 m6 l6">
+                                <p class="margin right-align medium-small"><a href="user-forgot-password.html">ลืมรหัสผ่าน
+                                        ?</a></p>
+                            </div>
+                        </div> -->
+                    </form>
+                </div>
+                <div class="col s6">
+                    <div class="row" style="text-align: center;">
+                        <div class="input-field col s12">
+                            <!-- <h5 class="ml-4">CMS</h5> -->
+                            <img width="250" height="100" src="./assets/img/webuild.png" style="margin-top: 30%;" />
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+
+            <!-- ลงทะเบียน -->
+            <div [hidden]="!isSignUp" class="z-depth-4 card-panel border-radius-6 login-card bg-opacity-9 centered"
+                style="width: 700px !important;">
+                <form class="login-form">
+                    <div class="row" style="text-align: center;">
+                        <div class="input-field col s12">
+                            <h2 class="ml-4">ลงทะเบียนเข้าใช้งาน</h2>
+                            <!-- <img width="250" height="100" src="./assets/img/webuild.png"/> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            <div class="col s12">
+                                <citxt (cModel)="model.username = $event" [label]="'ชื่อผู้ใช้ : '"></citxt>
+                            </div>
+                            <div class="col s12">
+                                <citxt (cModel)="model.password = $event" [label]="'รหัสผ่าน : '"></citxt>
+                            </div>
+                        </div>
+                        <div class="col s6">
+                            <cds (cModel)="model.image = $event" [label]="'รูปภาพ (เลือกภาพ/วางภาพที่นี่)'"
+                                [data]="[{ imageUrl: this.model.imageUrl || '' }]" [code]="'splash'">
+                            </cds>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s3">
+                            <csop (cModel)="model.prefixName = $event" [label]="'คำนำหน้า '"
+                                [data]="model.prefixName || 'none'" [sources]="listPrefixName">
+                            </csop>
+                        </div>
+                        <div class="col s5">
+                            <citxt (cModel)="model.firstName = $event" [label]="'ชื่อ : '"></citxt>
+                        </div>
+                        <div class="col s4">
+                            <citxt (cModel)="model.lastName = $event" [label]="'นามสกุล : '"></citxt>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s6">
+                            <cdp (cModel)="model.birthday = $event" [label]="'วันเกิด'" [data]="''">
+                            </cdp>
+                        </div>
+                        <div class="col s6">
+                            <citxt (cModel)="model.phone = $event" [label]="'เบอร์โทรศัพท์ : '"></citxt>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12">
+                            <citxt (cModel)="model.email = $event" [label]="'อีเมล : '"></citxt>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="col s12">  
+                            <citxt (cModel)="model.address = $event" [label]="'ที่อยู่ : '"></citxt>
+                        </div>
+                    </div> -->
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <a href="JavaScript:void(0)"
+                                class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12"
+                                (click)="signUp(model)">sing up</a>
+                        </div>
+                        <div class="input-field col s6" style="text-align: center">
+                            <p class="margin medium-small">have an account?</p>
+                            <p (click)="hiddenSignUp()" class="margin medium-small"><a href="javascript:void(0)">login
+                                    here</a></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <div class="col s12 l12 m12" style="height: 150px;"></div>
+
+    <div class="col s4"></div>
+        
+    <div class="col s4">      
+        <div class="container">       
+            <div id="login-page" class="row" >              
+                <div class="col s12 m12 l12 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">                   
+                    <form class="login-form">
+                        <div class="row" style="text-align: center;">
+                            <div class="input-field col s12">
+                                <h5 class="ml-4">CMS</h5>
+                                <img width="250" height="100" src="./assets/img/webuild.png" />
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix pt-2">person_outline</i>
+                                <input id="username" type="text">
+                                <label for="username" class="center-align">Username</label>
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix pt-2">lock_outline</i>
+                                <input id="password" type="password">
+                                <label for="password">Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 m12 l12 ml-2 mt-1">
+                                <p>
+                                    <label>
+                                        <input type="checkbox" />
+                                        <span>Remember Me</span>
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <a href="JavaScript:void(0)"
+                                    class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" (click)="login()">Login</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6 m6 l6">
+                                <p class="margin medium-small"><a href="user-register.html">Register Now!</a></p>
+                            </div>
+                            <div class="input-field col s6 m6 l6">
+                                <p class="margin right-align medium-small"><a href="user-forgot-password.html">Forgot
+                                        password ?</a></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="content-overlay"></div>
+    </div> -->
+
+    <div class="col s4"></div>
+</div>
+<!-- END: Login-->

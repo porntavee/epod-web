@@ -1,0 +1,86 @@
+<!-- <citxt [label]="คำที่จะแสดง" [data]="ดาต้าที่จะโชว์" (cModel)="ชื่อตัวแปร"></citxt> -->
+
+<div class="col s12">
+  <div class="card-panel-header">
+    <div class="row">
+      <div class="col s12">
+        <i class="material-icons">border_color</i>
+        <span>รายละเอียด</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-panel-body">
+    <div class="row">
+      <div class="col s8">
+        <div class="row">
+          <div class="col s12">
+            <citxt [label]="'Line ID : '" [data]="model.userId || ''" (cModel)="model.userId = $event" [readonly]="true"></citxt>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 -mt15">
+            <citxt [label]="'ชื่อผู้ใช้ (Line Display Name) : '" [data]="model.username || ''" (cModel)="model.username = $event" [readonly]="true"></citxt>
+          </div>
+        </div>
+        <div class="row" *ngFor="let i of dynamicField; let idx = index">
+          <div class="col s12 -mt15">
+            <citxt [label]="i.description"  [data]="model[i.title] || ''" (cModel)="model[i.title] = $event" [readonly]="true"></citxt>
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="col s12 -mt15">
+            <citxt [label]="'ชื่อ : '" [data]="model.firstName || ''" (cModel)="model.firstName = $event"></citxt>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 -mt15">
+            <citxt [label]="'สกุล : '" [data]="model.lastName || ''" (cModel)="model.lastName = $event"></citxt>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 -mt15">
+            <citxt [label]="'อายุ : '" [data]="model.age || ''" (cModel)="model.age = $event"></citxt>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 -mt15">
+            <citxt [label]="'เบอร์โทร : '" [data]="model.phone || ''" (cModel)="model.phone = $event"></citxt>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 -mt15">
+            <citxt [label]="'เพศ : '" [data]="model.sex || ''" (cModel)="model.sex = $event"></citxt>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 -mt15">
+            <citxt [label]="'ภูมิภาคหรือจังหวัดที่อยู่อาศัย : '" [data]="model.x || ''" (cModel)="model.x = $event"></citxt>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 -mt15">
+            <citxt [label]="'ข้อมูล/ข่าวสารที่ต้องการทราบ หรือเป็นที่น่าสนใจ : '" [data]="model.y || ''" (cModel)="model.y = $event"></citxt>
+          </div>
+        </div> -->
+      </div>
+      <div class="col s4">
+        <div class="col s5">
+          <cds [label]="'รูปปก (คลิกเลือกภาพ/ลากวางภาพที่นี่)'" [data]="[{ imageUrl: this.model.imageUrl || '' }]" (cModel)="model.image = $event" [code]="'profile'"></cds>
+        </div>
+        <div class="col s12">
+          <span style="color: red;">* ขนาดรูปภาพไม่เกิน 10 MB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-panel">
+    <div class="row">
+      <div class="col s6">
+        <cbtn [label]="'กลับ'" [color]="'red'" (click)="callBack.emit({code: 'back', data: ''})"></cbtn>
+      </div>
+      <div class="col s6" style="text-align: right;">
+        <cbtn [label]="'บันทึก'" [color]="'blue'" (click)="callBack.emit({code: 'update', data: model})"></cbtn>
+      </div>
+    </div>
+  </div>
+</div>

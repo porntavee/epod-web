@@ -1,0 +1,16 @@
+ <!-- style="height: 200px !important;" -->
+<!-- <div class="input-field col s12 width-100"> 
+    <textarea [(ngModel)]="data" (ngModelChange)="emit($event)" id="textarea1" class="materialize-textarea"></textarea>
+    <label for="textarea1" [ngClass]="{ 'active': data != '' }">{{label}}</label>
+</div> -->
+
+
+<div class="col l3 s12" style="padding-top: 15px !important; padding-right: 0px !important;">
+    <label>{{label}}</label>
+</div>
+<div class="col l9 s12">
+    <div class="input-field">
+        <textarea [(ngModel)]="data" (ngModelChange)="emit($event)" id="textarea1" class="materialize-textarea"></textarea>
+        <!-- <label for="data" [ngClass]="{ 'active': data != '' }">{{label}}</label> -->
+    </div>
+</div>

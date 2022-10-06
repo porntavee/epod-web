@@ -1,0 +1,110 @@
+<ngx-spinner>
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<!-- BEGIN: Page Main-->
+
+<!-- {{criteriaModel | json}} -->
+
+<div class="col s12">
+    <div class="container">
+        <section class="users-list-wrapper section">
+            <div class="users-list-filter">
+
+                <!-- Header -->
+                <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                    <div class="row">
+                        <!-- (click)="isAdvanceSearch = !isAdvanceSearch" -->
+                        <div class="col l8 s12">
+                            <!-- <i class="material-icons header-icon">
+                                filter_list
+                            </i> -->
+                            <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                                <b>Time Sheet</b>
+                            </span>
+                        </div>
+                        <div class="col l4 s12" style="text-align: right;">
+                            <cbtn [label]="'Reset'" [color]="'gray'" [icon]="'cached'" (click)="reset()"></cbtn>
+                            <cbtn [label]="'Search'" [color]="'blue'" [icon]="'search'" (click)="search()"></cbtn>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- [hidden]="isAdvanceSearch" -->
+                <div class="card-panel" style="margin-top: 0px;">
+
+                    <!-- BEGIN: Do Something This Here -->
+
+                    <div class="row">
+                        <!-- <div class="col s12 l4">
+                            <cinum (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence || 0"></cinum>
+                        </div> -->
+                        <!-- <div class="col l4 s12">
+                            <cdp (cModel)="criteriaModel.startDate = $event" [label]="'วันที่สร้าง'" [data]="criteriaModel.startDate">
+                            </cdp>
+                        </div>
+                        <div class="col l4 s12">
+                            <cdp (cModel)="criteriaModel.endDate = $event" [label]="'ถึงวันที่'" [data]="criteriaModel.endDate">
+                            </cdp>
+                        </div> -->
+                        <div class="col l5 s12" style="margin-bottom: 15px;">
+                            <csop (cModel)="criteriaModel.employeeCode = $event" [label]="'Employee Code'" [data]="criteriaModel.employeeCode" [sources]="listEmployeeCode">
+                            </csop>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col l5 s12" style="margin-bottom: 15px;">
+                            <csop (cModel)="criteriaModel.firstName = $event" [label]="'First Name'" [data]="criteriaModel.firstName" [sources]="listFirstName">
+                            </csop>
+                        </div>
+                        <!-- <div class="col l4 s12">
+                            <csop (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence" [sources]="listSequence">
+                            </csop>
+                        </div>
+                        <div class="col l4 s12">
+                            <citxt (cModel)="criteriaModel.createBy = $event" [label]="'ผู้สร้าง'" [data]="criteriaModel.createBy"></citxt>
+                        </div> -->
+                    </div>
+
+                    <!-- <div *ngIf="typeMessage !=''" class="row" >
+                        <div class="col s12" style="margin-left: 1rem;">
+                          <label>ภูมิภาค</label>
+                        </div>
+                        <div class="col s3" style="padding-bottom: 5px !important;" *ngFor="let i of regionList;let idx = index;">
+                        <ccb (cModel)="setSelectedRegion(idx,$event)" [label]="i.display" [data]="i.value"></ccb>
+                        </div>
+                    </div> -->
+
+                    <!-- <div *ngIf="typeMessage !=''" class="row" style="margin-top: 2rem;">
+                        <div class="col s12" style="margin-left: 1rem;">
+                            <label>Tags</label>
+                        </div>
+                        <div class="col s12">
+                            <div class="row">
+                                <div class="col s3" style="padding-bottom: 5px !important;" *ngFor="let i of listTags">
+                                    <ccb (cModel)="Change(i,$event)" [label]="i.display" [data]="i.checkTag"></ccb>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 30px;">
+                                <div class="col s6" style="padding-left: 150px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="row" style="margin-top: 2rem;">
+                        <div class="col s12">
+                          <chip-tag (callBack)="selectedTags($event)"></chip-tag>
+                        </div>
+                      </div> -->
+                    <!-- END: Do Something This Here -->
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- END: Page Main-->

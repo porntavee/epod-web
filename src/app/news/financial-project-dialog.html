@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content style="min-height: 300px; max-height: 300px;">
+    <!-- <p *ngFor="let i of data.listData">
+        {{i.PrjName}}
+    </p> -->
+    <div class="row">
+        <div class="col l4 s12">
+            <citxt (cModel)="criteriaModel.Code = $event" [label]="'Code'" [data]="criteriaModel.Code"></citxt>
+        </div>
+        <div class="col l4 s12">
+            <citxt (cModel)="criteriaModel.Name = $event" [label]="'Name'" [data]="criteriaModel.Name"></citxt>
+        </div>
+        <div class="col l1">
+
+        </div>
+        <div class="col l3 s12 p-0">
+            <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+        </div>
+    </div>
+    <table>
+        <thead style="position: sticky; top: 0; background-color: white; z-index: 999;">
+            <tr>
+                <th>PrjCode</th>
+                <th>PrjName</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of data.listData; let idx = index" (click)="ok(i)">
+                <td>{{i.PrjCode}}</td>
+                <td>{{i.PrjName}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<!-- <div mat-dialog-actions>
+    <div class="col s6 m6 l12 text-center"></div>
+    <div class="col s6 m6 l12 text-center">
+        <a class="mb-6 btn blue lighten-1" style="margin-right: 10px;" (click)="ok()">ยืนยัน</a>
+        <a class="mb-6 btn red lighten-1" (click)="cancel()">ยกเลิก</a>
+    </div>
+</div> -->

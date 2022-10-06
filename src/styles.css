@@ -1,0 +1,241 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* * {
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+} */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-size: 12px !important;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background: #FF7514;
+}
+
+span {
+    font-size: 12px !important;
+}
+
+a {
+    font-size: 12px !important;
+}
+
+label {
+    font-size: 12px !important;
+}
+
+input {
+    font-size: 12px !important;
+    color: #9e9e9e !important;
+}
+
+
+/* .btn { padding: 0 1rem !important; } */
+
+table.bordered th,
+table.bordered td {
+    padding: 5px !important;
+    border: 1px solid rgba(0, 0, 0, .12) !important;
+}
+
+td,
+th {
+    display: table-cell;
+    padding: 5px 5px;
+    text-align: left;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.mat-calendar-content {
+    padding: 0 18px 8px 18px !important;
+    outline: none !important;
+}
+
+.center {
+    text-align: center;
+    border: 3px solid green;
+    width: 30px;
+}
+
+.w10 {
+    text-align: center;
+    width: 10px;
+}
+
+.w20 {
+    text-align: center;
+    width: 20px;
+}
+
+.w30 {
+    text-align: center;
+    width: 30px;
+}
+
+.w50 {
+    text-align: center;
+    width: 50px;
+}
+
+.w75 {
+    text-align: center;
+    width: 75px;
+}
+
+.w100 {
+    text-align: center;
+    width: 100px;
+}
+
+.w150 {
+    text-align: center;
+    width: 150px;
+}
+
+.w200 {
+    text-align: center;
+    width: 200px;
+}
+
+.w250 {
+    text-align: center;
+    width: 250px;
+}
+
+.w300 {
+    text-align: center;
+    width: 300px;
+}
+
+.w350 {
+    text-align: center;
+    width: 350px;
+}
+
+.w400 {
+    text-align: center;
+    width: 400px;
+}
+
+.w450 {
+    text-align: center;
+    width: 450px;
+}
+
+p {
+    margin: 0px 0px !important;
+}
+
+.cut-text {
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0px 0px !important;
+}
+
+.header-icon {
+    position: relative;
+    float: left;
+    font-size: 2.5em !important;
+}
+
+
+/* DDPM */
+
+.background-sidebar {
+    background: #2E8B58 !important;
+}
+
+.background-header {
+    background: linear-gradient(45deg, #2E8B58, #2E8B58) !important;
+}
+
+.background-footer {
+    background: linear-gradient(45deg, #2E8B58, #2E8B58) !important;
+}
+
+.sidenav li a.active {
+    margin: 0;
+    color: #fff;
+    background: linear-gradient(45deg, #2E8B58, #2E8B58) !important;
+    /* box-shadow: 3px 3px 20px 0 rgba(255, 110, 64, .5); */
+    box-shadow: 3px 3px 20px 0 rgba(105, 105, 105, .5) !important;
+}
+
+
+/* DOPA */
+
+
+/* .background-sidebar {
+    background: #04385D !important;
+}
+.background-header {
+    background: #04385D !important;
+}
+.background-footer {
+    background: #04385D !important;
+}
+.sidenav li a.active {
+    margin: 0;
+    color: #fff;
+    background: #04385D !important;
+    box-shadow: 3px 3px 20px 0 #04385D !important;
+} */
+
+.ct-menu-btn {
+    padding-left: 40px !important;
+}
+
+.card-panel-header {
+    background-color: lavender;
+    /* margin: .5rem 0 1rem 0; */
+    padding: 10px;
+    transition: box-shadow .25s;
+    border-radius: 2px;
+    margin-bottom: 0px;
+    vertical-align: text-top;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+.card-panel-header span {
+    /* position: relative; 
+    float:left;  */
+    font-size: 1em;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.card-panel-body {
+    background-color: #fff;
+    /* margin: .5rem 0 1rem 0; */
+    padding: 10px;
+    transition: box-shadow .25s;
+    border-radius: 2px;
+    margin-bottom: 0px;
+    vertical-align: text-top;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+}
+
+.-mt15 {
+    margin-top: -15px !important;
+}
+
+.text-right {
+    text-align: right;
+}

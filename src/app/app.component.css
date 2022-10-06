@@ -1,0 +1,39 @@
+.padding-left-10 {
+    padding-left: 10%;
+}
+
+.login {
+    /* background-image: url('https://i.pinimg.com/originals/42/97/15/42971507604eed0ea9332dfd4993f3a1.jpg');  */
+    /* background-image: url('https://www.itl.cat/pngfile/big/201-2018174_empire-state-building-in-morning-wallpaper-new-york.jpg'); */
+    /* background-image: url('https://wallpapercave.com/wp/wp2149971.jpg'); */
+    /* background-image: url('../assets/img/bg.jpg'); */
+    /* DDPM */
+    background: #2E8B58;
+    background: -webkit-linear-gradient(#2E8B58, #2E8B58);
+    background: -o-linear-gradient(#2E8B58, #2E8B58);
+    background: -moz-linear-gradient(#2E8B58, #2E8B58);
+    background: linear-gradient(#2E8B58, #2E8B58);
+    /* DOPA */
+    /* background: #04385D; */
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.btn-login {
+    /* DDPM */
+    background: linear-gradient(45deg, #2E8B58, #2E8B58) !important;
+    /* DOPA */
+    /* background: #3ace01 !important; */
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 500px;
+}

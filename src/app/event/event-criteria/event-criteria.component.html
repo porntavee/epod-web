@@ -1,0 +1,80 @@
+<ngx-spinner>
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<!-- BEGIN: Page Main-->
+
+<!-- {{criteriaModel | json}} -->
+
+<div class="col s12">
+    <div class="container">
+        <section class="users-list-wrapper section">
+            <div class="users-list-filter">
+
+                <!-- Header -->
+                <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                    <div class="row">
+                        <div class="col s8" (click)="isAdvanceSearch = !isAdvanceSearch">
+                            <i class="material-icons header-icon">
+                                filter_list
+                            </i>
+                            <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                                ตัวกรอง
+                            </span>
+                        </div>
+                        <div class="col s4" style="text-align: right;">
+                            <cbtn [label]="'รีเซ็ต'" [color]="'gray'" [icon]="'cached'" (click)="reset()"></cbtn>
+                            <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="search()"></cbtn>
+                        </div>
+                    </div>
+
+                </div>
+                <div [hidden]="isAdvanceSearch" class="card-panel" style="margin-top: 0px;">
+
+                    <!-- BEGIN: Do Something This Here -->
+                  
+                    <div class="row">
+                        <!-- <div class="col s12 l4">
+                            <cinum (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence || 0"></cinum>
+                        </div> -->
+                        <div class="col s4">
+                            <cdp (cModel)="criteriaModel.startDate = $event" [label]="'วันที่สร้าง'" [data]="criteriaModel.startDate">
+                            </cdp>
+                        </div>
+                        <div class="col s4">
+                            <cdp (cModel)="criteriaModel.endDate = $event" [label]="'ถึงวันที่'" [data]="criteriaModel.endDate">
+                            </cdp>
+                        </div>
+                        <div class="col s4">
+                            <csop (cModel)="criteriaModel.status = $event" [label]="'สถานะ'" [data]="criteriaModel.status"
+                                [sources]="[{ value: '', display: 'ทั้งหมด' },{ value: 'N', display: 'รออนุมัติการเผยแพร่' }, { value: 'A', display: 'เผยแพร่แล้ว' }]">
+                            </csop>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s4">
+                            <csop (cModel)="criteriaModel.category = $event" [label]="'ประเภท'" [data]="criteriaModel.category"
+                                [sources]="listCategory">
+                            </csop>
+                        </div>
+                        <div class="col s4">
+                            <csop (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence"
+                                [sources]="listSequence">
+                            </csop>
+                        </div>
+                        <div class="col s4">
+                            <citxt (cModel)="criteriaModel.createBy = $event" [label]="'ผู้สร้าง'" [data]="criteriaModel.createBy"></citxt>
+                        </div>
+                    </div>
+
+                    <!-- END: Do Something This Here -->
+
+                </div>
+                
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- END: Page Main-->

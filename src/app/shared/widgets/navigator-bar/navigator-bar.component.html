@@ -1,0 +1,18 @@
+<div class="row mb-2 pl-2">
+    <h5 class="breadcrumbs-title mt-0 mb-0 display-inline hide-on-small-and-down">
+        <span *ngIf="title3 == ''">{{title1}}</span>
+        <span *ngIf="title3 != ''">{{title3}}</span>
+    </h5>
+    <ol class="breadcrumbs">
+        <li class="breadcrumb-item">
+            <a href="javascript:void(0)">{{title2}}</a>
+        </li>
+        <li *ngIf="title3 == ''" class="breadcrumb-item active">{{title1}}</li>
+
+        <li *ngIf="title3 != ''" class="breadcrumb-item">
+            <a href="javascript:void(0)">{{title1}}</a>
+        </li>
+        <li *ngIf="title3 != ''" class="breadcrumb-item active">{{title3}}</li>
+    </ol>
+</div>
+

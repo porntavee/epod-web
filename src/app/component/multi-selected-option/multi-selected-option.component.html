@@ -1,0 +1,14 @@
+<div class="col s12" style="padding-top: 20px !important;">
+    <mat-form-field style="width: 100%; font-size: 15px; font-family: Arial, Helvetica, sans-serif !important">
+        <mat-label>{{label}}</mat-label>
+        <mat-select multiple [(ngModel)]="data" (ngModelChange)="emit($event)" [(value)]="data">
+            <mat-option *ngFor="let i of sources" value="{{i.value}}">{{i.display}}</mat-option>
+            <!-- <mat-option>None</mat-option>
+            <mat-option value="option1">Option 1</mat-option>
+            <mat-option value="option2">Option 2</mat-option>
+            <mat-option value="option3">Option 3</mat-option> -->
+        </mat-select>
+    </mat-form-field>
+</div>
+<!-- <p>You selected: {{data}}</p>
+<button (click)="setValue()">Set</button> -->

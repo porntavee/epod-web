@@ -1,0 +1,100 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<cbtn [label]="'Export Excel'" [color]="'green'" [icon]="'file_download'" (click)="exportAsXLSX(data.listData)"></cbtn>
+<div mat-dialog-content style="min-height: 300px; max-height: 300px;">
+    <table id="users-list-datatable" class="bordered centered striped">
+        <thead style="position: sticky; top: 0; background-color: white; z-index: 999;">
+            <tr>
+                <th>id</th>
+                <th>Operation</th>
+                <th>empID</th>
+                <th>Code</th>
+                <th>userName</th>
+                <th>dbName</th>
+                <th>TimeStamp</th>
+                <th>DocNum</th>
+                <th>Date</th>
+                <th>ChangeFields</th>
+                <th>PreviousValue</th>
+                <th>NewValue</th>
+                <th>GUID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of data.listData; let idx = index" (click)="ok(i)">
+                <td>
+                    <div class="w30">
+                        {{i.id}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w150">
+                        {{i.Operation}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w150">
+                        {{i.empID}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w150">
+                        {{i.Code}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w150">
+                        {{i.userName}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w250">
+                        {{i.dbName}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w150">
+                        {{i.TimeStamp}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w150">
+                        {{i.DocNum}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w150">
+                        {{i.Date}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w150">
+                        {{i.ChangeFields}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w150">
+                        {{i.PreviousValue}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w150">
+                        {{i.NewValue}}
+                    </div>
+                </td>
+                <td>
+                    <div class="w300">
+                        {{i.GUID}}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<!-- <div mat-dialog-actions>
+    <div class="col s6 m6 l12 text-center"></div>
+    <div class="col s6 m6 l12 text-center">
+        <a class="mb-6 btn blue lighten-1" style="margin-right: 10px;" (click)="ok()">ยืนยัน</a>
+        <a class="mb-6 btn red lighten-1" (click)="cancel()">ยกเลิก</a>
+    </div>
+</div> -->

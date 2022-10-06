@@ -1,0 +1,131 @@
+<!-- BEGIN: Page Main-->
+
+<div class="col s12">
+    <div class="container">
+        <section class="users-list-wrapper section">
+            <div class="users-list-filter">
+
+                <!-- Header -->
+                <div class="card-panel"
+                    style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                    <div class="row">
+                        <div class="col s4">
+                            <i class="material-icons header-icon">
+                                featured_play_list
+                            </i>
+                            <span
+                                style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                                รายชื่อผู้อ่าน
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card-panel" style="margin-top: 0px;">
+                    <!-- <div class="row">
+                        <div class="col s2">
+                            <csop (cModel)="setPerPage($event)" [label]="'แสดง'"
+                                [data]="paginationModel.itemsPerPageString"
+                                [sources]="[{ value: '5', display: '5'},{ value: '10', display: '10'},{ value: '50', display: '50'},{ value: '100', display: '100'}]">
+                            </csop>
+                        </div>
+                        <div class="col s7">
+
+                        </div>
+                        <div class="col s3">
+                            <citxt (keyup.enter)="search()" (cModel)="searchModel.keySearch = $event" [label]="'ค้นหา'"
+                                [data]="searchModel.keySearch"></citxt>
+                        </div>
+                    </div> -->
+
+                    <div style="overflow-x:auto;">
+                        <table id="users-list-datatable" class="bordered centered striped">
+                            <thead>
+                                <tr>
+                                    <th>ลำดับ</th>
+                                    <th>ชื่อผู้อ่าน</th>
+                                    <th>สถานะ</th>
+                                    <th>สร้างวันที่</th>
+                                    <th>อ่านวันที่</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let i of editModel; let idx = index">
+                                    <td>
+                                        <div class="w30">
+                                            <!-- {{((paginationModel.currentPage - 1) * paginationModel.itemsPerPage) + (idx + 1)}} -->
+                                            {{(idx+1)}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w200">
+                                            <a href="javascript:void(0)">
+                                                <p class="cut-text">{{i.userName}}</p>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w150" [hidden]="i.status != 'A'"><span
+                                                class="chip green lighten-5"><span
+                                                    class="green-text">อ่านแล้ว</span></span></div>
+                                        <div class="w150" [hidden]="i.status == 'A'"><span class="chip red lighten-5"><span
+                                                    class="red-text">ยังไม่อ่าน</span></span></div>
+                                    </td>
+                                    <td>
+                                        <div class="w100">
+                                            {{i.createDate | datetimeFormat}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w100">
+                                            {{i.updateDate | datetimeFormat}}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="col s6">
+                            <ul>
+                                <li>{{paginationModel.textPage}}</li>
+                            </ul>
+                        </div>
+                        <div class="col s6">
+                            <div style="text-align: right;">
+                                <ul>
+                                    <li *ngFor="let item of [] | paginate: paginationModel"></li>
+                                </ul>
+                                <pagination-controls (pageChange)="paginationModel.currentPage = $event"
+                                    previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <div class="container">
+                <section class="users-list-wrapper section">
+                    <div class="users-list-filter">
+                        <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+                            <div class="row">
+                                <div class="col s12" style="text-align: center; margin-top: 10px;">
+
+                                    <cbtn [label]="'กลับ'" [color]="'red'" (click)="back()"></cbtn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="card-panel" style="margin-top: 0px;">
+    <div class="row">
+        <div class="col l4 s12">
+            <cdp (cModel)="criteriaModel.startDate = $event" [label]="'วันที่'" [data]="criteriaModel.startDate">
+            </cdp>
+        </div>
+        <div class="col l4 s12">
+            <cdp (cModel)="criteriaModel.endDate = $event" [label]="'ถึง'" [data]="criteriaModel.endDate">
+            </cdp>
+        </div>
+        <div class="col l4 s12 mt-1 text-right">
+            <cbtn [label]="'Export CSV'" [color]="'green'" [icon]="'add_circle_outline'" (click)="export()"></cbtn>
+        </div>
+    </div>
+</div>
+
+<div class="card-panel" style="margin-top: 0px;">
+    <div class="row">
+        <div class="col l7 s12">
+            <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="single" [gradient]="gradient" [legend]="showLegend" [legendPosition]="legendPosition" [labels]="showLabels" [doughnut]="isDoughnut" (select)="onSelect($event)" (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)">
+            </ngx-charts-pie-chart>
+        </div>
+        <div class="col l5 s12">
+
+            <ngx-charts-number-card [view]="cardView" [scheme]="cardColorScheme" [results]="card" [cardColor]="cardColor" (select)="onSelect($event)">
+            </ngx-charts-number-card>
+
+            <!-- <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+            <div class="row">
+                <div class="col s12">
+                    <i class="material-icons header-icon">
+                            featured_play_list
+                        </i>
+                    <span style="position: relative; float:left; padding-left: 10px; padding-top: 10px;">
+                        ตารางแสดงรายละเอียด
+                    </span>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-panel" style="margin-top: 0px;">
+            <div style="overflow-x:auto;">
+                <table id="users-list-datatable" class="bordered centered striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <h4>หัวข้อ</h4>
+                            </th>
+                            <th>
+                                <h4>จำนวน</h4>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="w120">
+                                    <h4>ข้อความส่งฟรี</h4>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <h4>{{formatNumber(model.quota)}}</h4>
+                                </div>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="w120">
+                                    <h4>ข้อความส่งไปแล้ว</h4>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <h4>{{formatNumber(model.totalUsage)}}</h4>
+                                </div>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="w120">
+                                    <h4>ข้อความคงเหลือ</h4>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <h4>{{formatNumber((model.quota - model.totalUsage))}}</h4>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div> -->
+
+        </div>
+
+    </div>
+</div>

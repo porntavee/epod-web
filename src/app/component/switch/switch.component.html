@@ -1,0 +1,32 @@
+<div class="input-field">
+    {{iaLabel}}<mat-slide-toggle [checked]="data" (change)="emit($event)">{{label}}</mat-slide-toggle>{{aLabel}}
+</div>
+
+<!-- data : {{chk}} -->
+<!-- <div id="view-switches">
+    <p>Use checkboxes when looking for yes or no answers. The <code class="language-markup">for</code>
+        attribute is necessary to bind our custom checkbox with the input. Add the input's <code class="language-markup">id</code>
+        as the value of the <code class="language-markup">for</code> attribute of the label. </p>
+    <form action="#" class="mt-1">
+        <div class="switch mb-1">
+            <label>
+                Off
+                <input checked type="checkbox" [(ngModel)]="data" >
+                <span class="lever"></span>
+                On
+            </label>
+            <label>
+                <input type="checkbox" [(ngModel)]="chk" />
+                <span class="lever"></span>
+            </label>
+        </div>
+        <div class="switch">
+            <label>
+                Off
+                <input disabled type="checkbox">
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </form>
+</div> -->

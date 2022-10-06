@@ -1,0 +1,33 @@
+<h5 class="breadcrumbs-title mt-0 mb-0 display-inline hide-on-small-and-down">
+    <span>spinner</span></h5>
+<ol class="breadcrumbs mb-0">
+    <li class="breadcrumb-item"><a href="index.html">Demo</a>
+    </li>
+    <!-- <li class="breadcrumb-item"><a href="#">Routing</a>
+    </li> -->
+    <li class="breadcrumb-item active">spinner
+    </li>
+</ol>
+<br>
+<br>
+<p>spinner works!</p>
+<div class="col s6 m6 l6 breadcrumbs-left">
+    <ngx-spinner></ngx-spinner>
+    <a class="mb-6 btn waves-effect waves-light gradient-45deg-purple-deep-orange" (click)="showSpinner()">Show default</a>
+</div>
+<div class="col s6 m6 l6 breadcrumbs-left">
+    <ngx-spinner name="mySpinner2"></ngx-spinner>
+    <a class="mb-6 btn waves-effect waves-light gradient-45deg-purple-deep-orange" (click)="showSpinner2()">Show line-scale-party</a>
+</div>
+<div class="col s6 m6 l6 breadcrumbs-left">
+    <ngx-spinner name="mySpinner3">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+    <a class="mb-6 btn waves-effect waves-light gradient-45deg-purple-deep-orange" (click)="showSpinner3()">Show ball-8bits</a>
+</div>
+<div class="col s6 m6 l6 breadcrumbs-left">
+    <ngx-spinner name="mySpinner4">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+    <a class="mb-6 btn waves-effect waves-light gradient-45deg-purple-deep-orange" (click)="showSpinner4()">Show ball-8bits Inside</a>
+</div>

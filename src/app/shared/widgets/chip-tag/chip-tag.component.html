@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col s12 chip-input">
+    <mat-form-field class="example-chip-list">
+      <mat-label>Tags</mat-label>
+      <mat-chip-list #chipList aria-label="Tag selection">
+        <mat-chip *ngFor="let tag of selectedList" [selectable]="selectable" [removable]="removable"
+          (removed)="remove(tag)">
+          {{tag.display}}
+          <mat-icon matChipRemove *ngIf="removable">
+            <i class="material-icons" style="position: relative; float:left; font-size: 1.3em !important; color: red;">
+              delete
+            </i>
+          </mat-icon>
+        </mat-chip>
+        <input placeholder="" #tagInput [formControl]="tagCtrl" (focus)="triggerTag()" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="selectedChip($event)" onscroll="true">
+        <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+          {{tag.display}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</div>

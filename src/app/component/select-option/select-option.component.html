@@ -1,0 +1,21 @@
+<!-- <div class="col s12" style="padding-top: 20px !important;"> -->
+
+<div class="col l3 s4" style="padding-top: 15px; padding-right: 0px !important;">
+    <label>{{label}}</label>
+</div>
+<div class="col l9 s8">
+    <mat-form-field style="height: 20px; width: 100%; font-family: Arial, Helvetica, sans-serif !important; padding-bottom: 0px !important;">
+        <!-- <mat-label style="font-size: 12px !important;">{{label}}</mat-label> -->
+        <mat-select [(ngModel)]="data" (ngModelChange)="emit($event)" [(value)]="data">
+            <mat-option *ngFor="let i of sources" value="{{i.value}}">{{i.display}}</mat-option>
+            <!-- <mat-option>None</mat-option>
+            <mat-option value="option1">Option 1</mat-option>
+            <mat-option value="option2">Option 2</mat-option>
+            <mat-option value="option3">Option 3</mat-option> -->
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<!-- </div> -->
+<!-- <p>You selected: {{data}}</p>
+<button (click)="setValue()">Set</button> -->

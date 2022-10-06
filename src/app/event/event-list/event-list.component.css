@@ -1,0 +1,18 @@
+.text-right {
+    text-align: end;
+}
+
+.green-text
+{
+    color: #4caf50 !important;
+}
+
+.yellow-text
+{
+    color: #f4ca2a !important;
+}
+
+.red-text
+{
+    color: #d00404 !important;
+}

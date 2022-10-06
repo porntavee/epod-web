@@ -1,0 +1,7 @@
+<ngx-dropzone class="dropzone gallery" (change)="onSelectApi($event, true)">
+	<ngx-dropzone-label>{{label}}</ngx-dropzone-label>
+	<ngx-dropzone-preview class="dropzone preview" *ngFor="let f of data" [removable]="true" (removed)="onRemoveApi(f, true)">
+        <ngx-dropzone-label class="dropzone label">
+            <img class="dropzone image" [src]="f.imageUrl"><br>{{ f.imageName }}</ngx-dropzone-label>
+	</ngx-dropzone-preview>
+</ngx-dropzone>

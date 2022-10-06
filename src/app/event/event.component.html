@@ -1,0 +1,449 @@
+<div *ngIf="isMainPage">
+    <div class="col s12">
+        <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l8 s12">
+                    <i class="material-icons header-icon">
+                        filter_list
+                    </i>
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                        <b>Employee</b>
+                    </span>
+                </div>
+                <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
+                    <cbtnl [label]="'Reset'" [color]="'gray'" [icon]="'cached'"></cbtnl>
+                </div>
+                <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
+                    <cbtnl [label]="'Search'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+                </div> -->
+            </div>
+
+        </div>
+        <!-- [hidden]="isAdvanceSearch" -->
+        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
+            <div class="row">
+                <!-- <div class="col s12 l4">
+                    <cinum (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence || 0"></cinum>
+                </div> -->
+                <!-- <div class="col l4 s12">
+                    <cdp (cModel)="criteriaModel.startDate = $event" [label]="'วันที่สร้าง'" [data]="criteriaModel.startDate">
+                    </cdp>
+                </div>
+                <div class="col l4 s12">
+                    <cdp (cModel)="criteriaModel.endDate = $event" [label]="'ถึงวันที่'" [data]="criteriaModel.endDate">
+                    </cdp>
+                </div> -->
+                <!-- <div class="col l5 s12" style="margin-bottom: 15px;">
+                    <csop (cModel)="criteriaModel.employeeCode = $event" [label]="'Employee Code'" [data]="criteriaModel.employeeCode" [sources]="listEmployeeCode">
+                    </csop>
+                </div> -->
+                <div class="col l5 s12">
+                    <citxt (cModel)="criteriaModel.empID = $event" [label]="'Emp ID'" [data]="criteriaModel.empID"></citxt>
+                </div>
+                <div class="col l1 s12"></div>
+                <div class="col l5 s12">
+                    <csop (cModel)="criteriaModel.Active = $event" [label]="'Active'" [data]="criteriaModel.Active" [sources]="listActive">
+                    </csop>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="criteriaModel.Code = $event" [label]="'Code'" [data]="criteriaModel.Code"></citxt>
+                </div>
+                <div class="col l1 s12"></div>
+                <div class="col l5 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'First Name'" [data]="criteriaModel.FirstName"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="criteriaModel.Code = $event" [label]="'Code'" [data]="criteriaModel.Code"></citxt>
+                </div>
+                <div class="col l1 s12"></div>
+                <div class="col l5 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'First Name'" [data]="criteriaModel.FirstName"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12" style="margin-top: -20px;">
+                    <csop (cModel)="criteriaModel.Position = $event" [label]="'Position'" [data]="criteriaModel.Position" [sources]="listPosition">
+                    </csop>
+                </div>
+                <div class="col l1 s12"></div>
+                <div class="col l5 s12" style="margin-top: -20px;">
+                    <csop (cModel)="criteriaModel.Branch = $event" [label]="'Branch'" [data]="criteriaModel.Branch" [sources]="listBranch">
+                    </csop>
+                </div>
+            </div>
+
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col l9 s12 p-0" style="margin-bottom: 5px;"></div>
+                <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
+                    <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- <div class="col l5 s12" style="margin-bottom: 15px;">
+                    <csop (cModel)="criteriaModel.firstName = $event" [label]="'First Name'" [data]="criteriaModel.firstName" [sources]="listFirstName">
+                    </csop>
+                </div>
+                <div class="col l4 s12">
+                    <csop (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence" [sources]="listSequence">
+                    </csop>
+                </div> -->
+                <!-- <div class="col l5 s12">
+                    <cdp (cModel)="criteriaModel.DateFrom = $event" [label]="'DateFrom'" [data]="criteriaModel.DateFrom"></cdp>
+                </div> -->
+            </div>
+        </div>
+        <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
+            <div class="row">
+                <div class="col s12">
+                    <citxt (cModel)="criteriaModel.empID = $event" [label]="'Emp ID'" [data]="criteriaModel.empID"></citxt>
+                </div>
+                <div class="col s12" style="margin-top: -10px;">
+                    <citxt (cModel)="criteriaModel.Code = $event" [label]="'Code'" [data]="criteriaModel.Code"></citxt>
+                </div>
+                <div class="col s12" style="margin-top: -10px;">
+                    <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'First Name'" [data]="criteriaModel.FirstName"></citxt>
+                </div>
+                <div class="col s12" style="margin-top: -10px;">
+                    <csop (cModel)="criteriaModel.Active = $event" [label]="'Active'" [data]="criteriaModel.Active" [sources]="listActive">
+                    </csop>
+                </div>
+                <div class="col s12" style="margin-top: 10px;">
+                    <csop (cModel)="criteriaModel.Position = $event" [label]="'Position'" [data]="criteriaModel.Position" [sources]="listPosition">
+                    </csop>
+                </div>
+                <div class="col s12" style="margin-top: 10px;">
+                    <csop (cModel)="criteriaModel.Branch = $event" [label]="'Branch'" [data]="criteriaModel.Branch" [sources]="listBranch">
+                    </csop>
+                </div>
+
+                <div class="col s12 p-0" style="margin-top: 20px; margin-bottom: 5px;">
+                    <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- {{this.viewModel|json}} -->
+    <div class="col s12">
+        <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l12 s12">
+                    <i class="material-icons header-icon">
+                        featured_play_list
+                    </i>
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                        Data List
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="card-panel" style="margin-top: 0px;">
+            <div style="overflow-x:auto;">
+                <table id="users-list-datatable" class="bordered centered striped">
+                    <thead>
+                        <tr>
+                            <!-- <th>
+                                <span class="header-checkbox">
+                                    <label>
+                                        <input type="checkbox" [(ngModel)]="itemSelected"
+                                            (change)="checkUncheckAll()" />
+                                        <span style="padding-left: 20px;"></span>
+                                </label>
+                                </span>
+                            </th> -->
+                            <!-- <th>ลำดับ</th> -->
+                            <th>No</th>
+                            <th>Emp ID</th>
+                            <th>Code</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Position Name</th>
+                            <th>Dept Name</th>
+                            <th>Branch Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 50, currentPage: p };; let idx = index">
+                            <!-- [hidden]="!checkPermission(i.category, 'deleteAction')" -->
+                            <!-- <td>
+                                <div class="w20">
+                                    <label>
+                                        <input type="checkbox" [(ngModel)]="i.isSelected"
+                                            (change)="isAllSelected(i.category, 'deleteAction')" />
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </td> -->
+                            <!-- <td>
+                                <div class="w30">
+                                    {{((paginationModel.currentPage - 1) * paginationModel.itemsPerPage) + (idx + 1)}}
+                                    {{idx + 1}}
+                                </div>
+                            </td> -->
+                            <td>
+                                <div class="w30">
+                                    {{idx + 1}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w30">
+                                    {{i.empID}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w150">
+                                    <cbtne [label]="i.Code" (click)="edit(i)"></cbtne>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <!-- <a href="javascript:void(0)">
+                                        <p class="cut-text">{{i.FirstName}}</p>
+                                    </a> -->
+                                    {{i.firstName}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <!-- <a href="javascript:void(0)">
+                                        <p class="cut-text">{{i.FirstName}}</p>
+                                    </a> -->
+                                    {{i.lastName}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <!-- {{i.createDate | datetimeFormat}} -->
+                                    {{i.positionName}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <!-- {{i.createBy}} -->
+                                    {{i.deptName}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <!-- {{i.createBy}} -->
+                                    {{i.branchName}}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col s6">
+                    <!-- <ul>
+                        <li>paginationModel.textPage</li>
+                    </ul> -->
+                </div>
+                <div class="col s6">
+                    <div style="text-align: right;">
+                        <!-- <ul>
+                            <li *ngFor="let item of listModel | paginate: { itemsPerPage: 10, currentPage: p }">{{item}}</li>
+                        </ul> -->
+                        <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isFormPage">
+    <div class="col s12">
+        <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l12 s12">
+                    <i class="material-icons header-icon">
+                        border_color
+                    </i>
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                        <b>{{title}}</b>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="card-panel" style="margin-top: 0px;">
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.empID = $event" [label]="'Emp ID'" [data]="model.empID" [readonly]="true"></citxt>
+                </div>
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.Active = $event" [label]="'Active'" [data]="model.Active" [readonly]="true"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.Code = $event" [label]="'Code'" [data]="model.Code" [readonly]="true"></citxt>
+                </div>
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.PassWord = $event" [label]="'Password'" [data]="model.PassWord" [type]="typePassword"></citxt>
+                </div>
+                <div class="col l2 s12 p-0" style="margin-top: 10px;">
+                    <a href="javascript:void(0)" (click)="showPassword()">แสดงรหัส</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.firstName = $event" [label]="'First Name'" [data]="model.firstName" [readonly]="true"></citxt>
+                </div>
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.lastName = $event" [label]="'Last Name'" [data]="model.lastName" [readonly]="true"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.positionName = $event" [label]="'Position Name'" [data]="model.positionName" [readonly]="true"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.deptName = $event" [label]="'Dept Name'" [data]="model.deptName" [readonly]="true"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.branchName = $event" [label]="'Branch Name'" [data]="model.branchName" [readonly]="true"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.CostCenter = $event" [label]="'Cost Center'" [data]="model.CostCenter" [readonly]="true"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="model.termDate = $event" [label]="'Term Date'" [data]="model.termDate" [readonly]="true"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <ccb (cModel)="model.Auth_User = $event" [label]="'Employee'" [data]="model.Auth_User"></ccb>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <ccb (cModel)="model.Auth_TimeSheet = $event" [label]="'Time Sheet'" [data]="model.Auth_TimeSheet"></ccb>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <ccb (cModel)="model.Auth_DocLogReport = $event" [label]="'Doc Log Report'" [data]="model.Auth_DocLogReport"></ccb>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 30px;">
+                <div class="col l5 s12">
+                    <ccb (cModel)="model.Auth_UserLogReport = $event" [label]="'User Log Report'" [data]="model.Auth_UserLogReport"></ccb>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12">
+        <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+            <div class="row">
+                <div class="col s12" style="text-align: center; margin-top: 10px;">
+                    <cbtn [label]="'บันทึก'" [color]="'blue'" (click)="create()">
+                    </cbtn>
+                    <cbtn [label]="'ย้อนกลับ'" [color]="'red'" (click)="backToMain()"></cbtn>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isTimeSheetPage">
+    <!-- {{timeSheetModel|json}} -->
+    <div class="col s12">
+        <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l12 s12">
+                    <i class="material-icons header-icon">
+                        border_color
+                    </i>
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                        <b>{{title}}</b>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="card-panel" style="margin-top: 0px;">
+            <div class="row">
+                <div class="col l5 s12">
+                    <cdp (cModel)="timeSheetModel.DateFrom = $event" [label]="'DateFrom'" [data]="timeSheetModel.DateFrom"></cdp>
+                    <!-- <citxt (cModel)="timeSheetModel.DateFrom = $event" [label]="'DateFrom'" [data]="timeSheetModel.DateFrom"></citxt> -->
+                </div>
+                <div class="col l5 s12">
+                    <cdp (cModel)="timeSheetModel.DateTo = $event" [label]="'DateTo'" [data]="timeSheetModel.DateTo"></cdp>
+                    <!-- <citxt (cModel)="timeSheetModel.DateTo = $event" [label]="'DateTo'" [data]="timeSheetModel.DateTo"></citxt> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <cdp (cModel)="timeSheetModel.Date = $event" [label]="'Date'" [data]="timeSheetModel.Date"></cdp>
+                    <!-- <citxt (cModel)="timeSheetModel.Date = $event" [label]="'Date'" [data]="timeSheetModel.Date"></citxt> -->
+                </div>
+                <div class="col l5 s12">
+                    <citxt (cModel)="timeSheetModel.StartTime = $event" [label]="'Start Time'" [data]="timeSheetModel.StartTime"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="timeSheetModel.U_HMC_Hour = $event" [label]="'Hour'" [data]="timeSheetModel.U_HMC_Hour"></citxt>
+                </div>
+                <div class="col l5 s12">
+                    <citxt (cModel)="timeSheetModel.EndTime = $event" [label]="'End Time'" [data]="timeSheetModel.EndTime"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="timeSheetModel.ActivityType = $event" [label]="'Activity Type'" [data]="timeSheetModel.ActivityType"></citxt>
+                </div>
+                <div class="col l5 s12">
+                    <citxt (cModel)="timeSheetModel.FinancialProject = $event" [label]="'Financial Project'" [data]="timeSheetModel.FinancialProject"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="timeSheetModel.CostCenter = $event" [label]="'Cost Center'" [data]="timeSheetModel.CostCenter"></citxt>
+                </div>
+                <div class="col l5 s12">
+                    <citxt (cModel)="timeSheetModel.U_HMC_Stage = $event" [label]="'Stage'" [data]="timeSheetModel.U_HMC_Stage"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="timeSheetModel.Break = $event" [label]="'Break'" [data]="timeSheetModel.Break"></citxt>
+                </div>
+                <div class="col l5 s12">
+                    <citxt (cModel)="timeSheetModel.NonBillableTime = $event" [label]="'Nonbillable Time'" [data]="timeSheetModel.NonBillableTime"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l5 s12">
+                    <citxt (cModel)="timeSheetModel.U_HMC_Detail = $event" [label]="'Detail'" [data]="timeSheetModel.U_HMC_Detail"></citxt>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12">
+        <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+            <div class="row">
+                <div class="col s12" style="text-align: center; margin-top: 10px;">
+                    <cbtn [label]="'บันทึก'" [color]="'blue'" (click)="addTimeSheet()">
+                    </cbtn>
+                    <cbtn [label]="'ย้อนกลับ'" [color]="'red'" (click)="backToForm()"></cbtn>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="col l3 s12" style="padding-top: 15px !important; padding-right: 0px !important;">
+    <label>{{label}}</label>
+</div>
+<div class="col l9 s12">
+    <div class="input-field">
+        <input style="height: 20px;" [(ngModel)]="data" (ngModelChange)="emit($event)" name="data" id="data" type="number" class="validate">
+        <!-- <label for="data" class="active">{{label}}</label> -->
+    </div>
+</div>

@@ -1,0 +1,277 @@
+<div class="col s12">
+
+  <div class="card-panel-header">
+    <div class="row">
+      <div class="col s12">
+        <i class="material-icons">border_color</i>
+        <span>รายละเอียด</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-panel-body">
+    <div class="row">
+      <div class="col s8">
+        <!-- <div class="col s6">
+          <csw (cModel)="model.isHighlight = $event" [label]="'รายการแนะนำ'" [data]="model.isHighlight"></csw>
+        </div>
+        <div class="col s6">
+          <csw [hidden]="!checkPermission(model.category, 'approveAction')"
+            (cModel)="model.isActive = $event" [label]="'เผยแพร่'" [data]="model.isActive"></csw>
+        </div> -->
+        <div class="row">
+          <div class="col s12">
+            <cinum (cModel)="model.sequence = $event" [label]="'ลำดับข้อมูล'"
+              [data]="model.sequence || 0"></cinum>
+          </div>
+        </div>
+
+        <!-- <div class="row">
+          <div class="col s12" style="margin-top: -15px !important; padding-bottom: 10px !important;">
+            <csop (cModel)="readCategory($event)" [label]="'ภาษา : '" [data]="model.language"
+              [sources]="[{ value: 'th', display: 'ไทย' }, { value: 'en', display: 'อังกฤษ' }]">
+            </csop>
+          </div>
+        </div> -->
+
+        <div class="row">
+          <div class="col s12" style="padding-bottom: 10px !important;">
+            <csop (cModel)="model.category = $event" [label]="'หมวดหมู่ : '" [data]="model.category"
+              [sources]="[{ value: 'ทั่วไป', display: 'ทั่วไป' }]">
+              <!-- [sources]="listCategory"> -->
+            </csop>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12">
+            <citxt (cModel)="model.title = $event" [label]="'หัวข้อ : '" [data]="model.title || ''">
+            </citxt>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12" style="margin-top: -15px !important;">
+            <citxt (cModel)="model.textButton = $event" [label]="'ชื่อปุ่มแหล่งอ้างอิง : '"
+              [data]="model.textButton || ''"></citxt>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12" style="margin-top: -15px !important;">
+            <citxt (cModel)="model.linkUrl = $event" [label]="'ลิ้งค์แหล่งอ้างอิง : '"
+              [data]="model.linkUrl || ''"></citxt>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col s4">
+        <div class="col s5">
+          <cds (cModel)="model.image = $event" [label]="'รูปปก (คลิกเลือกภาพ/ลากวางภาพที่นี่)'"
+            [data]="[{ imageUrl: this.model.imageUrl || '' }]" [code]="'news'"></cds>
+        </div>
+        <div class="col s12">
+          <span style="color: red;">* ขนาดรูปภาพไม่เกิน 10 MB</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- END: Do Something This Here -->
+
+  </div>
+
+
+    <div class="row">
+      <div class="col s12">
+        <div class="container">
+          <section class="users-list-wrapper section">
+            <div class="users-list-filter">
+  
+              <!-- Header -->
+              <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+                <div class="row">
+                  <div class="col s8">
+                    <i class="material-icons header-icon">
+                      border_color
+                    </i>
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                      <!-- {{title}} -->
+                    </span>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="card-panel-body" style="margin-bottom: 0px; margin-top: 0px;">
+  
+                <!-- BEGIN: Do Something This Here -->
+  
+                <div class="row">
+  
+                  <div class="col s8">
+  
+                    <!-- <div class="col s6">
+                      <csw (cModel)="model.isHighlight = $event" [label]="'รายการแนะนำ'" [data]="model.isHighlight"></csw>
+                    </div>
+                    <div class="col s6">
+                      <csw [hidden]="!checkPermission(model.category, 'approveAction')"
+                        (cModel)="model.isActive = $event" [label]="'เผยแพร่'" [data]="model.isActive"></csw>
+                    </div> -->
+  
+  
+                    <div class="row">
+                      <div class="col s12">
+                        <cinum (cModel)="model.sequence = $event" [label]="'ลำดับข้อมูล'"
+                          [data]="model.sequence || 0"></cinum>
+                      </div>
+                    </div>
+  
+                    <!-- <div class="row">
+                      <div class="col s12" style="margin-top: -15px !important; padding-bottom: 10px !important;">
+                        <csop (cModel)="readCategory($event)" [label]="'ภาษา : '" [data]="model.language"
+                          [sources]="[{ value: 'th', display: 'ไทย' }, { value: 'en', display: 'อังกฤษ' }]">
+                        </csop>
+                      </div>
+                    </div> -->
+  
+                    <div class="row">
+                      <div class="col s12" style="padding-bottom: 10px !important;">
+                        <csop (cModel)="model.category = $event" [label]="'หมวดหมู่ : '" [data]="model.category"
+                          [sources]="[{ value: 'ทั่วไป', display: 'ทั่วไป' }]">
+                          <!-- [sources]="listCategory"> -->
+                        </csop>
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col s12">
+                        <citxt (cModel)="model.title = $event" [label]="'หัวข้อ : '" [data]="model.title || ''">
+                        </citxt>
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col s12" style="margin-top: -15px !important;">
+                        <citxt (cModel)="model.textButton = $event" [label]="'ชื่อปุ่มแหล่งอ้างอิง : '"
+                          [data]="model.textButton || ''"></citxt>
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col s12" style="margin-top: -15px !important;">
+                        <citxt (cModel)="model.linkUrl = $event" [label]="'ลิ้งค์แหล่งอ้างอิง : '"
+                          [data]="model.linkUrl || ''"></citxt>
+                      </div>
+                    </div>
+  
+                  </div>
+  
+                  <div class="col s4">
+                    <div class="col s5">
+                      <cds (cModel)="model.image = $event" [label]="'รูปปก (คลิกเลือกภาพ/ลากวางภาพที่นี่)'"
+                        [data]="[{ imageUrl: this.model.imageUrl || '' }]" [code]="'news'"></cds>
+                    </div>
+                    <div class="col s12" style="color: red;padding-top: 20px;">
+                      <span>*Maximum 10 MB</span>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- END: Do Something This Here -->
+  
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col s12">
+        <div class="container">
+          <section class="users-list-wrapper section">
+            <div class="users-list-filter">
+  
+              <!-- Header -->
+              <div class="card-panel" style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+  
+                <div class="row">
+                  <div class="col s8">
+                    <i class="material-icons header-icon">
+                      border_color
+                    </i>
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                      รายละเอียด
+                    </span>
+                  </div>
+                </div>
+  
+              </div>
+              <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+  
+                <!-- BEGIN: Do Something This Here -->
+  
+                <div class="row">
+                  <div class="col s12">
+  
+                    <div class="row">
+                      <div class="col s12">
+                        <ctxte (cModel)="model.description = $event" [label]="'รายละเอียด : '"
+                          [data]="model.description || ''"></ctxte>
+                      </div>
+                    </div>
+  
+                  </div>
+  
+                  <!-- <div class="col s6">
+  
+                    <div class="row">
+                      <div class="col s12">
+                        <cdm (cModel)="model.gallery = $event"
+                          [label]="'รูปภาพประกอบข่าว (คลิกเลือกภาพ/ลากวางภาพที่นี่)'" [data]="model.gallery || []"
+                          [code]="'news'"></cdm>
+                      </div>
+                      <div class="col s12" style="color: red;padding-top: 20px;">
+                        <span>*Maximum 10 MB</span>
+                      </div>
+                    </div>
+  
+                  </div> -->
+                </div>
+  
+                <!-- END: Do Something This Here -->
+  
+              </div>
+  
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col s12">
+        <div class="container">
+          <section class="users-list-wrapper section">
+            <div class="users-list-filter">
+  
+              <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+  
+                <!-- BEGIN: Do Something This Here -->
+  
+                <div class="row">
+                  <div class="col s12" style="text-align: center; margin-top: 10px;">
+                    <!-- <cbtn (click)="checkSave()" [label]="'บันทึก'" [color]="'blue'"></cbtn> -->
+                    <!-- <cbtn [label]="'ยกเลิก'" [color]="'red'" (click)="showPage = 'main'"></cbtn> -->
+                  </div>
+                </div>
+  
+                <!-- END: Do Something This Here -->
+  
+              </div>
+  
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+</div>

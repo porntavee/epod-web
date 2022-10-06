@@ -1,0 +1,7 @@
+<!-- [(ngModel)]="data" (ngModelChange)="emit($event)" -->
+<ngx-dropzone class="dropzone video" (change)="onSelectApi($event)" [disabled]="isdisabled" style="height: 80px;">
+    <ngx-dropzone-label>{{label}}</ngx-dropzone-label>
+    <ngx-dropzone-preview class="dropzone preview" *ngFor="let f of data" [removable]="true" (removed)="onRemoveApi(f)">
+        <ngx-dropzone-label class="dropzone label">{{ f.videoName }}</ngx-dropzone-label>
+    </ngx-dropzone-preview>
+</ngx-dropzone>

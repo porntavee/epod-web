@@ -1,0 +1,26 @@
+<h5 class="breadcrumbs-title mt-0 mb-0 display-inline hide-on-small-and-down"><span>modal</span></h5>
+<ol class="breadcrumbs mb-0">
+    <li class="breadcrumb-item"><a href="index.html">Demo</a>
+    </li>
+    <!-- <li class="breadcrumb-item"><a href="#">File Upload</a>
+    </li> -->
+    <li class="breadcrumb-item active">modal
+    </li>
+</ol>
+<br>
+<br>
+<ol>
+    <li>
+        <mat-form-field>
+            <mat-label>What's your name?</mat-label>
+            <input matInput [(ngModel)]="name">
+        </mat-form-field>
+    </li>
+    <li>
+        <button mat-raised-button (click)="openDialog()">Pick one</button>
+        <button mat-raised-button (click)="openAlert()">Alert</button>
+    </li>
+    <li *ngIf="animal">
+        You chose: <i>{{animal}}</i>
+    </li>
+</ol>

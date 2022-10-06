@@ -1,0 +1,91 @@
+<ngx-spinner name="mySpinner3">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<!-- BEGIN: Page Main-->
+<div class="row">
+    <div class="col s12">
+        <div class="container">
+            <!-- users list start -->
+            <section class="users-list-wrapper section">
+                <div class="users-list-filter">
+                    <div class="card-panel">
+                        <div class="row">
+                            <!-- (ngModelChange)="firstname = $event" -->
+                            <div class="input-field col s6">
+                                <input [(ngModel)]="firstname" name="firstname" placeholder="Placeholder" id="firstname"
+                                    type="text" class="validate">
+                                <label for="first_name">First Name :</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input [(ngModel)]="lastname" name="lastname" id="lastname" type="text"
+                                    class="validate">
+                                <label for="lastname">Last Name : </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <select (ngModel)="check" (ngModelChange)="check = $event" name="check">
+                                    <option value="" disabled selected>Choose your option</option>
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                </select>
+                                <label>Materialize Select : {{check}}</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <select multiple>
+                                    <option value="" disabled selected>Choose your option</option>
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                </select>
+                                <label>Materialize Multiple Select</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <div class="col s11">
+                                    <input matInput [ngxMatDatetimePicker]="picker3" placeholder="Choose a date"
+                                        [formControl]="dateTimeControl">
+                                </div>
+                                <div class="col s1">
+                                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                    <ngx-mat-datetime-picker #picker3 [disableSecond]="true"></ngx-mat-datetime-picker>
+                                </div>
+                            </div>
+                            <div class="input-field col s6">
+                                value : {{displayDateTime(dateTimeControl.value)}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <div class="col s11">
+                                    <input matInput [matDatepicker]="picker" [formControl]="dateControl">
+                                </div>
+                                <div class="col s1">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </div>
+                            </div>
+                            <div class="input-field col s6">
+                                value : {{displayDate(dateControl.value)}}
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col s6 m6 l12 text-right">
+                                <a class="mb-6 btn waves-effect waves-light gradient-45deg-purple-deep-orange"
+                                    (click)="search()">Search</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- users list ends -->
+        </div>
+        <div class="content-overlay"></div>
+    </div>
+</div>
+<!-- END: Page Main-->

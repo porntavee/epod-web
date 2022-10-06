@@ -1,0 +1,17 @@
+textarea.materialize-textarea
+{
+    line-height: normal;
+
+    overflow-y: hidden;
+
+    box-sizing: border-box;
+    min-height: 5rem;
+    /* prevents scroll bar flash */
+    padding: 0 0 0 0 !important;
+    /* prevents text jump on Enter keypress */
+
+    resize: none;
+
+
+
+}

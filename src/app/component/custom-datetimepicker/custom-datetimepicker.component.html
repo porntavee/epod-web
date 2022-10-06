@@ -1,0 +1,13 @@
+<div class="input-field col s12">
+    <div class="col s10">
+        <!-- <label for="picker" [ngClass]="{ 'active': data != '' }">{{label}}</label> -->
+        <input [(ngModel)]="data" (ngModelChange)="emit($event)" matInput [ngxMatDatetimePicker]="picker" [formControl]="dateControl" placeholder="{{label}}">
+    </div>
+    <div class="col s2">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker [disableSecond]="true"></ngx-mat-datetime-picker>
+    </div>
+</div>
+<!-- <div class="input-field col s6">
+    value : {{dateControl.value}} / data : {{data}}
+</div> -->

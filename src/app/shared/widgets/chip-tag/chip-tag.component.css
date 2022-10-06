@@ -1,0 +1,11 @@
+.example-chip-list {
+    width: 100%;
+  }
+   .chip-input input{
+    border-bottom: 1px solid transparent !important;
+  }
+  .chip-input input:focus {
+    outline: none !important;
+    box-shadow: 0px 0px 0px 0px transparent !important;
+    border-bottom-color: transparent !important;
+    }

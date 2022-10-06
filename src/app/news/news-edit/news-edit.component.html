@@ -1,0 +1,451 @@
+<app-navigator-bar [title1]="api.title1" [title2]="api.title2"
+    [title3]="code == '' ? 'เพิ่มข้อมูล ' + api.title1 : 'แก้ไขข้อมูล ' + api.title1"></app-navigator-bar>
+
+<ngx-spinner>
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
+
+<div class="col l9 s12" style="padding-left: 0px !important;">
+    <div class="row">
+        <div class="col s12">
+            <div class="container">
+                <section class="users-list-wrapper section">
+                    <div class="users-list-filter">
+
+                        <!-- Header -->
+                        <div class="card-panel"
+                            style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                            <div class="row">
+                                <div class="col s8">
+                                    <i class="material-icons header-icon">
+                                        border_color
+                                    </i>
+                                    <span
+                                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                                        {{title}}
+                                    </span>
+                                </div>
+                                <div class="col s4" [hidden]="!createList" style="text-align: right;">
+                                    <cbtn [label]="'เพื่มข้อมูล'" [color]="'blue'" [icon]="'add_circle_outline'"
+                                        (click)="addDataList()">
+                                    </cbtn>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+
+                            <!-- BEGIN: Do Something This Here -->
+
+                            <div class="row">
+
+                                <div class="col l8 s12">
+
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <citxt (cModel)="editModel.title = $event" [label]="'หัวข้อ : '"
+                                                [data]="editModel.title || ''">
+                                            </citxt>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col s12" style="margin-top: -15px !important;">
+                                            <citxt (cModel)="editModel.textButton = $event"
+                                                [label]="'ชื่อปุ่มแหล่งอ้างอิง : '" [data]="editModel.textButton || ''">
+                                            </citxt>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col s12" style="margin-top: -15px !important;">
+                                            <citxt (cModel)="editModel.linkUrl = $event"
+                                                [label]="'ลิ้งค์แหล่งอ้างอิง : '" [data]="editModel.linkUrl || ''">
+                                            </citxt>
+                                        </div>
+                                    </div>
+
+                                    <div class="col l3 s12">
+                                        <div class="col l5 s12">
+                                            <cdsv (cModel)="editModel.video = $event"
+                                                [label]="'คลิกเลือกวีดีโอ/ลากวางวีดีโอที่นี่'"
+                                                [categoryId]="editModel.video"
+                                                [data]="[{ videoUrl: this.editModel.videoUrl || '' }]" [code]="'news'">
+                                            </cdsv>
+                                        </div>
+                                        <div class="col s12" style="color: red; padding-top: 20px;width:200px">
+                                            <span>*รองรับ .mp4 ขนาดไม่เกิน 100mb</span>
+                                          </div>
+                                    </div>
+                                </div>
+
+                                <div class="col l4 s12">
+                                    <div class="col s5">
+                                        <cds (cModel)="editModel.image = $event"
+                                            [label]="'รูปปก (คลิกเลือกภาพ/ลากวางภาพที่นี่)'"
+                                            [data]="[{ imageUrl: this.editModel.imageUrl || '' }]" [code]="'news'"
+                                            [categoryId]="editModel.image"></cds>
+                                    </div>
+                                    <div class="col s12" style="color: red;padding-top: 20px;">
+                                        <span>*Maximum 10 MB</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- END: Do Something This Here -->
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <div class="container">
+                <section class="users-list-wrapper section">
+                    <div class="users-list-filter">
+
+                        <!-- Header -->
+                        <div class="card-panel"
+                            style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                            <div class="row">
+                                <div class="col s8">
+                                    <i class="material-icons header-icon">
+                                        border_color
+                                    </i>
+                                    <span
+                                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                                        รายละเอียด
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+
+                            <!-- BEGIN: Do Something This Here -->
+
+                            <div class="row">
+                                <div class="col s12">
+
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <ctxte (cModel)="editModel.description = $event" [label]="'รายละเอียด : '"
+                                                [data]="editModel.description || ''"></ctxte>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- END: Do Something This Here -->
+
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" [hidden]="!createList">
+        <div class="container">
+            <div class="col s12">
+
+                <!-- Header -->
+                <div class="card-panel"
+                    style="margin-top: 0px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                    <div class="row">
+                        <div class="col s2">
+                            <span class="material-icons header-icon">
+                                featured_play_list
+                            </span>
+                            <span
+                                style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                                ข้อมูลทั้งหมด
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Detail -->
+                <div class="card-panel" style="margin-top: 0px; margin-bottom: 0px;">
+                    <div class="row">
+                        <div class="col s12">
+                            <!-- datatable start -->
+                            <div style="overflow-x:auto;">
+                                <table id="users-list-datatable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>รูป</th>
+                                            <th>หัวข้อ</th>
+                                            <th>ชื่อปุ่มแหล่งอ้างอิง</th>
+                                            <th>ลิ้งค์แหล่งอ้างอิง</th>
+                                            <th>รายละเอียด</th>
+                                            <th>ประเภท</th>
+                                            <th>ลบ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let i of datalist; let idx = index">
+                                            <td>{{idx + 1}}</td>
+                                            <td>
+                                                <img [src]="i.imageUrl"
+                                                    style="width:75px !important; height:75px !important">
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)">{{i.title}} </a>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)">{{i.textButton}} </a>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)">{{i.linkUrl}} </a>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" [innerHtml]="i.description"></a>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" [hidden]="!i.chkCard">การ์ด</a>
+                                                <a href="javascript:void(0)" [hidden]="!i.chkImage">รูปภาพ</a>
+                                                <a href="javascript:void(0)" [hidden]="!i.chkMessage">ข้อความ</a>
+                                                <a href="javascript:void(0)" [hidden]="!i.chkVideo">วิดีโอ</a>
+                                            </td>
+                                            <td>
+                                                <cbtnd (click)="deleteItem(idx)"></cbtnd>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- datatable ends -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <div class="container">
+                <section class="users-list-wrapper section">
+                    <div class="users-list-filter">
+
+                        <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+
+                            <!-- BEGIN: Do Something This Here -->
+
+                            <div class="row" [hidden]="isSaveSuccess">
+                                <div class="col s12" [hidden]="createList"
+                                    style="text-align: center; margin-top: 10px;">
+                                    <cbtn (click)="checkSave()" [label]="'ส่งข้อความไปยังสมาชิก'" [color]="'blue'">
+                                    </cbtn>
+                                    <cbtn [label]="'ยกเลิก'" [color]="'red'" (click)="back()"></cbtn>
+                                </div>
+                                <div class="col s12" [hidden]="!createList"
+                                    style="text-align: center; margin-top: 10px;">
+                                    <cbtn (click)="createListApi()" [label]="'ส่งข้อความไปยังสมาชิก'" [color]="'blue'">
+                                    </cbtn>
+                                    <cbtn [label]="'ยกเลิก'" [color]="'red'" (click)="back()"></cbtn>
+                                </div>
+                            </div>
+
+                            <!-- END: Do Something This Here -->
+
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col l3 s12" style="padding-left: 0px !important;">
+    <div class="row">
+        <div class="col s12">
+            <div class="container">
+                <section class="users-list-wrapper section">
+                    <div class="users-list-filter">
+
+                        <!-- Header -->
+                        <div class="card-panel"
+                            style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                            <div class="row">
+                                <div class="col s8">
+                                    <!-- <i class="material-icons header-icon">
+                                        border_color
+                                    </i> -->
+                                    <span
+                                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                                        รูปแบบข้อความ *
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- // <----- Organization -->
+                        <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+                            <div class="row">
+                                <div class="col s12" style="padding-bottom: 40px !important;">
+                                    <!-- {{editModel.organization}} -->
+                                    <ccb (cModel)="checkIsActiveNoti($event, 'การ์ด')" [label]="'การ์ด'"
+                                        [data]="editModel.chkCard"></ccb>
+                                    <ccb (cModel)="checkIsActiveNoti($event, 'รูปภาพ')" [label]="'รูปภาพ'"
+                                        [data]="editModel.chkImage">
+                                    </ccb>
+                                    <ccb (cModel)="checkIsActiveNoti($event, 'ข้อความ')" [label]="'ข้อความ'"
+                                        [data]="editModel.chkMessage"></ccb>
+                                    <ccb (cModel)="checkIsActiveNoti($event, 'วิดีโอ')" [label]="'วิดีโอ'"
+                                        [data]="editModel.chkVideo">
+                                    </ccb>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-bottom: 40px; margin-top: 0px;"
+                                *ngIf="editModel.chkManualOG && lv0Category.length != 0">
+                                <div class="col s12">
+                                    <label>หน่วยงาน</label>
+                                </div>
+                                <div class="col s12" *ngFor="let i of lv0Category; let idx = index">
+                                    <ccb (cModel)="readCategoryByLv($event, 'lv0', i)" [label]="i.title"
+                                        [data]="i.check"></ccb>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-bottom: 40px; margin-top: 0px;"
+                                *ngIf="editModel.chkManualOG && lv1Category.length != 0">
+                                <div class="col s12">
+                                    <label>เขต</label>
+                                </div>
+                                <div class="col s12" *ngFor="let i of lv1Category; let idx = index">
+                                    <ccb (cModel)="readCategoryByLv($event, 'lv1', i)" [label]="i.display"
+                                        [data]="i.check"></ccb>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-bottom: 40px; margin-top: 0px;"
+                                *ngIf="editModel.chkManualOG && lv2Category.length != 0">
+                                <div class="col s12">
+                                    <label>จังหวัด</label>
+                                </div>
+                                <div class="col s12" *ngFor="let i of lv2Category; let idx = index">
+                                    <ccb (cModel)="readCategoryByLv($event, 'lv2', i)" [label]="i.display"
+                                        [data]="i.check"></ccb>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-bottom: 40px; margin-top: 0px;"
+                                *ngIf="editModel.chkManualOG && lv3Category.length != 0">
+                                <div class="col s12">
+                                    <label>อำเภอ/เขต</label>
+                                </div>
+                                <div class="col s12" *ngFor="let i of lv3Category; let idx = index">
+                                    <ccb (cModel)="readCategoryByLv($event, 'lv3', i)" [label]="i.display"
+                                        [data]="i.check"></ccb>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-bottom: 40px; margin-top: 0px;"
+                                *ngIf="editModel.chkManualOG && lv4Category.length != 0">
+                                <div class="col s12">
+                                    <label>ตำบล/แขวง</label>
+                                </div>
+                                <div class="col s12" *ngFor="let i of lv4Category; let idx = index">
+                                    <ccb (cModel)="readCategoryByLv($event, 'lv4', i)" [label]="i.display"
+                                        [data]="i.check"></ccb>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="container">
+                <section class="users-list-wrapper section">
+                    <div class="users-list-filter">
+
+                        <!-- Header -->
+                        <div class="card-panel"
+                            style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                            <div class="row">
+                                <div class="col s8">
+                                    <span
+                                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                                        จังหวัด
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- // <----- Organization -->
+                        <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+                            <div class="row" style="padding-bottom: 40px; margin-top: 0px;">
+                                <div class="col s12" style="padding-bottom: 5px !important;">
+                                    <ccb (cModel)="checkUncheckAll($event)" [label]="'เลือกทั้งหมด'" [data]="editModel.allProvince"></ccb>
+                                </div>
+                                <div class="col s12" style="padding-bottom: 5px !important;" *ngFor="let i of listProvince">
+                                    <ccb (cModel)="ChangeProvince(i,$event)" [label]="i.display" [data]="i.checkProvince"></ccb>
+                                </div>
+                                <!-- <div class="col s12">
+                      <chip-tag (callBack)="selectedTags($event)"></chip-tag>
+                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="container">
+                <section class="users-list-wrapper section">
+                    <div class="users-list-filter">
+
+                        <!-- Header -->
+                        <div class="card-panel"
+                            style="margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+
+                            <div class="row">
+                                <div class="col s8">
+                                    <span
+                                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px;">
+                                        Tags
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- // <----- Organization -->
+                        <div class="card-panel" style="margin-bottom: 0px; margin-top: 0px;">
+                            <div class="row" style="padding-bottom: 40px; margin-top: 0px;">
+                                <div class="col s12" style="padding-bottom: 5px !important;" *ngFor="let i of listTags">
+                                    <ccb (cModel)="ChangeTag(i,$event)" [label]="i.display" [data]="i.checkTag"></ccb>
+                                </div>
+                                <!-- <div class="col s12">
+                      <chip-tag (callBack)="selectedTags($event)"></chip-tag>
+                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- END: Page Main-->

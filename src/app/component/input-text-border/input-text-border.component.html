@@ -1,0 +1,4 @@
+<!-- <div class="input-field col s12"> -->
+<input *ngIf="!readonly" placeholder="{{label}}" type="text" class="input-text-1" [ngClass]="{'readonly': readonly}" [readonly]="readonly" [(ngModel)]="data" (ngModelChange)="emit($event)">
+<input *ngIf="readonly" placeholder="{{label}}" type="text" class="input-text-1" [ngClass]="{'readonly': readonly}" [readonly]="readonly" [(ngModel)]="data" (ngModelChange)="emit($event)" style="background-color:rgb(200, 200, 200) !important; color: black !important;">
+<!-- </div> -->

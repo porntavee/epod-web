@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="input-field col s12">
+        <select [(ngModel)]="check" (ngModelChange)="check = $event" name="check">
+          <option [value]="" disabled selected>Choose your option</option>
+          <option [value]="'A'">Option 1</option>
+          <option [value]="'B'">Option 2</option>
+          <option [value]="'C'">Option 3</option>
+        </select>
+        <label>Materialize Select : {{check}}</label>
+    </div>
+</div>
+<div class="row">
+    <button (click)="setValue()">xxx</button>
+</div>

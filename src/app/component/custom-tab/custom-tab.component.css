@@ -1,0 +1,18 @@
+/* active tab */
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+    color:#9c27b0;
+    /* background-color: green; */
+}
+    
+/* ink bar */
+::ng-deep .mat-ink-bar {
+    background-color: var(--primary-color,#9c27b0) !important;
+}
+
+/* ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+  background-color: #FCE500;
+  font-weight: 700;
+  color: black;
+  opacity: 1;
+} */

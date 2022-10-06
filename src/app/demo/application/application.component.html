@@ -1,0 +1,15 @@
+<h5 class="breadcrumbs-title mt-0 mb-0 display-inline hide-on-small-and-down"><span>application</span></h5>
+<ol class="breadcrumbs mb-0">
+    <li class="breadcrumb-item"><a href="index.html">Demo</a>
+    </li>
+    <!-- <li class="breadcrumb-item"><a href="#">Routing</a>
+    </li> -->
+    <li class="breadcrumb-item active">application
+    </li>
+</ol>
+<br>
+<br>
+<app-criteria [hidden]="criteriaHide" (messageToEmit)="getMessageCriteria($event)"></app-criteria>
+<app-list [hidden]="listHide" [receivedParentMessage]="listModel" (messageToEmit)="getMessageList($event)"></app-list>
+<app-view [hidden]="viewHide"></app-view>
+<app-edit [hidden]="editHide"></app-edit>
