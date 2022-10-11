@@ -28,10 +28,10 @@ export class MenuService {
     this.menu = [
       {
         name: 'งานขนส่ง',
-        isActive: true,
+        // isActive: true,
         items: [
-          { 'name': 'อนุมัติงาน', 'routing': '/line-member', 'data': '', 'type': 'N', 'isActive': true, 'isShow': this.category?.orderApprove },
-          { 'name': 'สร้างงานขนส่ง', 'routing': '/line-member-not-confirm', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
+          { 'name': 'อนุมัติงาน', 'routing': '/order-approve', 'data': '', 'type': 'N', 'isActive': false, 'isShow': this.category?.orderApprove },
+          { 'name': 'สร้างงานขนส่ง', 'routing': '/news', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'สร้างใบคุมรถ', 'routing': '/line-member-confirm', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'ติดตามสถานะ', 'routing': '/line-tag', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'นำเข้าคำสั่งส่ง', 'routing': '/line-tag', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },

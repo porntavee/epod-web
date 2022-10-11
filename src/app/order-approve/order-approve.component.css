@@ -1,0 +1,23 @@
+.input-text-1 {
+    width: 100% !important;
+    /* margin-left: 20px !important; */
+    padding: 12px 2px !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+    background-color: #fff !important;
+}
+
+.input-text-1.readonly {
+    background-color: rgb(200, 200, 200) !important;
+    color: black !important;
+}
+
+
+/* thead th {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 999;
+} */

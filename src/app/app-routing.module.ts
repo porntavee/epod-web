@@ -23,6 +23,7 @@ import { DashboardV2Component } from './dashboard-v2/dashboard-v2.component';
 import { PendingComponent } from './pending/pending.component';
 import { NewsViewlistComponent } from './news/news-viewlist/news-viewlist.component';
 import { UserLogReportComponent } from './user-log-report/user-log-report.component';
+import { OrderApproveComponent } from './order-approve/order-approve.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: 'event-edit/:code', component: EventEditComponent },
   { path: 'news-viewlist/:code', component: NewsViewlistComponent },
   { path: 'user-log-report', component: UserLogReportComponent },
+  { path: 'order-approve', component: OrderApproveComponent },
 ];
 
 @NgModule({

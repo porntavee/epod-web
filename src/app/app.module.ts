@@ -96,6 +96,7 @@ import { ChipTagComponent } from './shared/widgets/chip-tag/chip-tag.component';
 import { NewsViewlistComponent } from './news/news-viewlist/news-viewlist.component';
 import { DashboardV2Component } from './dashboard-v2/dashboard-v2.component';
 import { UserLogReportComponent } from './user-log-report/user-log-report.component';
+import { OrderApproveComponent } from './order-approve/order-approve.component';
 
 @NgModule({
   declarations: [
@@ -163,7 +164,8 @@ import { UserLogReportComponent } from './user-log-report/user-log-report.compon
     StageDialog,
     EmployeeDialog,
     UserLogReportComponent,
-    DocLogDialog
+    DocLogDialog,
+    OrderApproveComponent
   ],
   imports: [
     BrowserModule,

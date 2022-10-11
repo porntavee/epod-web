@@ -8,11 +8,11 @@
     /* background-image: url('https://wallpapercave.com/wp/wp2149971.jpg'); */
     /* background-image: url('../assets/img/bg.jpg'); */
     /* DDPM */
-    background: #2E8B58;
-    background: -webkit-linear-gradient(#2E8B58, #2E8B58);
-    background: -o-linear-gradient(#2E8B58, #2E8B58);
-    background: -moz-linear-gradient(#2E8B58, #2E8B58);
-    background: linear-gradient(#2E8B58, #2E8B58);
+    background: #fff;
+    background: -webkit-linear-gradient(#fff, #fff);
+    background: -o-linear-gradient(#fff, #fff);
+    background: -moz-linear-gradient(#fff, #fff);
+    background: linear-gradient(#fff, #fff);
     /* DOPA */
     /* background: #04385D; */
     height: 100%;

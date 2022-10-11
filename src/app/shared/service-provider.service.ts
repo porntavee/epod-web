@@ -6,8 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 })
 export class ServiceProviderService {
 
-  // ng build --base-href "/pm/" --prod
-  // ng build --base-href "/pm/" --prod --aot --output-hashing=all
+  // ng build --base-href "/epod/" --prod
+  // ng build --base-href "/epod/" --prod --aot --output-hashing=all
 
   server: string = 'https://pm.we-builds.com/pm-api/';
   
