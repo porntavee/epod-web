@@ -98,6 +98,8 @@ import { DashboardV2Component } from './dashboard-v2/dashboard-v2.component';
 import { UserLogReportComponent } from './user-log-report/user-log-report.component';
 import { OrderApproveComponent } from './order-approve/order-approve.component';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -196,6 +198,7 @@ import { OrderApproveComponent } from './order-approve/order-approve.component';
     MatRadioModule,
     MatChipsModule,
     MatAutocompleteModule,
+    DragDropModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],

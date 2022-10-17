@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-order-approve',
@@ -20,16 +21,15 @@ export class OrderApproveComponent implements OnInit {
   isTimeSheetPage: boolean = false;
   listModel: any = [
     {
-      demo: 'demo',
+      demo: 'demo1',
       status: 'ส่งสินค้าแล้ว',
     },
     {
-      demo: 'demo',
-      status: 'เริ่มต้นปฏิบัติงาน',
-      
+      demo: 'demo2',
+      status: 'เริ่มต้นปฏิบัติงาน',     
     },
     {
-      demo: 'demo',
+      demo: 'demo3',
       status: 'ส่งสินค้าแล้ว',
     },
     {
@@ -287,37 +287,6 @@ export class OrderApproveComponent implements OnInit {
     });
   }
 
-  // readStage(param) {
-  //   let criteria = {
-  //     "UserInformation": {
-  //       "UserName": localStorage.getItem('a'),
-  //       "Password": localStorage.getItem('b'),
-  //       "empID": "2",
-  //       "dbName": localStorage.getItem('company'),
-  //     },
-  //     "FinancialProject" : param.FiProject
-  //   }
-
-  //   // let json = JSON.stringify(criteria);
-  //   this.serviceProviderService.post('api/B1/GetStage', criteria).subscribe(data => {
-  //     let model: any = {};
-  //     model = data;
-  //     this.viewModel = model;
-
-  //     if (model.Status) {
-  //       this.listStage = model.Data;
-  //     }
-  //     else {
-  //       this.spinner.hide();
-  //       this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-  //     }
-
-  //   }, err => {
-  //     this.spinner.hide();
-  //     this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-  //   });
-  // }
-
   editTimeSheet(param) {
 
     this.mode = 'edit';
@@ -417,78 +386,6 @@ export class OrderApproveComponent implements OnInit {
     this.model = {};
     this.models = [];
     this.listModel = [];
-  }
-
-  // goToTimeSheet() {
-  //   this.isMainPage = false;
-  //   this.isFormPage = false;
-  //   this.isTimeSheetPage = true;
-  // }
-
-  // backToForm() {
-  //   this.isMainPage = false;
-  //   this.isFormPage = true;
-  //   this.isTimeSheetPage = false;
-  // }
-
-  // addTimeSheet() {
-
-  //   this.timeSheetModel.DateFrom = moment(this.timeSheetModel.DateFrom).format('DD-MM-YYYY');
-  //   this.timeSheetModel.DateTo = moment(this.timeSheetModel.DateTo).format('DD-MM-YYYY');
-  //   this.timeSheetModel.Date = moment(this.timeSheetModel.Date).format('DD-MM-YYYY');
-  //   this.timeSheetModel.isNew = true;
-
-  //   const newTimeSheet = JSON.parse(JSON.stringify(this.timeSheetModel));
-  //   this.models.push(newTimeSheet);
-  //   this.timeSheetModel = {};
-  //   this.backToForm();
-  // }
-
-  newRecord() {
-
-    //  "Date": "2022-04-20",
-    // "StartTime": "08:00",
-    // "U_HMC_Hour": "2",
-    // "EndTime": "10:00",
-    // "ActivityType": 1,
-    // "FinancialProject": "21010001",
-    // "CostCenter": "B00006",
-    // "Break": "00:30",
-    // "NonBillableTime": "00:05",
-    // "U_HMC_Stage": "C01-วางแผนการทำงานประจำเดือน",
-    // "U_HMC_Detail": "ทดสอบจ้าาาาาา"
-
-    // this.models.push({
-    //   isNew: true,
-    //   "Date": "2022-04-20",
-    //   "StartTime": "08:00",
-    //   "U_HMC_Hour": "2",
-    //   "EndTime": "10:00",
-    //   "ActType": "1",
-    //   "FiProject": "21010001",
-    //   "CostCenter": "B00006",
-    //   "Break": "00:30",
-    //   "NonBillTm": "00:05",
-    //   "U_HMC_Stage": "C01-วางแผนการทำงานประจำเดือน",
-    //   "U_HMC_Detail": "ทดสอบจ้าาาาาา"
-    // });
-
-    this.models.push({
-      isNew: true,
-      "Date": "",
-      "StartTimeText": "08:30",
-      "U_HMC_Hour": "0",
-      "EndTimeText": "08:30",
-      "ActType": "",
-      "FiProject": "",
-      "CostCenter": this.costCenter,
-      "BreakText": "0000",
-      "NonBillTmText": "0000",
-      "EffectTmText": "00:00",
-      "BillableTmText": "00:00",
-      "U_HMC_Stage": "",
-      "U_HMC_Detail": ""
-    });
   }
 
   create() {
@@ -997,5 +894,14 @@ export class OrderApproveComponent implements OnInit {
     this.excelService.exportAsExcelFile(excelModel, 'timesheet-report');
     // this.excelService.exportAsExcelFile(this.listModel, 'user-log-report');
     this.spinner.hide();
+  }
+
+  next() {
+    this.isMainPage = false;
+    this.isFormPage = true;
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.listModel, event.previousIndex, event.currentIndex);
   }
 }
