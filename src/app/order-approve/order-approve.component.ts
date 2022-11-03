@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-order-approve',
@@ -18,56 +19,9 @@ export class OrderApproveComponent implements OnInit {
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
-  listModel: any = [
-    {
-      demo: 'demo1',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo2',
-      status: 'เริ่มต้นปฏิบัติงาน',     
-    },
-    {
-      demo: 'demo3',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-  ]; //ข้อมูลในตารางหน้า Main
+  listModel: any = []; //ข้อมูลในตารางหน้า Main
+  listDetailModel: any = [];
+  headerModel: any = {};
   criteriaModel: any = {} //ค้นหา
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
@@ -103,7 +57,7 @@ export class OrderApproveComponent implements OnInit {
     // { value: '2', display: 'First Name' },
     // { value: '3', display: 'First Name' }];
 
-    // this.read();
+    this.read();
     // this.readEmployee();
     // this.readActivityType();
     // this.readFinancialProject();
@@ -115,39 +69,29 @@ export class OrderApproveComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
+      "userinformation": {
+        "UserName": "dhong",
+        "GroupCode": "D",
+        "dbName": "WTX-EPOD",
+        "Version": "22.11.01.01"
       },
-      "empID": this.criteriaModel.empID,
-      "DocNum": this.criteriaModel.DocNum,
-      "FirstName": this.criteriaModel.FirstName,
-      "DateFrom": this.criteriaModel.DateFrom == 'Invalid date' ? '' : moment(this.criteriaModel.DateFrom).format('YYYY-MM-DD'),
-      "Code": this.criteriaModel.Code,
-      "LastDateFrom": this.criteriaModel.LastDateFrom == 'Invalid date' ? '' : moment(this.criteriaModel.LastDateFrom).format('YYYY-MM-DD'),
-      "LastDateTo": this.criteriaModel.LastDateTo == 'Invalid date' ? '' : moment(this.criteriaModel.LastDateTo).format('YYYY-MM-DD'),
-      // "FirstName": this.criteriaModel.FirstName,
-      // "DateFrom": this.criteriaModel.DateFrom
+      "TransportNo": ""
     }
-
 
     let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/TimeSheet/GetTimeSheet', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Transport/GetTransportHeader', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
       this.viewModel = model;
 
-
       if (model.Status) {
 
         model.Data.forEach(element => {
-          element.DateFrom = moment(element.DateFrom).format('DD-MM-YYYY');
-          element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-          element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+          element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
+          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
         });
 
         this.listModel = model.Data;
@@ -163,218 +107,58 @@ export class OrderApproveComponent implements OnInit {
     });
   }
 
-  readEmployee() {
+  readDetail(param) {
+    this.spinner.show();
+
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      }
-    }
-
-    // let json = JSON.stringify(criteria);
-    this.serviceProviderService.post('api/B1/GetEmployeeTimeSheet', criteria).subscribe(data => {
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.listEmployee = model.Data;
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
-  }
-
-  readActivityType() {
-    let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      }
-    }
-
-    // let json = JSON.stringify(criteria);
-    this.serviceProviderService.post('api/B1/GetActivityType', criteria).subscribe(data => {
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.listActivityType = model.Data;
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
-  }
-
-  readFinancialProject() {
-    let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      }
-    }
-
-    // let json = JSON.stringify(criteria);
-    this.serviceProviderService.post('api/B1/GetFinancialProject', criteria).subscribe(data => {
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.listFinancialProject = model.Data;
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
-  }
-
-  readCostCenter() {
-    //Get CostCenter
-    let criteriaEmp = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
+      "userinformation": {
+        "UserName": "dhong",
+        "GroupCode": "D",
+        "dbName": "WTX-EPOD",
+        "Version": "22.11.01.01"
       },
-      "empID": this.model.UserID
+      "TransportNo": param.TransportNo
     }
-    this.serviceProviderService.post('api/B1/Employees', criteriaEmp).subscribe(data => {
-      // this.spinner.hide();
+
+    this.headerModel = param;
+    this.headerModel.DriverFirstName = this.headerModel.DriverFirstName + ' ' + this.headerModel.DriverLastName;
+
+    let json = JSON.stringify(criteria);
+
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+      this.spinner.hide();
       let model: any = {};
       model = data;
-      // this.viewModel = model;
+      this.viewModel = model;
 
-      debugger
       if (model.Status) {
-        this.costCenter = model.Data[0].CostCenter;
 
+        // model.Data.forEach(element => {
+        //   element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
+        //   element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
+        //   // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+        //   // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+        // });
+
+        this.listDetailModel = model.Data;
+
+        this.isMainPage = false;
+        this.isFormPage = true;
       }
       else {
-        // this.spinner.hide();
-        // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
 
     }, err => {
-      // this.spinner.hide();
-      // this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
   }
 
-  editTimeSheet(param) {
-
-    this.mode = 'edit';
-    this.models = [];
-
-    if (param.Code != undefined) {
-      this.title = 'Info';
-      this.model = param;
-      this.model.DateFrom = moment(this.model.DateFrom, 'DD-MM-YYYY').format('YYYYMMDD');
-      this.model.DateTo = moment(this.model.DateTo, 'DD-MM-YYYY').format('YYYYMMDD');
-
-      this.readCostCenter();
-
-      let criteria = {
-        "UserInformation": {
-          "UserName": localStorage.getItem('a'),
-          "Password": localStorage.getItem('b'),
-          "empID": localStorage.getItem('empID'),
-          "dbName": localStorage.getItem('company'),
-        },
-        "AbsEntry": this.model.AbsEntry,
-        // "FirstName": this.criteriaModel.FirstName,
-        // "DateFrom": this.criteriaModel.DateFrom
-      }
-      this.serviceProviderService.post('api/TimeSheet/GetTimeSheetDetail', criteria).subscribe(data => {
-        // this.spinner.hide();
-        let model: any = {};
-        model = data;
-        // this.viewModel = model;
-
-        if (model.Status) {
-          this.models = model.Data;
-
-          this.models.forEach(element => {
-            element.ActType = element.ActType.toString();
-
-            let endTime = (parseFloat(element.EndTimeText.substr(0, 2)) * 60) + parseFloat(element.EndTimeText.substr(3, 5));
-            let startTime = (parseFloat(element.StartTimeText.substr(0, 2)) * 60) + parseFloat(element.StartTimeText.substr(3, 5));
-            element.U_HMC_Hour = (endTime - startTime) / 60;
-
-            // let FiProject = this.listFinancialProject.filter(c => c.PrjCode == element.FiProject);
-            // if (FiProject.length > 0)
-            //   element.FiProjectName = FiProject[0].PrjName;
-
-            // this.readStage(element);
-
-          });
-
-        }
-        else {
-          this.spinner.hide();
-          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        }
-
-      }, err => {
-        this.spinner.hide();
-        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      });
-    }
-
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.isTimeSheetPage = false;
-  }
-
-  newTimeSheet() {
-
-    this.mode = 'create';
-    this.model = {};
-    this.models = [];
-
-    // if (this.listModel.length == 0) {
-    //   this.toastr.warning('กรุณาค้นหาข้อมูลก่อน', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    //   return
-    // }
-
-    // if (this.listModel[0].Code != undefined) {
-    //   this.title = 'Info';
-    //   this.model = this.listModel[0];
-    //   this.model.DocNum = '';
-    //   this.model.DateFrom = moment(new Date()).format('DD-MM-YYYY');
-    //   this.model.DateTo = moment(new Date()).format('DD-MM-YYYY');
-
-    //   this.readCostCenter();
-    // }
-
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.isTimeSheetPage = false;
+  setSeq(param, idx) {
+    param = idx;
+    return param;
   }
 
   backToMain() {
@@ -579,50 +363,6 @@ export class OrderApproveComponent implements OnInit {
     //     });
     //   }
     // });
-  }
-
-  deleteLine(param, idx) {
-    if (param.LineID != undefined) {
-      this.spinner.show();
-
-      let criteria = {
-        "UserInformation": {
-          "UserName": localStorage.getItem('a'),
-          "Password": localStorage.getItem('b'),
-          "empID": localStorage.getItem('empID'),
-          "dbName": localStorage.getItem('company'),
-        },
-        "AbsEntry": param.AbsEntry,
-        "LineID": param.LineID
-
-      }
-
-      let json = JSON.stringify(criteria);
-
-      this.serviceProviderService.post('api/TimeSheet/DelTimeSheetLine', criteria).subscribe(data => {
-        this.spinner.hide();
-        let model: any = {};
-        model = data;
-        this.viewModel = model;
-
-        if (model.Status) {
-          this.editTimeSheet(this.model);
-          this.spinner.hide();
-          this.toastr.success('Delete Success.', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        }
-        else {
-          this.spinner.hide();
-          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        }
-
-      }, err => {
-        this.spinner.hide();
-        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      });
-    }
-    else {
-      this.models.splice(idx, 1);
-    }
   }
 
   calEndTime(event, param) {
@@ -840,7 +580,7 @@ export class OrderApproveComponent implements OnInit {
         // this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
         // this.read();
         this.reportModel = model.Data
-       
+
 
         // const dialogRef = this.dialog.open(DocLogDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Doc Log Report', listData: this.reportModel, listDataSearch: this.reportModel } });
 
@@ -866,7 +606,7 @@ export class OrderApproveComponent implements OnInit {
 
   }
 
-  exportAsXLSX2() : void {
+  exportAsXLSX2(): void {
     this.spinner.show();
 
     let code = 'AC001';
@@ -876,28 +616,23 @@ export class OrderApproveComponent implements OnInit {
     let lastName = 'ลลิตา';
     let dateTo = '01/06/2022';
 
-    
+
     let excelModel = [];
     excelModel.push(
-      {'Code': 'First Name', [this.model.Code]: this.model.FirstName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date From', [' ' + this.model.DocNum]: moment(this.model.DateFrom).format('DD-MM-YYYY'), '        ': '', '         ': ''},
-      {'Code': 'Last Name', [this.model.Code]: this.model.LastName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date To', [' ' + this.model.DocNum]: moment(this.model.DateTo).format('DD-MM-YYYY') , '        ': '', '         ': ''},
-      {'Code': '', [this.model.Code]: '', ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': '', [' ' + this.model.DocNum]: '', '        ': '', '         ': ''},
-      {'Code': 'Date', [this.model.Code]: 'Start Time', ' ': 'Hour', '  ': 'End Time', '   ': 'Activity Type', '    ': 'Financial Project', '     ': 'Cost Center', '      ': 'Stage', '       ': 'Break', 'Doc Num': 'Nonbillable Time', [' ' + this.model.DocNum]: 'Effective Time', '        ': 'Billable Time', '         ': 'Detail'});
-   
+      { 'Code': 'First Name', [this.model.Code]: this.model.FirstName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date From', [' ' + this.model.DocNum]: moment(this.model.DateFrom).format('DD-MM-YYYY'), '        ': '', '         ': '' },
+      { 'Code': 'Last Name', [this.model.Code]: this.model.LastName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date To', [' ' + this.model.DocNum]: moment(this.model.DateTo).format('DD-MM-YYYY'), '        ': '', '         ': '' },
+      { 'Code': '', [this.model.Code]: '', ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': '', [' ' + this.model.DocNum]: '', '        ': '', '         ': '' },
+      { 'Code': 'Date', [this.model.Code]: 'Start Time', ' ': 'Hour', '  ': 'End Time', '   ': 'Activity Type', '    ': 'Financial Project', '     ': 'Cost Center', '      ': 'Stage', '       ': 'Break', 'Doc Num': 'Nonbillable Time', [' ' + this.model.DocNum]: 'Effective Time', '        ': 'Billable Time', '         ': 'Detail' });
+
 
     this.models.forEach(element => {
-        excelModel.push(
-          {'Code': element.Date, [this.model.Code]: element.StartTimeText, ' ': element.U_HMC_Hour, '  ': element.EndTimeText, '   ': element.ActType, '    ': element.FiProject, '     ': element.CostCenter, '      ': element.U_HMC_Stage, '       ': element.BreakText, 'Doc Num': element.NonBillTmText, [' ' + this.model.DocNum]: element.EffectTmText, '        ': element.BillableTmText, '         ': element.U_HMC_Detail}
-        );
-    });  
+      excelModel.push(
+        { 'Code': element.Date, [this.model.Code]: element.StartTimeText, ' ': element.U_HMC_Hour, '  ': element.EndTimeText, '   ': element.ActType, '    ': element.FiProject, '     ': element.CostCenter, '      ': element.U_HMC_Stage, '       ': element.BreakText, 'Doc Num': element.NonBillTmText, [' ' + this.model.DocNum]: element.EffectTmText, '        ': element.BillableTmText, '         ': element.U_HMC_Detail }
+      );
+    });
     this.excelService.exportAsExcelFile(excelModel, 'timesheet-report');
     // this.excelService.exportAsExcelFile(this.listModel, 'user-log-report');
     this.spinner.hide();
-  }
-
-  next() {
-    this.isMainPage = false;
-    this.isFormPage = true;
   }
 
   drop(event: CdkDragDrop<string[]>) {
