@@ -242,7 +242,7 @@
                                 </div>
                             </td> -->
                         <td>
-                            <div class="w150">
+                            <div class="w100">
                                 <!-- <a href="javascript:void(0)">
                                         <p class="cut-text">{{i.FirstName}}</p>
                                     </a> -->
@@ -255,7 +255,7 @@
                             </div>
                         </td>
                         <td>
-                            <div class="w150">
+                            <div class="w100">
                                 {{i.TransportType}}
                                 <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
                             </div>
@@ -267,7 +267,7 @@
                             </div>
                         </td>
                         <td>
-                            <div class="w150">
+                            <div class="w100">
                                 {{i.VehicleType}}
                                 <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
                             </div>
@@ -291,36 +291,36 @@
                             </div>
                         </td>
                         <td>
-                            <div class="w150">
+                            <div class="w100">
                                 {{i.DriverUser}}
                                 <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                             </div>
                         </td>
 
                         <td>
-                            <div class="w150">
+                            <div class="w100">
                                 {{i.DriverFirstName}} {{i.DriverLastName}}
                                 <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                             </div>
                         </td>
                         <td>
-                            <div class="w150">
+                            <div class="w100">
                                 {{i.DriverMobile}}
                                 <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                             </div>
                         </td>
                         <td>
-                            <div class="w150">
+                            <div class="w100">
                                 {{i.TransportDate}}
                                 <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                             </div>
                         </td>
                         <td style="padding: 0 0 0 0 !important;">
-                            <div *ngIf="i.TransportStatusDesc == 'ยืนยันแล้ว'" class="w150" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                            <div *ngIf="i.TransportStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
                                 {{i.TransportStatusDesc}}
                                 <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                             </div>
-                            <div *ngIf="i.TransportStatusDesc == 'รอยืนยัน'" class="w150" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
+                            <div *ngIf="i.TransportStatusDesc == 'รอยืนยัน'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
                                 {{i.TransportStatusDesc}}
                                 <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                             </div>
@@ -386,7 +386,7 @@
             <div class="col s6">
                 <div class="row">
                     <div class="col s6" style="margin-top: 10px;">
-                        <cbtnl [label]="'สร้างใบคุมรถ'" [color]="'blue'" [icon]="''" (click)="create()"></cbtnl>
+                        <cbtn [label]="'สร้างใบคุมรถ'" [color]="'blue'" [icon]="'add'" (click)="create()"></cbtn>
                     </div>
                 </div>
 
