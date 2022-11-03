@@ -8,6 +8,7 @@ import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ThrowStmt } from '@angular/compiler';
+import { ShipToDialog, StatusDialog, TypeOfWorkDialog } from '../dialog/dialog';
 
 @Component({
   selector: 'app-order-approve',
@@ -75,7 +76,9 @@ export class OrderApproveComponent implements OnInit {
         "dbName": "WTX-EPOD",
         "Version": "22.11.01.01"
       },
-      "TransportNo": ""
+      "TransportNo": this.criteriaModel.TransportNo,
+      "ShiptoId": this.criteriaModel.shipToId,
+      "TransportStatus": this.criteriaModel.statusCode,
     }
 
     let json = JSON.stringify(criteria);
@@ -156,401 +159,121 @@ export class OrderApproveComponent implements OnInit {
     });
   }
 
+  confirm() {
+    this.spinner.show();
+
+    let criteria = {
+      "userinformation": {
+        "UserName": "dhong",
+        "GroupCode": "D",
+        "dbName": "WTX-EPOD",
+        "Version": "22.11.01.01"
+      },
+      "TransportNo": this.headerModel.TransportNo,
+      "TTRANSPORTDS": this.listDetailModel
+    }
+
+    let json = JSON.stringify(criteria);
+
+    this.serviceProviderService.post('api/Transport/ApproveTransport', criteria).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
   setSeq(param, idx) {
     param = idx;
     return param;
   }
 
+  //use
+  chooseShipTo() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.criteriaModel.shipToId = result.Id;
+        this.criteriaModel.shipToCode = result.Code;
+        this.criteriaModel.shipToAddress = result.Address;
+        this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseStatus() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Type of Work' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.criteriaModel.statusCode = result.Code;
+        this.criteriaModel.statusDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseTypeOfWork() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(TypeOfWorkDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Type of Work' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.criteriaModel.typeOfWorkCode = result.Code;
+        this.criteriaModel.typeOfWorkDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+
   backToMain() {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    // this.read();
-    this.model = {};
-    this.models = [];
-    this.listModel = [];
-  }
-
-  create() {
-    this.spinner.show();
-
-    let TimeSheetDetail = this.models.filter(c => c.isNew);
-
-    // "Date": "2022-04-20",
-    // "StartTime": "08:00",
-    // "U_HMC_Hour": "2",
-    // "EndTime": "10:00",
-    // "ActivityType": 1,
-    // "FinancialProject": "21010001",
-    // "CostCenter": "B00006",
-    // "Break": "00:30",
-    // "NonBillableTime": "00:05",
-    // "U_HMC_Stage": "C01-วางแผนการทำงานประจำเดือน",
-    // "U_HMC_Detail": "ทดสอบจ้าาาาาา"
-
-    let TimeSheetDetailMapping = [];
-    TimeSheetDetail.forEach(element => {
-      TimeSheetDetailMapping.push({
-        "Date": moment(element.Date).format('YYYY-MM-DD'),
-        "StartTime": element.StartTimeText,
-        "U_HMC_Hour": element.U_HMC_Hour,
-        "EndTime": element.EndTimeText,
-        "ActivityType": parseFloat(element.ActType),
-        "FinancialProject": element.FiProject,
-        "CostCenter": element.CostCenter,
-        "Break": element.BreakText.length == 4 ? element.BreakText.substr(0, 2) + ':' + element.BreakText.substr(2, 4) : element.BreakText,
-        "NonBillableTime": element.NonBillTmText.length == 4 ? element.NonBillTmText.substr(0, 2) + ':' + element.NonBillTmText.substr(2, 4) : element.NonBillTmText,
-        "U_HMC_Stage": element.U_HMC_Stage,
-        "U_HMC_Detail": element.U_HMC_Detail
-      });
-    });
-
-
-    let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
-      "UserID": this.model.UserID,
-      "DateFrom": moment(this.model.DateFrom).format('YYYY-MM-DD'),
-      "DateTo": moment(this.model.DateTo).format('YYYY-MM-DD'),
-      "TimeSheetDetail": TimeSheetDetailMapping
-    }
-
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/TimeSheet/AddTimeSheet', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        // this.read();
-        // this.editTimeSheet(this.model);
-        this.backToMain();
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
-  }
-
-  update() {
-    // this.toastr.warning('รอ API', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    //api/TimeSheet/UpdateTimeSheet
-
-    this.spinner.show();
-
-    let TimeSheetDetail = this.models;
-
-    // "Date": "2022-04-20",
-    // "StartTime": "08:00",
-    // "U_HMC_Hour": "2",
-    // "EndTime": "10:00",
-    // "ActivityType": 1,
-    // "FinancialProject": "21010001",
-    // "CostCenter": "B00006",
-    // "Break": "00:30",
-    // "NonBillableTime": "00:05",
-    // "U_HMC_Stage": "C01-วางแผนการทำงานประจำเดือน",
-    // "U_HMC_Detail": "ทดสอบจ้าาาาาา"
-
-    let TimeSheetDetailMapping = [];
-    TimeSheetDetail.forEach(element => {
-      TimeSheetDetailMapping.push({
-        "LineID": element.LineID,
-        "Date": moment(element.Date).format('YYYY-MM-DD'),
-        "StartTime": element.StartTimeText,
-        "U_HMC_Hour": element.U_HMC_Hour,
-        "EndTime": element.EndTimeText,
-        "ActivityType": parseFloat(element.ActType),
-        "FinancialProject": element.FiProject,
-        "CostCenter": element.CostCenter,
-        "Break": element.BreakText.length == 4 ? element.BreakText.substr(0, 2) + ':' + element.BreakText.substr(2, 4) : element.BreakText,
-        "NonBillableTime": element.NonBillTmText.length == 4 ? element.NonBillTmText.substr(0, 2) + ':' + element.NonBillTmText.substr(2, 4) : element.NonBillTmText,
-        "U_HMC_Stage": element.U_HMC_Stage,
-        "U_HMC_Detail": element.U_HMC_Detail
-      });
-    });
-
-
-    let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
-      "AbsEntry": this.model.AbsEntry,
-      "UserID": this.model.UserID,
-      "DateFrom": moment(this.model.DateFrom).format('YYYY-MM-DD'),
-      "DateTo": moment(this.model.DateTo).format('YYYY-MM-DD'),
-      "TimeSheetDetail": TimeSheetDetailMapping
-    }
-
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/TimeSheet/UpdateTimeSheet', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        // this.read();
-        this.backToMain();
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
-  }
-
-  delete() {
-    // const dialogRef = this.dialog.open(ConfirmDeleteDialog, { disableClose: true });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-
-    //   if (result) {
-    //     this.spinner.show();
-
-    //     let criteria = {
-    //       "UserInformation": {
-    //         "UserName": localStorage.getItem('a'),
-    //         "Password": localStorage.getItem('b'),
-    //         "empID": localStorage.getItem('empID'),
-    //         "dbName": localStorage.getItem('company'),
-    //       },
-    //       "AbsEntry": this.model.AbsEntry
-    //     }
-
-    //     let json = JSON.stringify(criteria);
-
-    //     this.serviceProviderService.post('api/TimeSheet/DelTimeSheet', criteria).subscribe(data => {
-    //       this.spinner.hide();
-    //       let model: any = {};
-    //       model = data;
-    //       this.viewModel = model;
-
-    //       if (model.Status) {
-    //         this.spinner.hide();
-    //         this.toastr.success('Delete Success.', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    //       }
-    //       else {
-    //         this.spinner.hide();
-    //         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    //       }
-
-    //     }, err => {
-    //       this.spinner.hide();
-    //       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    //     });
-    //   }
-    // });
-  }
-
-  calEndTime(event, param) {
-
-    // var timestring1 = "2013-05-09T00:00:00Z";
-    // var timestring2 = "2013-05-09T02:00:00Z";
-    // var startdate = moment(timestring1);
-    // var expected_enddate = moment(timestring2);
-    // var returned_endate = moment(startdate).add(2, 'hours');
-    // var travelTime = moment().add(11, 'minutes').format('hh:mm A');
-
-
-    // let startTime = '12:30:00';
-    // let durationInMinutes = '120';
-    // let endTime = moment(startTime, 'HH:mm:ss').add(durationInMinutes, 'minutes').format('HH:mm');
-    let startTime = param.StartTimeText;
-    let durationInMinutes = parseFloat(event.target.value) * 60;
-    param.EndTimeText = moment(startTime, 'HH:mm').add(durationInMinutes, 'minutes').format('HH:mm');
-
-    // endTime is equal to "14:30"
-    // console.log('hello');
-
-    // Cal EffectTm
-    if (param.BreakText == undefined || param.BreakText == '' || param.BreakText == '00:00' || param.BreakText == '0000') {
-      // param.EffectTmText = moment(parseFloat(event.target.value), 'hour').format('HH:mm');
-      param.EffectTmText = moment.utc(event.target.value * 3600 * 1000).format('HH:mm')
-    }
-    else {
-
-      let breakMinute = (parseFloat(param.BreakText.substr(0, 2)) * 60) + parseFloat(param.BreakText.substr(2, 4));
-      // param.EffectTmText = moment(parseFloat(event.target.value), 'hour').format('HH:mm');
-      let effectMinute = parseFloat(event.target.value) * 60;
-      let effectTotalHour = (effectMinute - breakMinute) / 60;
-
-      if (effectTotalHour < 0) {
-        this.toastr.error('EffectTm ติดลบ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        param.EffectTmText = "00:00";
-      }
-      else
-        // param.EffectTmText = moment(effectTotalHour, 'hour').format('HH:mm');
-        param.EffectTmText = moment.utc(effectTotalHour * 3600 * 1000).format('HH:mm')
-    }
-
-    // Call BillableTm
-    if (param.NonBillTmText == undefined || param.NonBillTmText == '' || param.NonBillTmText == '00:00') {
-      param.BillableTmText = param.EffectTmText;
-    }
-    else {
-      let nonBillMinute = (parseFloat(param.NonBillTmText.substr(0, 2)) * 60) + parseFloat(param.NonBillTmText.substr(2, 4));
-      // param.EffectTmText = moment(parseFloat(event.target.value), 'hour').format('HH:mm');
-      let effectMinute = (parseFloat(param.EffectTmText.substr(0, 2)) * 60) + parseFloat(param.EffectTmText.substr(3, 5));
-      let billTotalHour = (effectMinute - nonBillMinute) / 60;
-
-      if (billTotalHour < 0) {
-        this.toastr.error('BillableTm ติดลบ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        param.BillableTmText = "00:00";
-      }
-      else
-        // param.BillableTmText = moment(billTotalHour, 'hour').format('HH:mm');
-        param.BillableTmText = moment.utc(billTotalHour * 3600 * 1000).format('HH:mm')
-    }
-  }
-
-  calEffectTm(event, param) {
-
-    //EndTime - Break = EffectTm
-    let endTimeMinutes = parseFloat(param.U_HMC_Hour) * 60;
-    let breakMinutes = (parseFloat(event.target.value.substr(0, 2)) * 60) + parseFloat(event.target.value.substr(2, 4)); //00:00
-    let effectTotalHour = (endTimeMinutes - breakMinutes) / 60;
-
-    if (effectTotalHour < 0) {
-      this.toastr.error('EffectTm ติดลบ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      param.EffectTmText = "00:00";
-    }
-    else
-      // param.EffectTmText = moment(effectTotalHour, 'hour').format('HH:mm');
-      param.EffectTmText = moment.utc(effectTotalHour * 3600 * 1000).format('HH:mm')
-
-
-    // Call BillableTm
-    if (param.NonBillTmText == undefined || param.NonBillTmText == '' || param.NonBillTmText == '00:00' || param.NonBillTmText == '0000') {
-      param.BillableTmText = param.EffectTmText;
-    }
-    else {
-      let nonBillMinute = (parseFloat(param.NonBillTmText.substr(0, 2)) * 60) + parseFloat(param.NonBillTmText.substr(2, 4));
-      // param.EffectTmText = moment(parseFloat(event.target.value), 'hour').format('HH:mm');
-      let effectMinute = (parseFloat(param.EffectTmText.substr(0, 2)) * 60) + parseFloat(param.EffectTmText.substr(3, 5));
-      let billTotalHour = (effectMinute - nonBillMinute) / 60;
-
-      if (billTotalHour < 0) {
-        this.toastr.error('BillableTm ติดลบ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        param.BillableTmText = "00:00";
-      }
-      else
-        // param.BillableTmText = moment(billTotalHour, 'hour').format('HH:mm');
-        param.BillableTmText = moment.utc(billTotalHour * 3600 * 1000).format('HH:mm')
-    }
-  }
-
-  calBillTm(event, param) {
-
-    //EndTime - Break = EffectTm
-    let endTimeMinutes = (parseFloat(param.EffectTmText.substr(0, 2)) * 60) + parseFloat(param.EffectTmText.substr(3, 5));
-    let nonBillMinutes = (parseFloat(event.target.value.substr(0, 2)) * 60) + parseFloat(event.target.value.substr(2, 4));
-    let billTotalHour = (endTimeMinutes - nonBillMinutes) / 60;
-
-    if (billTotalHour < 0) {
-      this.toastr.error('BillTm ติดลบ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      param.BillableTmText = "00:00";
-    }
-    else
-      // param.EffectTmText = moment(effectTotalHour, 'hour').format('HH:mm');
-      param.BillableTmText = moment.utc(billTotalHour * 3600 * 1000).format('HH:mm')
-  }
-
-  chooseEmployee(param) {
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-    // const dialogRef = this.dialog.open(EmployeeDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Employee', listData: this.listEmployee, listDataSearch: this.listEmployee } });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-
-    //   if (result != undefined) {
-    //     param.Code = result.Code;
-    //     param.FirstName = result.firstName;
-    //     param.LastName = result.lastName;
-    //     param.UserID = result.empID;
-    //     this.costCenter = result.CostCenter;
-    //   }
-    // });
-  }
-
-  chooseFinancialProject(param) {
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-    // const dialogRef = this.dialog.open(FinancialProjectDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Financial Project', listData: this.listFinancialProject, listDataSearch: this.listFinancialProject } });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-
-    //   if (result != undefined) {
-    //     param.FiProject = result.PrjCode;
-    //     param.FiProjectName = result.PrjName;
-    //   }
-    // });
-  }
-
-  chooseStage(param) {
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-
-    let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": "2",
-        "dbName": localStorage.getItem('company'),
-      },
-      "FinancialProject": param.FiProject
-    }
-
-    // let json = JSON.stringify(criteria);
-    this.serviceProviderService.post('api/B1/GetStage', criteria).subscribe(data => {
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
-
-
-      if (model.Status) {
-        this.listStage = model.Data;
-
-        // const dialogRef = this.dialog.open(StageDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Stage', listData: this.listStage, listDataSearch: this.listStage } });
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //   console.log(`Dialog result: ${result}`);
-
-        //   if (result != undefined) {
-        //     param.U_HMC_Stage = result.U_HMC_Stage;
-        //   }
-        // });
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+    this.read();
+    // this.model = {};
+    // this.models = [];
+    // this.listModel = [];
   }
 
   reportModel: any = [];
@@ -636,6 +359,6 @@ export class OrderApproveComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.listModel, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.listDetailModel, event.previousIndex, event.currentIndex);
   }
 }

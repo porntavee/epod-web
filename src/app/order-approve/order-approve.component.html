@@ -39,13 +39,13 @@
                     </csop>
                 </div> -->
                 <div class="col l3 s12">
-                    <citxt (cModel)="criteriaModel.xxx = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.xxx"></citxt>
+                    <citxt (cModel)="criteriaModel.TransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.TransportNo"></citxt>
                 </div>
                 <div class="col l3 s12">
-                    <citxt (cModel)="criteriaModel.xxx = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.xxx"></citxt>
+                    <citxt (cModel)="criteriaModel.shipToId = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.shipToDescription" [readonly]="true" (click)="chooseShipTo()"></citxt>
                 </div>
                 <div class="col l3 s12">
-                    <citxt (cModel)="criteriaModel.xxx = $event" [label]="'ที่อยู่ผู้รับ'" [data]="criteriaModel.xxx"></citxt>
+                    <citxt (cModel)="criteriaModel.shipToAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="criteriaModel.shipToAddress" [readonly]="true" (click)="chooseShipTo()"></citxt>
                 </div>
                 <div class="col l3 s12">
                     <citxt (cModel)="criteriaModel.xxx = $event" [label]="'Appt. Date'" [data]="criteriaModel.xxx"></citxt>
@@ -60,10 +60,10 @@
                     <citxt (cModel)="criteriaModel.xxx = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.xxx"></citxt>
                 </div>
                 <div class="col l3 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.xxx = $event" [label]="'สถานะ'" [data]="criteriaModel.xxx"></citxt>
+                    <citxt (cModel)="criteriaModel.statusCode = $event" [label]="'สถานะ'" [data]="criteriaModel.statusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
                 </div>
                 <div class="col l3 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.xxx = $event" [label]="'Type of Work'" [data]="criteriaModel.xxx"></citxt>
+                    <citxt (cModel)="criteriaModel.typeOfWorkCode = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
                 </div>
             </div>
 
@@ -628,16 +628,17 @@
                             <th>ลำดับ</th>
                             <th>เลขที่ใบคุม</th>
                             <th>เลขที่ Inv.</th>
-                            <th>บริษัทขนส่ง</th>
-                            <th>ประเภทรถ</th>
-                            <th>Route</th>
-                            <th>SubRoute</th>
+                            <th>Doc. Type</th>
+                            <th>Doc. No.</th>
+                            <th>PO</th>
+                            <th>Cus Code</th>
+                            <th>Ship To</th>
                             <th>ที่อยู่ผู้รับ</th>
-                            <th>ชื่อผู้ใช้งาน</th>
 
-                            <th>ชื่อคนขับ</th>
-                            <th>เบอร์โทรศัพท์คนขับ</th>
-                            <th>วันที่ออกเอกสาร</th>
+                            <th>Appt. Date</th>
+                            <th>CBM</th>
+                            <th>Carton</th>
+                            <th>Weight (kg.)</th>
                             <th>สถานะ</th>
                             <th>หมายเหตุ</th>
                             <th>คำสั่ง</th>
@@ -681,7 +682,7 @@
                                 </td> -->
                             <td>
                                 <div class="w30">
-                                    <!-- {{setSeq(i.Seq, idx)}} -->
+                                    {{setSeq(i.Seq, idx + 1)}}
                                 </div>
                             </td>
                             <td>
@@ -704,79 +705,85 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="w300">
-                                    {{i.Transport}}
+                                <div class="w100">
+                                    {{i.OrderType}}
                                     <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.VehicleType}}
+                                    {{i.OrderNo}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
-                                <div class="w150">
-                                    {{i.Route}}
+                                <div class="w100">
+                                    {{i.PurchaseNo}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.U_HMC_Hour" name="i.U_HMC_Hour" id="i.U_HMC_Hour" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
-                                <div class="w150">
-                                    {{i.SubRoute}}
+                                <div class="w100">
+                                    {{i.ShiptoCode}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.EndTime" name="i.EndTime" id="i.EndTime" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
-                                <div class="w150">
-                                    รอข้อมูล
+                                <div class="w200">
+                                    {{i.ShiptoName}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.DriverUser}}
+                                    {{i.ShiptoAdress}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
 
                             <td>
                                 <div class="w100">
-                                    {{i.DriverFirstName}} {{i.DriverLastName}}
+                                    ขอ Field
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.DriverMobile}}
+                                    {{i.CBM}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.TransportDate}}
+                                    {{i.Qty}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Weight}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.TransportStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
+                                <div *ngIf="i.OrderStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatusDesc}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'รอยืนยัน'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
+                                <div *ngIf="i.OrderStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatusDesc}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w300">
-                                    {{i.Remark}}
+                                    {{i.Comment}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w150">
-                                    {{i.demo}}
+
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
@@ -828,11 +835,11 @@
             <div class="row">
                 <div class="col s6">
                     <div class="row">
-                        <div class="col s6" style="margin-top: 10px;">
-                            <cbtnl [label]="'ยืนยันการจัดส่งแผนงาน'" [color]="'blue'" [icon]="''" (click)="read()"></cbtnl>
+                        <div class="col s5" style="margin-top: 10px;">
+                            <cbtn [label]="'ยืนยันการจัดส่งแผนงาน'" [color]="'blue'" [icon]="''" (click)="confirm()"></cbtn>
                         </div>
-                        <div class="col s6" style="margin-top: 10px;">
-                            <cbtnl [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="backToMain()"></cbtnl>
+                        <div class="col s5" style="margin-top: 10px;">
+                            <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="backToMain()"></cbtn>
                         </div>
                     </div>
 
