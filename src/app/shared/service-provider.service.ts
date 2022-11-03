@@ -9,9 +9,9 @@ export class ServiceProviderService {
   // ng build --base-href "/epod/" --prod
   // ng build --base-href "/epod/" --prod --aot --output-hashing=all
 
-  server: string = 'https://pm.we-builds.com/pm-api/';
+  server: string = 'https://mangcoo.com/sino-api/';
   
-  version: string = '20190921.1';
+  version: string = '20221102';
 
   constructor(private http: HttpClient) { }
 
@@ -20,15 +20,25 @@ export class ServiceProviderService {
   }
 
   post(url, param) {
+    const basicAuth = 'dhong:dhong@whaletechx';
 
-    let headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
+    // let headers = new HttpHeaders();
+    // headers.append('Accept', 'application/json');
+    // headers.append('Content-Type', 'application/json');
+    // headers.append('Authorization',  'Basic ' + btoa(basicAuth));
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic ' + btoa(basicAuth)
+      })
+    };
 
     // let options = new RequestOptions();
     // options.headers = headers;
     param.Version = this.version;
-    return this.http.post(this.server + url, param, { headers: headers });
+    return this.http.post(this.server + url, param, httpOptions);
   }
 
   postByPass(url, param) {

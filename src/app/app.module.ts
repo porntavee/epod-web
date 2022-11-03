@@ -99,6 +99,9 @@ import { UserLogReportComponent } from './user-log-report/user-log-report.compon
 import { OrderApproveComponent } from './order-approve/order-approve.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { OrderTransportComponent } from './order-transport/order-transport.component';
+import { OrderTransportFormComponent } from './order-transport-form/order-transport-form.component';
+import { RouteDialog, ShipToDialog, TypeOfWorkDialog } from "./dialog/dialog";
 
 @NgModule({
   declarations: [
@@ -167,7 +170,12 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     EmployeeDialog,
     UserLogReportComponent,
     DocLogDialog,
-    OrderApproveComponent
+    OrderApproveComponent,
+    OrderTransportComponent,
+    OrderTransportFormComponent,
+    RouteDialog,
+    TypeOfWorkDialog,
+    ShipToDialog
   ],
   imports: [
     BrowserModule,

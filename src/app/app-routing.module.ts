@@ -24,6 +24,8 @@ import { PendingComponent } from './pending/pending.component';
 import { NewsViewlistComponent } from './news/news-viewlist/news-viewlist.component';
 import { UserLogReportComponent } from './user-log-report/user-log-report.component';
 import { OrderApproveComponent } from './order-approve/order-approve.component';
+import { OrderTransportComponent } from './order-transport/order-transport.component';
+import { OrderTransportFormComponent } from './order-transport-form/order-transport-form.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -50,6 +52,8 @@ const routes: Routes = [
   { path: 'news-viewlist/:code', component: NewsViewlistComponent },
   { path: 'user-log-report', component: UserLogReportComponent },
   { path: 'order-approve', component: OrderApproveComponent },
+  { path: 'order-transport', component: OrderTransportComponent },
+  { path: 'order-transport-form', component: OrderTransportFormComponent }
 ];
 
 @NgModule({

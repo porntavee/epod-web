@@ -1,19 +1,21 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Inject, KeyValueDiffers, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { RouteDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'app-order-approve',
-  templateUrl: './order-approve.component.html',
-  styleUrls: ['./order-approve.component.css']
+  selector: 'app-order-transport-form',
+  templateUrl: './order-transport-form.component.html',
+  styleUrls: ['./order-transport-form.component.css']
 })
-export class OrderApproveComponent implements OnInit {
+export class OrderTransportFormComponent implements OnInit {
 
   isMainPage: boolean = true;
   isFormPage: boolean = false;
@@ -25,7 +27,7 @@ export class OrderApproveComponent implements OnInit {
     },
     {
       demo: 'demo2',
-      status: 'เริ่มต้นปฏิบัติงาน',     
+      status: 'เริ่มต้นปฏิบัติงาน',
     },
     {
       demo: 'demo3',
@@ -85,7 +87,13 @@ export class OrderApproveComponent implements OnInit {
   costCenter: any = '';
   p = 1;
 
+  listTransport: any = [];
+  listRoute: any = [];
+  listSubRoute: any = [];
+  listVehicleType: any = [];
+
   constructor(public dialog: MatDialog,
+    private router: Router,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
@@ -108,6 +116,10 @@ export class OrderApproveComponent implements OnInit {
     // this.readActivityType();
     // this.readFinancialProject();
     // this.readStage();
+
+    this.readTransport();
+    this.readRoute();
+    this.readVehicleType();
   }
 
   viewModel: any;
@@ -163,24 +175,142 @@ export class OrderApproveComponent implements OnInit {
     });
   }
 
-  readEmployee() {
+  //use
+  readTransport() {
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      }
+      "userinformation": {
+        "UserName": "dhong",
+        "GroupCode": "A",
+        "dbName": "WTX-EPOD",
+        "Version": "22.09.08.01"
+      },
+      "Code": ""
     }
 
     // let json = JSON.stringify(criteria);
-    this.serviceProviderService.post('api/B1/GetEmployeeTimeSheet', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/GetTransport', criteria).subscribe(data => {
       let model: any = {};
       model = data;
       this.viewModel = model;
 
       if (model.Status) {
-        this.listEmployee = model.Data;
+        this.listTransport = model.Data;
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  //use
+  readRoute() {
+    let criteria = {
+      "userinformation": {
+        "UserName": "dhong",
+        "GroupCode": "A",
+        "dbName": "WTX-EPOD",
+        "Version": "22.09.08.01"
+      },
+      "Code": ""
+    }
+
+    // let json = JSON.stringify(criteria);
+    this.serviceProviderService.post('api/Masters/GetRoute', criteria).subscribe(data => {
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+        this.listRoute = model.Data;
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  //use
+  readSubRoute() {
+    let criteria = {
+      "userinformation": {
+        "UserName": "dhong",
+        "GroupCode": "A",
+        "dbName": "WTX-EPOD",
+        "Version": "22.09.08.01"
+      },
+      "Code": "",
+      "RouteId": this.criteriaModel.routeId,
+    }
+
+    // let json = JSON.stringify(criteria);
+    this.serviceProviderService.post('api/Masters/GetSubRoute', criteria).subscribe(data => {
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+        this.listSubRoute = model.Data;
+
+        //ต้องเอาไปใส่ใน app.module ที่ declarations
+        const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Sub Route', listData: this.listSubRoute, listDataSearch: this.listSubRoute } });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+
+          if (result != undefined) {
+            this.criteriaModel.subRouteId = result.Id;
+            this.criteriaModel.subRouteCode = result.Code;
+            this.criteriaModel.subRouteDescription = result.Code + ' - ' + result.Description;
+            // param.Code = result.Code;
+            // param.FirstName = result.firstName;
+            // param.LastName = result.lastName;
+            // param.UserID = result.empID;
+            // this.costCenter = result.CostCenter;
+          }
+        });
+
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  //use
+  readVehicleType() {
+    let criteria = {
+      "userinformation": {
+        "UserName": "dhong",
+        "GroupCode": "A",
+        "dbName": "WTX-EPOD",
+        "Version": "22.09.08.01"
+      },
+      "Code": ""
+    }
+
+    // let json = JSON.stringify(criteria);
+    this.serviceProviderService.post('api/Masters/GetVehicleType', criteria).subscribe(data => {
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+        this.listVehicleType = model.Data;
       }
       else {
         this.spinner.hide();
@@ -388,76 +518,11 @@ export class OrderApproveComponent implements OnInit {
   }
 
   create() {
-    this.spinner.show();
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/order-transport-form`])
+    );
 
-    let TimeSheetDetail = this.models.filter(c => c.isNew);
-
-    // "Date": "2022-04-20",
-    // "StartTime": "08:00",
-    // "U_HMC_Hour": "2",
-    // "EndTime": "10:00",
-    // "ActivityType": 1,
-    // "FinancialProject": "21010001",
-    // "CostCenter": "B00006",
-    // "Break": "00:30",
-    // "NonBillableTime": "00:05",
-    // "U_HMC_Stage": "C01-วางแผนการทำงานประจำเดือน",
-    // "U_HMC_Detail": "ทดสอบจ้าาาาาา"
-
-    let TimeSheetDetailMapping = [];
-    TimeSheetDetail.forEach(element => {
-      TimeSheetDetailMapping.push({
-        "Date": moment(element.Date).format('YYYY-MM-DD'),
-        "StartTime": element.StartTimeText,
-        "U_HMC_Hour": element.U_HMC_Hour,
-        "EndTime": element.EndTimeText,
-        "ActivityType": parseFloat(element.ActType),
-        "FinancialProject": element.FiProject,
-        "CostCenter": element.CostCenter,
-        "Break": element.BreakText.length == 4 ? element.BreakText.substr(0, 2) + ':' + element.BreakText.substr(2, 4) : element.BreakText,
-        "NonBillableTime": element.NonBillTmText.length == 4 ? element.NonBillTmText.substr(0, 2) + ':' + element.NonBillTmText.substr(2, 4) : element.NonBillTmText,
-        "U_HMC_Stage": element.U_HMC_Stage,
-        "U_HMC_Detail": element.U_HMC_Detail
-      });
-    });
-
-
-    let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
-      "UserID": this.model.UserID,
-      "DateFrom": moment(this.model.DateFrom).format('YYYY-MM-DD'),
-      "DateTo": moment(this.model.DateTo).format('YYYY-MM-DD'),
-      "TimeSheetDetail": TimeSheetDetailMapping
-    }
-
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/TimeSheet/AddTimeSheet', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        // this.read();
-        // this.editTimeSheet(this.model);
-        this.backToMain();
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+    window.open(url, '_blank');
   }
 
   update() {
@@ -738,21 +803,85 @@ export class OrderApproveComponent implements OnInit {
       param.BillableTmText = moment.utc(billTotalHour * 3600 * 1000).format('HH:mm')
   }
 
-  chooseEmployee(param) {
+  //use
+  chooseTransport() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    // const dialogRef = this.dialog.open(EmployeeDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Employee', listData: this.listEmployee, listDataSearch: this.listEmployee } });
+    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport', listData: this.listTransport, listDataSearch: this.listTransport } });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
 
-    //   if (result != undefined) {
-    //     param.Code = result.Code;
-    //     param.FirstName = result.firstName;
-    //     param.LastName = result.lastName;
-    //     param.UserID = result.empID;
-    //     this.costCenter = result.CostCenter;
-    //   }
-    // });
+      if (result != undefined) {
+        this.criteriaModel.transportId = result.Id;
+        this.criteriaModel.transportCode = result.Code;
+        this.criteriaModel.transportDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseRoute() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Route', listData: this.listRoute, listDataSearch: this.listRoute } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+
+        this.criteriaModel.subRouteId = '';
+        this.criteriaModel.subRouteCode = '';
+        this.criteriaModel.subRouteDescription = '';
+
+        this.criteriaModel.routeId = result.Id;
+        this.criteriaModel.routeCode = result.Code;
+        this.criteriaModel.routeDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseSubRoute() {
+
+    if (this.criteriaModel.routeId == '' || this.criteriaModel.routeId == undefined)
+    {
+      this.toastr.warning('กรุณาเลือก Route ก่อน', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return
+    }
+
+    this.readSubRoute();
+  }
+
+  //use
+  chooseVehicleType() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Truck Type', listData: this.listVehicleType, listDataSearch: this.listVehicleType } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+
+        this.criteriaModel.truckTypeId = result.Id;
+        this.criteriaModel.truckTypeCode = result.Code;
+        this.criteriaModel.truckTypeDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
   }
 
   chooseFinancialProject(param) {
@@ -840,7 +969,7 @@ export class OrderApproveComponent implements OnInit {
         // this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
         // this.read();
         this.reportModel = model.Data
-       
+
 
         // const dialogRef = this.dialog.open(DocLogDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Doc Log Report', listData: this.reportModel, listDataSearch: this.reportModel } });
 
@@ -866,7 +995,7 @@ export class OrderApproveComponent implements OnInit {
 
   }
 
-  exportAsXLSX2() : void {
+  exportAsXLSX2(): void {
     this.spinner.show();
 
     let code = 'AC001';
@@ -876,20 +1005,20 @@ export class OrderApproveComponent implements OnInit {
     let lastName = 'ลลิตา';
     let dateTo = '01/06/2022';
 
-    
+
     let excelModel = [];
     excelModel.push(
-      {'Code': 'First Name', [this.model.Code]: this.model.FirstName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date From', [' ' + this.model.DocNum]: moment(this.model.DateFrom).format('DD-MM-YYYY'), '        ': '', '         ': ''},
-      {'Code': 'Last Name', [this.model.Code]: this.model.LastName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date To', [' ' + this.model.DocNum]: moment(this.model.DateTo).format('DD-MM-YYYY') , '        ': '', '         ': ''},
-      {'Code': '', [this.model.Code]: '', ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': '', [' ' + this.model.DocNum]: '', '        ': '', '         ': ''},
-      {'Code': 'Date', [this.model.Code]: 'Start Time', ' ': 'Hour', '  ': 'End Time', '   ': 'Activity Type', '    ': 'Financial Project', '     ': 'Cost Center', '      ': 'Stage', '       ': 'Break', 'Doc Num': 'Nonbillable Time', [' ' + this.model.DocNum]: 'Effective Time', '        ': 'Billable Time', '         ': 'Detail'});
-   
+      { 'Code': 'First Name', [this.model.Code]: this.model.FirstName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date From', [' ' + this.model.DocNum]: moment(this.model.DateFrom).format('DD-MM-YYYY'), '        ': '', '         ': '' },
+      { 'Code': 'Last Name', [this.model.Code]: this.model.LastName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date To', [' ' + this.model.DocNum]: moment(this.model.DateTo).format('DD-MM-YYYY'), '        ': '', '         ': '' },
+      { 'Code': '', [this.model.Code]: '', ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': '', [' ' + this.model.DocNum]: '', '        ': '', '         ': '' },
+      { 'Code': 'Date', [this.model.Code]: 'Start Time', ' ': 'Hour', '  ': 'End Time', '   ': 'Activity Type', '    ': 'Financial Project', '     ': 'Cost Center', '      ': 'Stage', '       ': 'Break', 'Doc Num': 'Nonbillable Time', [' ' + this.model.DocNum]: 'Effective Time', '        ': 'Billable Time', '         ': 'Detail' });
+
 
     this.models.forEach(element => {
-        excelModel.push(
-          {'Code': element.Date, [this.model.Code]: element.StartTimeText, ' ': element.U_HMC_Hour, '  ': element.EndTimeText, '   ': element.ActType, '    ': element.FiProject, '     ': element.CostCenter, '      ': element.U_HMC_Stage, '       ': element.BreakText, 'Doc Num': element.NonBillTmText, [' ' + this.model.DocNum]: element.EffectTmText, '        ': element.BillableTmText, '         ': element.U_HMC_Detail}
-        );
-    });  
+      excelModel.push(
+        { 'Code': element.Date, [this.model.Code]: element.StartTimeText, ' ': element.U_HMC_Hour, '  ': element.EndTimeText, '   ': element.ActType, '    ': element.FiProject, '     ': element.CostCenter, '      ': element.U_HMC_Stage, '       ': element.BreakText, 'Doc Num': element.NonBillTmText, [' ' + this.model.DocNum]: element.EffectTmText, '        ': element.BillableTmText, '         ': element.U_HMC_Detail }
+      );
+    });
     this.excelService.exportAsExcelFile(excelModel, 'timesheet-report');
     // this.excelService.exportAsExcelFile(this.listModel, 'user-log-report');
     this.spinner.hide();
@@ -903,4 +1032,6 @@ export class OrderApproveComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.listModel, event.previousIndex, event.currentIndex);
   }
+
 }
+
