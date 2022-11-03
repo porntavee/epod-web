@@ -627,7 +627,7 @@
                             </th> -->
                             <th>ลำดับ</th>
                             <th>เลขที่ใบคุม</th>
-                            <th>Type of Work</th>
+                            <th>เลขที่ Inv.</th>
                             <th>บริษัทขนส่ง</th>
                             <th>ประเภทรถ</th>
                             <th>Route</th>
@@ -644,7 +644,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let i of listDetailModel | paginate: { itemsPerPage: 50, currentPage: p };; let idx = index">
+                        <tr *ngFor="let i of listDetailModel; let idx = index" cdkDrag>
                             <!-- [hidden]="!checkPermission(i.category, 'deleteAction')" -->
                             <!-- <td>
                                 <div class="w20">
@@ -681,7 +681,7 @@
                                 </td> -->
                             <td>
                                 <div class="w30">
-                                    {{setSeq(i.Seq, idx)}}
+                                    <!-- {{setSeq(i.Seq, idx)}} -->
                                 </div>
                             </td>
                             <td>
@@ -694,12 +694,12 @@
                                             {{i.Code}}
                                         </a> -->
                                     <!-- <cbtne [label]="i.Code" (click)="editTimeSheet(i)"></cbtne> -->
-                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a>
+                                    {{i.TransportNo}}
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.TransportType}}
+                                    {{i.InvoiceNo}}
                                     <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
                                 </div>
                             </td>
