@@ -57,12 +57,7 @@ export class EventComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "empID": this.criteriaModel.empID,
       "Code": this.criteriaModel.Code,
       "Active": this.criteriaModel.Active,
@@ -154,12 +149,7 @@ export class EventComponent implements OnInit {
       this.oldPassword = this.model.PassWord;
 
       let criteria = {
-        "UserInformation": {
-          "UserName": localStorage.getItem('a'),
-          "Password": localStorage.getItem('b'),
-          "empID": localStorage.getItem('empID'),
-          "dbName": localStorage.getItem('company'),
-        },
+        "userinformation": this.serviceProviderService.userinformation,
         "empID": this.model.empID,
         // "FirstName": this.criteriaModel.FirstName,
         // "DateFrom": this.criteriaModel.DateFrom
@@ -236,12 +226,7 @@ export class EventComponent implements OnInit {
 
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "empID": this.model.empID,
       "Auth_User": this.model.Auth_User,
       "Auth_TimeSheet": this.model.Auth_TimeSheet,
@@ -283,12 +268,7 @@ export class EventComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": "2",
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "empID": this.model.empID,
       "Password": this.model.PassWord
       // "FirstName": this.criteriaModel.FirstName,

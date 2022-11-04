@@ -101,7 +101,7 @@ import { OrderApproveComponent } from './order-approve/order-approve.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OrderTransportComponent } from './order-transport/order-transport.component';
 import { OrderTransportFormComponent } from './order-transport-form/order-transport-form.component';
-import { RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog } from "./dialog/dialog";
+import { DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from "./dialog/dialog";
 
 @NgModule({
   declarations: [
@@ -177,7 +177,9 @@ import { RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkD
     TypeOfWorkDialog,
     ShipToDialog,
     StatusDialog,
-    TransportNoDialog
+    TransportNoDialog,
+    VehicleDialog,
+    DriverDialog
   ],
   imports: [
     BrowserModule,

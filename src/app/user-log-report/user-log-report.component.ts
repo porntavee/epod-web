@@ -32,12 +32,7 @@ export class UserLogReportComponent implements OnInit {
 
   readEmployee() {
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      }
+      "userinformation": this.serviceProviderService.userinformation,
     }
 
     // let json = JSON.stringify(criteria);
@@ -65,19 +60,13 @@ export class UserLogReportComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "CodeFrom": this.criteriaModel.CodeFrom,
       "CodeTo": this.criteriaModel.CodeTo,
       "TimeStampFrom": this.criteriaModel.TimeStampFrom == "Invalid date" ? '' : moment(this.criteriaModel.TimeStampFrom).format('YYYY-MM-DD'),
       "TimeStampTo": this.criteriaModel.TimeStampTo == "Invalid date" ? '' : moment(this.criteriaModel.TimeStampTo).format('YYYY-MM-DD')
     }
 
-    debugger
     let json = JSON.stringify(criteria);
   
     this.serviceProviderService.post('api/B1/getUserLog', criteria).subscribe(data => {

@@ -116,7 +116,7 @@ export class DropzoneSingleComponent implements OnInit {
   }
 
   chkimageUrl(param){
-debugger
+
   }
 }
 

@@ -40,7 +40,6 @@ export class DropzoneSingleLargeComponent implements OnInit {
 
     // debugger
     this.fileuploadService.postFile(this.code, event.addedFiles[0]).subscribe(data => {
-      debugger
         this.data[0] = data;
         this.cModel.emit(this.data);
     });

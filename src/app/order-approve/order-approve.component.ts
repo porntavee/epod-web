@@ -8,7 +8,7 @@ import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ThrowStmt } from '@angular/compiler';
-import { ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog } from '../dialog/dialog';
+import { DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 
 @Component({
   selector: 'app-order-approve',
@@ -40,6 +40,8 @@ export class OrderApproveComponent implements OnInit {
   costCenter: any = '';
   p = 1;
 
+  listRoute: any = [];
+
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
@@ -59,10 +61,7 @@ export class OrderApproveComponent implements OnInit {
     // { value: '3', display: 'First Name' }];
 
     this.read();
-    // this.readEmployee();
-    // this.readActivityType();
-    // this.readFinancialProject();
-    // this.readStage();
+    this.readRoute();
   }
 
   viewModel: any;
@@ -70,12 +69,7 @@ export class OrderApproveComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": {
-        "UserName": "dhong",
-        "GroupCode": "D",
-        "dbName": "WTX-EPOD",
-        "Version": "22.11.01.01"
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": this.criteriaModel.TransportNo,
       "ShiptoId": this.criteriaModel.shipToId,
       "TransportStatus": this.criteriaModel.statusCode,
@@ -114,12 +108,7 @@ export class OrderApproveComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": {
-        "UserName": "dhong",
-        "GroupCode": "D",
-        "dbName": "WTX-EPOD",
-        "Version": "22.11.01.01"
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": param.TransportNo
     }
 
@@ -163,12 +152,7 @@ export class OrderApproveComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": {
-        "UserName": "dhong",
-        "GroupCode": "D",
-        "dbName": "WTX-EPOD",
-        "Version": "22.11.01.01"
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": this.headerModel.TransportNo,
       "TTRANSPORTDS": this.listDetailModel
     }
@@ -288,6 +272,99 @@ export class OrderApproveComponent implements OnInit {
     });
   }
 
+  //use
+  chooseRoute() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Route', listData: this.listRoute, listDataSearch: this.listRoute } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+
+        this.criteriaModel.subRouteId = '';
+        this.criteriaModel.subRouteCode = '';
+        this.criteriaModel.subRouteDescription = '';
+
+        this.criteriaModel.routeId = result.Id;
+        this.criteriaModel.routeCode = result.Code;
+        this.criteriaModel.routeDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseVehicle() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(VehicleDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Vehicle' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.vehicleCode = result.Code;
+        this.criteriaModel.vehicleDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseDriver() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(DriverDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Driver' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.driverId = result.Id;
+        this.criteriaModel.driverCode = result.Code;
+        this.criteriaModel.driverDescription = result.Code + ' - ' + result.FirstName + ' ' + result.LastName;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  readRoute() {
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+      "Code": ""
+    }
+
+    // let json = JSON.stringify(criteria);
+    this.serviceProviderService.post('api/Masters/GetRoute', criteria).subscribe(data => {
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+        this.listRoute = model.Data;
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
 
   backToMain() {
     this.isMainPage = true;
@@ -305,12 +382,7 @@ export class OrderApproveComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "DocNum": param.DocNum
     }
 

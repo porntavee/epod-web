@@ -65,12 +65,7 @@ export class NewsComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "empID": this.criteriaModel.empID,
       "DocNum": this.criteriaModel.DocNum,
       "FirstName": this.criteriaModel.FirstName,
@@ -84,7 +79,6 @@ export class NewsComponent implements OnInit {
 
 
     let json = JSON.stringify(criteria);
-    debugger
 
     this.serviceProviderService.post('api/TimeSheet/GetTimeSheet', criteria).subscribe(data => {
       this.spinner.hide();
@@ -116,12 +110,7 @@ export class NewsComponent implements OnInit {
 
   readEmployee() {
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      }
+      "userinformation": this.serviceProviderService.userinformation,
     }
 
     // let json = JSON.stringify(criteria);
@@ -146,12 +135,7 @@ export class NewsComponent implements OnInit {
 
   readActivityType() {
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      }
+      "userinformation": this.serviceProviderService.userinformation,
     }
 
     // let json = JSON.stringify(criteria);
@@ -176,12 +160,7 @@ export class NewsComponent implements OnInit {
 
   readFinancialProject() {
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      }
+      "userinformation": this.serviceProviderService.userinformation,
     }
 
     // let json = JSON.stringify(criteria);
@@ -207,12 +186,7 @@ export class NewsComponent implements OnInit {
   readCostCenter() {
     //Get CostCenter
     let criteriaEmp = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "empID": this.model.UserID
     }
     this.serviceProviderService.post('api/B1/Employees', criteriaEmp).subscribe(data => {
@@ -221,7 +195,6 @@ export class NewsComponent implements OnInit {
       model = data;
       // this.viewModel = model;
 
-      debugger
       if (model.Status) {
         this.costCenter = model.Data[0].CostCenter;
 
@@ -282,12 +255,7 @@ export class NewsComponent implements OnInit {
       this.readCostCenter();
 
       let criteria = {
-        "UserInformation": {
-          "UserName": localStorage.getItem('a'),
-          "Password": localStorage.getItem('b'),
-          "empID": localStorage.getItem('empID'),
-          "dbName": localStorage.getItem('company'),
-        },
+        "userinformation": this.serviceProviderService.userinformation,
         "AbsEntry": this.model.AbsEntry,
         // "FirstName": this.criteriaModel.FirstName,
         // "DateFrom": this.criteriaModel.DateFrom
@@ -477,12 +445,7 @@ export class NewsComponent implements OnInit {
 
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "UserID": this.model.UserID,
       "DateFrom": moment(this.model.DateFrom).format('YYYY-MM-DD'),
       "DateTo": moment(this.model.DateTo).format('YYYY-MM-DD'),
@@ -554,12 +517,7 @@ export class NewsComponent implements OnInit {
 
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "AbsEntry": this.model.AbsEntry,
       "UserID": this.model.UserID,
       "DateFrom": moment(this.model.DateFrom).format('YYYY-MM-DD'),
@@ -601,12 +559,7 @@ export class NewsComponent implements OnInit {
         this.spinner.show();
 
         let criteria = {
-          "UserInformation": {
-            "UserName": localStorage.getItem('a'),
-            "Password": localStorage.getItem('b'),
-            "empID": localStorage.getItem('empID'),
-            "dbName": localStorage.getItem('company'),
-          },
+          "userinformation": this.serviceProviderService.userinformation,
           "AbsEntry": this.model.AbsEntry
         }
 
@@ -640,12 +593,7 @@ export class NewsComponent implements OnInit {
       this.spinner.show();
 
       let criteria = {
-        "UserInformation": {
-          "UserName": localStorage.getItem('a'),
-          "Password": localStorage.getItem('b'),
-          "empID": localStorage.getItem('empID'),
-          "dbName": localStorage.getItem('company'),
-        },
+        "userinformation": this.serviceProviderService.userinformation,
         "AbsEntry": param.AbsEntry,
         "LineID": param.LineID
 
@@ -827,12 +775,7 @@ export class NewsComponent implements OnInit {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": "2",
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "FinancialProject": param.FiProject
     }
 
@@ -873,12 +816,7 @@ export class NewsComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "DocNum": param.DocNum
     }
 

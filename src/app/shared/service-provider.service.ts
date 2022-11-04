@@ -13,6 +13,14 @@ export class ServiceProviderService {
   
   version: string = '20221102';
 
+  userinformation: any = {
+    "UserId": localStorage.getItem('token_epod_20221006') ?? '',
+    "UserName": localStorage.getItem('userName') ?? '',
+    "GroupCode": localStorage.getItem('groupCode') ?? '',
+    "dbName": "WTX-EPOD",
+    "Version": "22.11.01.01",
+  };
+
   constructor(private http: HttpClient) { }
 
   get(url) {

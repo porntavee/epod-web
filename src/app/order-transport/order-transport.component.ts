@@ -52,12 +52,7 @@ export class OrderTransportComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": {
-        "UserName": "dhong",
-        "GroupCode": "D",
-        "dbName": "WTX-EPOD",
-        "Version": "22.11.01.01"
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": ""
     }
 
@@ -147,12 +142,7 @@ export class OrderTransportComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "DocNum": param.DocNum
     }
 

@@ -127,12 +127,7 @@ export class OrderTransportFormComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "empID": this.criteriaModel.empID,
       "DocNum": this.criteriaModel.DocNum,
       "FirstName": this.criteriaModel.FirstName,
@@ -178,12 +173,7 @@ export class OrderTransportFormComponent implements OnInit {
   //use
   readTransport() {
     let criteria = {
-      "userinformation": {
-        "UserName": "dhong",
-        "GroupCode": "A",
-        "dbName": "WTX-EPOD",
-        "Version": "22.09.08.01"
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "Code": ""
     }
 
@@ -210,12 +200,7 @@ export class OrderTransportFormComponent implements OnInit {
   //use
   readRoute() {
     let criteria = {
-      "userinformation": {
-        "UserName": "dhong",
-        "GroupCode": "A",
-        "dbName": "WTX-EPOD",
-        "Version": "22.09.08.01"
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "Code": ""
     }
 
@@ -242,12 +227,7 @@ export class OrderTransportFormComponent implements OnInit {
   //use
   readSubRoute() {
     let criteria = {
-      "userinformation": {
-        "UserName": "dhong",
-        "GroupCode": "A",
-        "dbName": "WTX-EPOD",
-        "Version": "22.09.08.01"
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "Code": "",
       "RouteId": this.criteriaModel.routeId,
     }
@@ -294,12 +274,7 @@ export class OrderTransportFormComponent implements OnInit {
   //use
   readVehicleType() {
     let criteria = {
-      "userinformation": {
-        "UserName": "dhong",
-        "GroupCode": "A",
-        "dbName": "WTX-EPOD",
-        "Version": "22.09.08.01"
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "Code": ""
     }
 
@@ -325,12 +300,7 @@ export class OrderTransportFormComponent implements OnInit {
 
   readActivityType() {
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      }
+      "userinformation": this.serviceProviderService.userinformation,
     }
 
     // let json = JSON.stringify(criteria);
@@ -355,12 +325,7 @@ export class OrderTransportFormComponent implements OnInit {
 
   readFinancialProject() {
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      }
+      "userinformation": this.serviceProviderService.userinformation,
     }
 
     // let json = JSON.stringify(criteria);
@@ -386,12 +351,7 @@ export class OrderTransportFormComponent implements OnInit {
   readCostCenter() {
     //Get CostCenter
     let criteriaEmp = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "empID": this.model.UserID
     }
     this.serviceProviderService.post('api/B1/Employees', criteriaEmp).subscribe(data => {
@@ -400,7 +360,6 @@ export class OrderTransportFormComponent implements OnInit {
       model = data;
       // this.viewModel = model;
 
-      debugger
       if (model.Status) {
         this.costCenter = model.Data[0].CostCenter;
 
@@ -430,12 +389,7 @@ export class OrderTransportFormComponent implements OnInit {
       this.readCostCenter();
 
       let criteria = {
-        "UserInformation": {
-          "UserName": localStorage.getItem('a'),
-          "Password": localStorage.getItem('b'),
-          "empID": localStorage.getItem('empID'),
-          "dbName": localStorage.getItem('company'),
-        },
+        "userinformation": this.serviceProviderService.userinformation,
         "AbsEntry": this.model.AbsEntry,
         // "FirstName": this.criteriaModel.FirstName,
         // "DateFrom": this.criteriaModel.DateFrom
@@ -565,12 +519,7 @@ export class OrderTransportFormComponent implements OnInit {
 
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "AbsEntry": this.model.AbsEntry,
       "UserID": this.model.UserID,
       "DateFrom": moment(this.model.DateFrom).format('YYYY-MM-DD'),
@@ -651,12 +600,7 @@ export class OrderTransportFormComponent implements OnInit {
       this.spinner.show();
 
       let criteria = {
-        "UserInformation": {
-          "UserName": localStorage.getItem('a'),
-          "Password": localStorage.getItem('b'),
-          "empID": localStorage.getItem('empID'),
-          "dbName": localStorage.getItem('company'),
-        },
+        "userinformation": this.serviceProviderService.userinformation,
         "AbsEntry": param.AbsEntry,
         "LineID": param.LineID
 
@@ -902,12 +846,7 @@ export class OrderTransportFormComponent implements OnInit {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": "2",
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "FinancialProject": param.FiProject
     }
 
@@ -948,12 +887,7 @@ export class OrderTransportFormComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "DocNum": param.DocNum
     }
 

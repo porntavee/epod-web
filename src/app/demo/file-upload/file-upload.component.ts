@@ -36,7 +36,7 @@ export class FileUploadComponent implements OnInit {
     // });
     
     this.fileuploadService.postFile(Caption.value, this.fileToUpload).subscribe(data => {
-      debugger
+      
     });
   }
 }

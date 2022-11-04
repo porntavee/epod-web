@@ -116,25 +116,23 @@ export class AppComponent {
     }
     else {
 
-      let param = {
-        UserName: this.userModel.username,
-        Password: this.userModel.password,
-        dbName: this.userModel.company
-      };
+      let criteria = {
+        "userinformation": this.serviceProviderService.userinformation,
+        "UserName": this.userModel.username,
+        "Password": this.userModel.password,
+      }
 
-      this.serviceProviderService.post('register/login', param).subscribe(data => {
+      this.serviceProviderService.post('api/Masters/Login', criteria).subscribe(data => {
         this.spinner.hide();
         let model: any = {};
         model = data;
         // this.viewModel = model;
 
-        if (model.status == 'S') {
-          // localStorage.setItem('category', JSON.stringify({ organizationPage: true, userRolePage: true, memberPage: true, createAction: true, readAction: true, updateAction: true, deleteAction: true }));
-          localStorage.setItem('token_epod_20221006', JSON.stringify(model.jsonData));
-          localStorage.setItem('a', this.userModel.username);
-          localStorage.setItem('b', this.userModel.password);
-          localStorage.setItem('company', this.userModel.company);
-          localStorage.setItem('username', model.objectData.username);
+        if (model.Status) {
+          localStorage.setItem('token_epod_20221006', model.Data[0].Id);
+          localStorage.setItem('userName', model.Data[0].UserName);
+          localStorage.setItem('groupCode', model.Data[0].GroupCode);
+          localStorage.setItem('category', JSON.stringify({ orderApprove: true, }));
 
           // this.getIPAddress('Log in');
 
@@ -161,12 +159,7 @@ export class AppComponent {
 
   createLog(param) {
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": localStorage.getItem('empID'),
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "Operation": param,
       "ClientIP": this.ipAddress,
       "ClientName": ''
@@ -281,12 +274,7 @@ export class AppComponent {
     this.spinner.show();
 
     let criteria = {
-      "UserInformation": {
-        "UserName": localStorage.getItem('a'),
-        "Password": localStorage.getItem('b'),
-        "empID": this.empID,
-        "dbName": localStorage.getItem('company'),
-      },
+      "userinformation": this.serviceProviderService.userinformation,
       "empID": this.empID,
       "Password": this.userModel.newPassword
       // "FirstName": this.criteriaModel.FirstName,
