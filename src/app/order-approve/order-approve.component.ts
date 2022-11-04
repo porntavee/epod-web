@@ -8,7 +8,7 @@ import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ThrowStmt } from '@angular/compiler';
-import { ShipToDialog, StatusDialog, TypeOfWorkDialog } from '../dialog/dialog';
+import { ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog } from '../dialog/dialog';
 
 @Component({
   selector: 'app-order-approve',
@@ -198,6 +198,29 @@ export class OrderApproveComponent implements OnInit {
   setSeq(param, idx) {
     param = idx;
     return param;
+  }
+
+  //use
+  chooseTransportNo() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.criteriaModel.transportNo = result.TransportNo;
+        // this.criteriaModel.shipToCode = result.Code;
+        // this.criteriaModel.shipToAddress = result.Address;
+        // this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
   }
 
   //use

@@ -1,9 +1,9 @@
 <div *ngIf="label != '-'" class="input-field">
     <div class="row">
-        <div class="col l3 s4" style="padding-left: 25px !important;">
+        <div class="col l4 s4 p-0 text-right">
             <label>{{label}}</label>
         </div>
-        <div class="col l8 s6" style="padding-right: 0px !important;">
+        <div class="col l6 s6 p-0 pl-2" style="padding-right: 0px !important;">
             <!-- placeholder="{{label}}" -->
             <input style="height: 20px; margin-bottom: 0px !important;" [(ngModel)]="data" (ngModelChange)="emit($event)" matInput [matDatepicker]="picker" [formControl]="dateControl">
         </div>
