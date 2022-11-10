@@ -133,6 +133,16 @@ tr:nth-child(even) {
     width: 450px;
 }
 
+.w600 {
+    text-align: center;
+    width: 600px;
+}
+
+.w1000 {
+    text-align: center;
+    width: 1000px;
+}
+
 p {
     margin: 0px 0px !important;
 }

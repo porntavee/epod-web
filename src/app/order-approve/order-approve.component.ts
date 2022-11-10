@@ -72,7 +72,12 @@ export class OrderApproveComponent implements OnInit {
       "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": this.criteriaModel.TransportNo,
       "ShiptoId": this.criteriaModel.shipToId,
+      "OrderEstimate": this.criteriaModel.apptDate != undefined && this.criteriaModel.apptDate != "Invalid date" ? moment(this.criteriaModel.apptDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "DriverId": this.criteriaModel.driverId,
       "TransportStatus": this.criteriaModel.statusCode,
+      "TransportTypeId": this.criteriaModel.typeOfWorkCode,
+      "VehicleId": this.criteriaModel.vehicleId,
+      "RouteId": this.criteriaModel.routeId,
     }
 
     let json = JSON.stringify(criteria);
@@ -94,6 +99,7 @@ export class OrderApproveComponent implements OnInit {
         this.listModel = model.Data;
       }
       else {
+        this.listModel = [];
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
@@ -125,12 +131,12 @@ export class OrderApproveComponent implements OnInit {
 
       if (model.Status) {
 
-        // model.Data.forEach(element => {
-        //   element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
-        //   element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
-        //   // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-        //   // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
-        // });
+        model.Data.forEach(element => {
+          element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
+          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+        });
 
         this.listDetailModel = model.Data;
 
@@ -166,7 +172,10 @@ export class OrderApproveComponent implements OnInit {
       this.viewModel = model;
 
       if (model.Status) {
-
+        this.spinner.hide();
+        this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        debugger
+        this.backToMain();
       }
       else {
         this.spinner.hide();
@@ -307,6 +316,7 @@ export class OrderApproveComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
+        this.criteriaModel.vehicleId = result.Id;
         this.criteriaModel.vehicleCode = result.Code;
         this.criteriaModel.vehicleDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
@@ -455,5 +465,9 @@ export class OrderApproveComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.listDetailModel, event.previousIndex, event.currentIndex);
+  }
+
+  clear() {
+    this.criteriaModel = { apptDate: '' };
   }
 }

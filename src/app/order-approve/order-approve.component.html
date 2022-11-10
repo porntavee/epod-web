@@ -113,7 +113,10 @@
 
 
             <div class="row">
-                <div class="col l10 s12 p-0" style="margin-bottom: 5px;"></div>
+                <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
+                <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
+                    <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
+                </div>
                 <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
                     <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
                 </div>
@@ -191,6 +194,7 @@
                             </th> -->
                             <!-- <th></th> -->
                             <th>เลขที่ใบคุม</th>
+                            <th>สถานะ</th>
                             <th>Type of Work</th>
                             <th>บริษัทขนส่ง</th>
                             <th>ทะเบียนรถ</th>
@@ -199,14 +203,12 @@
                             <th>ประเภทรถ</th>
                             <th>Route</th>
                             <th>SubRoute</th>
-                            <th>ที่อยู่ผู้รับ</th>
+                            <th>สถานที่รับสินค้า</th>
                             <th>ชื่อผู้ใช้งาน</th>
 
 
                             <th>วันที่ออกเอกสาร</th>
-                            <th>สถานะ</th>
                             <th>หมายเหตุ</th>
-                            <th>คำสั่ง</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -258,6 +260,31 @@
                                     <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a>
                                 </div>
                             </td>
+                            <td style="padding: 0 0 0 0 !important;">
+                                <div *ngIf="i.TransportStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                                    {{i.TransportStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                                <div *ngIf="i.TransportStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
+                                    {{i.TransportStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                                <div *ngIf="i.TransportStatusDesc == 'รอคนขับรับงาน'" class="w100" style="background-color: rgb(131, 247, 230); height: 42px; padding-top: 10px;">
+                                    {{i.TransportStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                                <div *ngIf="i.TransportStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
+                                    {{i.TransportStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                                <div *ngIf="i.TransportStatusDesc != 'รอยืนยัน' && i.TransportStatusDesc != 'รอยืนยันใบคุมรถ' && i.TransportStatusDesc != 'ระหว่างจัดส่งสินค้า' && i.TransportStatusDesc != 'รอคนขับรับงาน'" class="w100" style="background-color: rgb(181, 181, 181); height: 42px; padding-top: 10px;">
+                                    {{i.TransportStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+
+
+
+                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.TransportType}}
@@ -307,8 +334,8 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="w150">
-                                    รอข้อมูล
+                                <div class="w1000">
+                                    {{i.ReceiveFromName}} {{i.ReceiveFromAddress}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
@@ -325,29 +352,10 @@
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
-                            <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.TransportStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                                <div *ngIf="i.TransportStatusDesc == 'รอยืนยัน'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                                <div *ngIf="i.TransportStatusDesc != 'รอยืนยัน' && i.TransportStatusDesc != 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
+
                             <td>
                                 <div class="w300">
                                     {{i.Remark}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w150">
-                                    {{i.demo}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
@@ -643,6 +651,7 @@
                             <th>ลำดับ</th>
                             <!-- <th>เลขที่ใบคุม</th> -->
                             <th>เลขที่ Inv.</th>
+                            <th>สถานะ</th>
                             <th>Doc. Type</th>
                             <th>Doc. No.</th>
                             <th>PO</th>
@@ -654,9 +663,8 @@
                             <th>CBM</th>
                             <th>Carton</th>
                             <th>Weight (kg.)</th>
-                            <th>สถานะ</th>
+
                             <th>หมายเหตุ</th>
-                            <th>คำสั่ง</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -719,6 +727,26 @@
                                     <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
                                 </div>
                             </td>
+                            <td style="padding: 0 0 0 0 !important;">
+                                <div *ngIf="i.OrderStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                                <div *ngIf="i.OrderStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                                <div *ngIf="i.OrderStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+
+
+                                <div *ngIf="i.OrderStatusDesc != 'รอยืนยันใบคุมรถ' && i.OrderStatusDesc != 'ยืนยันแล้ว' && i.OrderStatusDesc != 'ระหว่างจัดส่งสินค้า' " class="w100" style="background-color: rgb(218, 131, 247); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.OrderType}}
@@ -750,7 +778,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="w300">
+                                <div class="w600">
                                     {{i.ShiptoAdress}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
@@ -758,7 +786,7 @@
 
                             <td>
                                 <div class="w100">
-                                    ขอ Field
+                                    {{i.OrderEstimate}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
@@ -780,32 +808,19 @@
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
-                            <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.OrderStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                                <div *ngIf="i.OrderStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                                <div *ngIf="i.OrderStatusDesc != 'รอยืนยันใบคุมรถ' && i.OrderStatusDesc != 'ยืนยันแล้ว' " class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
+
                             <td>
                                 <div class="w300">
                                     {{i.Comment}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <div class="w150">
 
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                    <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1">
                                 </div>
-                            </td>
+                            </td> -->
                             <!-- <td>
                                     <div class="w100">
                                         <input style="height: 20px;" [(ngModel)]="i.FinancialProject" name="i.FinancialProject" id="i.FinancialProject" type="text" class="input-text-1">
@@ -871,7 +886,7 @@
                         <!-- <ul>
                             <li *ngFor="let item of listModel | paginate: { itemsPerPage: 10, currentPage: p }">{{item}}</li>
                         </ul> -->
-                        <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                        <!-- <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls> -->
                     </div>
                 </div>
 

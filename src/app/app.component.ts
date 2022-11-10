@@ -50,7 +50,7 @@ export class AppComponent {
 
     if (localStorage.getItem('token_epod_20221006') != null) {
       this.company = localStorage.getItem('company');
-      this.username = localStorage.getItem('username');
+      this.username = localStorage.getItem('userName');
 
       let expire = parseInt(localStorage.getItem('expire'));
       this.empID = parseInt(localStorage.getItem('empID'));
@@ -109,7 +109,7 @@ export class AppComponent {
       localStorage.setItem('category', JSON.stringify({ orderApprove: true, }));
       localStorage.setItem('token_epod_20221006', 'token_epod_20221006');
       localStorage.setItem('company', this.userModel.company);
-      localStorage.setItem('username', 'demo');
+      localStorage.setItem('userName', 'demo');
 
       this.goToHome();
       window.location.href = "";
