@@ -111,14 +111,14 @@
                 </div> -->
             </div>
 
-
             <div class="row">
                 <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
-                <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
-                    <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
-                </div>
-                <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
-                    <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+                <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
+                   
+                </div> -->
+                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
+                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtn>
                 </div>
             </div>
         </div>
@@ -194,6 +194,7 @@
                             </th> -->
                             <!-- <th></th> -->
                             <th>เลขที่ใบคุม</th>
+                            <th>Shipment No.</th>
                             <th>สถานะ</th>
                             <th>Type of Work</th>
                             <th>บริษัทขนส่ง</th>
@@ -260,8 +261,13 @@
                                     <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a>
                                 </div>
                             </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.ShipmentNo}}
+                                </div>
+                            </td>
                             <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.TransportStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                                <div *ngIf="i.TransportStatusDesc == 'เสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
@@ -277,13 +283,13 @@
                                     {{i.TransportStatusDesc}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc != 'รอยืนยัน' && i.TransportStatusDesc != 'รอยืนยันใบคุมรถ' && i.TransportStatusDesc != 'ระหว่างจัดส่งสินค้า' && i.TransportStatusDesc != 'รอคนขับรับงาน'" class="w100" style="background-color: rgb(181, 181, 181); height: 42px; padding-top: 10px;">
+                                <div *ngIf="i.TransportStatusDesc != 'เสร็จสิ้น' 
+                                && i.TransportStatusDesc != 'รอยืนยันใบคุมรถ' 
+                                && i.TransportStatusDesc != 'รอคนขับรับงาน' 
+                                && i.TransportStatusDesc != 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(181, 181, 181); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
-
-
-
                             </td>
                             <td>
                                 <div class="w100">
@@ -786,7 +792,7 @@
 
                             <td>
                                 <div class="w100">
-                                    {{i.OrderEstimate}}
+                                    {{i.OrderEstimateStr}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
@@ -868,13 +874,10 @@
 
             <div class="row">
                 <div class="col s6">
-                    <div class="row">
-                        <div class="col s5" style="margin-top: 10px;">
-                            <cbtn [label]="'ยืนยันการจัดส่งแผนงาน'" [color]="'blue'" [icon]="''" (click)="confirm()"></cbtn>
-                        </div>
-                        <div class="col s5" style="margin-top: 10px;">
-                            <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="backToMain()"></cbtn>
-                        </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <cbtn [label]="'ยืนยันการจัดส่งแผนงาน'" [color]="'blue'" [icon]="''" (click)="confirm()"></cbtn>
+                        <cbtn [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn>
+                        <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="backToMain()"></cbtn>
                     </div>
 
                     <!-- <ul>

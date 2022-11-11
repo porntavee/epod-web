@@ -30,7 +30,7 @@ export class MenuService {
         name: 'งานขนส่ง',
         // isActive: true,
         items: [
-          { 'name': 'อนุมัติงาน', 'routing': '/order-approve', 'data': '', 'type': 'N', 'isActive': false, 'isShow': this.category?.orderApprove },
+          { 'name': 'อนุมัติงาน', 'routing': '/order-approve', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true }, //this.category?.orderApprove
           { 'name': 'สร้างงานขนส่ง', 'routing': '/news', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'สร้างใบคุมรถ', 'routing': '/order-transport', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'ติดตามสถานะ', 'routing': '/line-tag', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },

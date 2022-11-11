@@ -60,6 +60,9 @@ export class OrderApproveComponent implements OnInit {
     // { value: '2', display: 'First Name' },
     // { value: '3', display: 'First Name' }];
 
+    this.criteriaModel.statusCode = 'O';
+    this.criteriaModel.statusDescription = 'O - รอยืนยันใบคุมรถ';
+
     this.read();
     this.readRoute();
   }
@@ -132,7 +135,7 @@ export class OrderApproveComponent implements OnInit {
       if (model.Status) {
 
         model.Data.forEach(element => {
-          element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
@@ -157,6 +160,13 @@ export class OrderApproveComponent implements OnInit {
   confirm() {
     this.spinner.show();
 
+    for (let index = 0; index < this.listDetailModel.length; index++) {
+      this.listDetailModel[index].Seq = index + 1;
+    }
+    // this.listDetailModel.forEach(element => {
+    //   element.Seq = 
+    // });
+
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": this.headerModel.TransportNo,
@@ -174,6 +184,40 @@ export class OrderApproveComponent implements OnInit {
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        debugger
+        this.backToMain();
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  cancel() {
+    this.spinner.show();
+
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+      "TransportNo": this.headerModel.TransportNo,
+      // "TTRANSPORTDS": this.listDetailModel
+    }
+
+    let json = JSON.stringify(criteria);
+
+    this.serviceProviderService.post('api/Transport/CancelTransport', criteria).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+        this.spinner.hide();
+        this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
         debugger
         this.backToMain();
       }
