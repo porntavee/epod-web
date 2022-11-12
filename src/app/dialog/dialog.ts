@@ -18,7 +18,7 @@ export class RouteDialog {
         //   if ((this.criteriaModel.Code != undefined && this.criteriaModel.Code != '') && (this.criteriaModel.FirstName != undefined && this.criteriaModel.FirstName != ''))
         // this.data.listData = this.data.listDataSearch.filter(c => c.Code.includes(this.criteriaModel.Code) && c.firstName.includes(this.criteriaModel.FirstName));
         if (this.criteriaModel.Code != undefined && this.criteriaModel.Code != '')
-            this.data.listData = this.data.listDataSearch.filter(c => c.Code.includes(this.criteriaModel.Code));
+            this.data.listData = this.data.listDataSearch.filter(c => c.Code.toUpperCase().includes(this.criteriaModel.Code.toUpperCase()));
         //   else if (this.criteriaModel.FirstName != undefined && this.criteriaModel.FirstName != '')
         // this.data.listData = this.data.listDataSearch.filter(c => c.firstName.includes(this.criteriaModel.FirstName));
         else
@@ -244,6 +244,7 @@ export class TransportNoDialog {
     }
 
     filter() {
+
         //   if ((this.criteriaModel.Code != undefined && this.criteriaModel.Code != '') && (this.criteriaModel.FirstName != undefined && this.criteriaModel.FirstName != ''))
         // this.data.listData = this.data.listDataSearch.filter(c => c.Code.includes(this.criteriaModel.Code) && c.firstName.includes(this.criteriaModel.FirstName));
         if (this.criteriaModel.TransportNo != undefined && this.criteriaModel.TransportNo != '')

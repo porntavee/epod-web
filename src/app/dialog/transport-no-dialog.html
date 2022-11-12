@@ -14,7 +14,7 @@
 
         </div>
         <div class="col l3 s12 p-0">
-            <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="filter()"></cbtnl>
+            <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
         </div>
     </div>
     <table>
@@ -22,12 +22,16 @@
             <tr>
                 <!-- <th>Id</th> -->
                 <th>Transport No.</th>
+                <th>Shipment No.</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let i of data.listData; let idx = index" (click)="ok(i)">
                 <!-- <td>{{i.Id}}</td> -->
                 <td>{{i.TransportNo}}</td>
+                <td>{{i.ShipmentNo}}</td>
+                <td>{{i.TransportStatusDesc}}</td>
             </tr>
         </tbody>
     </table>

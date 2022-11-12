@@ -1,21 +1,21 @@
-import { Component, Inject, KeyValueDiffers, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, KeyValueDiffers, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ThrowStmt } from '@angular/compiler';
-import { DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 
 @Component({
-  selector: 'app-order-approve',
-  templateUrl: './order-approve.component.html',
-  styleUrls: ['./order-approve.component.css']
+  selector: 'app-order',
+  templateUrl: './order.component.html',
+  styleUrls: ['./order.component.css']
 })
-export class OrderApproveComponent implements OnInit {
+export class OrderComponent implements OnInit {
 
   isMainPage: boolean = true;
   isFormPage: boolean = false;
@@ -43,6 +43,7 @@ export class OrderApproveComponent implements OnInit {
   listRoute: any = [];
 
   constructor(public dialog: MatDialog,
+    private router: Router,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
@@ -73,7 +74,7 @@ export class OrderApproveComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.criteriaModel.transportNo,
+      "TransportNo": this.criteriaModel.TransportNo,
       "ShiptoId": this.criteriaModel.shipToId,
       "OrderEstimate": this.criteriaModel.apptDate != undefined && this.criteriaModel.apptDate != "Invalid date" ? moment(this.criteriaModel.apptDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
       "DriverId": this.criteriaModel.driverId,
@@ -184,6 +185,7 @@ export class OrderApproveComponent implements OnInit {
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+
         this.backToMain();
       }
       else {
@@ -217,7 +219,6 @@ export class OrderApproveComponent implements OnInit {
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        debugger
         this.backToMain();
       }
       else {
@@ -512,5 +513,13 @@ export class OrderApproveComponent implements OnInit {
 
   clear() {
     this.criteriaModel = { apptDate: '' };
+  }
+
+  create() {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`./order-form`])
+    );
+
+    window.open(url, '_blank');
   }
 }

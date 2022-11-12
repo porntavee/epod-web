@@ -26,6 +26,8 @@ import { UserLogReportComponent } from './user-log-report/user-log-report.compon
 import { OrderApproveComponent } from './order-approve/order-approve.component';
 import { OrderTransportComponent } from './order-transport/order-transport.component';
 import { OrderTransportFormComponent } from './order-transport-form/order-transport-form.component';
+import { OrderComponent } from './order/order.component';
+import { OrderFormComponent } from './order-form/order-form.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -52,6 +54,8 @@ const routes: Routes = [
   { path: 'news-viewlist/:code', component: NewsViewlistComponent },
   { path: 'user-log-report', component: UserLogReportComponent },
   { path: 'order-approve', component: OrderApproveComponent },
+  { path: 'order', component: OrderComponent },
+  { path: 'order-form', component: OrderFormComponent },
   { path: 'order-transport', component: OrderTransportComponent },
   { path: 'order-transport-form', component: OrderTransportFormComponent }
 ];
