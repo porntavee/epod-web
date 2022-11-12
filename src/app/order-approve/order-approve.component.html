@@ -517,7 +517,7 @@
 
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.xxx = $event" [label]="'Shipment No.'" [data]="'ขอ Field'" [readonly]="true"></citxt>
+                    <citxt (cModel)="criteriaModel.xxx = $event" [label]="'Shipment No.'" [data]="headerModel.ShipmentNo" [readonly]="true"></citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
                     <citxt (cModel)="headerModel.SubRoute = $event" [label]="'SubRoute'" [data]="headerModel.SubRoute" [readonly]="true"></citxt>
@@ -602,10 +602,10 @@
                     <citxt (cModel)="headerModel.Route = $event" [label]="'Route'" [data]="headerModel.Route" [readonly]="true"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.xxx = $event" [label]="'Picking For'" [data]="'ขอ Field'" [readonly]="true"></citxt>
+                    <citxt (cModel)="headerModel.xxx = $event" [label]="'Picking For'" [data]="headerModel.Remark" [readonly]="true"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.xxx = $event" [label]="'Shipment No.'" [data]="'ขอ Field'" [readonly]="true"></citxt>
+                    <citxt (cModel)="headerModel.xxx = $event" [label]="'Shipment No.'" [data]="headerModel.ShipmentNo" [readonly]="true"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="headerModel.SubRoute = $event" [label]="'SubRoute'" [data]="headerModel.SubRoute" [readonly]="true"></citxt>
