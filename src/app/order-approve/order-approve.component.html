@@ -276,6 +276,10 @@
                                     {{i.TransportStatusDesc}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
+                                <div *ngIf="i.TransportStatusDesc == 'คืนบิลเสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                                    {{i.TransportStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
                                 <div *ngIf="i.TransportStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
@@ -297,6 +301,7 @@
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                                 <div *ngIf="i.TransportStatusDesc != 'เสร็จสิ้น' 
+                                && i.TransportStatusDesc !='คืนบิลเสร็จสิ้น'
                                 && i.TransportStatusDesc != 'รอยืนยันใบคุมรถ' 
                                 && i.TransportStatusDesc != 'รอคนขับรับงาน' 
                                 && i.TransportStatusDesc != 'ระหว่างจัดส่งสินค้า'
