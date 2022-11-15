@@ -8,7 +8,7 @@ import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ThrowStmt } from '@angular/compiler';
-import { DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog, DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 
 @Component({
   selector: 'app-order-approve',
@@ -198,36 +198,46 @@ export class OrderApproveComponent implements OnInit {
   }
 
   cancel() {
-    this.spinner.show();
 
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.headerModel.TransportNo,
-      // "TTRANSPORTDS": this.listDetailModel
-    }
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการยกเลิกใช่หรือไม่?' } });
 
-    let json = JSON.stringify(criteria);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
 
-    this.serviceProviderService.post('api/Transport/CancelTransport', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
+      if (result) {
+        this.spinner.show();
 
-      if (model.Status) {
-        this.spinner.hide();
-        this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        debugger
-        this.backToMain();
+        let criteria = {
+          "userinformation": this.serviceProviderService.userinformation,
+          "TransportNo": this.headerModel.TransportNo,
+          // "TTRANSPORTDS": this.listDetailModel
+        }
+
+        let json = JSON.stringify(criteria);
+
+        this.serviceProviderService.post('api/Transport/CancelTransport', criteria).subscribe(data => {
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
+          this.viewModel = model;
+
+          if (model.Status) {
+            this.spinner.hide();
+            this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            debugger
+            this.backToMain();
+          }
+          else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
       }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
   }
 

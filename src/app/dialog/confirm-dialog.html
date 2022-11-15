@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>แจ้งเตือน</h1>
+<div mat-dialog-content style="min-height: 300px; max-height: 300px;">
+    {{data.title}} <br>
+    <cbtn [label]="'ยืนยัน'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn>
+    <cbtn [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn>
+</div>
+<!-- <div mat-dialog-actions>
+    <cbtn [label]="'ยืนยัน'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn>
+    <cbtn [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn>
+</div> -->

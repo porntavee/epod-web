@@ -4,6 +4,24 @@ import { ToastrService } from "ngx-toastr";
 import { ServiceProviderService } from "../shared/service-provider.service";
 
 @Component({
+    selector: 'confirm-dialog',
+    templateUrl: 'confirm-dialog.html',
+})
+export class ConfirmDialog {
+    constructor(
+        public dialogRef: MatDialogRef<ConfirmDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+    cancel() {
+        this.dialogRef.close(false);
+    }
+
+    ok() {
+        this.dialogRef.close(true);
+    }
+}
+
+@Component({
     selector: 'route-dialog',
     templateUrl: 'route-dialog.html',
 })
