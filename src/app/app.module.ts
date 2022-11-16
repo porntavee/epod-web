@@ -101,7 +101,7 @@ import { OrderApproveComponent } from './order-approve/order-approve.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OrderTransportComponent } from './order-transport/order-transport.component';
 import { OrderTransportFormComponent } from './order-transport-form/order-transport-form.component';
-import { ConfirmDialog, DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from "./dialog/dialog";
+import { ConfirmDialog, DriverDialog, GroupUserDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog  } from "./dialog/dialog";
 import { OrderComponent } from './order/order.component';
 import { OrderFormComponent } from './order-form/order-form.component';
 import { MasterUserComponent } from './master-user/master-user.component';
@@ -186,7 +186,8 @@ import { MasterUserComponent } from './master-user/master-user.component';
     ConfirmDialog,
     OrderComponent,
     OrderFormComponent,
-    MasterUserComponent
+    MasterUserComponent,
+    GroupUserDialog
   ],
   imports: [
     BrowserModule,

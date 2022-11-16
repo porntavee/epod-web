@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content style="min-height: 300px; max-height: 300px;">
+    <table>
+        <thead style="position: sticky; top: 0; background-color: white; z-index: 999;">
+            <tr>
+                <th>Code</th>
+                <th>GroupName</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of data.listData; let idx = index" (click)="ok(i)">
+                <td>{{i.Code}}</td>
+                <td>{{i.GroupName}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

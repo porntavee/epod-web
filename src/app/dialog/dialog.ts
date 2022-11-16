@@ -22,6 +22,60 @@ export class ConfirmDialog {
 }
 
 @Component({
+    selector: 'group-user-dialog',
+    templateUrl: 'group-user-dialog.html',
+})
+export class GroupUserDialog {
+    constructor(
+        public dialogRef: MatDialogRef<GroupUserDialog>,
+        private serviceProviderService: ServiceProviderService,
+        private toastr: ToastrService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.read();
+    }
+
+    criteriaModel: any = {};
+
+    read() {
+        let criteria = {
+            "userinformation": this.serviceProviderService.userinformation,
+            "Code": ""
+        }
+
+        // let json = JSON.stringify(criteria);
+        this.serviceProviderService.post('api/Masters/GetGroupUser', criteria).subscribe(data => {
+            let model: any = {};
+            model = data;
+
+            if (model.Status) {
+                this.data.listData = model.Data;
+            }
+            else {
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+        }, err => {
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+    }
+
+    filter() {
+        if (this.criteriaModel.Code != undefined && this.criteriaModel.Code != '')
+            this.data.listData = this.data.listDataSearch.filter(c => c.Code.includes(this.criteriaModel.Code));
+        else
+            this.data.listData = this.data.listDataSearch
+    }
+
+    cancel() {
+        this.dialogRef.close(undefined);
+    }
+
+    ok(param) {
+        this.dialogRef.close(param);
+    }
+}
+
+
+@Component({
     selector: 'route-dialog',
     templateUrl: 'route-dialog.html',
 })
