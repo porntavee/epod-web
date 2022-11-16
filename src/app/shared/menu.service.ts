@@ -41,7 +41,7 @@ export class MenuService {
         name: 'ทะเบียน',
         items: [
           { 'name': 'สถานที่รับ/ส่งสินค้า', 'routing': '/line-quest-and-answer-form', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
-          { 'name': 'ผู้ใช้งาน', 'routing': '/auto-reply', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
+          { 'name': 'ผู้ใช้งาน', 'routing': '/master-user', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'วันหยุด', 'routing': '/auto-reply', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true }
         ]
       },

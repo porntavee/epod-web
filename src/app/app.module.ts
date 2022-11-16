@@ -104,6 +104,7 @@ import { OrderTransportFormComponent } from './order-transport-form/order-transp
 import { ConfirmDialog, DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from "./dialog/dialog";
 import { OrderComponent } from './order/order.component';
 import { OrderFormComponent } from './order-form/order-form.component';
+import { MasterUserComponent } from './master-user/master-user.component';
 
 @NgModule({
   declarations: [
@@ -184,7 +185,8 @@ import { OrderFormComponent } from './order-form/order-form.component';
     DriverDialog,
     ConfirmDialog,
     OrderComponent,
-    OrderFormComponent
+    OrderFormComponent,
+    MasterUserComponent
   ],
   imports: [
     BrowserModule,
