@@ -37,9 +37,7 @@ export class MasterUserComponent implements OnInit {
    constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService,
-    private differs: KeyValueDiffers,
-    private excelService: ExcelService) { }
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.read();
@@ -52,7 +50,11 @@ export class MasterUserComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-
+      "UserName": this.criteriaModel.UserName,
+      "FirstName": this.criteriaModel.FirstName,
+      "LastName": this.criteriaModel.LastName,
+      "Mobile": this.criteriaModel.Mobile,
+      "GroupName": this.criteriaModel.GroupName,
     }
 
     let json = JSON.stringify(criteria);
@@ -64,11 +66,6 @@ export class MasterUserComponent implements OnInit {
       this.viewModel = model;
 
       if (model.Status) {
-
-        // model.Data.forEach(element => {
-        //   element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
-        // });
-
         this.listModel = model.Data;
       }
       else {
