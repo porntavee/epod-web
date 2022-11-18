@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
-import { GroupUserDialog } from '../dialog/dialog';
+import { GroupUserDialog,VehicleDialog } from '../dialog/dialog';
 
 @Component({
   selector: 'app-master-user',
@@ -54,7 +54,7 @@ export class MasterUserComponent implements OnInit {
       "FirstName": this.criteriaModel.FirstName,
       "LastName": this.criteriaModel.LastName,
       "Mobile": this.criteriaModel.Mobile,
-      "GroupName": this.criteriaModel.GroupName,
+      "GroupCode": this.criteriaModel.GroupCode,
     }
 
     let json = JSON.stringify(criteria);
@@ -89,19 +89,86 @@ export class MasterUserComponent implements OnInit {
         console.log(`Dialog result: ${result}`);
   
         if (result != undefined) {
-          this.criteriaModel.Code = result.Code;
+          this.criteriaModel.GroupCode = result.Code;
           this.criteriaModel.GroupName = result.GroupName;
         }
         else{
-          this.criteriaModel.Code = '';
+          this.criteriaModel.GroupCode = '';
           this.criteriaModel.GroupName = '';
         }
       });
     }
+
+        //Group User.
+        chooseGroupUserDetail() {
+          //ต้องเอาไปใส่ใน app.module ที่ declarations
+          const dialogRef = this.dialog.open(GroupUserDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'กลุ่มผู้ใช้งานระบบ' } });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+      
+            if (result != undefined) {
+              this.headerModel.GroupCode = result.Code;
+              this.headerModel.GroupName = result.GroupName;
+            }
+            else{
+              this.headerModel.GroupCode = '';
+              this.headerModel.GroupName = '';
+            }
+          });
+        }
+
+        chooseVehicleDetail() {
+          //ต้องเอาไปใส่ใน app.module ที่ declarations
+          const dialogRef = this.dialog.open(VehicleDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Vehicle' } });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+      
+            if (result != undefined) {
+              this.headerModel.VehicleId = result.Id;
+              this.headerModel.VehicleNo = result.Description;
+            }
+            else{
+              this.headerModel.VehicleId = '';
+              this.headerModel.VehicleNo = '';
+            }
+          });
+        }
+      
     
   clear() {
     this.criteriaModel = { apptDate: '' };
   }
 
+  add() {
+    this.spinner.show();
+
+    this.headerModel.Code = 'Auto';
+    this.headerModel.FirstName = '';
+    this.headerModel.LastName = '';
+    this.headerModel.UserName = '';
+    this.headerModel.Password = '';
+    this.headerModel.LicenseNo = '';
+    this.headerModel.Mobile = '';
+    this.headerModel.Email = '';
+
+    //Popup
+    this.headerModel.GroupCode = '';
+    this.headerModel.GroupName = '';
+
+    this.headerModel.VehicleId = '';
+    this.headerModel.VehicleNo = '';
+
+    this.isMainPage = false;
+    this.isFormPage = true;
+    this.spinner.hide();
+  }
+  back() {
+    this.isMainPage = true;
+    this.isFormPage = false;
+    this.isTimeSheetPage = false;
+    this.read();
+  }
 
 }
