@@ -140,22 +140,18 @@
                                 </span>
                             </th> -->
                             <!-- <th></th> -->
-                            <th>เลขที่ใบคุม</th>
-                            <th>Shipment No.</th>
+                            <th>เลขที่ Inv.</th>
                             <th>สถานะ</th>
-                            <th>Type of Work</th>
-                            <th>บริษัทขนส่ง</th>
-                            <th>ทะเบียนรถ</th>
-                            <th>ชื่อคนขับ</th>
-                            <th>เบอร์โทรศัพท์คนขับ</th>
-                            <th>ประเภทรถ</th>
-                            <th>Route</th>
-                            <th>SubRoute</th>
-                            <th>สถานที่รับสินค้า</th>
-                            <th>ชื่อผู้ใช้งาน</th>
-
-
-                            <th>วันที่ออกเอกสาร</th>
+                            <th>Doc. Type</th>
+                            <th>Doc. No.</th>
+                            <th>PO</th>
+                            <th>Cus Code</th>
+                            <th>Ship To</th>
+                            <th>ที่อยู่ผู้รับ</th>
+                            <th>Appt. Date</th>
+                            <th>CBM</th>
+                            <th>Carton</th>
+                            <th>Weight</th>
                             <th>หมายเหตุ</th>
                         </tr>
                     </thead>
@@ -205,120 +201,107 @@
                                             {{i.Code}}
                                         </a> -->
                                     <!-- <cbtne [label]="i.Code" (click)="editTimeSheet(i)"></cbtne> -->
-                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.ShipmentNo}}
+                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.InvoiceNo}}</a>
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.TransportStatusDesc == 'เสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
+                                <div *ngIf="i.OrderStatusDesc == 'เสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatus}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
+                                <div *ngIf="i.OrderStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatus}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'รอคนขับรับงาน'" class="w100" style="background-color: rgb(131, 247, 230); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
+                                <div *ngIf="i.OrderStatusDesc == 'รอคนขับรับงาน'" class="w100" style="background-color: rgb(131, 247, 230); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatus}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
+                                <div *ngIf="i.OrderStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatus}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'จัดส่งสินค้าสำเร็จ'" class="w100" style="background-color: rgb(247, 131, 239); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
+                                <div *ngIf="i.OrderStatusDesc == 'จัดส่งสินค้าสำเร็จ'" class="w100" style="background-color: rgb(247, 131, 239); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatus}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(133, 131, 247); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
+                                <div *ngIf="i.OrderStatusDesc == 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(133, 131, 247); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatus}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc != 'เสร็จสิ้น' 
-                                && i.TransportStatusDesc != 'รอยืนยันใบคุมรถ' 
-                                && i.TransportStatusDesc != 'รอคนขับรับงาน' 
-                                && i.TransportStatusDesc != 'ระหว่างจัดส่งสินค้า'
-                                && i.TransportStatusDesc != 'จัดส่งสินค้าสำเร็จ'
-                                && i.TransportStatusDesc != 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(182, 182, 182); height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
+                                <div *ngIf="i.OrderStatusDesc != 'เสร็จสิ้น' 
+                                && i.OrderStatusDesc != 'รอยืนยันใบคุมรถ' 
+                                && i.OrderStatusDesc != 'รอคนขับรับงาน' 
+                                && i.OrderStatusDesc != 'ระหว่างจัดส่งสินค้า'
+                                && i.OrderStatusDesc != 'จัดส่งสินค้าสำเร็จ'
+                                && i.OrderStatusDesc != 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(182, 182, 182); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatusDesc}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.TransportType}}
-                                    <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w300">
-                                    {{i.Transport}}
+                                    {{i.OrderType}}
                                     <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.Vehicle}}
+                                    {{i.OrderNo}}
+                                    <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.PurchaseNo}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.DriverFirstName}} {{i.DriverLastName}}
+                                    {{i.ShiptoCode}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
-                                <div class="w100">
-                                    {{i.DriverMobile}}
+                                <div class="w300">
+                                    {{i.ShiptoName}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
-                                <div class="w100">
-                                    {{i.VehicleType}}
+                                <div class="w400">
+                                    {{i.ShiptoAdress}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w150">
-                                    {{i.Route}}
+                                    {{i.OrderEstimate}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.U_HMC_Hour" name="i.U_HMC_Hour" id="i.U_HMC_Hour" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
-                                <div class="w200">
-                                    {{i.SubRoute}}
+                                <div class="w100">
+                                    {{i.CBM}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.EndTime" name="i.EndTime" id="i.EndTime" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
+                                <div class="w100">
+                                    {{i.Qty}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Weight}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                            </td>
+                            <td>
                                 <div class="w1000">
-                                    {{i.ReceiveFromName}} {{i.ReceiveFromAddress}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.DriverUser}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="w100">
-                                    {{i.TransportDate}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="w300">
-                                    {{i.Remark}}
+                                    {{i.Comment}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
@@ -368,23 +351,28 @@
             </div>
 
             <div class="row">
-                <div class="col s6">
+                <div class="col s7" style="margin-top: 10px;">
                     <!-- <div class="row">
                         <div class="col s6" style="margin-top: 10px;">
                             <cbtn [label]="'ดำเนินการต่อ'" [color]="'blue'" [icon]="''" (click)="next()"></cbtn>
                         </div>
                     </div> -->
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col s6" style="margin-top: 10px;">
-                            <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="create()"></cbtn>
                         </div>
-                    </div>
+                    </div> -->
+
+                    <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="create()"></cbtn>
+                    <cbtn [label]="'อัพโหลดไฟล์'" [color]="'blue'" [icon]="'file_download'" (click)="create()"></cbtn>
+                    <cbtn [label]="'แก้ไข'" [color]="'blue'" [icon]="'edit'" (click)="create()"></cbtn>
+                    <cbtn [label]="'ลบ'" [color]="'red'" [icon]="'remove'" (click)="create()"></cbtn>
+
 
                     <!-- <ul>
                         <li>paginationModel.textPage</li>
                     </ul> -->
                 </div>
-                <div class="col s6">
+                <div class="col s5">
                     <div style="text-align: right;">
                         <!-- <ul>
                             <li *ngFor="let item of listModel | paginate: { itemsPerPage: 10, currentPage: p }">{{item}}</li>

@@ -86,7 +86,7 @@ export class OrderComponent implements OnInit {
 
     let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/Transport/GetTransportHeader', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Transport/GetOrder', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
@@ -95,7 +95,7 @@ export class OrderComponent implements OnInit {
       if (model.Status) {
 
         model.Data.forEach(element => {
-          element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
+          element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
         });
