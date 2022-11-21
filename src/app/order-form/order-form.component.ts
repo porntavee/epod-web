@@ -277,8 +277,8 @@ export class OrderFormComponent implements OnInit {
         this.criteriaModel.ShiptoAddress = result.Address;
         this.criteriaModel.ShiptoDescription = result.Code + ' - ' + result.CustomerName;
         this.criteriaModel.ShiptoMobile = result.Mobile;
-        this.criteriaModel.RouteDescription = result.RouteId;
-        this.criteriaModel.SubRouteDescription = result.SubRouteId;
+        this.criteriaModel.RouteDescription = result.Route;
+        this.criteriaModel.SubRouteDescription = result.SubRoute;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
