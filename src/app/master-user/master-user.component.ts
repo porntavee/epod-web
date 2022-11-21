@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
-import { GroupUserDialog,VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog, GroupUserDialog, VehicleDialog } from '../dialog/dialog';
 
 @Component({
   selector: 'app-master-user',
@@ -34,7 +34,7 @@ export class MasterUserComponent implements OnInit {
 
   listGroupUser: any = [];
 
-   constructor(public dialog: MatDialog,
+  constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService) { }
@@ -80,78 +80,115 @@ export class MasterUserComponent implements OnInit {
     });
   }
 
-    //Group User.
-    chooseGroupUser() {
-      //ต้องเอาไปใส่ใน app.module ที่ declarations
-      const dialogRef = this.dialog.open(GroupUserDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'กลุ่มผู้ใช้งานระบบ' } });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-  
-        if (result != undefined) {
-          this.criteriaModel.GroupCode = result.Code;
-          this.criteriaModel.GroupName = result.GroupName;
-        }
-        else{
-          this.criteriaModel.GroupCode = '';
-          this.criteriaModel.GroupName = '';
-        }
-      });
+  readDetail(param) {
+    this.spinner.show();
+
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+      "Id": param.Id
     }
 
-        //Group User.
-        chooseGroupUserDetail() {
-          //ต้องเอาไปใส่ใน app.module ที่ declarations
-          const dialogRef = this.dialog.open(GroupUserDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'กลุ่มผู้ใช้งานระบบ' } });
-      
-          dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-      
-            if (result != undefined) {
-              this.headerModel.GroupCode = result.Code;
-              this.headerModel.GroupName = result.GroupName;
-            }
-            else{
-              this.headerModel.GroupCode = '';
-              this.headerModel.GroupName = '';
-            }
-          });
-        }
+    this.headerModel = param;
+    this.headerModel.Operation = 'UPDATE';
+    let json = JSON.stringify(criteria);
 
-        chooseVehicleDetail() {
-          //ต้องเอาไปใส่ใน app.module ที่ declarations
-          const dialogRef = this.dialog.open(VehicleDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Vehicle' } });
-      
-          dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-      
-            if (result != undefined) {
-              this.headerModel.VehicleId = result.Id;
-              this.headerModel.VehicleNo = result.Description;
-            }
-            else{
-              this.headerModel.VehicleId = '';
-              this.headerModel.VehicleNo = '';
-            }
-          });
-        }
-      
-    
+    this.serviceProviderService.post('api/Masters/GetUser', criteria).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+
+        this.listDetailModel = model.Data;
+
+        this.isMainPage = false;
+        this.isFormPage = true;
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  //Group User.
+  chooseGroupUser() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(GroupUserDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'กลุ่มผู้ใช้งานระบบ' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.GroupCode = result.Code;
+        this.criteriaModel.GroupName = result.GroupName;
+      }
+      else {
+        this.criteriaModel.GroupCode = '';
+        this.criteriaModel.GroupName = '';
+      }
+    });
+  }
+
+  chooseGroupUserDetail() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(GroupUserDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'กลุ่มผู้ใช้งานระบบ' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.headerModel.GroupCode = result.Code;
+        this.headerModel.GroupName = result.GroupName;
+      }
+      else {
+        this.headerModel.GroupCode = '';
+        this.headerModel.GroupName = '';
+      }
+    });
+  }
+
+  chooseVehicleDetail() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(VehicleDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Vehicle' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.headerModel.VehicleId = result.Id;
+        this.headerModel.VehicleNo = result.Description;
+      }
+      else {
+        this.headerModel.VehicleId = '';
+        this.headerModel.VehicleNo = '';
+      }
+    });
+  }
+
   clear() {
     this.criteriaModel = { apptDate: '' };
   }
 
   add() {
     this.spinner.show();
-
+    this.headerModel.Operation = 'INSERT';
     this.headerModel.Code = 'Auto';
     this.headerModel.FirstName = '';
     this.headerModel.LastName = '';
     this.headerModel.UserName = '';
     this.headerModel.Password = '';
     this.headerModel.LicenseNo = '';
+  
     this.headerModel.Mobile = '';
     this.headerModel.Email = '';
+    this.headerModel.Sex = '';
+    this.headerModel.Active = 'Y';
 
     //Popup
     this.headerModel.GroupCode = '';
@@ -164,6 +201,7 @@ export class MasterUserComponent implements OnInit {
     this.isFormPage = true;
     this.spinner.hide();
   }
+
   back() {
     this.isMainPage = true;
     this.isFormPage = false;
@@ -171,4 +209,92 @@ export class MasterUserComponent implements OnInit {
     this.read();
   }
 
+  save() {
+    this.spinner.show();
+
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+      "Operation": this.headerModel.Operation,
+      "Id": this.headerModel.Id,
+      "Code": this.headerModel.Code,
+      "FirstName": this.headerModel.FirstName,
+      "LastName": this.headerModel.LastName,
+      "UserName": this.headerModel.UserName,
+      "Password": this.headerModel.Password,
+      "GroupCode": this.headerModel.GroupCode,
+      "NationalityID": this.headerModel.NationalityID,
+      "VehicleId": this.headerModel.VehicleId,
+      "LicenseNo": this.headerModel.LicenseNo,
+      "Mobile": this.headerModel.Mobile,
+      "Email": this.headerModel.Email,
+      "Sex": this.headerModel.Sex,
+      "Active": this.headerModel.Active,
+    }
+
+    let json = JSON.stringify(criteria);
+
+    this.serviceProviderService.post('api/Masters/SaveUser', criteria).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      if (model.Status) {
+        this.spinner.hide();
+        this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.back();
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  delete(param) {
+
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'} });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+         this.spinner.show();
+
+        let criteria = {
+          "userinformation": this.serviceProviderService.userinformation,
+          "Id": param.Id ,
+        }
+
+        let json = JSON.stringify(criteria);
+
+        this.serviceProviderService.post('api/Masters/DeleteUser', criteria).subscribe(data => {
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
+          this.viewModel = model;
+
+          if (model.Status) {
+            this.spinner.hide();
+            this.toastr.success('เสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            // debugger
+            this.back();
+          }
+          else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+
+      this.read();
+      }
+    });
+  }
 }

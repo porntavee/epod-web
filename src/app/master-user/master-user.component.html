@@ -1,9 +1,11 @@
 <div *ngIf="isMainPage">
     <div class="col s12">
-        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel"
+            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
             <div class="row">
                 <div class="col l8 s12">
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                    <span
+                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
                         <b>ทะเบียน / ผู้ใช้งาน</b>
                     </span>
                 </div>
@@ -14,19 +16,23 @@
         <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.UserName = $event" [label]="'รหัสเข้าระบบ'" [data]="criteriaModel.UserName"></citxt>
+                    <citxt (cModel)="criteriaModel.UserName = $event" [label]="'รหัสเข้าระบบ'"
+                        [data]="criteriaModel.UserName"></citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'ชื่อ'" [data]="criteriaModel.FirstName"></citxt>
+                    <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'ชื่อ'"
+                        [data]="criteriaModel.FirstName"></citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="criteriaModel.Mobile"></citxt>
+                    <citxt (cModel)="criteriaModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="criteriaModel.Mobile">
+                    </citxt>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'" [data]="criteriaModel.GroupName" [readonly]="true" (click)="chooseGroupUser()"></citxt>
+                    <citxt (cModel)="criteriaModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'"
+                        [data]="criteriaModel.GroupName" [readonly]="true" (click)="chooseGroupUser()"></citxt>
                 </div>
             </div>
 
@@ -41,16 +47,18 @@
         </div>
         <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
             <div class="row">
-                
+
 
             </div>
         </div>
     </div>
     <div class="col s12">
-        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel"
+            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
             <div class="row">
                 <div class="col l2 s12">
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                    <span
+                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
                         <b>รายการข้อมูล</b>
                     </span>
                 </div>
@@ -63,16 +71,37 @@
                 <table id="users-list-datatable" class="bordered centered striped">
                     <thead>
                         <tr>
+                            <th>คำสั่ง</th>
+                            <th>รหัส</th>
                             <th>รหัสเข้าระบบ</th>
                             <th>ชื่อ</th>
                             <th>นามสกุล</th>
                             <th>กลุ่มผู้ใช้งาน</th>
                             <th>เบอร์โทร</th>
+                            <th>ทะเบียนรถ</th>
                             <th>อีเมล์</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
+                        <tr
+                            *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
+                            <td>
+                                <div class="w100">
+                                    <a class="btn-floating blue" style="cursor: pointer;" (click)="readDetail(i)">
+                                        <i class="medium material-icons">edit</i>
+                                    </a>
+                                    <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
+                                        <i class="medium material-icons">delete</i>
+                                    </a>
+                                    
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Code}}
+                                </div>
+                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.UserName}}
@@ -100,6 +129,11 @@
                             </td>
                             <td>
                                 <div class="w100">
+                                    {{i.VehicleNo}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
                                     {{i.Email}}
                                 </div>
                             </td>
@@ -118,7 +152,8 @@
                 </div>
                 <div class="col s6">
                     <div style="text-align: right;">
-                        <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                        <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป">
+                        </pagination-controls>
                     </div>
                 </div>
 
@@ -130,10 +165,12 @@
 
 <div *ngIf="isFormPage">
     <div class="col s12">
-        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel"
+            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
             <div class="row">
                 <div class="col l8 s12">
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                    <span
+                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
                         <b>ทะเบียน / ผู้ใช้งาน / รายละเอียด</b>
                     </span>
                 </div>
@@ -141,82 +178,85 @@
 
         </div>
         <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
+
             <div class="row">
                 <div class="col l4 s12">
-                    <citxt (cModel)="headerModel.Code = $event" [label]="'รหัสระบบ'" [data]="headerModel.Code" [readonly]="true"></citxt>
+                    <citxt (cModel)="headerModel.Code = $event" [label]="'รหัส'" [data]="headerModel.Code"
+                        [readonly]="true"></citxt>
+                </div>
+                <div class="col l4 s12">
+                    <citxt (cModel)="headerModel.Active = $event" [label]="'สถานะ'" [data]="headerModel.Active"
+                        [readonly]="true"></citxt>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.FirstName = $event" [label]="'ชื่อ'" [data]="headerModel.FirstName"></citxt>
+                    <citxt (cModel)="headerModel.FirstName = $event" [label]="'ชื่อ'" [data]="headerModel.FirstName">
+                    </citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.LastName = $event" [label]="'นามสกุล'" [data]="headerModel.LastName"></citxt>
+                    <citxt (cModel)="headerModel.LastName = $event" [label]="'นามสกุล'" [data]="headerModel.LastName">
+                    </citxt>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.UserName = $event" [label]="'Username'" [data]="headerModel.UserName">
+                    </citxt>
+                </div>
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.Password = $event" [label]="'Password'" [data]="headerModel.Password"
+                        type="password"></citxt>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.UserName = $event" [label]="'Username'" [data]="headerModel.UserName"></citxt>
+                    <citxt (cModel)="headerModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'"
+                        [data]="headerModel.GroupName" [readonly]="true" (click)="chooseGroupUserDetail()"></citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Password = $event" [label]="'Password'" [data]="headerModel.Password"  type="password"></citxt>
+                    <citxt (cModel)="headerModel.VehicleNo = $event" [label]="'ทะเบียนรถ'"
+                        [data]="headerModel.VehicleNo" [readonly]="true" (click)="chooseVehicleDetail()"></citxt>
                 </div>
             </div>
+            <div class="row">
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.NationalityID = $event" [label]="'เลขที่บัตรประชาชน'"
+                        [data]="headerModel.NationalityID"></citxt>
+                </div>
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.LicenseNo = $event" [label]="'เลขที่ใบขับขี่'"
+                        [data]="headerModel.LicenseNo"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="headerModel.Mobile">
+                    </citxt>
+                </div>
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.Email = $event" [label]="'อีเมล์'" [data]="headerModel.Email"></citxt>
+                </div>
 
-            <div class="row">
-                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'" [data]="headerModel.GroupName"[readonly]="true" (click)="chooseGroupUserDetail()"></citxt>
-                </div>               
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.VehicleNo = $event" [label]="'ทะเบียนรถ'" [data]="headerModel.VehicleNo"[readonly]="true" (click)="chooseVehicleDetail()"></citxt>
+                <!-- Hidden -->
+                <div class="row" hidden="true">
+                    <div class="col l4 s12">
+                        <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id"
+                            [readonly]="true"></citxt>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                   <citxt (cModel)="headerModel.NationalityID = $event" [label]="'เลขที่บัตรประชาชน'" [data]="headerModel.NationalityID"></citxt>
-               </div>               
-               <div class="col l4 s12" style="margin-top: -20px;">
-                   <citxt (cModel)="headerModel.LicenseNo = $event" [label]="'เลขที่ใบขับขี่'" [data]="headerModel.LicenseNo"></citxt>
-               </div>
-           </div>
-           <div class="row">
-            <div class="col l4 s12" style="margin-top: -20px;">
-               <citxt (cModel)="headerModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="headerModel.Mobile"></citxt>
-           </div>               
-           <div class="col l4 s12" style="margin-top: -20px;">
-               <citxt (cModel)="headerModel.Email = $event" [label]="'อีเมล์'" [data]="headerModel.Email"></citxt>
-           </div>
-       </div>
             <div class="row">
                 <div class="col l4 s12 p-0" style="margin-bottom: 5px;"></div>
                 <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
-                    <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'"></cbtn>
-                    <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="back()"></cbtn>
+                    <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'" (click)="save()"></cbtn>
+                    <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="'keyboard_backspace'" (click)="back()"></cbtn>
                 </div>
             </div>
         </div>
 
     </div>
-</div>
-    <!-- {{this.viewModel|json}} -->
-    <div class="col s12">
-        <!-- <div class="card-panel" style="margin-top: 0px;">
-            <div class="row">
-                <div class="col s6">
-                    <div class="row" style="margin-top: 10px;">
-                        <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="''"></cbtn>
-                        <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''"></cbtn>
-                    </div>
-                </div>
-                <div class="col s6">
-                    <div style="text-align: right;">
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div> -->
 </div>
