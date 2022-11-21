@@ -5,7 +5,7 @@
     </p> -->
     <div class="row">
         <div class="col l4 s12">
-            <citxt (cModel)="criteriaModel.Code = $event" [label]="'Code'" [data]="criteriaModel.Code"></citxt>
+            <citxt (cModel)="criteriaModel.Fillter = $event" [label]="'Fillter'" [data]="criteriaModel.Fillter"></citxt>
         </div>
         <div class="col l4 s12">
             <!-- <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'Name'" [data]="criteriaModel.FirstName"></citxt> -->
@@ -14,7 +14,7 @@
 
         </div>
         <div class="col l3 s12 p-0">
-            <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="filter()"></cbtnl>
+            <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
         </div>
     </div>
     <table>

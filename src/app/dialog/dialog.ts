@@ -354,7 +354,7 @@ export class VehicleDialog {
     read() {
         let criteria = {
             "userinformation": this.serviceProviderService.userinformation,
-            "Code": ""
+            "Fillter": this.criteriaModel.Fillter
         }
 
         // let json = JSON.stringify(criteria);
