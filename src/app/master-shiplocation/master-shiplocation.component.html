@@ -31,7 +31,7 @@
                     <citxt (cModel)="criteriaModel.ContractName = $event" [label]="'ชื่อผู้ติดต่อ'" [data]="criteriaModel.ContractName"></citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'Route'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
+                    <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'เส้นทางหลัก'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
                 </div>
             </div>
 
@@ -109,12 +109,12 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="w500">
+                                <div class="w200">
                                     {{i.CustomerName}}
                                 </div>
                             </td>
                             <td>
-                                <div class="w500">
+                                <div class="w300">
                                     {{i.Address}}
                                 </div>
                             </td>
