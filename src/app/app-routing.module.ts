@@ -29,6 +29,7 @@ import { OrderTransportFormComponent } from './order-transport-form/order-transp
 import { OrderComponent } from './order/order.component';
 import { OrderFormComponent } from './order-form/order-form.component';
 import { MasterUserComponent } from './master-user/master-user.component'
+import { MasterShiplocationComponent } from './master-shiplocation/master-shiplocation.component'
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -59,7 +60,8 @@ const routes: Routes = [
   { path: 'order-form', component: OrderFormComponent },
   { path: 'order-transport', component: OrderTransportComponent },
   { path: 'order-transport-form', component: OrderTransportFormComponent },
-  { path: 'master-user', component: MasterUserComponent }
+  { path: 'master-user', component: MasterUserComponent },
+  { path: 'master-shiplocation', component: MasterShiplocationComponent },
 ];
 
 @NgModule({

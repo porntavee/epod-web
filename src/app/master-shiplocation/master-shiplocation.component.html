@@ -6,7 +6,7 @@
                 <div class="col l8 s12">
                     <span
                         style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>ทะเบียน / ผู้ใช้งาน</b>
+                        <b>ทะเบียน / สถานที่รับ-ส่งสินค้า</b>
                     </span>
                 </div>
             </div>
@@ -16,23 +16,22 @@
         <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.UserName = $event" [label]="'รหัสเข้าระบบ'"
-                        [data]="criteriaModel.UserName"></citxt>
+                    <citxt (cModel)="criteriaModel.Code = $event" [label]="'รหัส'" [data]="criteriaModel.Code"></citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'ชื่อ'"
-                        [data]="criteriaModel.FirstName"></citxt>
+                    <citxt (cModel)="criteriaModel.Address = $event" [label]="'สถานที่ (Address)'" [data]="criteriaModel.Address"></citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="criteriaModel.Mobile">
-                    </citxt>
+                    <citxt (cModel)="criteriaModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="criteriaModel.Mobile"></citxt>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'"
-                        [data]="criteriaModel.GroupName" [readonly]="true" (click)="chooseGroupUser()"></citxt>
+                    <citxt (cModel)="criteriaModel.ContractName = $event" [label]="'ชื่อผู้ติดต่อ'" [data]="criteriaModel.ContractName"></citxt>
+                </div>
+                <div class="col l3 s12 p-0">
+                    <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'Route'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
                 </div>
             </div>
 
@@ -72,14 +71,16 @@
                     <thead>
                         <tr>
                             <th>คำสั่ง</th>
+                            <th>รหัสระบบ</th>
                             <th>รหัส</th>
-                            <th>รหัสเข้าระบบ</th>
                             <th>ชื่อ</th>
-                            <th>นามสกุล</th>
-                            <th>กลุ่มผู้ใช้งาน</th>
+                            <th>ที่อยู่</th>
+                            <th>ชื่อผู้ติดต่อ</th>
                             <th>เบอร์โทร</th>
-                            <th>ทะเบียนรถ</th>
-                            <th>อีเมล์</th>
+                            <th>เส้นทางหลัก</th>
+                            <th>เส้นทางย่อย</th>
+                            <th>จังหวัด</th>
+                            <th>อำเภอ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,28 +99,28 @@
 
                             </td>
                             <td>
-                                <div class="w100">
+                                <div class="w60">
+                                    {{i.Id}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w60">
                                     {{i.Code}}
                                 </div>
                             </td>
                             <td>
-                                <div class="w100">
-                                    {{i.UserName}}
+                                <div class="w500">
+                                    {{i.CustomerName}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w500">
+                                    {{i.Address}}
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.FirstName}}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.LastName}}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.GroupName}}
+                                    {{i.ContractName}}
                                 </div>
                             </td>
                             <td>
@@ -129,12 +130,22 @@
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.VehicleNo}}
+                                    {{i.Route}}
                                 </div>
                             </td>
                             <td>
-                                <div class="w150">
-                                    {{i.Email}}
+                                <div class="w100">
+                                    {{i.SubRoute}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Province}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.District}}
                                 </div>
                             </td>
                         </tr>
@@ -214,12 +225,10 @@
 
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'"
-                        [data]="headerModel.GroupName" [readonly]="true" (click)="chooseGroupUserDetail()"></citxt>
+                    <!-- <citxt (cModel)="headerModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'" [data]="headerModel.GroupName" [readonly]="true" (click)="chooseGroupUserDetail()"></citxt> -->
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.VehicleNo = $event" [label]="'ทะเบียนรถ'"
-                        [data]="headerModel.VehicleNo" [readonly]="true" (click)="chooseVehicleDetail()"></citxt>
+                    <!-- <citxt (cModel)="headerModel.VehicleNo = $event" [label]="'ทะเบียนรถ'" [data]="headerModel.VehicleNo" [readonly]="true" (click)="chooseVehicleDetail()"></citxt> -->
                 </div>
             </div>
             <div class="row">

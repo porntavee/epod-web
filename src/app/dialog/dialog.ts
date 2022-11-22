@@ -393,6 +393,7 @@ export class VehicleDialog {
     }
 }
 
+
 @Component({
     selector: 'driver-dialog',
     templateUrl: 'driver-dialog.html',
@@ -439,6 +440,52 @@ export class DriverDialog {
         // this.data.listData = this.data.listDataSearch.filter(c => c.firstName.includes(this.criteriaModel.FirstName));
         else
             this.data.listData = this.data.listDataSearch
+    }
+
+    cancel() {
+        this.dialogRef.close(undefined);
+    }
+
+    ok(param) {
+        this.dialogRef.close(param);
+    }
+}
+
+@Component({
+    selector: 'routing-dialog',
+    templateUrl: 'routing-dialog.html',
+})
+export class RoutingDialog {
+    constructor(
+        public dialogRef: MatDialogRef<RoutingDialog>,
+        private serviceProviderService: ServiceProviderService,
+        private toastr: ToastrService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.read();
+    }
+
+    criteriaModel: any = {};
+
+    read() {
+        let criteria = {
+            "userinformation": this.serviceProviderService.userinformation,
+            "Fillter": this.criteriaModel.Fillter
+        }
+
+        // let json = JSON.stringify(criteria);
+        this.serviceProviderService.post('api/Masters/GetRoute', criteria).subscribe(data => {
+            let model: any = {};
+            model = data;
+
+            if (model.Status) {
+                this.data.listData = model.Data;
+            }
+            else {
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+        }, err => {
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
     }
 
     cancel() {
