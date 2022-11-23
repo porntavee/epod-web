@@ -77,17 +77,19 @@
                             <th>ที่อยู่</th>
                             <th>ชื่อผู้ติดต่อ</th>
                             <th>เบอร์โทร</th>
+                            <th>โซน</th>
                             <th>เส้นทางหลัก</th>
                             <th>เส้นทางย่อย</th>
                             <th>จังหวัด</th>
                             <th>อำเภอ</th>
+                            <th>รหัสไปรษณีย์</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr
                             *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
                             <td>
-                                <div class="w55">
+                                <div class="w100">
                                     <a class="btn-floating blue" style="cursor: pointer;" (click)="readDetail(i)">
                                         <i class="medium material-icons">edit</i>
                                     </a>
@@ -109,12 +111,12 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="w200">
+                                <div class="w150">
                                     {{i.CustomerName}}
                                 </div>
                             </td>
                             <td>
-                                <div class="w300">
+                                <div class="w250">
                                     {{i.Address}}
                                 </div>
                             </td>
@@ -135,6 +137,11 @@
                             </td>
                             <td>
                                 <div class="w100">
+                                    {{i.Region}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
                                     {{i.SubRoute}}
                                 </div>
                             </td>
@@ -146,6 +153,11 @@
                             <td>
                                 <div class="w100">
                                     {{i.District}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.PostCode}}
                                 </div>
                             </td>
                         </tr>
@@ -196,60 +208,65 @@
                         [readonly]="true"></citxt>
                 </div>
                 <div class="col l4 s12">
-                    <citxt (cModel)="headerModel.Active = $event" [label]="'สถานะ'" [data]="headerModel.Active"
-                        [readonly]="true"></citxt>
+                    <!-- <citxt (cModel)="headerModel.Active = $event" [label]="'สถานะ'" [data]="headerModel.Active"
+                        [readonly]="true"></citxt> -->
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.FirstName = $event" [label]="'ชื่อ'" [data]="headerModel.FirstName">
+                    <citxt (cModel)="headerModel.CustomerName = $event" [label]="'ชื่อ'" [data]="headerModel.CustomerName">
                     </citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.LastName = $event" [label]="'นามสกุล'" [data]="headerModel.LastName">
+                    <citxt (cModel)="headerModel.Address = $event" [label]="'ที่อยู่'" [data]="headerModel.Address">
                     </citxt>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.UserName = $event" [label]="'Username'" [data]="headerModel.UserName">
+                    <citxt (cModel)="headerModel.ContractName = $event" [label]="'ชื่อผู้ติดต่อ'" [data]="headerModel.ContractName">
                     </citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Password = $event" [label]="'Password'" [data]="headerModel.Password"
-                        type="password"></citxt>
+                    <citxt (cModel)="headerModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="headerModel.Mobile"></citxt>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <!-- <citxt (cModel)="headerModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'" [data]="headerModel.GroupName" [readonly]="true" (click)="chooseGroupUserDetail()"></citxt> -->
+                    <citxt (cModel)="headerModel.Province = $event" [label]="'จังหวัด'" [data]="headerModel.Province" [readonly]="true" (click)="chooseProvince2()"></citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <!-- <citxt (cModel)="headerModel.VehicleNo = $event" [label]="'ทะเบียนรถ'" [data]="headerModel.VehicleNo" [readonly]="true" (click)="chooseVehicleDetail()"></citxt> -->
+                    <citxt (cModel)="headerModel.District = $event" [label]="'อำเภอ'" [data]="headerModel.District" [readonly]="true" (click)="chooseDistrict2()"></citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.NationalityID = $event" [label]="'เลขที่บัตรประชาชน'"
-                        [data]="headerModel.NationalityID"></citxt>
+                    <citxt (cModel)="headerModel.PostCode = $event" [label]="'รหัสไปรษณีย์'" [data]="headerModel.PostCode"></citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.LicenseNo = $event" [label]="'เลขที่ใบขับขี่'"
-                        [data]="headerModel.LicenseNo"></citxt>
+                    <citxt (cModel)="headerModel.Region = $event" [label]="'โซน'" [data]="headerModel.Region"[readonly]="true" (click)="chooseRegion2()"></citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="headerModel.Mobile">
-                    </citxt>
+                    <citxt (cModel)="headerModel.Route = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.Route" [readonly]="true" (click)="chooseRoute2()"></citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Email = $event" [label]="'อีเมล์'" [data]="headerModel.Email"></citxt>
+                    <citxt (cModel)="headerModel.SubRoute = $event" [label]="'เส้นทางย่อย'" [data]="headerModel.SubRoute" [readonly]="true" (click)="chooseSubRoute2()"></citxt>
                 </div>
-
+            </div>
+            <div class="row">
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.Latitude = $event" [label]="'ละติจูด'" [data]="headerModel.Latitude"></citxt>
+                </div>
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.Longtitude = $event" [label]="'ลองติจูด'" [data]="headerModel.Longtitude"></citxt>
+                </div>
+            </div>
+            <div class="row">
                 <!-- Hidden -->
                 <div class="row" hidden="true">
                     <div class="col l4 s12">
@@ -258,6 +275,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col l4 s12 p-0" style="margin-bottom: 5px;"></div>
                 <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">

@@ -452,6 +452,101 @@ export class DriverDialog {
 }
 
 @Component({
+    selector: 'province-dialog',
+    templateUrl: 'province-dialog.html',
+})
+export class ProvinceDialog {
+    constructor(
+        public dialogRef: MatDialogRef<ProvinceDialog>,
+        private serviceProviderService: ServiceProviderService,
+        private toastr: ToastrService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.read();
+    }
+
+    criteriaModel: any = {};
+
+    read() {
+        let criteria = {
+            "userinformation": this.serviceProviderService.userinformation,
+            "Fillter": this.criteriaModel.Fillter
+        }
+
+        // let json = JSON.stringify(criteria);
+        this.serviceProviderService.post('api/Masters/GetProvince', criteria).subscribe(data => {
+            let model: any = {};
+            model = data;
+
+            if (model.Status) {
+                this.data.listData = model.Data;
+            }
+            else {
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+        }, err => {
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+    }
+
+    cancel() {
+        this.dialogRef.close(undefined);
+    }
+
+    ok(param) {
+        this.dialogRef.close(param);
+    }
+}
+
+@Component({
+    selector: 'district-dialog',
+    templateUrl: 'district-dialog.html',
+})
+export class DistrictDialog {
+    constructor(
+        public dialogRef: MatDialogRef<DistrictDialog>,
+        private serviceProviderService: ServiceProviderService,
+        private toastr: ToastrService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.read();
+    }
+
+    criteriaModel: any = {};
+
+    read() {
+        let criteria = {
+            "userinformation": this.serviceProviderService.userinformation,
+            "ProvinceId": this.data.ProvinceId,
+            "Fillter": this.criteriaModel.Fillter
+        }
+
+        // let json = JSON.stringify(criteria);
+        this.serviceProviderService.post('api/Masters/GetDistrict', criteria).subscribe(data => {
+            let model: any = {};
+            model = data;
+
+            if (model.Status) {
+                this.data.listData = model.Data;
+            }
+            else {
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+        }, err => {
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+    }
+
+    cancel() {
+        this.dialogRef.close(undefined);
+    }
+
+    ok(param) {
+        this.dialogRef.close(param);
+    }
+}
+
+
+
+@Component({
     selector: 'routing-dialog',
     templateUrl: 'routing-dialog.html',
 })
@@ -474,6 +569,98 @@ export class RoutingDialog {
 
         // let json = JSON.stringify(criteria);
         this.serviceProviderService.post('api/Masters/GetRoute', criteria).subscribe(data => {
+            let model: any = {};
+            model = data;
+
+            if (model.Status) {
+                this.data.listData = model.Data;
+            }
+            else {
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+        }, err => {
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+    }
+
+    cancel() {
+        this.dialogRef.close(undefined);
+    }
+
+    ok(param) {
+        this.dialogRef.close(param);
+    }
+}
+
+@Component({
+    selector: 'subrouting-dialog',
+    templateUrl: 'subrouting-dialog.html',
+})
+export class SubRoutingDialog {
+    constructor(
+        public dialogRef: MatDialogRef<SubRoutingDialog>,
+        private serviceProviderService: ServiceProviderService,
+        private toastr: ToastrService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.read();
+    }
+
+    criteriaModel: any = {};
+
+    read() {
+        let criteria = {
+            "userinformation": this.serviceProviderService.userinformation,
+            "RouteId": this.data.RouteId,
+            "Fillter": this.criteriaModel.Fillter,
+        }
+        // let json = JSON.stringify(criteria);
+        this.serviceProviderService.post('api/Masters/GetSubRoute', criteria).subscribe(data => {
+            let model: any = {};
+            model = data;
+
+            if (model.Status) {
+                this.data.listData = model.Data;
+            }
+            else {
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+        }, err => {
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+    }
+
+    cancel() {
+        this.dialogRef.close(undefined);
+    }
+
+    ok(param) {
+        this.dialogRef.close(param);
+    }
+}
+
+@Component({
+    selector: 'region-dialog',
+    templateUrl: 'region-dialog.html',
+})
+export class RegionDialog {
+    constructor(
+        public dialogRef: MatDialogRef<RegionDialog>,
+        private serviceProviderService: ServiceProviderService,
+        private toastr: ToastrService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.read();
+    }
+
+    criteriaModel: any = {};
+
+    read() {
+        let criteria = {
+            "userinformation": this.serviceProviderService.userinformation,
+            "Fillter": this.criteriaModel.Fillter
+        }
+
+        // let json = JSON.stringify(criteria);
+        this.serviceProviderService.post('api/Masters/GetRegion', criteria).subscribe(data => {
             let model: any = {};
             model = data;
 

@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content style="min-height: 300px; max-height: 300px;">
+    <div class="row">
+        <div class="col l4 s12">
+            <citxt (cModel)="criteriaModel.Fillter = $event" [label]="'Fillter'" [data]="criteriaModel.Fillter"></citxt>
+        </div>
+        <div class="col l4 s12">
+        </div>
+        <div class="col l1">
+
+        </div>
+        <div class="col l3 s12 p-0">
+            <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+        </div>
+    </div>
+    <table>
+        <thead style="position: sticky; top: 0; background-color: white; z-index: 999;">
+            <tr>
+                <!-- <th>Id</th> -->
+                <th>Code</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of data.listData; let idx = index" (click)="ok(i)">
+                <td>{{i.Code}}</td>
+                <td>{{i.Description}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
