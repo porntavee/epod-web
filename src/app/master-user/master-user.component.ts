@@ -90,30 +90,35 @@ export class MasterUserComponent implements OnInit {
 
     this.headerModel = param;
     this.headerModel.Operation = 'UPDATE';
-    let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/Masters/GetUser', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
+    this.isMainPage = false;
+    this.isFormPage = true;
+    this.spinner.hide();
 
-      if (model.Status) {
+    // let json = JSON.stringify(criteria);
 
-        this.listDetailModel = model.Data;
+    // this.serviceProviderService.post('api/Masters/GetUser', criteria).subscribe(data => {
+    //   this.spinner.hide();
+    //   let model: any = {};
+    //   model = data;
+    //   this.viewModel = model;
 
-        this.isMainPage = false;
-        this.isFormPage = true;
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
+    //   if (model.Status) {
 
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+    //     this.listDetailModel = model.Data;
+
+    //     this.isMainPage = false;
+    //     this.isFormPage = true;
+    //   }
+    //   else {
+    //     this.spinner.hide();
+    //     this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    //   }
+
+    // }, err => {
+    //   this.spinner.hide();
+    //   this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    // });
   }
 
   //Group User.
