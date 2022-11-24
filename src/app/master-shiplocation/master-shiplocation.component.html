@@ -1,11 +1,9 @@
 <div *ngIf="isMainPage">
     <div class="col s12">
-        <div class="card-panel"
-            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
             <div class="row">
                 <div class="col l8 s12">
-                    <span
-                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
                         <b>ทะเบียน / สถานที่รับ-ส่งสินค้า</b>
                     </span>
                 </div>
@@ -52,12 +50,10 @@
         </div>
     </div>
     <div class="col s12">
-        <div class="card-panel"
-            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
             <div class="row">
                 <div class="col l2 s12">
-                    <span
-                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
                         <b>รายการข้อมูล</b>
                     </span>
                 </div>
@@ -86,8 +82,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
+                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
                             <td>
                                 <div class="w100">
                                     <a class="btn-floating blue" style="cursor: pointer;" (click)="readDetail(i)">
@@ -96,7 +91,7 @@
                                     <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
                                         <i class="medium material-icons">delete</i>
                                     </a>
-                                    
+
                                 </div>
 
                             </td>
@@ -188,12 +183,10 @@
 
 <div *ngIf="isFormPage">
     <div class="col s12">
-        <div class="card-panel"
-            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
             <div class="row">
                 <div class="col l8 s12">
-                    <span
-                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
                         <b>ทะเบียน / ผู้ใช้งาน / รายละเอียด</b>
                     </span>
                 </div>
@@ -204,8 +197,7 @@
 
             <div class="row">
                 <div class="col l4 s12">
-                    <citxt (cModel)="headerModel.Code = $event" [label]="'รหัส'" [data]="headerModel.Code"
-                        [readonly]="true"></citxt>
+                    <citxt (cModel)="headerModel.Code = $event" [label]="'รหัส'" [data]="headerModel.Code" [readonly]="true"></citxt>
                 </div>
                 <div class="col l4 s12">
                     <!-- <citxt (cModel)="headerModel.Active = $event" [label]="'สถานะ'" [data]="headerModel.Active"
@@ -219,8 +211,8 @@
                     </citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Address = $event" [label]="'ที่อยู่'" [data]="headerModel.Address">
-                    </citxt>
+                    <ctxta (cModel)="headerModel.Address = $event" [label]="'ที่อยู่'" [data]="headerModel.Address">
+                    </ctxta>
                 </div>
             </div>
 
@@ -247,7 +239,7 @@
                     <citxt (cModel)="headerModel.PostCode = $event" [label]="'รหัสไปรษณีย์'" [data]="headerModel.PostCode"></citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Region = $event" [label]="'โซน'" [data]="headerModel.Region"[readonly]="true" (click)="chooseRegion2()"></citxt>
+                    <citxt (cModel)="headerModel.Region = $event" [label]="'โซน'" [data]="headerModel.Region" [readonly]="true" (click)="chooseRegion2()"></citxt>
                 </div>
             </div>
             <div class="row">
@@ -270,8 +262,7 @@
                 <!-- Hidden -->
                 <div class="row" hidden="true">
                     <div class="col l4 s12">
-                        <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id"
-                            [readonly]="true"></citxt>
+                        <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id" [readonly]="true"></citxt>
                     </div>
                 </div>
             </div>
