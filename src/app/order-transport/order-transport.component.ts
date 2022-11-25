@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ShipToDialog, TypeOfWorkDialog } from '../dialog/dialog';
+import { ShipToDialog, TransportNoDialog, TypeOfWorkDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -119,6 +119,29 @@ export class OrderTransportComponent implements OnInit {
         // this.criteriaModel.transportTypeId = result.Id;
         this.criteriaModel.typeOfWorkCode = result.Code;
         this.criteriaModel.typeOfWorkDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseTransportNo() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.criteriaModel.transportNo = result.TransportNo;
+        // this.criteriaModel.shipToCode = result.Code;
+        // this.criteriaModel.shipToAddress = result.Address;
+        // this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;

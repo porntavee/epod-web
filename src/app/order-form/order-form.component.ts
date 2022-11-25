@@ -543,7 +543,6 @@ export class OrderFormComponent implements OnInit {
 
   create() {
 
-    debugger
     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
     this.criteriaModel.OrderDate = moment(this.criteriaModel.OrderDate).format('YYYY-MM-DDT00:00:00');
     this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');

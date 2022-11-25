@@ -893,10 +893,26 @@
             </div>
 
             <div class="row">
-                <div class="col s6">
+                <div class="col s3">
                     <div class="row" style="margin-top: 10px;">
                         <cbtn [label]="'ยืนยันการจัดส่งแผนงาน'" [color]="'blue'" [icon]="''" (click)="confirm()"></cbtn>
+                    </div>
+
+                    <!-- <ul>
+                        <li>paginationModel.textPage</li>
+                    </ul> -->
+                </div>
+                <div class="col s2">
+                    <div class="row" style="margin-top: 10px;">
                         <cbtn [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn>
+                    </div>
+
+                    <!-- <ul>
+                        <li>paginationModel.textPage</li>
+                    </ul> -->
+                </div>
+                <div class="col s2">
+                    <div class="row" style="margin-top: 10px;">
                         <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="backToMain()"></cbtn>
                     </div>
 
@@ -904,7 +920,7 @@
                         <li>paginationModel.textPage</li>
                     </ul> -->
                 </div>
-                <div class="col s6">
+                <div class="col s5">
                     <div style="text-align: right;">
                         <!-- <ul>
                             <li *ngFor="let item of listModel | paginate: { itemsPerPage: 10, currentPage: p }">{{item}}</li>

@@ -1,4 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { E } from '@angular/cdk/keycodes';
 import { Component, Inject, KeyValueDiffers, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -6,7 +7,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { RouteDialog } from '../dialog/dialog';
+import { DriverDialog, RouteDialog, ShipToDialog, StatusDialog, VehicleDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -20,57 +21,9 @@ export class OrderTransportFormComponent implements OnInit {
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
-  listModel: any = [
-    {
-      demo: 'demo1',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo2',
-      status: 'เริ่มต้นปฏิบัติงาน',
-    },
-    {
-      demo: 'demo3',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-    {
-      demo: 'demo',
-      status: 'ส่งสินค้าแล้ว',
-    },
-  ]; //ข้อมูลในตารางหน้า Main
+  listModel: any = []; //ข้อมูลในตารางหน้า Main
   criteriaModel: any = {} //ค้นหา
+
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
@@ -92,13 +45,22 @@ export class OrderTransportFormComponent implements OnInit {
   listSubRoute: any = [];
   listVehicleType: any = [];
 
+  formModel: any = {};
+  listFormModel: any = [];
+
+  itemSelected = false;
+
   constructor(public dialog: MatDialog,
     private router: Router,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private differs: KeyValueDiffers,
-    private excelService: ExcelService) { }
+    private excelService: ExcelService) {
+
+    const date = new Date();
+    this.criteriaModel.TransportDateString = moment(date.setDate(date.getDate() + 1)).format('YYYYMMDD');
+  }
 
   ngOnInit(): void {
 
@@ -248,9 +210,9 @@ export class OrderTransportFormComponent implements OnInit {
           console.log(`Dialog result: ${result}`);
 
           if (result != undefined) {
-            this.criteriaModel.subRouteId = result.Id;
-            this.criteriaModel.subRouteCode = result.Code;
-            this.criteriaModel.subRouteDescription = result.Code + ' - ' + result.Description;
+            this.criteriaModel.SubRouteId = result.Id;
+            this.criteriaModel.SubRouteCode = result.Code;
+            this.criteriaModel.SubRouteDescription = result.Code + ' - ' + result.Description;
             // param.Code = result.Code;
             // param.FirstName = result.firstName;
             // param.LastName = result.lastName;
@@ -469,14 +431,6 @@ export class OrderTransportFormComponent implements OnInit {
     this.model = {};
     this.models = [];
     this.listModel = [];
-  }
-
-  create() {
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/order-transport-form`])
-    );
-
-    window.open(url, '_blank');
   }
 
   update() {
@@ -756,9 +710,9 @@ export class OrderTransportFormComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        this.criteriaModel.transportId = result.Id;
-        this.criteriaModel.transportCode = result.Code;
-        this.criteriaModel.transportDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.TransportId = result.Id;
+        this.criteriaModel.TransportCode = result.Code;
+        this.criteriaModel.TransportDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -778,13 +732,13 @@ export class OrderTransportFormComponent implements OnInit {
 
       if (result != undefined) {
 
-        this.criteriaModel.subRouteId = '';
-        this.criteriaModel.subRouteCode = '';
-        this.criteriaModel.subRouteDescription = '';
+        this.criteriaModel.SubRouteId = '';
+        this.criteriaModel.SubRouteCode = '';
+        this.criteriaModel.SubRouteDescription = '';
 
-        this.criteriaModel.routeId = result.Id;
-        this.criteriaModel.routeCode = result.Code;
-        this.criteriaModel.routeDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.RouteId = result.Id;
+        this.criteriaModel.RouteCode = result.Code;
+        this.criteriaModel.RouteDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -797,13 +751,161 @@ export class OrderTransportFormComponent implements OnInit {
   //use
   chooseSubRoute() {
 
-    if (this.criteriaModel.routeId == '' || this.criteriaModel.routeId == undefined)
-    {
+    if (this.criteriaModel.RouteId == '' || this.criteriaModel.RouteId == undefined) {
       this.toastr.warning('กรุณาเลือก Route ก่อน', 'แจ้งเตือนระบบ', { timeOut: 5000 });
       return
     }
 
     this.readSubRoute();
+  }
+
+  //use
+  chooseReceiveFrom() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.ReceiveFromId = result.Id;
+        this.criteriaModel.ReceiveFromCode = result.Code;
+        this.criteriaModel.ReceiveFromAddress = result.Address;
+        this.criteriaModel.ReceiveFromDescription = result.Code + ' - ' + result.CustomerName;
+      }
+    });
+  }
+
+  //use
+  chooseTransportShipTo() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.criteriaModel.TransportShiptoId = result.Id;
+        this.criteriaModel.TransportShiptoCode = result.Code;
+        this.criteriaModel.TransportShiptoAddress = result.Address;
+        this.criteriaModel.TransportShiptoDescription = result.Code + ' - ' + result.CustomerName;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseShipTo() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.formModel.ShiptoId = result.Id;
+        this.formModel.ShiptoCode = result.Code;
+        this.formModel.ShiptoAddress = result.Address;
+        this.formModel.ShiptoDescription = result.Code + ' - ' + result.CustomerName;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseTypeOfWork() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะเอกสาร' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.criteriaModel.StatusCode = result.Code;
+        this.criteriaModel.StatusDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseStatus() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะเอกสาร' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.formModel.StatusCode = result.Code;
+        this.formModel.StatusDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseDriver() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(DriverDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'คนขับ' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.DriverId = result.Id;
+        this.criteriaModel.DriverCode = result.Code;
+        this.criteriaModel.DriverDescription = result.Code + ' - ' + result.FirstName + ' ' + result.LastName;
+
+        this.criteriaModel.Mobile = result.Mobile;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  //use
+  chooseVehicle() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(VehicleDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'ทะเบียนรถ' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.VehicleId = result.Id;
+        this.criteriaModel.VehicleCode = result.Code;
+        this.criteriaModel.VehicleDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
   }
 
   //use
@@ -816,9 +918,9 @@ export class OrderTransportFormComponent implements OnInit {
 
       if (result != undefined) {
 
-        this.criteriaModel.truckTypeId = result.Id;
-        this.criteriaModel.truckTypeCode = result.Code;
-        this.criteriaModel.truckTypeDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.VehicleTypeId = result.Id;
+        this.criteriaModel.VehicleTypeCode = result.Code;
+        this.criteriaModel.VehicleTypeDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -958,13 +1060,146 @@ export class OrderTransportFormComponent implements OnInit {
     this.spinner.hide();
   }
 
-  next() {
+  add() {
     this.isMainPage = false;
     this.isFormPage = true;
+
+    this.readOrder();
+  }
+
+  addOrder() {
+
+    this.listFormModel.forEach(element => {
+      if (element.isSelected)
+        this.listModel.push(element);
+    });
+
+    this.isMainPage = true;
+    this.isFormPage = false;
+
+    window.scroll(0, 0);
+
+  }
+
+  deleteOrder(idx) {
+    this.listModel.splice(idx, 1);
   }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.listModel, event.previousIndex, event.currentIndex);
+  }
+
+  clear() {
+    this.formModel = { OrderDateString: '' };
+  }
+
+  readOrder() {
+    this.spinner.show();
+
+    this.formModel.userinformation = this.serviceProviderService.userinformation;
+    this.formModel.OrderDate = this.criteriaModel.OrderDateString != undefined && this.criteriaModel.OrderDateString != "Invalid date" ? moment(this.criteriaModel.OrderDateString).format('YYYY-MM-DD 00:00:00.000') : undefined;
+
+    this.serviceProviderService.post('api/Transport/GetOrder', this.formModel).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+
+        model.Data.forEach(element => {
+          element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+        });
+
+        this.listFormModel = model.Data;
+      }
+      else {
+        this.listFormModel = [];
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  checkUncheckAll() {
+    this.listFormModel.forEach(element => {
+      element.isSelected = this.itemSelected;
+    });
+  }
+
+  create() {
+
+    this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+    this.criteriaModel.TransportNo = "";
+    this.criteriaModel.TransportDate = moment(this.criteriaModel.TransportDateString).format('YYYY-MM-DDT00:00:00');
+    this.criteriaModel.TransportStatus = "O"; 
+    this.criteriaModel.TransportTypeId = "OT";
+    this.criteriaModel.RegionId = "0010000000000";
+    this.criteriaModel.CreateBy = "0010000000000";
+    // this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
+    // this.criteriaModel.UoM = "N/A";
+
+    let json = JSON.stringify(this.criteriaModel);
+
+    debugger
+
+    this.serviceProviderService.post('api/Transport/CreateTransport', this.criteriaModel).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+
+      if (model.Status) {
+        this.criteriaModel.TransportNo = model.Data;
+        this.toastr.success("สร้างใบคุมเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+
+
+        let item:any = {};
+        item.TransportNo = model.Data;
+        item.OrderNo = "";
+        
+
+        this.serviceProviderService.post('api/Transport/CreateTransportIem', this.criteriaModel).subscribe(data => {
+          // this.spinner.hide();
+          let model: any = {};
+          model = data;
+          // this.viewModel = model;
+    
+    
+          if (model.Status) {
+            // this.criteriaModel.TransportNo = model.Data;
+            this.toastr.success("สร้างงานขนส่งเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            // this.listModel = model.Data;
+          }
+          else {
+            // this.listModel = [];
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+    
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+        // this.listModel = model.Data;
+      }
+      else {
+        // this.listModel = [];
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
   }
 
 }
