@@ -59,7 +59,7 @@ const routes: Routes = [
   { path: 'order', component: OrderComponent },
   { path: 'order-form', component: OrderFormComponent },
   { path: 'order-transport', component: OrderTransportComponent },
-  { path: 'order-transport-form', component: OrderTransportFormComponent },
+  { path: 'order-transport-form/:id', component: OrderTransportFormComponent },
   { path: 'master-user', component: MasterUserComponent },
   { path: 'master-shiplocation', component: MasterShiplocationComponent },
 ];

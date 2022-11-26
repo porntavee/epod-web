@@ -17,11 +17,11 @@ export class InputTextComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.cModel.emit(this.data);
+    this.cModel.emit(this.data || '');
   }
 
   emit(param) {
-    this.cModel.emit(param);
+    this.cModel.emit(param || '');
   }
 
 }

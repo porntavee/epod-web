@@ -3,11 +3,11 @@ import { E } from '@angular/cdk/keycodes';
 import { Component, Inject, KeyValueDiffers, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { DriverDialog, RouteDialog, ShipToDialog, StatusDialog, VehicleDialog } from '../dialog/dialog';
+import { DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -50,13 +50,21 @@ export class OrderTransportFormComponent implements OnInit {
 
   itemSelected = false;
 
+  id: any = '';
+
   constructor(public dialog: MatDialog,
     private router: Router,
+    private route: ActivatedRoute,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private differs: KeyValueDiffers,
     private excelService: ExcelService) {
+
+    this.route.queryParams.subscribe(params => {
+      let model: any = this.route.snapshot.params;
+      this.id = model.id;
+    });
 
     const date = new Date();
     this.criteriaModel.TransportDateString = moment(date.setDate(date.getDate() + 1)).format('YYYYMMDD');
@@ -82,6 +90,11 @@ export class OrderTransportFormComponent implements OnInit {
     this.readTransport();
     this.readRoute();
     this.readVehicleType();
+
+    if (this.id != 'new')
+    {
+      this.read();
+    }
   }
 
   viewModel: any;
@@ -90,36 +103,70 @@ export class OrderTransportFormComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "empID": this.criteriaModel.empID,
-      "DocNum": this.criteriaModel.DocNum,
-      "FirstName": this.criteriaModel.FirstName,
-      "DateFrom": this.criteriaModel.DateFrom == 'Invalid date' ? '' : moment(this.criteriaModel.DateFrom).format('YYYY-MM-DD'),
-      "Code": this.criteriaModel.Code,
-      "LastDateFrom": this.criteriaModel.LastDateFrom == 'Invalid date' ? '' : moment(this.criteriaModel.LastDateFrom).format('YYYY-MM-DD'),
-      "LastDateTo": this.criteriaModel.LastDateTo == 'Invalid date' ? '' : moment(this.criteriaModel.LastDateTo).format('YYYY-MM-DD'),
-      // "FirstName": this.criteriaModel.FirstName,
-      // "DateFrom": this.criteriaModel.DateFrom
+      "TransportNo": this.id
     }
-
 
     let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/TimeSheet/GetTimeSheet', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Transport/GetTransportHeader', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
       this.viewModel = model;
 
+      if (model.Status) {
+
+        this.criteriaModel = model.Data[0];
+        this.criteriaModel.TransportDescription = model.Data[0].Transport;
+        this.criteriaModel.ReceiveFromDescription = model.Data[0].ReceiveFromName;
+        this.criteriaModel.RouteDescription = model.Data[0].Route;
+        this.criteriaModel.TransportTypeDescription = model.Data[0].TransportType;
+        this.criteriaModel.SubRouteDescription = model.Data[0].SubRoute;
+        this.criteriaModel.TransportShiptoDescription = model.Data[0].TransportShitptoName;
+        this.criteriaModel.DriverDescription = model.Data[0].DriverFirstName;
+        this.criteriaModel.Plant = model.Data[0].Plant;
+        this.criteriaModel.TransportShiptoAddress = model.Data[0].TransportShitptoAddress;
+        this.criteriaModel.VehicleDescription = model.Data[0].Vehicle;
+        this.criteriaModel.VehicleTypeDescription = model.Data[0].VehicleType;
+        
+        this.criteriaModel.TransportDateString = moment(model.Data[0].TransportDate).format('YYYYMMDD');
+
+        
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
 
       if (model.Status) {
 
-        model.Data.forEach(element => {
-          element.DateFrom = moment(element.DateFrom).format('DD-MM-YYYY');
-          element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-          element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
-        });
-
         this.listModel = model.Data;
+        // this.criteriaModel.TransportDescription = model.Data[0].Transport;
+        // this.criteriaModel.ReceiveFromDescription = model.Data[0].ReceiveFromName;
+        // this.criteriaModel.RouteDescription = model.Data[0].Route;
+        // this.criteriaModel.TransportTypeDescription = model.Data[0].TransportType;
+        // this.criteriaModel.SubRouteDescription = model.Data[0].SubRoute;
+        // this.criteriaModel.TransportShiptoDescription = '';
+        // this.criteriaModel.DriverDescription = model.Data[0].DriverFirstName;
+        // this.criteriaModel.Plant = model.Data[0].Plant;
+        // this.criteriaModel.TransportShiptoAddress = '';
+        // this.criteriaModel.VehicleDescription = model.Data[0].Vehicle;
+        // this.criteriaModel.VehicleTypeDescription = model.Data[0].VehicleType;
+        
+        // this.criteriaModel.TransportDateString = moment(model.Data[0].TransportDate).format('YYYYMMDD');
+
+        
       }
       else {
         this.spinner.hide();
@@ -426,11 +473,6 @@ export class OrderTransportFormComponent implements OnInit {
   backToMain() {
     this.isMainPage = true;
     this.isFormPage = false;
-    this.isTimeSheetPage = false;
-    // this.read();
-    this.model = {};
-    this.models = [];
-    this.listModel = [];
   }
 
   update() {
@@ -778,6 +820,11 @@ export class OrderTransportFormComponent implements OnInit {
 
   //use
   chooseTransportShipTo() {
+
+    if (this.criteriaModel.TransportTypeId != 'XD') {
+      this.toastr.warning('ระบุ Type of Work เป็น X Dock ก่อน', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return
+    }
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
 
@@ -825,15 +872,15 @@ export class OrderTransportFormComponent implements OnInit {
   //use
   chooseTypeOfWork() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะเอกสาร' } });
+    const dialogRef = this.dialog.open(TypeOfWorkDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะเอกสาร' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
         // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.StatusCode = result.Code;
-        this.criteriaModel.StatusDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.TransportTypeId = result.Code;
+        this.criteriaModel.TransportTypeDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -1138,8 +1185,8 @@ export class OrderTransportFormComponent implements OnInit {
     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
     this.criteriaModel.TransportNo = "";
     this.criteriaModel.TransportDate = moment(this.criteriaModel.TransportDateString).format('YYYY-MM-DDT00:00:00');
-    this.criteriaModel.TransportStatus = "O"; 
-    this.criteriaModel.TransportTypeId = "OT";
+    this.criteriaModel.TransportStatus = "O";
+    // this.criteriaModel.TransportTypeId = "OT";
     this.criteriaModel.RegionId = "0010000000000";
     this.criteriaModel.CreateBy = "0010000000000";
     // this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
@@ -1147,43 +1194,123 @@ export class OrderTransportFormComponent implements OnInit {
 
     let json = JSON.stringify(this.criteriaModel);
 
-    debugger
-
     this.serviceProviderService.post('api/Transport/CreateTransport', this.criteriaModel).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
       this.viewModel = model;
 
-
       if (model.Status) {
         this.criteriaModel.TransportNo = model.Data;
         this.toastr.success("สร้างใบคุมเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
 
+        let item: any = {};
+        item.userinformation = this.serviceProviderService.userinformation;
+        item.TTRANSPORTDS = [];
 
-        let item:any = {};
-        item.TransportNo = model.Data;
-        item.OrderNo = "";
-        
+        this.listModel.forEach(element => {
+          item.TTRANSPORTDS.push({
+            "TransportNo": model.Data,
+            "OrderNo": element.OrderNo,
+            "OrderStatus": "O",
+            "ShiptoId": this.criteriaModel.TransportTypeId == "XD" ? this.criteriaModel.TransportShiptoId : ""
+          })
+        });
 
-        this.serviceProviderService.post('api/Transport/CreateTransportIem', this.criteriaModel).subscribe(data => {
+        this.serviceProviderService.post('api/Transport/CreateTransportIem', item).subscribe(data => {
           // this.spinner.hide();
           let model: any = {};
           model = data;
           // this.viewModel = model;
-    
-    
+
           if (model.Status) {
             // this.criteriaModel.TransportNo = model.Data;
             this.toastr.success("สร้างงานขนส่งเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
             // this.listModel = model.Data;
+            this.router.navigate(['order-transport']);
           }
           else {
             // this.listModel = [];
             this.spinner.hide();
             this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
           }
-    
+
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+        // this.listModel = model.Data;
+      }
+      else {
+        // this.listModel = [];
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  edit() {
+
+    this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+    this.criteriaModel.Process = 'UPDATE';
+    // this.criteriaModel.TransportNo = "";
+    this.criteriaModel.TransportDate = moment(this.criteriaModel.TransportDateString).format('YYYY-MM-DDT00:00:00');
+    // this.criteriaModel.TransportStatus = "O";
+    // this.criteriaModel.TransportTypeId = "OT";
+    // this.criteriaModel.RegionId = "0010000000000";
+    // this.criteriaModel.CreateBy = "0010000000000";
+    // this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
+    // this.criteriaModel.UoM = "N/A";
+
+    let json = JSON.stringify(this.criteriaModel);
+
+    debugger
+    this.serviceProviderService.post('api/Transport/CreateTransport', this.criteriaModel).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      debugger
+      if (model.Status) {
+        this.criteriaModel.TransportNo = model.Data;
+        this.toastr.success("อัพเดทใบคุมเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+
+        let item: any = {};
+        item.userinformation = this.serviceProviderService.userinformation;
+        item.TTRANSPORTDS = [];
+
+        this.listModel.forEach(element => {
+          item.TTRANSPORTDS.push({
+            "TransportNo": model.Data,
+            "OrderNo": element.OrderNo,
+            // "OrderStatus": "O",
+            "ShiptoId": this.criteriaModel.TransportTypeId == "XD" ? this.criteriaModel.TransportShiptoId : ""
+          })
+        });
+
+        this.serviceProviderService.post('api/Transport/CreateTransportIem', item).subscribe(data => {
+          // this.spinner.hide();
+          let model: any = {};
+          model = data;
+          // this.viewModel = model;
+
+          if (model.Status) {
+            // this.criteriaModel.TransportNo = model.Data;
+            this.toastr.success("อัพเดทงานขนส่งเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            // this.listModel = model.Data;
+            this.router.navigate(['order-transport']);
+          }
+          else {
+            // this.listModel = [];
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+
         }, err => {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });

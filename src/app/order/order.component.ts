@@ -517,7 +517,7 @@ export class OrderComponent implements OnInit {
 
   create() {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`./order-form`])
+      this.router.createUrlTree([`epod/order-form`])
     );
 
     window.open(url, '_blank');
