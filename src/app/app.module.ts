@@ -106,6 +106,7 @@ import { OrderComponent } from './order/order.component';
 import { OrderFormComponent } from './order-form/order-form.component';
 import { MasterUserComponent } from './master-user/master-user.component';
 import { MasterShiplocationComponent } from './master-shiplocation/master-shiplocation.component';
+import { ReturnDocumentComponent } from './return-document/return-document.component';
 
 @NgModule({
   declarations: [
@@ -194,7 +195,8 @@ import { MasterShiplocationComponent } from './master-shiplocation/master-shiplo
     OrderFormComponent,
     MasterUserComponent,
     GroupUserDialog,
-    MasterShiplocationComponent
+    MasterShiplocationComponent,
+    ReturnDocumentComponent
   ],
   imports: [
     BrowserModule,
