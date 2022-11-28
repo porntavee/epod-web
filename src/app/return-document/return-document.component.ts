@@ -58,8 +58,7 @@ export class ReturnDocumentComponent implements OnInit {
       this.spinner.show();
 
       this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
-
-      // let json = JSON.stringify(criteria);
+      this.criteriaModel.Process = 'ADMIN_RETRURN';
 
       this.serviceProviderService.post('api/Transport/GetTransportDetail', this.criteriaModel).subscribe(data => {
         this.spinner.hide();
