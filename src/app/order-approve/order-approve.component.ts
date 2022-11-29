@@ -17,6 +17,7 @@ import { ConfirmDialog, DriverDialog, RouteDialog, ShipToDialog, StatusDialog, T
 })
 export class OrderApproveComponent implements OnInit {
 
+  isDelivery: boolean = false;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
@@ -125,7 +126,7 @@ export class OrderApproveComponent implements OnInit {
     this.headerModel.DriverFirstName = this.headerModel.DriverFirstName + ' ' + this.headerModel.DriverLastName;
 
     let json = JSON.stringify(criteria);
-
+    this.isDelivery = false;
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
@@ -139,12 +140,20 @@ export class OrderApproveComponent implements OnInit {
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+
+          
+          //D P R S 
+          var strDeliveryStatus = "DPRS";
+          if(strDeliveryStatus.includes(String(element.OrderStatus))){
+            this.isDelivery = true;
+          }
         });
 
         this.listDetailModel = model.Data;
 
         this.isMainPage = false;
         this.isFormPage = true;
+
       }
       else {
         this.spinner.hide();
