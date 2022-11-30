@@ -123,6 +123,7 @@ export class OrderApproveComponent implements OnInit {
     }
 
     this.headerModel = param;
+    this.headerModel.DriverFirstName = '';
     this.headerModel.DriverFirstName = this.headerModel.DriverFirstName + ' ' + this.headerModel.DriverLastName;
 
     let json = JSON.stringify(criteria);

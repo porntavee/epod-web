@@ -101,7 +101,9 @@ import { OrderApproveComponent } from './order-approve/order-approve.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OrderTransportComponent } from './order-transport/order-transport.component';
 import { OrderTransportFormComponent } from './order-transport-form/order-transport-form.component';
-import { ConfirmDialog, DriverDialog, GroupUserDialog, RouteDialog , RoutingDialog ,SubRoutingDialog,RegionDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog ,ProvinceDialog,DistrictDialog,JobStatusDialog  } from "./dialog/dialog";
+import { ConfirmDialog, DriverDialog, GroupUserDialog, RouteDialog , RoutingDialog ,SubRoutingDialog,RegionDialog
+  , ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog ,ProvinceDialog,DistrictDialog
+  ,JobStatusDialog,DocReturnDialog  } from "./dialog/dialog";
 import { OrderComponent } from './order/order.component';
 import { OrderFormComponent } from './order-form/order-form.component';
 import { MasterUserComponent } from './master-user/master-user.component';
@@ -191,6 +193,7 @@ import { ReturnDocumentComponent } from './return-document/return-document.compo
     DistrictDialog,
     DriverDialog,
     JobStatusDialog,
+    DocReturnDialog,
     ConfirmDialog,
     OrderComponent,
     OrderFormComponent,

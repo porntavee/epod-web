@@ -13,17 +13,55 @@
         <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
             <div class="row">
                 <div class="col l3 s12 p-0">
+                    <citxt (cModel)="criteriaModel.ReturnNo = $event" [label]="'เลขที่ใบคืนเอกสาร'" [data]="criteriaModel.ReturnNo"  [readonly]="true" (click)="chooseDocReturn()"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l3 s12 p-0">
+                    <citxt (cModel)="criteriaModel.TransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.TransportNo" (keydown)="read($event)"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l3 s12 p-0">
                     <citxt (cModel)="criteriaModel.InvoiceNo = $event" [label]="'เลขที่อินวอยน์'" [data]="criteriaModel.InvoiceNo" (keydown)="read($event)"></citxt>
                 </div>
             </div>
+
+
+            <div class="row">
+                <div class="col l3" style="margin-top: 10px;">
+                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
+                </div>
+            </div>
+
         </div>
         <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
+            <div class="row">
+                <div class="col s12">
+                    <citxt (cModel)="criteriaModel.ReturnNo = $event" [label]="'เลขที่ใบคืนเอกสาร'" [data]="criteriaModel.ReturnNo" [readonly]="true" (click)="chooseDocReturn()"></citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <citxt (cModel)="criteriaModel.TransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.TransportNo" (keydown)="read($event)"></citxt>
+                </div>
+            </div>
             <div class="row">
                 <div class="col s12">
                     <citxt (cModel)="criteriaModel.InvoiceNo = $event" [label]="'เลขที่อินวอยน์'" [data]="criteriaModel.InvoiceNo" (keydown)="read($event)"></citxt>
                 </div>
             </div>
+           
+
+            <div class="row">
+                <div class="col s12" style="margin-top: 10px;">
+                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
+                </div>
+            </div>
+    
         </div>
+
+     
     </div>
     <!-- {{this.viewModel|json}} -->
     <div class="col s12">
@@ -59,6 +97,7 @@
                             </th> -->
                             <th>คำสั่ง</th>
                             <th>ลำดับ</th>
+                            <th>เลขที่ใบคุม</th>
                             <th>Shipment No.</th>
                             <th>เลขที่อินวอยน์</th>
                             <th>Doc. Type</th>
@@ -72,7 +111,7 @@
                             <th>Carton</th>
                             <th>Weight (kg.)</th>
                             <th>Due Date</th>
-                            <th>จำนวนวัน</th>
+                            <!-- <th>จำนวนวัน</th> -->
                             <th>สถานะ</th>
                             <th>หมายเหตุ</th>
                         </tr>
@@ -135,6 +174,11 @@
                                     <!-- <cbtne [label]="i.Code" (click)="editTimeSheet(i)"></cbtne> -->
                                     <!-- <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a> -->
                                     {{idx + 1}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.TransportNo}}
                                 </div>
                             </td>
                             <td>
@@ -202,11 +246,11 @@
                                     {{i.OrderEstimate}}
                                 </div>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <div class="w100">
 
                                 </div>
-                            </td>
+                            </td> -->
                             <td style="padding: 0 0 0 0 !important;">
                                 <div *ngIf="i.TransportStatusDesc == 'เสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
@@ -263,7 +307,7 @@
                 <div class="col s6">
                     <div class="row">
                         <div class="col s6" style="margin-top: 10px;">
-                            <cbtn [label]="'คืนเอกสาร'" [color]="'blue'" [icon]="''" (click)="confirm()"></cbtn>
+                            <cbtn [label]="'คืนเอกสาร'" [color]="'blue'" [icon]="''" (click)="confirmAlert()"></cbtn>
                         </div>
                     </div>
 

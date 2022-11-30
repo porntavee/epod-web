@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog } from '../dialog/dialog';
+import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, DocReturnDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -49,12 +49,21 @@ export class ReturnDocumentComponent implements OnInit {
     private excelService: ExcelService) { }
 
   ngOnInit(): void {
+    this.criteriaModel.InvoiceNo = '';
+    this.criteriaModel.TransportNo = '';
+    this.criteriaModel.ReturnNo = '';
   }
 
   viewModel: any;
   read(param) {
 
     if (param.key === "Enter") {
+
+      if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '') {
+        this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        return;
+      }
+
       this.spinner.show();
 
       this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
@@ -76,6 +85,7 @@ export class ReturnDocumentComponent implements OnInit {
           });
 
           this.criteriaModel.InvoiceNo = '';
+          this.criteriaModel.TransportNo = '';
         }
         else {
           // this.listModel = [];
@@ -134,7 +144,28 @@ export class ReturnDocumentComponent implements OnInit {
     });
   }
 
+
+  confirmAlert() {
+    if (this.criteriaModel.ReturnNo == '') {
+      const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการสร้างเอกสารคืน ใช่หรือไม่ ?' } });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+        if (result) {
+          this.confirm();
+        }
+        else {
+          return;
+        }
+      });
+    }
+    else {
+      this.confirm();
+    }
+  }
+
+
   confirm() {
+
     this.spinner.show();
 
     let item: any = [];
@@ -148,15 +179,16 @@ export class ReturnDocumentComponent implements OnInit {
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "Process": "ADMIN_RETRURN",
+      "ReturnNo": this.criteriaModel.ReturnNo,
       "TTRANSPORTDS": item
     }
 
     console.log(JSON.stringify(criteria));
 
-    debugger
+    // debugger
     this.serviceProviderService.post('api/Transport/ReturnOrders', criteria).subscribe(data => {
 
-      debugger
+      // debugger
       this.spinner.hide();
       let model: any = {};
       model = data;
@@ -179,9 +211,15 @@ export class ReturnDocumentComponent implements OnInit {
   }
 
   deleteOrder(idx) {
-    this.listModel.splice(idx, 1);
+    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?' } });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.listModel.splice(idx, 1);
+      }
+    });
   }
-  
+
   cancel() {
 
     //ต้องเอาไปใส่ใน app.module ที่ declarations
@@ -414,6 +452,24 @@ export class ReturnDocumentComponent implements OnInit {
     });
   }
 
+
+  //use
+  chooseDocReturn() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(DocReturnDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'เลขที่คืนเอกสาร' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.ReturnNo = result.ReturnNo;
+      }
+      else {
+        this.criteriaModel.ReturnNo = '';
+      }
+    });
+  }
+
   backToMain() {
     this.isMainPage = true;
     this.isFormPage = false;
@@ -422,6 +478,7 @@ export class ReturnDocumentComponent implements OnInit {
     // this.model = {};
     // this.models = [];
     this.listModel = [];
+    this.clear()
   }
 
   reportModel: any = [];
@@ -507,5 +564,9 @@ export class ReturnDocumentComponent implements OnInit {
 
   clear() {
     this.criteriaModel = { apptDate: '' };
+    this.listModel = [];
+    this.criteriaModel.InvoiceNo = '';
+    this.criteriaModel.TransportNo = '';
+    this.criteriaModel.ReturnNo = '';
   }
 }
