@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog } from '../dialog/dialog';
+import { TransportNoDialog, ShipToDialog, JobStatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -62,7 +62,7 @@ export class OrderComponent implements OnInit {
     // { value: '3', display: 'First Name' }];
 
     this.criteriaModel.statusCode = 'O';
-    this.criteriaModel.statusDescription = 'O - รอยืนยันใบคุมรถ';
+    this.criteriaModel.statusDescription = 'O - รอจัดใบคุมรถ';
 
     this.read();
     this.readRoute();
@@ -74,14 +74,10 @@ export class OrderComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.criteriaModel.TransportNo,
+      "OrderNo": this.criteriaModel.orderNo,
       "ShiptoId": this.criteriaModel.shipToId,
-      "OrderEstimate": this.criteriaModel.apptDate != undefined && this.criteriaModel.apptDate != "Invalid date" ? moment(this.criteriaModel.apptDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "DriverId": this.criteriaModel.driverId,
-      "TransportStatus": this.criteriaModel.statusCode,
-      "TransportTypeId": this.criteriaModel.typeOfWorkCode,
-      "VehicleId": this.criteriaModel.vehicleId,
-      "RouteId": this.criteriaModel.routeId,
+      "OrderDate": this.criteriaModel.orderDate != undefined && this.criteriaModel.orderDate != "Invalid date" ? moment(this.criteriaModel.orderDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "OrderStatus": this.criteriaModel.statusCode,
     }
 
     let json = JSON.stringify(criteria);
@@ -96,6 +92,7 @@ export class OrderComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.OrderDate = moment(element.OrderDate).format('DD-MM-YYYY');
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
         });
@@ -286,7 +283,7 @@ export class OrderComponent implements OnInit {
   //use
   chooseStatus() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Type of Work' } });
+    const dialogRef = this.dialog.open(JobStatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะ' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -512,7 +509,7 @@ export class OrderComponent implements OnInit {
   }
 
   clear() {
-    this.criteriaModel = { apptDate: '' };
+    this.criteriaModel = { orderDate: '' };
   }
 
   create() {
