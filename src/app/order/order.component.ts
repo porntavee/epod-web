@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { TransportNoDialog, ShipToDialog, JobStatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog } from '../dialog/dialog';
+import { TransportNoDialog, ShipToDialog, JobStatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, ConfirmDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -514,9 +514,62 @@ export class OrderComponent implements OnInit {
 
   create() {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`epod/order-form`])
+      this.router.createUrlTree([`order-form/new`])
     );
 
     window.open(url, '_blank');
+  }
+
+  edit(param) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`order-form/` + param])
+    );
+
+    window.open(url, '_blank');
+  }
+
+  delete(param) {
+
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องลบใช่หรือไม่?' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+
+        this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+        this.criteriaModel.Process = 'DELETE';
+        this.criteriaModel.OrderNo = param;
+        // this.criteriaModel.TransportStatus = "O";
+        // this.criteriaModel.TransportTypeId = "OT";
+        // this.criteriaModel.RegionId = "0010000000000";
+        // this.criteriaModel.CreateBy = "0010000000000";
+        // this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
+        // this.criteriaModel.UoM = "N/A";
+
+        let json = JSON.stringify(this.criteriaModel);
+
+
+        this.serviceProviderService.post('api/Transport/CreateOrder', this.criteriaModel).subscribe(data => {
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
+          this.viewModel = model;
+
+
+          if (model.Status) {
+            this.criteriaModel.TransportNo = model.Data;
+            this.toastr.success("ลบใบคุมเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.read();
+          }
+
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+      }
+    });
+
   }
 }

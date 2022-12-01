@@ -2,11 +2,11 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, KeyValueDiffers, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog } from '../dialog/dialog';
+import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, ConfirmDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -41,13 +41,22 @@ export class OrderFormComponent implements OnInit {
 
   listRoute: any = [];
 
+  id: any = '';
+
   constructor(public dialog: MatDialog,
     private router: Router,
+    private route: ActivatedRoute,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private differs: KeyValueDiffers,
-    private excelService: ExcelService) { }
+    private excelService: ExcelService) {
+
+    this.route.queryParams.subscribe(params => {
+      let model: any = this.route.snapshot.params;
+      this.id = model.id;
+    });
+  }
 
   ngOnInit(): void {
 
@@ -68,6 +77,10 @@ export class OrderFormComponent implements OnInit {
     this.criteriaModel.OrderEstimate = moment(date.setDate(date.getDate() + 1)).format('YYYYMMDD');
     // this.read();
     // this.readRoute();
+
+    if (this.id != 'new') {
+      this.read();
+    }
   }
 
   viewModel: any;
@@ -76,19 +89,12 @@ export class OrderFormComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.criteriaModel.TransportNo,
-      "ShiptoId": this.criteriaModel.shipToId,
-      "OrderEstimate": this.criteriaModel.apptDate != undefined && this.criteriaModel.apptDate != "Invalid date" ? moment(this.criteriaModel.apptDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "DriverId": this.criteriaModel.driverId,
-      "TransportStatus": this.criteriaModel.statusCode,
-      "TransportTypeId": this.criteriaModel.typeOfWorkCode,
-      "VehicleId": this.criteriaModel.vehicleId,
-      "RouteId": this.criteriaModel.routeId,
+      "OrderNo": this.id,
     }
 
     let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/Transport/GetTransportHeader', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Transport/GetOrder', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
@@ -96,16 +102,25 @@ export class OrderFormComponent implements OnInit {
 
       if (model.Status) {
 
-        model.Data.forEach(element => {
-          element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
-          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
-        });
+        this.criteriaModel = model.Data[0];
+        this.criteriaModel.OrderTypeDescription = model.Data[0].OrderType;
+        this.criteriaModel.OwnerDescription = model.Data[0].OwnerName;
+        this.criteriaModel.ShiptoDescription = model.Data[0].ShiptoName;
+        this.criteriaModel.ShiptoTel = model.Data[0].ShiptoMobile;
+        this.criteriaModel.ShiptoAddress = model.Data[0].ShiptoAdress;
+        this.criteriaModel.RouteDescription = '';
+        this.criteriaModel.SubRouteDescription = '';
 
-        this.listModel = model.Data;
+        // model.Data.forEach(element => {
+        //   // element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
+        //   // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+        //   // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+        // });
+
+
       }
       else {
-        this.listModel = [];
+        this.criteriaModel = {};
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
@@ -558,6 +573,39 @@ export class OrderFormComponent implements OnInit {
 
       if (model.Status) {
         this.criteriaModel.OrderNo = model.Data;
+        this.toastr.success("บันทึกข้อมูลเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        // this.listModel = model.Data;
+      }
+      else {
+        // this.listModel = [];
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  update() {
+
+    this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+    this.criteriaModel.OrderDate = moment(this.criteriaModel.OrderDate).format('YYYY-MM-DDT00:00:00');
+    this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
+    this.criteriaModel.UoM = "N/A";
+    this.criteriaModel.Process = "UPDATE";
+
+    let json = JSON.stringify(this.criteriaModel);
+
+    this.serviceProviderService.post('api/Transport/CreateOrder', this.criteriaModel).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+        // this.criteriaModel.OrderNo = model.Data;
         this.toastr.success("บันทึกข้อมูลเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
         // this.listModel = model.Data;
       }

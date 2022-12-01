@@ -196,10 +196,10 @@
                                 </td> -->
                             <td>
                                 <div class="w100">
-                                    <a class="btn-floating blue" style="cursor: pointer;">
+                                    <a class="btn-floating blue" style="cursor: pointer;" (click)="edit(i.OrderNo)">
                                         <i class="medium material-icons">edit</i>
                                     </a>
-                                    <a class="btn-floating red" style="cursor: pointer;">
+                                    <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i.OrderNo)">
                                         <i class="medium material-icons">delete</i>
                                     </a>
 
@@ -221,23 +221,22 @@
                             <td style="padding: 0 0 0 0 !important;">
                                 <div *ngIf="i.OrderStatus == 'P'" class="w100" style="background-color: rgb(0, 204, 120); height: 42px; padding-top: 10px;">
                                     {{i.OrderStatusDesc}}
-                                 </div>
-                                 <div *ngIf="i.OrderStatus == 'D'" class="w100" style="background-color: rgb(255, 255, 0); height: 42px; padding-top: 10px;">
+                                </div>
+                                <div *ngIf="i.OrderStatus == 'D'" class="w100" style="background-color: rgb(255, 255, 0); height: 42px; padding-top: 10px;">
                                     {{i.OrderStatusDesc}}
-                                 </div>
-                                 <div *ngIf="i.OrderStatus == 'F'" class="w100" style="background-color: rgb(0, 204, 204); height: 42px; padding-top: 10px;">
+                                </div>
+                                <div *ngIf="i.OrderStatus == 'F'" class="w100" style="background-color: rgb(0, 204, 204); height: 42px; padding-top: 10px;">
                                     {{i.OrderStatusDesc}}
-                                 </div>
-                                 <div *ngIf="i.OrderStatus == 'C'" class="w100" style="background-color: rgb(255, 0, 0); height: 42px; padding-top: 10px;">
+                                </div>
+                                <div *ngIf="i.OrderStatus == 'C'" class="w100" style="background-color: rgb(255, 0, 0); height: 42px; padding-top: 10px;">
                                     {{i.OrderStatusDesc}}
-                                 </div>
-                                 <div *ngIf="i.OrderStatus != 'P'
+                                </div>
+                                <div *ngIf="i.OrderStatus != 'P'
                                  && i.OrderStatus != 'D'
                                  && i.OrderStatus != 'F'
-                                 && i.OrderStatus != 'C'" 
-                                 class="w100">
+                                 && i.OrderStatus != 'C'" class="w100">
                                     {{i.OrderStatusDesc}}
-                                 </div>
+                                </div>
                             </td>
                             <td>
                                 <div class="w100">
@@ -256,7 +255,7 @@
                                     {{i.OrderDate}}
                                     <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
                                 </div>
-                            </td>                            
+                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.PurchaseNo}}
