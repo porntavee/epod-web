@@ -31,6 +31,7 @@ import { OrderFormComponent } from './order-form/order-form.component';
 import { MasterUserComponent } from './master-user/master-user.component'
 import { MasterShiplocationComponent } from './master-shiplocation/master-shiplocation.component'
 import { ReturnDocumentComponent } from './return-document/return-document.component';
+import { TrackingStatusComponent } from './tracking-status/tracking-status.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -64,6 +65,7 @@ const routes: Routes = [
   { path: 'master-user', component: MasterUserComponent },
   { path: 'master-shiplocation', component: MasterShiplocationComponent },
   { path: 'return-document', component: ReturnDocumentComponent },
+  { path: 'tracking-status', component: TrackingStatusComponent },
 ];
 
 @NgModule({

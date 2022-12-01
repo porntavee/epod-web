@@ -109,6 +109,7 @@ import { OrderFormComponent } from './order-form/order-form.component';
 import { MasterUserComponent } from './master-user/master-user.component';
 import { MasterShiplocationComponent } from './master-shiplocation/master-shiplocation.component';
 import { ReturnDocumentComponent } from './return-document/return-document.component';
+import { TrackingStatusComponent } from './tracking-status/tracking-status.component';
 
 @NgModule({
   declarations: [
@@ -200,7 +201,8 @@ import { ReturnDocumentComponent } from './return-document/return-document.compo
     MasterUserComponent,
     GroupUserDialog,
     MasterShiplocationComponent,
-    ReturnDocumentComponent
+    ReturnDocumentComponent,
+    TrackingStatusComponent
   ],
   imports: [
     BrowserModule,
