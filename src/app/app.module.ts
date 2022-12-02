@@ -110,6 +110,7 @@ import { MasterUserComponent } from './master-user/master-user.component';
 import { MasterShiplocationComponent } from './master-shiplocation/master-shiplocation.component';
 import { ReturnDocumentComponent } from './return-document/return-document.component';
 import { TrackingStatusComponent } from './tracking-status/tracking-status.component';
+import { ReturnTransactionComponent } from "./return-transaction/return-transaction.component";
 
 @NgModule({
   declarations: [
@@ -202,11 +203,8 @@ import { TrackingStatusComponent } from './tracking-status/tracking-status.compo
     GroupUserDialog,
     MasterShiplocationComponent,
     ReturnDocumentComponent,
-<<<<<<< HEAD
-    TrackingStatusComponent
-=======
+    TrackingStatusComponent,
     ReturnTransactionComponent
->>>>>>> 7e1acef (update return-transaction)
   ],
   imports: [
     BrowserModule,

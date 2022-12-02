@@ -32,6 +32,7 @@ import { MasterUserComponent } from './master-user/master-user.component'
 import { MasterShiplocationComponent } from './master-shiplocation/master-shiplocation.component'
 import { ReturnDocumentComponent } from './return-document/return-document.component';
 import { TrackingStatusComponent } from './tracking-status/tracking-status.component';
+import { ReturnTransactionComponent } from './return-transaction/return-transaction.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
