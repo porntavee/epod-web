@@ -20,7 +20,68 @@ export class TrackingStatusComponent implements OnInit {
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
-  listModel: any = []; //ข้อมูลในตารางหน้า Main
+  listModel: any = [
+    {
+      "Seq": 1,
+      "Code": "T",
+      "Description": "รอจัดใบคุมรถ",
+      "NumStatus": 0
+    },
+    {
+      "Seq": 2,
+      "Code": "O",
+      "Description": "รอยืนยันใบคุมรถ",
+      "NumStatus": 0
+    },
+    {
+      "Seq": 3,
+      "Code": "W",
+      "Description": "รอคนขับรับงาน",
+      "NumStatus": 0
+    },
+    {
+      "Seq": 5,
+      "Code": "L",
+      "Description": "ระหว่างรับสินค้า",
+      "NumStatus": 0
+    },
+    {
+      "Seq": 6,
+      "Code": "D",
+      "Description": "ระหว่างจัดส่งสินค้า",
+      "NumStatus": 0
+    },
+    {
+      "Seq": 7,
+      "Code": "P",
+      "Description": "จัดส่งสินค้าสำเร็จ",
+      "NumStatus": 0
+    },
+    {
+      "Seq": 8,
+      "Code": "F",
+      "Description": "จัดส่งสินค้าไม่สำเร็จ",
+      "NumStatus": 0
+    },
+    {
+      "Seq": 9,
+      "Code": "R",
+      "Description": "คนขับคืนบิลเสร็จสิ้น",
+      "NumStatus": 0
+    },
+    {
+      "Seq": 10,
+      "Code": "S",
+      "Description": "คืนบิลเสร็จสิ้น",
+      "NumStatus": 0
+    },
+    {
+      "Seq": 11,
+      "Code": "C",
+      "Description": "ยกเลิก",
+      "NumStatus": 0
+    }
+  ]; //ข้อมูลในตารางหน้า Main
   listDetailModel: any = [];
   headerModel: any = {};
   criteriaModel: any = {} //ค้นหา
@@ -53,7 +114,8 @@ export class TrackingStatusComponent implements OnInit {
     const startDate = new Date();
     const endDate = new Date();
     this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
-    this.criteriaModel.endDate =  moment(endDate).format('YYYYMMDD');
+    this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
+    this.read();
   }
 
   viewModel: any;
@@ -62,19 +124,14 @@ export class TrackingStatusComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.criteriaModel.transportNo,
-      "ShiptoId": this.criteriaModel.shipToId,
-      "OrderEstimate": this.criteriaModel.apptDate != undefined && this.criteriaModel.apptDate != "Invalid date" ? moment(this.criteriaModel.apptDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "DriverId": this.criteriaModel.driverId,
-      "TransportStatus": this.criteriaModel.statusCode,
-      "TransportTypeId": this.criteriaModel.typeOfWorkCode,
-      "VehicleId": this.criteriaModel.vehicleId,
-      "RouteId": this.criteriaModel.routeId,
+      "BeginDate": this.criteriaModel.startDate != undefined && this.criteriaModel.startDate != "Invalid date" ? moment(this.criteriaModel.startDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "EndDate": this.criteriaModel.endDate != undefined && this.criteriaModel.endDate != "Invalid date" ? moment(this.criteriaModel.endDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+
     }
 
     let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/Transport/GetTransportHeader', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Transport/GetAllStatus', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
@@ -82,11 +139,11 @@ export class TrackingStatusComponent implements OnInit {
 
       if (model.Status) {
 
-        model.Data.forEach(element => {
-          element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
-          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
-        });
+        // model.Data.forEach(element => {
+        //   element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
+        //   // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+        //   // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+        // });
 
         this.listModel = model.Data;
       }
@@ -130,10 +187,10 @@ export class TrackingStatusComponent implements OnInit {
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
 
-          
+
           //D P R S 
           var strDeliveryStatus = "DPRS";
-          if(strDeliveryStatus.includes(String(element.OrderStatus))){
+          if (strDeliveryStatus.includes(String(element.OrderStatus))) {
             this.isDelivery = true;
           }
         });
