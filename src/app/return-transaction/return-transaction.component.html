@@ -1,0 +1,220 @@
+<div>
+    <div class="col s12">
+        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l8 s12">
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                        <b>งานขนส่ง / อนุมัติงาน</b>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
+            <div class="row">
+                <div class="col l3 s12 p-0">
+                    <citxt (cModel)="criteriaModel.ReturnNo = $event" [label]="'เลขที่ใบคืนเอกสาร'" [data]="criteriaModel.ReturnNo" [readonly]="true" (click)="chooseDocReturn()"></citxt>
+                </div>
+                <div class="col l3 s12 p-0">
+                    <citxt (cModel)="criteriaModel.TransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.TransportNo" [readonly]="true" (click)="chooseTransportNo()"></citxt>
+                </div>
+                <div class="col l3 s12 p-0">
+                    <citxt (cModel)="criteriaModel.ShipToDescription = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.ShipToDescription" [readonly]="true" (click)="chooseShipTo()"></citxt>
+                </div>
+                <div class="col l3 s12 p-0">
+                    <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'Route'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col l3 s12 pl-0">
+                    <cdp (cModel)="criteriaModel.OrderEstimate = $event" [label]="'Appt. Date'" [data]="criteriaModel.OrderEstimate"></cdp>
+                </div>
+                <div class="col l3 s12 p-0" style="margin-top: -20px;">
+                    <citxt (cModel)="criteriaModel.VehicleDescription = $event" [label]="'ทะเบียนรถ'" [data]="criteriaModel.VehicleDescription" [readonly]="true" (click)="chooseVehicle()"></citxt>
+                </div>
+                <div class="col l3 s12 p-0" style="margin-top: -20px;">
+                    <citxt (cModel)="criteriaModel.DriverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.DriverDescription" [readonly]="true" (click)="chooseDriver()"></citxt>
+                </div>
+            </div>
+
+            <div class="row">
+            </div>
+
+            <div class="row">
+            </div>
+
+            <div class="row">
+                <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
+                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
+                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtn>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12">
+        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l2 s12">
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                        <b>รายการข้อมูล</b>
+                    </span>
+                </div>
+                <div class="col l8 s12">
+                </div>
+            </div>
+        </div>
+        <div class="card-panel" style="margin-top: 0px;">
+            <div style="overflow-x: auto;">
+                <table id="users-list-datatable" class="bordered centered striped">
+                    <thead>
+                        <tr>
+                            <th>ลำดับ</th>
+                            <th>เลขที่ใบคืน</th>
+                            <th>เลขที่ Inv.</th>
+                            <th>สถานะ</th>
+                            <th>ทะเบียนรถ</th>
+                            <th>ใบคุมรถ</th>
+                            <th>Doc. No.</th>
+                            <th>Doc. Type</th>
+                            <th>ผลการจัดส่ง</th>
+                            <th>สาเหตุ</th>
+                            <th>PO</th>
+                            <th>Cus Code</th>
+                            <th>Ship To</th>
+                            <th>ที่อยู่ผู้รับ</th>
+                            <th>Appt. Date</th>
+                            <th>CBM</th>
+                            <th>Carton</th>
+                            <th>Weight (kg.)</th>
+                            <th>หมายเหตุ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
+                            <td>
+                                <div class="w30">
+                                    {{setSeq(i.Seq, idx + 1)}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.ReturnNo}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.InvoiceNo}}
+                                </div>
+                            </td>
+                            <td style="padding: 0 0 0 0 !important;">
+                                <div class="w100" style="background-color: rgb(218, 131, 247); height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatusDesc}}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Vehicle}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.TransportNo}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.OrderNo}}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.OrderType}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.DeliveryStatus}}
+                                    </div>
+                            </td>
+                            <td>
+                                <div class="w200">
+                                    {{i.Reason}}
+                                  </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.PurchaseNo}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.ShiptoCode}}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="w200">
+                                    {{i.ShiptoName}}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="w600">
+                                    {{i.ShiptoAdress}}
+                                 </div>
+                            </td>
+
+                            <td>
+                                <div class="w100">
+                                    {{i.OrderEstimateStr}}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.CBM}}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Qty}}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Weight}}
+                                  </div>
+                            </td>
+
+                            <td>
+                                <div class="w300">
+                                    {{i.Comment}}
+                                </div>
+                            </td>
+                          
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <!-- <div class="col s6">
+                    <div class="row">
+                        <div class="col s6" style="margin-top: 10px;">
+                            <cbtn [label]="'ดำเนินการต่อ'" [color]="'blue'" [icon]="''"></cbtn>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col s6"> 
+                    <div style="text-align: right;">
+                        <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

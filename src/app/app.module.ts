@@ -202,7 +202,11 @@ import { TrackingStatusComponent } from './tracking-status/tracking-status.compo
     GroupUserDialog,
     MasterShiplocationComponent,
     ReturnDocumentComponent,
+<<<<<<< HEAD
     TrackingStatusComponent
+=======
+    ReturnTransactionComponent
+>>>>>>> 7e1acef (update return-transaction)
   ],
   imports: [
     BrowserModule,

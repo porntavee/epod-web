@@ -66,6 +66,8 @@ const routes: Routes = [
   { path: 'master-shiplocation', component: MasterShiplocationComponent },
   { path: 'return-document', component: ReturnDocumentComponent },
   { path: 'tracking-status', component: TrackingStatusComponent },
+  { path: 'return-document', component: ReturnDocumentComponent },
+  { path: 'return-transaction', component: ReturnTransactionComponent },
 ];
 
 @NgModule({
