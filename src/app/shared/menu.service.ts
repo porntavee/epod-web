@@ -34,12 +34,9 @@ export class MenuService {
           { 'name': 'สร้างงานขนส่ง', 'routing': '/order', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'สร้างใบคุมรถ', 'routing': '/order-transport', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'คืนเอกสาร', 'routing': '/return-document', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
-<<<<<<< HEAD
-          { 'name': 'ติดตามสถานะ', 'routing': '/tracking-status', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
-=======
           { 'name': 'รายการคืนเอกสาร', 'routing': '/return-transaction', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
+          { 'name': 'ติดตามสถานะ', 'routing': '/tracking-status', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'ติดตามสถานะ', 'routing': '/line-tag', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false },
->>>>>>> 7e1acef (update return-transaction)
           { 'name': 'นำเข้าคำสั่งส่ง', 'routing': '/line-tag', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false },
         ]
       },
