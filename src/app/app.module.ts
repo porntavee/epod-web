@@ -235,7 +235,7 @@ import { ReturnTransactionComponent } from "./return-transaction/return-transact
     MatRadioModule,
     MatChipsModule,
     MatAutocompleteModule,
-    DragDropModule
+    DragDropModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],

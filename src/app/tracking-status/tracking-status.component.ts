@@ -103,6 +103,7 @@ export class TrackingStatusComponent implements OnInit {
 
   listRoute: any = [];
 
+
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
@@ -115,11 +116,13 @@ export class TrackingStatusComponent implements OnInit {
     const endDate = new Date();
     this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
     this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
+    this.readSumStatus();
     this.read();
   }
 
+
   viewModel: any;
-  read() {
+  readSumStatus() {
     this.spinner.show();
 
     let criteria = {
@@ -159,17 +162,62 @@ export class TrackingStatusComponent implements OnInit {
     });
   }
 
+  viewModel2: any;
+  read() {
+    this.spinner.show();
+
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+    }
+
+    let json = JSON.stringify(criteria);
+
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+
+      if (model.Status) {
+
+        model.Data.forEach(element => {
+          element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
+          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+
+
+          //D P R S 
+          // var strDeliveryStatus = "DPRS";
+          // if (strDeliveryStatus.includes(String(element.OrderStatus))) {
+          //   this.isDelivery = true;
+          // }
+        });
+
+        this.viewModel2 = model.Data;
+      }
+      else {
+        this.listModel = [];
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
   readDetail(param) {
     this.spinner.show();
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": param.TransportNo
+      "OrderNo": param.OrderNo
     }
 
-    this.headerModel = param;
-    this.headerModel.DriverFirstName = '';
-    this.headerModel.DriverFirstName = this.headerModel.DriverFirstName + ' ' + this.headerModel.DriverLastName;
+    // this.headerModel = param;
+    // this.headerModel.DriverFirstName = '';
+    // this.headerModel.DriverFirstName = this.headerModel.DriverFirstName + ' ' + this.headerModel.DriverLastName;
 
     let json = JSON.stringify(criteria);
     this.isDelivery = false;
@@ -177,25 +225,16 @@ export class TrackingStatusComponent implements OnInit {
       this.spinner.hide();
       let model: any = {};
       model = data;
-      this.viewModel = model;
+      // this.viewModel = model;
 
       if (model.Status) {
 
-        model.Data.forEach(element => {
-          element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
-          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+        this.headerModel = model.Data[0];
+        this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
+        this.headerModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
+        this.headerModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;
 
-
-          //D P R S 
-          var strDeliveryStatus = "DPRS";
-          if (strDeliveryStatus.includes(String(element.OrderStatus))) {
-            this.isDelivery = true;
-          }
-        });
-
-        this.listDetailModel = model.Data;
+        // this.headerModel = model.Data;
 
         this.isMainPage = false;
         this.isFormPage = true;
