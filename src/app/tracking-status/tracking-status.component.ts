@@ -203,6 +203,14 @@ export class TrackingStatusComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
+      "TransportNo": this.criteriaModel.transportNo,
+      "ShiptoId": this.criteriaModel.shipToId,
+      "RouteId": this.criteriaModel.routeDescription,
+      "OrderEstimate":  this.criteriaModel.apptDate != undefined &&  this.criteriaModel.apptDate != "Invalid date" ? moment( this.criteriaModel.apptDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "VehicleNo": this.criteriaModel.vehicleId,
+      "DriverId": this.criteriaModel.driverId,
+      "OrderStatus": this.criteriaModel.statusCode,
+      "OrderTypeId": this.criteriaModel.typeOfWorkCode,
     }
 
     let json = JSON.stringify(criteria);
