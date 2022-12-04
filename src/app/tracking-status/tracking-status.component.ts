@@ -82,7 +82,40 @@ export class TrackingStatusComponent implements OnInit {
       "NumStatus": 0
     }
   ]; //ข้อมูลในตารางหน้า Main
-  listDetailModel: any = [];
+  listDetailModel: any = [
+    {
+      CustomerName: "Pick Up order",
+      TypeOfWork: "Normal",
+      PlanIn: "25/9/2022",
+      ActualIn: "25/9/2022",
+      Status: "Complete"
+    },
+    {
+      CustomerName: "Customer1",
+      TypeOfWork: "Service",
+      PlanIn: "25/9/2022",
+      ActualIn: "",
+      Status: "Pending"
+    }
+  ];
+
+  listDetailModel2: any = [
+    {
+      InvoiceNo: "2032022225",
+      ApptDate: "25/9/2022",
+      ActualArrive: "25/9/2022",
+      Status: "On time"
+    }
+  ];
+
+  listDetailModel3: any = [
+    {
+      DriverReturn: "2032022225",
+      DueDate: "25/9/2022",
+      ReturnDate: "25/9/2022",
+      Status: "On time"
+    }
+  ];
   headerModel: any = {};
   criteriaModel: any = {} //ค้นหา
   title: string = 'เพิ่มข้อมูล';
@@ -103,6 +136,8 @@ export class TrackingStatusComponent implements OnInit {
 
   listRoute: any = [];
 
+  lat = 51.678418;
+  lng = 7.809007;
 
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
@@ -527,7 +562,9 @@ export class TrackingStatusComponent implements OnInit {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    this.read();
+    // this.read();
+
+    window.scroll(0,0);
     // this.model = {};
     // this.models = [];
     // this.listModel = [];

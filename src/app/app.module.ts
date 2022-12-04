@@ -111,6 +111,7 @@ import { MasterShiplocationComponent } from './master-shiplocation/master-shiplo
 import { ReturnDocumentComponent } from './return-document/return-document.component';
 import { TrackingStatusComponent } from './tracking-status/tracking-status.component';
 import { ReturnTransactionComponent } from "./return-transaction/return-transaction.component";
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
   declarations: [
@@ -236,6 +237,9 @@ import { ReturnTransactionComponent } from "./return-transaction/return-transact
     MatChipsModule,
     MatAutocompleteModule,
     DragDropModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBC5NdsVo80Nrdqpcpat7ek90ncKx6NNQo'
+    })
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],
