@@ -43,6 +43,7 @@ export class ReturnTransactionComponent implements OnInit {
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "Process": 'RETURN_TRANSACTION',
+      "ReturnNo": this.criteriaModel.ReturnNo,
       "TransportNo": this.criteriaModel.TransportNo,
       "ShiptoId": this.criteriaModel.ShipToId,
       "OrderEstimate": this.criteriaModel.OrderEstimate != undefined && this.criteriaModel.OrderEstimate != "Invalid date" ? moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DD 00:00:00.000') : undefined,
