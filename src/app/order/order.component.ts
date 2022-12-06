@@ -532,6 +532,7 @@ export class OrderComponent implements OnInit {
 
   delete(param) {
 
+    debugger
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องลบใช่หรือไม่?' } });
 
@@ -540,9 +541,10 @@ export class OrderComponent implements OnInit {
 
       if (result) {
 
-        this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
-        this.criteriaModel.Process = 'DELETE';
-        this.criteriaModel.OrderNo = param;
+        let criteria: any = {};
+        criteria.userinformation = this.serviceProviderService.userinformation;
+        criteria.Process = 'DELETE';
+        criteria.OrderNo = param;
         // this.criteriaModel.TransportStatus = "O";
         // this.criteriaModel.TransportTypeId = "OT";
         // this.criteriaModel.RegionId = "0010000000000";
@@ -550,10 +552,10 @@ export class OrderComponent implements OnInit {
         // this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
         // this.criteriaModel.UoM = "N/A";
 
-        let json = JSON.stringify(this.criteriaModel);
+        // let json = JSON.stringify(this.criteriaModel);
 
 
-        this.serviceProviderService.post('api/Transport/CreateOrder', this.criteriaModel).subscribe(data => {
+        this.serviceProviderService.post('api/Transport/CreateOrder', criteria).subscribe(data => {
           this.spinner.hide();
           let model: any = {};
           model = data;

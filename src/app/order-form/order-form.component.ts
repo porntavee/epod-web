@@ -639,6 +639,8 @@ export class OrderFormComponent implements OnInit {
       model = data;
       this.viewModel = model;
 
+      debugger
+
       if (model.Status) {
         // this.criteriaModel.OrderNo = model.Data;
         this.toastr.success("บันทึกข้อมูลเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
