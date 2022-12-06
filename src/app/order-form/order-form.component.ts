@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, ConfirmDialog } from '../dialog/dialog';
+import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, ConfirmDialog, MasterDataDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -346,6 +346,20 @@ export class OrderFormComponent implements OnInit {
     });
   }
 
+  chooseJobType() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(MasterDataDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'ประเภทเอกสาร' , urlapi:'api/Masters/GetJobType' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.OrderTypeId = result.Code;
+        this.criteriaModel.OrderTypeDescription = result.Code + ' - ' + result.Description;
+      }
+    });
+  }
+  
   //use
   chooseTypeOfWork() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations

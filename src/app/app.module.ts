@@ -103,7 +103,7 @@ import { OrderTransportComponent } from './order-transport/order-transport.compo
 import { OrderTransportFormComponent } from './order-transport-form/order-transport-form.component';
 import { ConfirmDialog, DriverDialog, GroupUserDialog, RouteDialog , RoutingDialog ,SubRoutingDialog,RegionDialog
   , ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog ,ProvinceDialog,DistrictDialog
-  ,JobStatusDialog,DocReturnDialog  } from "./dialog/dialog";
+  ,JobStatusDialog,DocReturnDialog,MasterDataDialog  } from "./dialog/dialog";
 import { OrderComponent } from './order/order.component';
 import { OrderFormComponent } from './order-form/order-form.component';
 import { MasterUserComponent } from './master-user/master-user.component';
@@ -198,6 +198,7 @@ import { AgmCoreModule } from "@agm/core";
     JobStatusDialog,
     DocReturnDialog,
     ConfirmDialog,
+    MasterDataDialog,
     OrderComponent,
     OrderFormComponent,
     MasterUserComponent,
