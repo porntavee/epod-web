@@ -8,7 +8,6 @@
             <citxt (cModel)="criteriaModel.Fillter = $event" [label]="'Fillter'" [data]="criteriaModel.Fillter"></citxt>
         </div>
         <div class="col l4 s12">
-            <!-- <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'Name'" [data]="criteriaModel.FirstName"></citxt> -->
         </div>
         <div class="col l1">
 
@@ -28,7 +27,7 @@
         <tbody>
             <tr *ngFor="let i of data.listData; let idx = index" (click)="ok(i)">
                 <td>{{i.Code}}</td>
-                <td>{{i.CustomerName}}</td>
+                <td>{{i.Description}}</td>
                 <td>{{i.Address}}</td>
             </tr>
         </tbody>

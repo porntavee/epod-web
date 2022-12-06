@@ -77,7 +77,7 @@
         <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
             <div class="row">
                 <div class="col s12">
-                    <citxt (cModel)="criteriaModel.orderNo = $event" [label]="'Doc No.'" [data]="criteriaModel.orderNo" [readonly]="true" (click)="chooseTransportNo()"></citxt>
+                    <citxt (cModel)="criteriaModel.orderNo = $event" [label]="'Doc No.'" [data]="criteriaModel.orderNo" [readonly]="true"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="criteriaModel.shipToDescription = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.shipToDescription" [readonly]="true" (click)="chooseShipTo()"></citxt>
@@ -215,7 +215,10 @@
                                             {{i.Code}}
                                         </a> -->
                                     <!-- <cbtne [label]="i.Code" (click)="editTimeSheet(i)"></cbtne> -->
-                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.InvoiceNo}}</a>
+                                    <!-- <a style="cursor: pointer;" (click)="readDetail(i)">{{i.InvoiceNo}}</a> -->
+                                    <a>
+                                        {{i.InvoiceNo}}
+                                    </a>
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
@@ -276,7 +279,7 @@
                             </td>
                             <td>
                                 <div class="w400">
-                                    {{i.ShiptoAdress}}
+                                    {{i.Address}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
                                 </div>
                             </td>

@@ -50,7 +50,7 @@
 
             <div class="row">
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.OrderTypeDescription = $event" [label]="'ประเภทเอกสาร'" [data]="criteriaModel.OrderTypeDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
+                    <citxt (cModel)="criteriaModel.OrderTypeDescription = $event" [label]="'ประเภทเอกสาร'" [data]="criteriaModel.OrderTypeDescription" [readonly]="true" (click)="chooseJobType()"></citxt>
                 </div>
                 <div class="col l2 s12 p-0" style="margin-top: -20px;">
                     <h1>&nbsp;</h1>
@@ -68,19 +68,21 @@
                     <h1>&nbsp;</h1>
                 </div>
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.CBM = $event" [label]="'CBM'" [data]="criteriaModel.CBM"></citxt>
+                    <citxt (cModel)="criteriaModel.Qty = $event" [label]="'Carton'" [data]="criteriaModel.Qty"></citxt>
                 </div>
+
             </div>
 
             <div class="row">
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.OwnerDescription = $event" [label]="'ผู้ส่ง'" [data]="criteriaModel.OwnerDescription" [readonly]="true" (click)="chooseOwner()"></citxt>
+                    <citxt (cModel)="criteriaModel.OwnerDescription = $event" [label]="'เจ้าของงาน'" [data]="criteriaModel.OwnerDescription" [readonly]="true" (click)="chooseOwner()"></citxt>
                 </div>
                 <div class="col l2 s12 p-0" style="margin-top: -20px;">
                     <h1>&nbsp;</h1>
                 </div>
+
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.Qty = $event" [label]="'Carton'" [data]="criteriaModel.Qty"></citxt>
+                    <citxt (cModel)="criteriaModel.UoM = $event" [label]="'UoM'" [data]="criteriaModel.UoM"></citxt>
                 </div>
             </div>
 
@@ -92,13 +94,20 @@
                     <h1>&nbsp;</h1>
                 </div>
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.Weight = $event" [label]="'Weight'" [data]="criteriaModel.Weight"></citxt>
+                    <citxt (cModel)="criteriaModel.CBM = $event" [label]="'CBM'" [data]="criteriaModel.CBM"></citxt>
                 </div>
+            
             </div>
 
             <div class="row">
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.ShiptoTel = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="criteriaModel.ShiptoTel" [readonly]="true" (click)="chooseShipTo()"></citxt>
+                    <citxt (cModel)="criteriaModel.ShiptoMobile = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="criteriaModel.ShiptoMobile" [readonly]="true" (click)="chooseShipTo()"></citxt>
+                </div>
+                <div class="col l2 s12 p-0" style="margin-top: -20px;">
+                    <h1>&nbsp;</h1>
+                </div>
+                <div class="col l4 s12 p-0" style="margin-top: -20px;">
+                    <citxt (cModel)="criteriaModel.Weight = $event" [label]="'Weight'" [data]="criteriaModel.Weight"></citxt>
                 </div>
             </div>
 
@@ -151,7 +160,7 @@
                     <citxt (cModel)="criteriaModel.ReferenceNo = $event" [label]="'Reference No.'" [data]="criteriaModel.ReferenceNo"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.OrderTypeDescription = $event" [label]="'ประเภทเอกสาร'" [data]="criteriaModel.OrderTypeDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
+                    <citxt (cModel)="criteriaModel.OrderTypeDescription = $event" [label]="'ประเภทเอกสาร'" [data]="criteriaModel.OrderTypeDescription" [readonly]="true" (click)="chooseJobType()"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="criteriaModel.PurchaseNo = $event" [label]="'PO No.'" [data]="criteriaModel.PurchaseNo"></citxt>
@@ -164,7 +173,7 @@
                 </div>
 
                 <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.OwnerDescription = $event" [label]="'ผู้ส่ง'" [data]="criteriaModel.OwnerDescription" [readonly]="true" (click)="chooseOwner()"></citxt>
+                    <citxt (cModel)="criteriaModel.OwnerDescription = $event" [label]="'เจ้าของงาน'" [data]="criteriaModel.OwnerDescription" [readonly]="true" (click)="chooseOwner()"></citxt>
                 </div>
 
                 <div class="col s12" style="margin-top: -10px;">
@@ -172,7 +181,7 @@
                 </div>
 
                 <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.ShiptoTel = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="criteriaModel.ShiptoTel" [readonly]="true" (click)="chooseShipTo()"></citxt>
+                    <citxt (cModel)="criteriaModel.ShiptoMobile = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="criteriaModel.ShiptoMobile" [readonly]="true" (click)="chooseShipTo()"></citxt>
                 </div>
 
                 <div class="col s12" style="margin-top: -10px;">
@@ -186,7 +195,9 @@
                 <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="criteriaModel.SubRouteDescription = $event" [label]="'เส้นทางย่อย'" [data]="criteriaModel.SubRouteDescription" [readonly]="true" (click)="chooseShipTo()"></citxt>
                 </div>
-
+                <div class="col s12">
+                    <citxt (cModel)="criteriaModel.UoM = $event" [label]="'UoM'" [data]="criteriaModel.UoM"></citxt>
+                </div>
                 <div class="col s12">
                     <citxt (cModel)="criteriaModel.Qty = $event" [label]="'Carton'" [data]="criteriaModel.Qty"></citxt>
                 </div>

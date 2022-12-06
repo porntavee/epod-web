@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, ConfirmDialog, MasterDataDialog } from '../dialog/dialog';
+import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, ConfirmDialog, MasterDataDialog, LocationAddressDataDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -78,6 +78,8 @@ export class OrderFormComponent implements OnInit {
     // this.read();
     // this.readRoute();
 
+    this.criteriaModel.UoM = 'N/A';
+
     if (this.id != 'new') {
       this.read();
     }
@@ -103,13 +105,35 @@ export class OrderFormComponent implements OnInit {
       if (model.Status) {
 
         this.criteriaModel = model.Data[0];
-        this.criteriaModel.OrderTypeDescription = model.Data[0].OrderType;
-        this.criteriaModel.OwnerDescription = model.Data[0].OwnerName;
-        this.criteriaModel.ShiptoDescription = model.Data[0].ShiptoName;
-        this.criteriaModel.ShiptoTel = model.Data[0].ShiptoMobile;
-        this.criteriaModel.ShiptoAddress = model.Data[0].ShiptoAdress;
-        this.criteriaModel.RouteDescription = '';
-        this.criteriaModel.SubRouteDescription = '';
+
+        this.criteriaModel.OrderTypeId = model.Data[0].OrderTypeId;
+        this.criteriaModel.OrderTypeDescription =  model.Data[0].OrderTypeCode + ' - ' + model.Data[0].OrderType;
+
+
+        this.criteriaModel.OwnerId = model.Data[0].OwnerId;
+        this.criteriaModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
+
+
+        this.criteriaModel.ShiptoId = model.Data[0].ShiptoId;
+        this.criteriaModel.ShiptoCode = model.Data[0].ShiptoCode;
+        this.criteriaModel.ShiptoAddress = model.Data[0].Address;
+        this.criteriaModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;;
+        this.criteriaModel.ShiptoMobile = model.Data[0].Mobile;
+
+
+        this.criteriaModel.routeId = model.Data[0].RouteId;
+        this.criteriaModel.subRouteId = model.Data[0].SubRouteId;
+        this.criteriaModel.RouteDescription =  model.Data[0].Route;
+        this.criteriaModel.SubRouteDescription = model.Data[0].SubRoute;
+
+
+        // this.criteriaModel.OwnerDescription = model.Data[0].OwnerName;
+        // this.criteriaModel.ShiptoDescription = model.Data[0].ShiptoName;
+        // this.criteriaModel.ShiptoDescription = model.Data[0].ShiptoName;
+        // this.criteriaModel.ShiptoMobile = model.Data[0].ShiptoMobile;
+        // this.criteriaModel.ShiptoAddress = model.Data[0].ShiptoAdress;
+        // this.criteriaModel.RouteDescription = '';
+        // this.criteriaModel.SubRouteDescription = '';
 
         // model.Data.forEach(element => {
         //   // element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
@@ -306,21 +330,14 @@ export class OrderFormComponent implements OnInit {
   //use
   chooseOwner() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
+    const dialogRef = this.dialog.open(LocationAddressDataDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'เจ้าของงาน' ,  urlapi:'api/Masters/GetOwner'} });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-
-        // this.criteriaModel.transportTypeId = result.Id;
         this.criteriaModel.OwnerId = result.Id;
-        this.criteriaModel.OwnerDescription = result.Code + ' - ' + result.CustomerName;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        this.criteriaModel.OwnerDescription = result.Code + ' - ' + result.Description;
       }
     });
   }
@@ -575,9 +592,11 @@ export class OrderFormComponent implements OnInit {
     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
     this.criteriaModel.OrderDate = moment(this.criteriaModel.OrderDate).format('YYYY-MM-DDT00:00:00');
     this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
-    this.criteriaModel.UoM = "N/A";
+    this.criteriaModel.UoM = this.criteriaModel.UoM;
 
     let json = JSON.stringify(this.criteriaModel);
+
+    debugger;
 
     this.serviceProviderService.post('api/Transport/CreateOrder', this.criteriaModel).subscribe(data => {
       this.spinner.hide();
@@ -607,10 +626,12 @@ export class OrderFormComponent implements OnInit {
     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
     this.criteriaModel.OrderDate = moment(this.criteriaModel.OrderDate).format('YYYY-MM-DDT00:00:00');
     this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
-    this.criteriaModel.UoM = "N/A";
+    this.criteriaModel.UoM = this.criteriaModel.UoM;
     this.criteriaModel.Process = "UPDATE";
 
     let json = JSON.stringify(this.criteriaModel);
+
+    debugger;
 
     this.serviceProviderService.post('api/Transport/CreateOrder', this.criteriaModel).subscribe(data => {
       this.spinner.hide();
