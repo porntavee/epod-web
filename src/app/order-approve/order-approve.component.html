@@ -211,8 +211,6 @@
                             <th>SubRoute</th>
                             <th>สถานที่รับสินค้า</th>
                             <th>ชื่อผู้ใช้งาน</th>
-
-
                             <th>วันที่ออกเอกสาร</th>
                             <th>หมายเหตุ</th>
                         </tr>
@@ -274,31 +272,24 @@
                             <td style="padding: 0 0 0 0 !important;">
                                 <div *ngIf="i.TransportStatusDesc == 'เสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                                 <div *ngIf="i.TransportStatusDesc == 'คืนบิลเสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                                 <div *ngIf="i.TransportStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                                 <div *ngIf="i.TransportStatusDesc == 'รอคนขับรับงาน'" class="w100" style="background-color: rgb(131, 247, 230); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                                 <div *ngIf="i.TransportStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                                 <div *ngIf="i.TransportStatusDesc == 'จัดส่งสินค้าสำเร็จ'" class="w100" style="background-color: rgb(247, 131, 239); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                                 <div *ngIf="i.TransportStatusDesc == 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(133, 131, 247); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                                 <div *ngIf="i.TransportStatusDesc != 'เสร็จสิ้น' 
                                 && i.TransportStatusDesc !='คืนบิลเสร็จสิ้น'
@@ -308,81 +299,68 @@
                                 && i.TransportStatusDesc != 'จัดส่งสินค้าสำเร็จ'
                                 && i.TransportStatusDesc != 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(182, 182, 182); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
                                     {{i.TransportType}}
-                                    <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w300">
                                     {{i.Transport}}
-                                    <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
                                     {{i.Vehicle}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
-                                </div>
+                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
                                     {{i.DriverFirstName}} {{i.DriverLastName}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
+                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
                                     {{i.DriverMobile}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
                                     {{i.VehicleType}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w150">
                                     {{i.Route}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.U_HMC_Hour" name="i.U_HMC_Hour" id="i.U_HMC_Hour" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>
                                 <div class="w200">
                                     {{i.SubRoute}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.EndTime" name="i.EndTime" id="i.EndTime" type="text" class="input-text-1"> -->
-                                </div>
+                                 </div>
                             </td>
                             <td>
                                 <div class="w1000">
                                     {{i.ReceiveFromName}} {{i.ReceiveFromAddress}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
+                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
                                     {{i.DriverUser}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
+                                 </div>
                             </td>
-
+    
                             <td>
                                 <div class="w100">
                                     {{i.TransportDate}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
-
+    
                             <td>
                                 <div class="w1000">
                                     {{i.Remark}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <!-- <td>

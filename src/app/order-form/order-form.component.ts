@@ -597,7 +597,7 @@ export class OrderFormComponent implements OnInit {
 
     let json = JSON.stringify(this.criteriaModel);
 
-    debugger;
+    // debugger;
 
     this.serviceProviderService.post('api/Transport/CreateOrder', this.criteriaModel).subscribe(data => {
       this.spinner.hide();
@@ -608,6 +608,8 @@ export class OrderFormComponent implements OnInit {
       if (model.Status) {
         this.criteriaModel.OrderNo = model.Data;
         this.toastr.success("บันทึกข้อมูลเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.id = this.criteriaModel.OrderNo;
+        this.ngOnInit();
         // window.self.close(); 
         // this.listModel = model.Data;
       }
@@ -646,6 +648,8 @@ export class OrderFormComponent implements OnInit {
       if (model.Status) {
         // this.criteriaModel.OrderNo = model.Data;
         this.toastr.success("บันทึกข้อมูลเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.id = this.criteriaModel.OrderNo;
+        this.ngOnInit();
         // this.listModel = model.Data;
       }
       else {
@@ -658,5 +662,10 @@ export class OrderFormComponent implements OnInit {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
+  }
+
+
+  close(){
+    window.self.close();
   }
 }

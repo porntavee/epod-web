@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
+import { DriverDialog, RegionDialog, RouteDialog, RoutingDialog, ShipToDialog, StatusDialog, SubRoutingDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -88,11 +88,10 @@ export class OrderTransportFormComponent implements OnInit {
     // this.readStage();
 
     this.readTransport();
-    this.readRoute();
+    // this.readRoute();
     this.readVehicleType();
 
-    if (this.id != 'new')
-    {
+    if (this.id != 'new') {
       this.read();
     }
   }
@@ -128,10 +127,10 @@ export class OrderTransportFormComponent implements OnInit {
         this.criteriaModel.TransportShiptoAddress = model.Data[0].TransportShitptoAddress;
         this.criteriaModel.VehicleDescription = model.Data[0].Vehicle;
         this.criteriaModel.VehicleTypeDescription = model.Data[0].VehicleType;
-        
+
         this.criteriaModel.TransportDateString = moment(model.Data[0].TransportDate).format('YYYYMMDD');
 
-        
+
       }
       else {
         this.spinner.hide();
@@ -152,25 +151,14 @@ export class OrderTransportFormComponent implements OnInit {
       if (model.Status) {
 
         this.listModel = model.Data;
-        // this.criteriaModel.TransportDescription = model.Data[0].Transport;
-        // this.criteriaModel.ReceiveFromDescription = model.Data[0].ReceiveFromName;
-        // this.criteriaModel.RouteDescription = model.Data[0].Route;
-        // this.criteriaModel.TransportTypeDescription = model.Data[0].TransportType;
-        // this.criteriaModel.SubRouteDescription = model.Data[0].SubRoute;
-        // this.criteriaModel.TransportShiptoDescription = '';
-        // this.criteriaModel.DriverDescription = model.Data[0].DriverFirstName;
-        // this.criteriaModel.Plant = model.Data[0].Plant;
-        // this.criteriaModel.TransportShiptoAddress = '';
-        // this.criteriaModel.VehicleDescription = model.Data[0].Vehicle;
-        // this.criteriaModel.VehicleTypeDescription = model.Data[0].VehicleType;
-        
-        // this.criteriaModel.TransportDateString = moment(model.Data[0].TransportDate).format('YYYYMMDD');
 
-        
+        model.Data.forEach(element => {
+          element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
+        });
       }
       else {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
 
     }, err => {
@@ -764,47 +752,115 @@ export class OrderTransportFormComponent implements OnInit {
     });
   }
 
-  //use
+  // //use
+  // chooseRoute() {
+  //   //ต้องเอาไปใส่ใน app.module ที่ declarations
+  //   const dialogRef = this.dialog.open(RoutingDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Route', listData: this.listRoute, listDataSearch: this.listRoute } });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(`Dialog result: ${result}`);
+
+  //     if (result != undefined) {
+
+  //       this.criteriaModel.SubRouteId = '';
+  //       this.criteriaModel.SubRouteCode = '';
+  //       this.criteriaModel.SubRouteDescription = '';
+
+  //       this.criteriaModel.RouteId = result.Id;
+  //       this.criteriaModel.RouteCode = result.Code;
+  //       this.criteriaModel.RouteDescription = result.Code + ' - ' + result.Description;
+  //       // param.Code = result.Code;
+  //       // param.FirstName = result.firstName;
+  //       // param.LastName = result.lastName;
+  //       // param.UserID = result.empID;
+  //       // this.costCenter = result.CostCenter;
+  //     }
+  //   });
+  // }
+
+  // //use
+  // chooseSubRoute() {
+
+  //   if (this.criteriaModel.RouteId == '' || this.criteriaModel.RouteId == undefined) {
+  //     this.toastr.warning('กรุณาเลือก Route ก่อน', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  //     return
+  //   }
+
+  //   this.readSubRoute();
+  // }
+
   chooseRoute() {
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Route', listData: this.listRoute, listDataSearch: this.listRoute } });
+    const dialogRef = this.dialog.open(RoutingDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'เส้นทางหลัก' } });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      this.criteriaModel.SubRouteId = '';
+      this.criteriaModel.SubRouteCode = '';
+      this.criteriaModel.SubRouteDescription = '';
+
+      if (result != undefined) {
+        this.criteriaModel.RouteId = result.Id;
+        this.criteriaModel.RouteCode = result.Code;
+        this.criteriaModel.RouteDescription = result.Description;
+
+      }
+      else {
+        this.criteriaModel.RouteId = '';
+        this.criteriaModel.RouteCode = '';
+        this.criteriaModel.RouteDescription = '';
+      }
+    });
+  }
+
+  chooseSubRoute() {
+
+    if(this.criteriaModel.RouteId == '' || this.criteriaModel.RouteId == undefined){
+      this.toastr.error('กรุณาระบุเส้นทางหลัก', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return;
+    }
+
+    
+    const dialogRef = this.dialog.open(SubRoutingDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'เส้นทางย่อย' ,RouteId : this.criteriaModel.RouteId} });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-
+        this.criteriaModel.SubRouteId = result.Id;
+        this.criteriaModel.SubRouteCode = result.Code;
+        this.criteriaModel.SubRouteDescription = result.Description;
+      }
+      else {
         this.criteriaModel.SubRouteId = '';
         this.criteriaModel.SubRouteCode = '';
         this.criteriaModel.SubRouteDescription = '';
-
-        this.criteriaModel.RouteId = result.Id;
-        this.criteriaModel.RouteCode = result.Code;
-        this.criteriaModel.RouteDescription = result.Code + ' - ' + result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
       }
     });
   }
 
-  //use
-  chooseSubRoute() {
+  chooseRegion() {
+    const dialogRef = this.dialog.open(RegionDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'โซน' } });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
 
-    if (this.criteriaModel.RouteId == '' || this.criteriaModel.RouteId == undefined) {
-      this.toastr.warning('กรุณาเลือก Route ก่อน', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      return
-    }
+      if (result != undefined) {
+        this.criteriaModel.RegionId = result.Id;
+        this.criteriaModel.RegionCode = result.Code;
+        this.criteriaModel.Region = result.Description;
 
-    this.readSubRoute();
+      }
+      else {
+        this.criteriaModel.RegionId = '';
+        this.criteriaModel.RegionCode = '';
+        this.criteriaModel.Region = '';
+
+      }
+    });
   }
-
   //use
   chooseReceiveFrom() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
+    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานที่' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -826,7 +882,7 @@ export class OrderTransportFormComponent implements OnInit {
       return
     }
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
+    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานที่' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -920,11 +976,22 @@ export class OrderTransportFormComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
+        //Driver
         this.criteriaModel.DriverId = result.Id;
         this.criteriaModel.DriverCode = result.Code;
-        this.criteriaModel.DriverDescription = result.Code + ' - ' + result.FirstName + ' ' + result.LastName;
+        this.criteriaModel.DriverDescription = result.FirstName + ' ' + result.LastName;
+        this.criteriaModel.DriverMobile = result.Mobile;
 
-        this.criteriaModel.Mobile = result.Mobile;
+        //Vehicle
+        this.criteriaModel.VehicleId = result.VehicleId;
+        this.criteriaModel.VehicleCode = result.VehicleCode;
+        this.criteriaModel.VehicleDescription = result.Vehicle;
+      
+        //VehicleType
+        this.criteriaModel.VehicleTypeId = result.VehicleTypeId;
+        this.criteriaModel.VehicleTypeCode = result.VehicleTypeCode;
+        this.criteriaModel.VehicleTypeDescription = result.VehicleType;
+
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -945,12 +1012,11 @@ export class OrderTransportFormComponent implements OnInit {
       if (result != undefined) {
         this.criteriaModel.VehicleId = result.Id;
         this.criteriaModel.VehicleCode = result.Code;
-        this.criteriaModel.VehicleDescription = result.Code + ' - ' + result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        this.criteriaModel.VehicleDescription = result.Description;
+      
+        this.criteriaModel.VehicleTypeId = result.VehicleTypeId;
+        this.criteriaModel.VehicleTypeCode = result.VehicleTypeCode;
+        this.criteriaModel.VehicleTypeDescription = result.VehicleType;
       }
     });
   }
@@ -967,7 +1033,7 @@ export class OrderTransportFormComponent implements OnInit {
 
         this.criteriaModel.VehicleTypeId = result.Id;
         this.criteriaModel.VehicleTypeCode = result.Code;
-        this.criteriaModel.VehicleTypeDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.VehicleTypeDescription = result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -1115,10 +1181,12 @@ export class OrderTransportFormComponent implements OnInit {
   }
 
   addOrder() {
-
     this.listFormModel.forEach(element => {
       if (element.isSelected)
+      {
+        element.Process = 'CREATE';
         this.listModel.push(element);
+      }
     });
 
     this.isMainPage = true;
@@ -1144,6 +1212,7 @@ export class OrderTransportFormComponent implements OnInit {
     this.spinner.show();
 
     this.formModel.userinformation = this.serviceProviderService.userinformation;
+    this.formModel.Process = 'TRANSPORT';
     this.formModel.OrderDate = this.criteriaModel.OrderDateString != undefined && this.criteriaModel.OrderDateString != "Invalid date" ? moment(this.criteriaModel.OrderDateString).format('YYYY-MM-DD 00:00:00.000') : undefined;
 
     this.serviceProviderService.post('api/Transport/GetOrder', this.formModel).subscribe(data => {
@@ -1155,7 +1224,8 @@ export class OrderTransportFormComponent implements OnInit {
       if (model.Status) {
 
         model.Data.forEach(element => {
-          element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          // element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
         });
@@ -1180,7 +1250,29 @@ export class OrderTransportFormComponent implements OnInit {
     });
   }
 
+  validation() {
+    if (this.criteriaModel.ReceiveFromId == null) {
+      this.toastr.warning('กรุณาระบุ สถานที่รับสินค้า', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return false;
+    }
+    if (this.criteriaModel.TransportTypeId == null) {
+      this.toastr.warning('กรุณาระบุ Type of work', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return false;
+    }
+    if (this.criteriaModel.RouteId == null) {
+      this.toastr.warning('กรุณาระบุ Route', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return false;
+    }
+    if (this.criteriaModel.SubRouteId == null) {
+      this.toastr.warning('กรุณาระบุ SubRoute', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return false;
+    }
+    return true;
+  }
+
   create() {
+    if (!this.validation()) { return; }
+
 
     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
     this.criteriaModel.TransportNo = "";
@@ -1226,8 +1318,10 @@ export class OrderTransportFormComponent implements OnInit {
           if (model.Status) {
             // this.criteriaModel.TransportNo = model.Data;
             this.toastr.success("สร้างงานขนส่งเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.id = this.criteriaModel.TransportNo;
+            this.read();
             // this.listModel = model.Data;
-            this.router.navigate(['order-transport']);
+            // this.router.navigate(['order-transport']);
           }
           else {
             // this.listModel = [];
@@ -1251,6 +1345,10 @@ export class OrderTransportFormComponent implements OnInit {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
+  }
+
+  close(){
+    window.self.close();
   }
 
   edit() {
@@ -1285,12 +1383,16 @@ export class OrderTransportFormComponent implements OnInit {
         item.TTRANSPORTDS = [];
 
         this.listModel.forEach(element => {
-          item.TTRANSPORTDS.push({
-            "TransportNo": model.Data,
-            "OrderNo": element.OrderNo,
-            // "OrderStatus": "O",
-            "ShiptoId": this.criteriaModel.TransportTypeId == "XD" ? this.criteriaModel.TransportShiptoId : ""
-          })
+          if(element.Process =='CREATE')
+          {
+            item.TTRANSPORTDS.push({
+              "TransportNo": model.Data,
+              "OrderNo": element.OrderNo,
+              "Process": element.Process,
+              "ShiptoId": this.criteriaModel.TransportTypeId == "XD" ? this.criteriaModel.TransportShiptoId : ""
+            })
+          }
+
         });
 
         this.serviceProviderService.post('api/Transport/CreateTransportIem', item).subscribe(data => {
@@ -1302,8 +1404,10 @@ export class OrderTransportFormComponent implements OnInit {
           if (model.Status) {
             // this.criteriaModel.TransportNo = model.Data;
             this.toastr.success("อัพเดทงานขนส่งเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.id = this.criteriaModel.TransportNo;
+            this.read();
             // this.listModel = model.Data;
-            this.router.navigate(['order-transport']);
+            // this.router.navigate(['order-transport']);
           }
           else {
             // this.listModel = [];

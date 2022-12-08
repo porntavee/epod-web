@@ -2,40 +2,15 @@
     <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
         <div class="row">
             <div class="col l8 s12">
-                <!-- <i class="material-icons header-icon">
-                    filter_list
-                </i> -->
                 <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
                     <b>งานขนส่ง / สร้างใบคุมรถ</b>
                 </span>
             </div>
-            <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;"> -->
-            <!-- (click)="reset()" -->
-            <!-- <cbtnl [label]="'Reset'" [color]="'gray'" [icon]="'cached'"></cbtnl> -->
-            <!-- </div> -->
-            <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
-                    <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
-                </div> -->
         </div>
     </div>
     <!-- [hidden]="isAdvanceSearch" -->
     <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
         <div class="row">
-            <!-- <div class="col s12 l4">
-                    <cinum (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence || 0"></cinum>
-                </div> -->
-            <!-- <div class="col l4 s12">
-                    <cdp (cModel)="criteriaModel.startDate = $event" [label]="'วันที่สร้าง'" [data]="criteriaModel.startDate">
-                    </cdp>
-                </div>
-                <div class="col l4 s12">
-                    <cdp (cModel)="criteriaModel.endDate = $event" [label]="'ถึงวันที่'" [data]="criteriaModel.endDate">
-                    </cdp>
-                </div> -->
-            <!-- <div class="col l5 s12" style="margin-bottom: 15px;">
-                    <csop (cModel)="criteriaModel.employeeCode = $event" [label]="'Employee Code'" [data]="criteriaModel.employeeCode" [sources]="listEmployeeCode">
-                    </csop>
-                </div> -->
             <div class="col l3 s12 p-0">
                 <citxt (cModel)="criteriaModel.transportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.transportNo" [readonly]="true" (click)="chooseTransportNo()"></citxt>
             </div>
@@ -133,16 +108,18 @@
                 <thead>
                     <tr>
                         <th>เลขที่ใบคุม</th>
+                        <th>Shipment No.</th>
                         <th>สถานะ</th>
                         <th>Type of Work</th>
                         <th>บริษัทขนส่ง</th>
+                        <th>ทะเบียนรถ</th>
+                        <th>ชื่อคนขับ</th>
+                        <th>เบอร์โทรศัพท์คนขับ</th>
                         <th>ประเภทรถ</th>
                         <th>Route</th>
                         <th>SubRoute</th>
-                        <th>ที่อยู่ผู้รับ</th>
+                        <th>สถานที่รับสินค้า</th>
                         <th>ชื่อผู้ใช้งาน</th>
-                        <th>ชื่อคนขับ</th>
-                        <th>เบอร์โทรศัพท์คนขับ</th>
                         <th>วันที่ออกเอกสาร</th>
                         <th>หมายเหตุ</th>
                         <th>คำสั่ง</th>
@@ -155,19 +132,24 @@
                                 {{i.TransportNo}}
                             </div>
                         </td>
+                        <td>
+                            <div class="w100">
+                                {{i.ShipmentNo}}
+                            </div>
+                        </td>
                         <td style="padding: 0 0 0 0 !important;">
                             <div *ngIf="i.TransportStatusDesc == 'เสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
                                 {{i.TransportStatusDesc}}
-                                </div>
+                            </div>
                             <div *ngIf="i.TransportStatusDesc == 'คืนบิลเสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
                                 {{i.TransportStatusDesc}}
-                                </div>
+                            </div>
                             <div *ngIf="i.TransportStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
                                 {{i.TransportStatusDesc}}
-                             </div>
+                            </div>
                             <div *ngIf="i.TransportStatusDesc == 'รอคนขับรับงาน'" class="w100" style="background-color: rgb(131, 247, 230); height: 42px; padding-top: 10px;">
                                 {{i.TransportStatusDesc}}
-                             </div>
+                            </div>
                             <div *ngIf="i.TransportStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
                                 {{i.TransportStatusDesc}}
                             </div>
@@ -177,27 +159,40 @@
                             <div *ngIf="i.TransportStatusDesc == 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(133, 131, 247); height: 42px; padding-top: 10px;">
                                 {{i.TransportStatusDesc}}
                             </div>
-                            <div *ngIf="
-                            i.TransportStatusDesc != 'เสร็จสิ้น' && 
-                            i.TransportStatusDesc != 'คืนบิลเสร็จสิ้น' && 
-                            i.TransportStatusDesc != 'รอยืนยันใบคุมรถ' && 
-                            i.TransportStatusDesc != 'รอคนขับรับงาน' && 
-                            i.TransportStatusDesc != 'ระหว่างจัดส่งสินค้า' && 
-                            i.TransportStatusDesc != 'จัดส่งสินค้าสำเร็จ' && 
-                            i.TransportStatusDesc != 'ระหว่างรับสินค้า'" 
-                            class="w100" style="background-color: rgb(182, 182, 182); height: 42px; padding-top: 10px;">
+                            <div *ngIf="i.TransportStatusDesc != 'เสร็จสิ้น' 
+                            && i.TransportStatusDesc !='คืนบิลเสร็จสิ้น'
+                            && i.TransportStatusDesc != 'รอยืนยันใบคุมรถ' 
+                            && i.TransportStatusDesc != 'รอคนขับรับงาน' 
+                            && i.TransportStatusDesc != 'ระหว่างจัดส่งสินค้า'
+                            && i.TransportStatusDesc != 'จัดส่งสินค้าสำเร็จ'
+                            && i.TransportStatusDesc != 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(182, 182, 182); height: 42px; padding-top: 10px;">
                                 {{i.TransportStatusDesc}}
                             </div>
                         </td>
                         <td>
                             <div class="w100">
                                 {{i.TransportType}}
-                              </div>
+                            </div>
                         </td>
                         <td>
                             <div class="w300">
                                 {{i.Transport}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="w100">
+                                {{i.Vehicle}}
                              </div>
+                        </td>
+                        <td>
+                            <div class="w100">
+                                {{i.DriverFirstName}} {{i.DriverLastName}}
+                             </div>
+                        </td>
+                        <td>
+                            <div class="w100">
+                                {{i.DriverMobile}}
+                            </div>
                         </td>
                         <td>
                             <div class="w100">
@@ -207,17 +202,17 @@
                         <td>
                             <div class="w150">
                                 {{i.Route}}
-                             </div>
+                            </div>
                         </td>
                         <td>
-                            <div class="w150">
+                            <div class="w200">
                                 {{i.SubRoute}}
                              </div>
                         </td>
                         <td>
-                            <div class="w150">
-                                {{i.ReceiveFromName}}
-                            </div>
+                            <div class="w1000">
+                                {{i.ReceiveFromName}} {{i.ReceiveFromAddress}}
+                             </div>
                         </td>
                         <td>
                             <div class="w100">
@@ -227,23 +222,14 @@
 
                         <td>
                             <div class="w100">
-                                {{i.DriverFirstName}} {{i.DriverLastName}}
-                             </div>
-                        </td>
-                        <td>
-                            <div class="w100">
-                                {{i.DriverMobile}}
-                             </div>
-                        </td>
-                        <td>
-                            <div class="w100">
                                 {{i.TransportDate}}
-                             </div>
+                            </div>
                         </td>
+
                         <td>
-                            <div class="w300">
+                            <div class="w1000">
                                 {{i.Remark}}
-                             </div>
+                            </div>
                         </td>
                         <td>
                             <div class="w100">

@@ -134,12 +134,16 @@
                 <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
                    
                 </div> -->
-                <div class="col l12 s12 p-0 text-center" style="margin-bottom: 5px;">
-                    <!-- <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="''" (click)="create()"></cbtn> -->
+
+                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
                     <cbtn *ngIf="id == 'new'" [label]="'บันทึกข้อมูล'" [color]="'blue'" [icon]="''" (click)="create()"></cbtn>
                     <cbtn *ngIf="id != 'new'" [label]="'อัพเดทข้อมูล'" [color]="'blue'" [icon]="''" (click)="update()"></cbtn>
-                    <!-- <cbtn [label]="'ออก'" [color]="'red'" [icon]="''" (click)="clear()"></cbtn> -->
                 </div>
+
+                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
+                    <cbtn [label]="'ปิด'" [color]="'grey'" [icon]="''" (click)="close()"></cbtn>
+                </div>
+
             </div>
         </div>
         <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
@@ -207,16 +211,16 @@
                 </div>
 
 
-
-
-                <div class="col s12 p-0" style="margin-bottom: 5px;">
-                    <!-- <cbtnl [label]="'บันทึก'" [color]="'blue'" [icon]="''" (click)="create()"></cbtnl> -->
+                <!-- <div class="col s12 p-0" style="margin-bottom: 5px;"> -->
+                <div class="col s12 p-0 text-right" style="margin-bottom: 5px;">
                     <cbtn *ngIf="id == 'new'" [label]="'บันทึกข้อมูล'" [color]="'blue'" [icon]="''" (click)="create()"></cbtn>
                     <cbtn *ngIf="id != 'new'" [label]="'อัพเดทข้อมูล'" [color]="'blue'" [icon]="''" (click)="update()"></cbtn>
+                    
                 </div>
-                <div class="col s12 p-0" style="margin-bottom: 5px;">
-                    <!-- <cbtnl [label]="'กลับ'" [color]="'red'" [icon]="''" (click)="clear()"></cbtnl> -->
+                <div class="col s12 p-0 text-right" style="margin-bottom: 5px;">
+                    <cbtn [label]="'ปิด'" [color]="'grey'" [icon]="''" (click)="close()"></cbtn>
                 </div>
+
             </div>
         </div>
     </div>
