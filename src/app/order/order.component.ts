@@ -514,8 +514,8 @@ export class OrderComponent implements OnInit {
 
   create() {
     const url = this.router.serializeUrl(
-      // this.router.createUrlTree([`epod/order-form/new`])
-      this.router.createUrlTree([`order-form/new`])
+      this.router.createUrlTree([`epod/order-form/new`])
+      // this.router.createUrlTree([`order-form/new`])
     );
 
     window.open(url, '_blank');
@@ -523,8 +523,8 @@ export class OrderComponent implements OnInit {
 
   edit(param) {
     const url = this.router.serializeUrl(
-      // this.router.createUrlTree([`epod/order-form/` + param])
-      this.router.createUrlTree([`order-form/` + param])
+      this.router.createUrlTree([`epod/order-form/` + param])
+      // this.router.createUrlTree([`order-form/` + param])
     );
 
     window.open(url, '_blank');
