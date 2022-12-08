@@ -141,7 +141,6 @@
                                 </label>
                                 </span>
                             </th> -->
-                            <th>คำสั่ง</th>
                             <th>เลขที่ Inv.</th>
                             <th>สถานะ</th>
                             <th>Doc. Type</th>
@@ -156,6 +155,7 @@
                             <th>Carton</th>
                             <th>Weight</th>
                             <th>หมายเหตุ</th>
+                            <th>คำสั่ง</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -194,17 +194,6 @@
                                         </a>
                                     </div>
                                 </td> -->
-                            <td>
-                                <div class="w100">
-                                    <a class="btn-floating blue" style="cursor: pointer;" (click)="edit(i.OrderNo)">
-                                        <i class="medium material-icons">edit</i>
-                                    </a>
-                                    <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i.OrderNo)">
-                                        <i class="medium material-icons">delete</i>
-                                    </a>
-
-                                </div>
-                            </td>
                             <td>
                                 <div class="w100">
                                     <!-- <a href="javascript:void(0)">
@@ -308,51 +297,22 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="w1000">
+                                <div class="w250">
                                     {{i.Comment}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
-                            <!-- <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.FinancialProject" name="i.FinancialProject" id="i.FinancialProject" type="text" class="input-text-1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.CostCenter" name="i.CostCenter" id="i.CostCenter" type="text" class="input-text-1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.U_HMC_Stage" name="i.U_HMC_Stage" id="i.U_HMC_Stage" type="text" class="input-text-1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.Break" name="i.Break" id="i.Break" type="text" class="input-text-1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.NonBillableTime" name="i.NonBillableTime" id="i.NonBillableTime" type="text" class="input-text-1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        N/A
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        N/A
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.U_HMC_Detail" name="i.U_HMC_Detail" id="i.U_HMC_Detail" type="text" class="input-text-1">
-                                    </div>
-                                </td> -->
+                            <td>
+                                <div class="w100">
+                                    <a class="btn-floating blue" style="cursor: pointer;" (click)="edit(i.OrderNo)">
+                                        <i class="medium material-icons">edit</i>
+                                    </a>
+                                    <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i.OrderNo)">
+                                        <i class="medium material-icons">delete</i>
+                                    </a>
+
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

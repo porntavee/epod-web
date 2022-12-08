@@ -593,6 +593,7 @@ export class OrderFormComponent implements OnInit {
     this.criteriaModel.OrderDate = moment(this.criteriaModel.OrderDate).format('YYYY-MM-DDT00:00:00');
     this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
     this.criteriaModel.UoM = this.criteriaModel.UoM;
+    this.criteriaModel.Process = "CREATE";
 
     let json = JSON.stringify(this.criteriaModel);
 
@@ -607,6 +608,7 @@ export class OrderFormComponent implements OnInit {
       if (model.Status) {
         this.criteriaModel.OrderNo = model.Data;
         this.toastr.success("บันทึกข้อมูลเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        // window.self.close(); 
         // this.listModel = model.Data;
       }
       else {
@@ -631,7 +633,7 @@ export class OrderFormComponent implements OnInit {
 
     let json = JSON.stringify(this.criteriaModel);
 
-    debugger;
+    // debugger;
 
     this.serviceProviderService.post('api/Transport/CreateOrder', this.criteriaModel).subscribe(data => {
       this.spinner.hide();
@@ -639,7 +641,7 @@ export class OrderFormComponent implements OnInit {
       model = data;
       this.viewModel = model;
 
-      debugger
+      // debugger
 
       if (model.Status) {
         // this.criteriaModel.OrderNo = model.Data;

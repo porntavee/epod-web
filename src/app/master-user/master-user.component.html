@@ -71,7 +71,6 @@
                 <table id="users-list-datatable" class="bordered centered striped">
                     <thead>
                         <tr>
-                            <th>คำสั่ง</th>
                             <th>รหัส</th>
                             <th>รหัสเข้าระบบ</th>
                             <th>ชื่อ</th>
@@ -80,23 +79,12 @@
                             <th>เบอร์โทร</th>
                             <th>ทะเบียนรถ</th>
                             <th>อีเมล์</th>
+                            <th>คำสั่ง</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr
                             *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
-                            <td>
-                                <div class="w100">
-                                    <a class="btn-floating blue" style="cursor: pointer;" (click)="readDetail(i)">
-                                        <i class="medium material-icons">edit</i>
-                                    </a>
-                                    <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
-                                        <i class="medium material-icons">delete</i>
-                                    </a>
-                                    
-                                </div>
-
-                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.Code}}
@@ -136,6 +124,18 @@
                                 <div class="w150">
                                     {{i.Email}}
                                 </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <a class="btn-floating blue" style="cursor: pointer;" (click)="readDetail(i)">
+                                        <i class="medium material-icons">edit</i>
+                                    </a>
+                                    <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
+                                        <i class="medium material-icons">delete</i>
+                                    </a>
+                                    
+                                </div>
+
                             </td>
                         </tr>
                     </tbody>
