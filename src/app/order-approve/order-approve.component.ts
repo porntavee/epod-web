@@ -62,7 +62,7 @@ export class OrderApproveComponent implements OnInit {
     // { value: '3', display: 'First Name' }];
 
     this.criteriaModel.statusCode = 'O';
-    this.criteriaModel.statusDescription = 'O - รอยืนยันใบคุมรถ';
+    this.criteriaModel.statusDescription = 'O - รออนุมัติงาน';
 
     this.read();
     this.readRoute();
