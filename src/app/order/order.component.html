@@ -43,9 +43,9 @@
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
                     <cdp (cModel)="criteriaModel.orderDate = $event" [label]="'วันที่ออกเอกสาร'" [data]="criteriaModel.orderDate"></cdp>
                 </div>
-                <!-- <div class="col l4 s12 pl-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.toDescription = $event" [label]="'ถึง'" [data]="criteriaModel.toDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
-                </div> -->
+                <div class="col l4 s12 pl-0" style="margin-top: -20px;">
+                    <cdp (cModel)="criteriaModel.orderDateEnd = $event" [label]="'ถึงวันที่ออกเอกสาร'" [data]="criteriaModel.orderDateEnd"></cdp>
+                </div>
             </div>
 
             <div class="row">
