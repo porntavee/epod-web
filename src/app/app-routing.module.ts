@@ -33,6 +33,7 @@ import { MasterShiplocationComponent } from './master-shiplocation/master-shiplo
 import { ReturnDocumentComponent } from './return-document/return-document.component';
 import { TrackingStatusComponent } from './tracking-status/tracking-status.component';
 import { ReturnTransactionComponent } from './return-transaction/return-transaction.component';
+import { MasterRouteComponent } from './master-route/master-route.component'
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -69,6 +70,7 @@ const routes: Routes = [
   { path: 'tracking-status', component: TrackingStatusComponent },
   { path: 'return-document', component: ReturnDocumentComponent },
   { path: 'return-transaction', component: ReturnTransactionComponent },
+  { path: 'master-route', component: MasterRouteComponent },
 ];
 
 @NgModule({

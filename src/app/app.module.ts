@@ -111,6 +111,7 @@ import { MasterShiplocationComponent } from './master-shiplocation/master-shiplo
 import { ReturnDocumentComponent } from './return-document/return-document.component';
 import { TrackingStatusComponent } from './tracking-status/tracking-status.component';
 import { ReturnTransactionComponent } from "./return-transaction/return-transaction.component";
+import { MasterRouteComponent } from './master-route/master-route.component';
 
 @NgModule({
   declarations: [
@@ -206,7 +207,8 @@ import { ReturnTransactionComponent } from "./return-transaction/return-transact
     MasterShiplocationComponent,
     ReturnDocumentComponent,
     TrackingStatusComponent,
-    ReturnTransactionComponent
+    ReturnTransactionComponent,
+    MasterRouteComponent
   ],
   imports: [
     BrowserModule,
