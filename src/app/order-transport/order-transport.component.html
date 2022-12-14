@@ -21,7 +21,7 @@
                 <citxt (cModel)="criteriaModel.shipToAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="criteriaModel.shipToAddress" [readonly]="true" (click)="chooseShipTo()"></citxt>
             </div>
             <div class="col l3 s12 pl-0">
-                <citxt (cModel)="criteriaModel.approveDateString = $event" [label]="'Appt. Date'" [data]="criteriaModel.approveDateString"></citxt>
+                <cdp (cModel)="criteriaModel.approveDateString = $event" [label]="'Appt. Date'" [data]="criteriaModel.approveDateString"></cdp>
             </div>
         </div>
 
@@ -42,11 +42,13 @@
 
 
         <div class="row">
-            <div class="col l10 s12 p-0" style="margin-bottom: 5px;"></div>
-            <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
-                <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+            <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
+            <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
+                <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
+                <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtn>
             </div>
         </div>
+
     </div>
     <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
         <div class="row">
@@ -83,6 +85,13 @@
                 <div class="col s12" style="margin-top: -10px;">
                     <cdp (cModel)="criteriaModel.LastDateTo = $event" [label]="'Last Date To'" [data]="criteriaModel.LastDateTo"></cdp>
                 </div> -->
+            <!-- <div class="col s12 p-0" style="margin-bottom: 5px;">
+                <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+            </div> -->
+
+            <div class="col s12 p-0" style="margin-bottom: 5px;">
+                <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
+            </div>
             <div class="col s12 p-0" style="margin-bottom: 5px;">
                 <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
             </div>
@@ -129,7 +138,7 @@
                     <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
                         <td>
                             <div class="w100">
-                                {{i.TransportNo}}
+                                <a style="cursor: pointer;" (click)="edit(i.TransportNo)">{{i.TransportNo}}</a>
                             </div>
                         </td>
                         <td>

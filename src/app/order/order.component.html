@@ -141,10 +141,10 @@
                                 </label>
                                 </span>
                             </th> -->
+                            <th>Doc. No.</th>
                             <th>เลขที่ Inv.</th>
                             <th>สถานะ</th>
                             <th>Doc. Type</th>
-                            <th>Doc. No.</th>
                             <th>Doc. Date</th>
                             <th>PO</th>
                             <th>Cus Code</th>
@@ -160,54 +160,14 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
-                            <!-- [hidden]="!checkPermission(i.category, 'deleteAction')" -->
-                            <!-- <td>
-                                <div class="w20">
-                                    <label>
-                                            (change)="isAllSelected(i.category, 'deleteAction')"
-                                            <input type="checkbox" [(ngModel)]="i.isSelected" />
-                                            <span></span>
-                                        </label>
-                                </div>
-                            </td> -->
-                            <!-- <td>
-                                    <div class="w150"> -->
-                            <!-- <a href="javascript:void(0)">
-                                            <p class="cut-text">{{i.FirstName}}</p>
-                                        </a> -->
-                            <!-- <cdp (cModel)="i.DateFrom = $event" [label]="'-'" [data]="i.DateFrom"></cdp> -->
-                            <!-- <div class="col s9 p-0">
-                                            <input style="height: 20px; margin-top: 10px !important;" [(ngModel)]="i.DateFrom" matInput [matDatepicker]="picker" [formControl]="dateControl">
-                                        </div>
-                                        <div class="col s2 p-0">
-                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker></mat-datepicker>
-                                        </div> -->
-                            <!-- </div>
-                                </td> -->
-                            <!-- <td>
-                                    <div class="w30">
-                                        <a href="javascript:void(0)" (click)="exportAsXLSX(i)">
-                                            <i class="material-icons">
-                                                print
-                                            </i>
-                                        </a>
-                                    </div>
-                                </td> -->
                             <td>
                                 <div class="w100">
-                                    <!-- <a href="javascript:void(0)">
-                                            <p class="cut-text">{{i.FirstName}}</p>
-                                        </a> -->
-                                    <!-- <cdp (cModel)="i.DateTo = $event" [label]="'-'" [data]="i.DateTo"></cdp> -->
-                                    <!-- <a href="javascript:void(0)" style="cursor: pointer !important;">
-                                            {{i.Code}}
-                                        </a> -->
-                                    <!-- <cbtne [label]="i.Code" (click)="editTimeSheet(i)"></cbtne> -->
-                                    <!-- <a style="cursor: pointer;" (click)="readDetail(i)">{{i.InvoiceNo}}</a> -->
-                                    <a>
-                                        {{i.InvoiceNo}}
-                                    </a>
+                                    <a style="cursor: pointer;" (click)="edit(i.OrderNo)">{{i.OrderNo}}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <a style="cursor: pointer;" (click)="edit(i.OrderNo)">{{i.InvoiceNo}}</a>
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
@@ -233,12 +193,6 @@
                             <td>
                                 <div class="w100">
                                     {{i.OrderType}}
-                                    <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.OrderNo}}
                                     <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
                                 </div>
                             </td>

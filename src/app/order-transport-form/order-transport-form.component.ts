@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { DriverDialog, RegionDialog, RouteDialog, RoutingDialog, ShipToDialog, StatusDialog, SubRoutingDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog, DriverDialog, RegionDialog, RouteDialog, RoutingDialog, ShipToDialog, StatusDialog, SubRoutingDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -1277,7 +1277,7 @@ export class OrderTransportFormComponent implements OnInit {
     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
     this.criteriaModel.TransportNo = "";
     this.criteriaModel.TransportDate = moment(this.criteriaModel.TransportDateString).format('YYYY-MM-DDT00:00:00');
-    this.criteriaModel.TransportStatus = "O";
+    this.criteriaModel.TransportStatus = "A";
     // this.criteriaModel.TransportTypeId = "OT";
     this.criteriaModel.RegionId = "0010000000000";
     this.criteriaModel.CreateBy = "0010000000000";
@@ -1432,6 +1432,52 @@ export class OrderTransportFormComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
   }
+
+  
+  confirm() {
+
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องยืนยันใบคุมใช่หรือไม่?' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+        this.spinner.show();
+
+        let criteria = {
+          "userinformation": this.serviceProviderService.userinformation,
+          "TransportNo": this.criteriaModel.TransportNo ,
+          "TransportStatus": 'O' ,
+        }
+
+        let json = JSON.stringify(criteria);
+
+        this.serviceProviderService.post('api/Transport/UpdateTransportStatus', criteria).subscribe(data => {
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
+          this.viewModel = model;
+
+          if (model.Status) {
+            this.spinner.hide();
+            this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            debugger
+            this.backToMain();
+          }
+          else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+      }
+    });
+  }
+
 
 }
 

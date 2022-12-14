@@ -200,8 +200,8 @@ export class OrderTransportComponent implements OnInit {
 
   create() {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`epod/order-transport-form/new`])
-      // this.router.createUrlTree([`order-transport-form/new`])
+      // this.router.createUrlTree([`epod/order-transport-form/new`])
+      this.router.createUrlTree([`order-transport-form/new`])
     );
 
     window.open(url, '_blank');
@@ -209,12 +209,17 @@ export class OrderTransportComponent implements OnInit {
 
   edit(param) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`epod/order-transport-form/` + param])
-      // this.router.createUrlTree([`order-transport-form/` + param])
+      // this.router.createUrlTree([`epod/order-transport-form/` + param])
+      this.router.createUrlTree([`order-transport-form/` + param])
     );
 
     window.open(url, '_blank');
   }
+
+  clear() {
+    this.criteriaModel = { approveDateString: '' };
+  }
+
 
   reportModel: any = [];
   exportAsXLSX(param): void {
