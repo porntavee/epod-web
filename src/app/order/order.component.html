@@ -171,22 +171,7 @@
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.OrderStatus == 'P'" class="w100" style="background-color: rgb(0, 204, 120); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                </div>
-                                <div *ngIf="i.OrderStatus == 'D'" class="w100" style="background-color: rgb(255, 255, 0); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                </div>
-                                <div *ngIf="i.OrderStatus == 'F'" class="w100" style="background-color: rgb(0, 204, 204); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                </div>
-                                <div *ngIf="i.OrderStatus == 'C'" class="w100" style="background-color: rgb(255, 0, 0); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                </div>
-                                <div *ngIf="i.OrderStatus != 'P'
-                                 && i.OrderStatus != 'D'
-                                 && i.OrderStatus != 'F'
-                                 && i.OrderStatus != 'C'" class="w100">
+                                <div class="w100" style="background-color: {{statusOrderColor(i.OrderStatus)}}; height: 42px; padding-top: 10px;">
                                     {{i.OrderStatusDesc}}
                                 </div>
                             </td>
@@ -606,21 +591,7 @@
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.OrderStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                                <div *ngIf="i.OrderStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                                <div *ngIf="i.OrderStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-
-
-                                <div *ngIf="i.OrderStatusDesc != 'รอยืนยันใบคุมรถ' && i.OrderStatusDesc != 'ยืนยันแล้ว' && i.OrderStatusDesc != 'ระหว่างจัดส่งสินค้า' " class="w100" style="background-color: rgb(218, 131, 247); height: 42px; padding-top: 10px;">
+                                <div class="w100" style="background-color: {{statusOrderColor(i.OrderStatus)}}; height: 42px; padding-top: 10px;">
                                     {{i.OrderStatusDesc}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>

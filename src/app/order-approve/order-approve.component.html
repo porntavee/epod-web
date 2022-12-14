@@ -270,36 +270,36 @@
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.TransportStatusDesc == 'เสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                                <div class="w100" style="background-color: {{statusTransportColor(i.TransportStatus)}}; height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'คืนบิลเสร็จสิ้น'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                                <!-- <div *ngIf="i.TransportStatus == 'D'" class="w100" style="background-color: #F7E884; height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
+                                <div *ngIf="i.TransportStatus == 'L'" class="w100" style="background-color: #B6B6B6; height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'รอคนขับรับงาน'" class="w100" style="background-color: rgb(131, 247, 230); height: 42px; padding-top: 10px;">
+                                <div *ngIf="i.TransportStatus == 'O'" class="w100" style="background-color: #B6B6B6; height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
+                                <div *ngIf="i.TransportStatus == 'P'" class="w100" style="background-color: #79D58B; height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc == 'จัดส่งสินค้าสำเร็จ'" class="w100" style="background-color: rgb(247, 131, 239); height: 42px; padding-top: 10px;">
+                                <div *ngIf="i.TransportStatus == 'จัดส่งสินค้าสำเร็จ'" class="w100" style="background-color: rgb(247, 131, 239); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
                                 </div>
                                 <div *ngIf="i.TransportStatusDesc == 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(133, 131, 247); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
                                 </div>
-                                <div *ngIf="i.TransportStatusDesc != 'เสร็จสิ้น' 
-                                && i.TransportStatusDesc !='คืนบิลเสร็จสิ้น'
-                                && i.TransportStatusDesc != 'รอยืนยันใบคุมรถ' 
-                                && i.TransportStatusDesc != 'รอคนขับรับงาน' 
-                                && i.TransportStatusDesc != 'ระหว่างจัดส่งสินค้า'
-                                && i.TransportStatusDesc != 'จัดส่งสินค้าสำเร็จ'
-                                && i.TransportStatusDesc != 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(182, 182, 182); height: 42px; padding-top: 10px;">
+                                <div *ngIf="i.TransportStatus != 'เสร็จสิ้น' 
+                                && i.TransportStatus !='คืนบิลเสร็จสิ้น'
+                                && i.TransportStatus != 'รอยืนยันใบคุมรถ' 
+                                && i.TransportStatus != 'รอคนขับรับงาน' 
+                                && i.TransportStatus != 'ระหว่างจัดส่งสินค้า'
+                                && i.TransportStatus != 'จัดส่งสินค้าสำเร็จ'
+                                && i.TransportStatus != 'ระหว่างรับสินค้า'" class="w100" style="background-color: rgb(182, 182, 182); height: 42px; padding-top: 10px;">
                                     {{i.TransportStatusDesc}}
-                                </div>
+                                </div> -->
                             </td>
                             <td>
                                 <div class="w100">
@@ -314,12 +314,12 @@
                             <td>
                                 <div class="w100">
                                     {{i.Vehicle}}
-                                 </div>
+                                </div>
                             </td>
                             <td>
                                 <div class="w100">
                                     {{i.DriverFirstName}} {{i.DriverLastName}}
-                                 </div>
+                                </div>
                             </td>
                             <td>
                                 <div class="w100">
@@ -339,25 +339,25 @@
                             <td>
                                 <div class="w200">
                                     {{i.SubRoute}}
-                                 </div>
+                                </div>
                             </td>
                             <td>
                                 <div class="w1000">
                                     {{i.ReceiveFromName}} {{i.ReceiveFromAddress}}
-                                 </div>
+                                </div>
                             </td>
                             <td>
                                 <div class="w100">
                                     {{i.DriverUser}}
-                                 </div>
+                                </div>
                             </td>
-    
+
                             <td>
                                 <div class="w100">
                                     {{i.TransportDate}}
                                 </div>
                             </td>
-    
+
                             <td>
                                 <div class="w1000">
                                     {{i.Remark}}
@@ -734,34 +734,21 @@
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.OrderStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                                <div *ngIf="i.OrderStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                                <div *ngIf="i.OrderStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
+                                <div class="w100" style="background-color: {{statusOrderColor(i.OrderStatus)}}; height: 42px; padding-top: 10px;">
                                     {{i.OrderStatusDesc}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
 
-
-                                <div *ngIf="i.OrderStatusDesc != 'รอยืนยันใบคุมรถ' && i.OrderStatusDesc != 'ยืนยันแล้ว' && i.OrderStatusDesc != 'ระหว่างจัดส่งสินค้า' " class="w100" style="background-color: rgb(218, 131, 247); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
                             </td>
                             <td *ngIf="isDelivery">
                                 <div class="w100">
                                     {{i.DeliveryStatus}}
-                                    </div>
+                                </div>
                             </td>
                             <td *ngIf="isDelivery">
                                 <div class="w100">
                                     {{i.Reason}}
-                                  </div>
+                                </div>
                             </td>
                             <td>
                                 <div class="w100">

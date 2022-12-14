@@ -142,10 +142,10 @@ export class OrderApproveComponent implements OnInit {
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
 
-          
+
           //D P R S 
           var strDeliveryStatus = "DPRS";
-          if(strDeliveryStatus.includes(String(element.OrderStatus))){
+          if (strDeliveryStatus.includes(String(element.OrderStatus))) {
             this.isDelivery = true;
           }
         });
@@ -532,5 +532,55 @@ export class OrderApproveComponent implements OnInit {
 
   clear() {
     this.criteriaModel = { apptDate: '' };
+  }
+
+  statusTransportColor(param) {
+    switch (param) {
+      case 'C':
+        return '#E16E5B'
+      case 'D':
+        return '#F7E884'
+      case 'L':
+        return '#B6B6B6'
+      case 'O':
+        return '#B6B6B6'
+      case 'P':
+        return '#79D58B'
+      case 'R':
+        return '#79D58B'
+      case 'S':
+        return '#66A5D9'
+      case 'W':
+        return '#B6B6B6'
+      default:
+        break;
+    }
+
+  }
+
+  statusOrderColor(param) {
+    switch (param) {
+      case 'C':
+        return '#E16E5B'
+      case 'D':
+        return '#F7E884'
+      case 'L':
+        return '#B6B6B6'
+      case 'O':
+        return '#B6B6B6'
+      case 'P':
+        return '#79D58B'
+      case 'R':
+        return '#79D58B'
+      case 'S':
+        return '#66A5D9'
+      case 'W':
+        return '#B6B6B6'
+      case 'F':
+        return '#EBB146'
+      default:
+        break;
+    }
+
   }
 }

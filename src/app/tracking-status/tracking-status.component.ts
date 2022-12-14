@@ -662,4 +662,28 @@ export class TrackingStatusComponent implements OnInit {
   clear() {
     this.criteriaModel = { apptDate: '' };
   }
+
+  statusTransportColor(param) {
+    switch (param) {
+      case 'C':
+        return '#E16E5B'
+      case 'D':
+        return '#F7E884'
+      case 'L':
+        return '#B6B6B6'
+      case 'O':
+        return '#B6B6B6'
+      case 'P':
+        return '#79D58B'
+      case 'R':
+        return '#79D58B'
+      case 'S':
+        return '#66A5D9'
+      case 'W':
+        return '#B6B6B6'
+      default:
+        break;
+    }
+
+  }
 }
