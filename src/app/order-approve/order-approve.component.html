@@ -888,15 +888,7 @@
                         <li>paginationModel.textPage</li>
                     </ul> -->
                 </div>
-                <div class="col s2">
-                    <div class="row" style="margin-top: 10px;">
-                        <cbtn [label]="'Refresh'" [color]="'blue'" [icon]="''" (click)="readDetail(headerModel)"></cbtn>
-                    </div>
 
-                    <!-- <ul>
-                        <li>paginationModel.textPage</li>
-                    </ul> -->
-                </div>
                 <div class="col s2">
                     <div class="row" style="margin-top: 10px;">
                         <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="backToMain()"></cbtn>
@@ -906,8 +898,14 @@
                         <li>paginationModel.textPage</li>
                     </ul> -->
                 </div>
+                <!-- <div class="col s2">
+                    <div class="row" style="margin-top: 10px;">
+                        <cbtn [label]="'Refresh'" [color]="'blue'" [icon]="''" (click)="readDetail(headerModel)"></cbtn>
+                    </div>
+                </div> -->
                 <div class="col s5">
-                    <div style="text-align: right;">
+                    <div style="text-align: right; margin-top: 10px;">
+                        <cbtn [label]="'Refresh'" [color]="'blue'" [icon]="''" (click)="readDetail(headerModel)"></cbtn>
                         <!-- <ul>
                             <li *ngFor="let item of listModel | paginate: { itemsPerPage: 10, currentPage: p }">{{item}}</li>
                         </ul> -->
