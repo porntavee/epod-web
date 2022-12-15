@@ -76,8 +76,8 @@ export class OrderComponent implements OnInit {
       "userinformation": this.serviceProviderService.userinformation,
       "OrderNo": this.criteriaModel.orderNo,
       "ShiptoId": this.criteriaModel.shipToId,
-      "OrderDate": this.criteriaModel.orderDate != undefined && this.criteriaModel.orderDate != "Invalid date" ? moment(this.criteriaModel.orderDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "OrderDateEnd": this.criteriaModel.OrderDateEnd != undefined && this.criteriaModel.OrderDateEnd != "Invalid date" ? moment(this.criteriaModel.OrderDateEnd).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "OrderDateStart": this.criteriaModel.orderDate != undefined && this.criteriaModel.orderDate != "Invalid date" ? moment(this.criteriaModel.orderDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "OrderDateEnd": this.criteriaModel.orderDateEnd != undefined && this.criteriaModel.orderDateEnd != "Invalid date" ? moment(this.criteriaModel.orderDateEnd).format('YYYY-MM-DD 00:00:00.000') : undefined,
       "OrderStatus": this.criteriaModel.statusCode,
     }
 
