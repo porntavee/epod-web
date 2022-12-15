@@ -1174,10 +1174,20 @@ export class OrderTransportFormComponent implements OnInit {
   }
 
   add() {
-    this.isMainPage = false;
-    this.isFormPage = true;
+    if(this.criteriaModel.TransportStatus == 'A' 
+    || this.criteriaModel.TransportStatus == 'O' 
+    || this.criteriaModel.TransportStatus== undefined)
+    {
+      this.isMainPage = false;
+      this.isFormPage = true;
+  
+      this.readOrder();
+    }
+    else{
+      this.toastr.error('สถานะไม่สามารถเพิ่มงานขนส่งได้', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    }
 
-    this.readOrder();
+
   }
 
   addOrder() {
