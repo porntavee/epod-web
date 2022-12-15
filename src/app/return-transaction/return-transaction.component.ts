@@ -64,6 +64,7 @@ export class ReturnTransactionComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.AdminReturnDate = moment(element.AdminReturnDate).format('DD-MM-YYYY h:mm:ss');
         });
 
         this.listModel = model.Data;
@@ -173,6 +174,44 @@ export class ReturnTransactionComponent implements OnInit {
 
   clear() {
     this.criteriaModel = { OrderEstimate: '' };
+  }
+
+  delete(idx) {
+    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?' } });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+        this.spinner.show();
+        let criteria = {
+          "userinformation": this.serviceProviderService.userinformation,
+          "Process": 'CANCEL_RETURN',
+          "TransportNo": this.listModel[idx].TransportNo,
+          "OrderNo": this.listModel[idx].OrderNo,
+        }
+
+        let json = JSON.stringify(criteria);
+
+        this.serviceProviderService.post('api/Transport/ReturnOrders', criteria).subscribe(data => {
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
+          if (model.Status) {
+            this.listModel.splice(idx, 1);
+            this.spinner.hide();
+            this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+          else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+      }
+    });
   }
 
   statusOrderColor(param) {
