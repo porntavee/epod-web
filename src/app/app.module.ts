@@ -112,6 +112,7 @@ import { ReturnDocumentComponent } from './return-document/return-document.compo
 import { TrackingStatusComponent } from './tracking-status/tracking-status.component';
 import { ReturnTransactionComponent } from "./return-transaction/return-transaction.component";
 import { MasterRouteComponent } from './master-route/master-route.component';
+import { MasterSubrouteComponent } from './master-subroute/master-subroute.component';
 
 @NgModule({
   declarations: [
@@ -208,7 +209,8 @@ import { MasterRouteComponent } from './master-route/master-route.component';
     ReturnDocumentComponent,
     TrackingStatusComponent,
     ReturnTransactionComponent,
-    MasterRouteComponent
+    MasterRouteComponent,
+    MasterSubrouteComponent
   ],
   imports: [
     BrowserModule,

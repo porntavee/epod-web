@@ -45,6 +45,7 @@ export class MenuService {
         items: [
           { 'name': 'สถานที่รับ/ส่งสินค้า', 'routing': '/master-shiplocation', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'เส้นทางหลัก / Route', 'routing': '/master-route', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
+          { 'name': 'เส้นทางย่อย / SubRoute', 'routing': '/master-subroute', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'ผู้ใช้งาน', 'routing': '/master-user', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'วันหยุด', 'routing': '/auto-reply', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false }
         ]
