@@ -197,19 +197,9 @@
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.OrderStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                                <div class="w100" style="background-color: {{statusOrderColor(i.OrderStatus)}}; height: 42px; padding-top: 10px;">
                                     {{i.OrderStatusDesc}}
-                                </div>
-                                <div *ngIf="i.OrderStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                </div>
-                                <div *ngIf="i.OrderStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                </div>
-
-
-                                <div *ngIf="i.OrderStatusDesc != 'รอยืนยันใบคุมรถ' && i.OrderStatusDesc != 'ยืนยันแล้ว' && i.OrderStatusDesc != 'ระหว่างจัดส่งสินค้า' " class="w100" style="background-color: rgb(218, 131, 247); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
                             <td>

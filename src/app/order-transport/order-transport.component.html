@@ -27,7 +27,8 @@
 
         <div class="row">
             <div class="col l3 s12 p-0" style="margin-top: -20px;">
-                <citxt (cModel)="criteriaModel.xxx = $event" [label]="'ชื่อผู้ใช้งาน'" [data]="criteriaModel.xxx"></citxt>
+                <!-- <citxt (cModel)="criteriaModel.xxx = $event" [label]="'ชื่อผู้ใช้งาน'" [data]="criteriaModel.xxx"></citxt> -->
+                <citxt (cModel)="criteriaModel.vehicleDescription = $event" [label]="'ทะเบียนรถ'" [data]="criteriaModel.vehicleDescription" [readonly]="true" (click)="chooseVehicle()"></citxt>
             </div>
             <div class="col l3 s12 p-0" style="margin-top: -20px;">
                 <citxt (cModel)="criteriaModel.driverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.driverDescription" [readonly]="true" (click)="chooseDriver()"></citxt>

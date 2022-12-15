@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, DriverDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog } from '../dialog/dialog';
+import { ConfirmDialog, DriverDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -62,7 +62,8 @@ export class OrderTransportComponent implements OnInit {
       "ApproveDate": moment(this.criteriaModel.approveDateString).format('YYYY-MM-DDT00:00:00'),
       "DriverId": this.criteriaModel.driverId,
       "TransportStatus": this.criteriaModel.statusCode,
-      "TransportTypeId": this.criteriaModel.typeOfWorkCode
+      "TransportTypeId": this.criteriaModel.typeOfWorkCode,
+      "VehicleId": this.criteriaModel.vehicleId,
     }
 
     let json = JSON.stringify(criteria);
@@ -202,9 +203,30 @@ export class OrderTransportComponent implements OnInit {
     });
   }
 
+  //use
+  chooseVehicle() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(VehicleDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'ทะเบียนรถ' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.vehicleId = result.Id;
+        this.criteriaModel.vehicleCode = result.Code;
+        this.criteriaModel.vehicleDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
   create() {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`epod/order-transport-form/new`])
+      this.router.createUrlTree([`order-transport-form/new`])
       // this.router.createUrlTree([`order-transport-form/new`])
     );
 
@@ -213,7 +235,7 @@ export class OrderTransportComponent implements OnInit {
 
   edit(param) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`epod/order-transport-form/` + param])
+      this.router.createUrlTree([`order-transport-form/` + param])
       // this.router.createUrlTree([`order-transport-form/` + param])
     );
 
