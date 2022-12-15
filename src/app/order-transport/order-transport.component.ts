@@ -226,7 +226,7 @@ export class OrderTransportComponent implements OnInit {
 
   create() {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`order-transport-form/new`])
+      this.router.createUrlTree([`epod/order-transport-form/new`])
       // this.router.createUrlTree([`order-transport-form/new`])
     );
 
@@ -235,7 +235,7 @@ export class OrderTransportComponent implements OnInit {
 
   edit(param) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`order-transport-form/` + param])
+      this.router.createUrlTree([`epod/order-transport-form/` + param])
       // this.router.createUrlTree([`order-transport-form/` + param])
     );
 
@@ -379,7 +379,7 @@ export class OrderTransportComponent implements OnInit {
       case 'D':
         return '#F7E884'
       case 'L':
-        return '#B6B6B6'
+        return '#F7E884'
       case 'O':
         return '#B6B6B6'
       case 'P':

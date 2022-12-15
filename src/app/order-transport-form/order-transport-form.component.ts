@@ -1495,7 +1495,7 @@ export class OrderTransportFormComponent implements OnInit {
       case 'D':
         return '#F7E884'
       case 'L':
-        return '#B6B6B6'
+        return '#F7E884'
       case 'O':
         return '#B6B6B6'
       case 'P':
