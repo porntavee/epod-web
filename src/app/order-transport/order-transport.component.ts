@@ -328,7 +328,7 @@ export class OrderTransportComponent implements OnInit {
         let json = JSON.stringify(this.criteriaModel);
 
 
-        this.serviceProviderService.post('api/Transport/CreateTransport', this.criteriaModel).subscribe(data => {
+        this.serviceProviderService.post('api/Transport/CancelTransport', this.criteriaModel).subscribe(data => {
           this.spinner.hide();
           let model: any = {};
           model = data;
