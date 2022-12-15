@@ -44,8 +44,8 @@ export class OrderTransportComponent implements OnInit {
     // { value: '2', display: 'First Name' },
     // { value: '3', display: 'First Name' }];
 
-    this.criteriaModel.statusCode = 'A';
-    this.criteriaModel.statusDescription = 'A - รอยืนยันใบคุม';
+    // this.criteriaModel.statusCode = 'A';
+    // this.criteriaModel.statusDescription = 'A - รอยืนยันใบคุม';
 
 
     this.read();
