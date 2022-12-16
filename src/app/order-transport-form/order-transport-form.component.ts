@@ -1191,11 +1191,27 @@ export class OrderTransportFormComponent implements OnInit {
   }
 
   addOrder() {
+
+    // var tags = this.listFormModel.reduce((tags, item) => {
+    //   item.tags.forEach(tag => {
+    //     tags[tag.InvoiceNo] = tags[tag.InvoiceNo] || 0;
+    //     tags[tag.InvoiceNo]++;
+    //   });
+    //   return tags;
+    // }, {});
+
+    // debugger
+
     this.listFormModel.forEach(element => {
       if (element.isSelected)
       {
-        element.Process = 'CREATE';
-        this.listModel.push(element);
+        let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
+
+        if (dup.length == 0)
+        {
+          element.Process = 'CREATE';
+          this.listModel.push(element);
+        }
       }
     });
 
