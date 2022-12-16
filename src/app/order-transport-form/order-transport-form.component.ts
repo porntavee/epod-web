@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, DriverDialog, RegionDialog, RouteDialog, RoutingDialog, ShipToDialog, StatusDialog, SubRoutingDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog, DriverDialog, JobStatusDialog, RegionDialog, RouteDialog, RoutingDialog, ShipToDialog, StatusDialog, SubRoutingDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -877,10 +877,10 @@ export class OrderTransportFormComponent implements OnInit {
   //use
   chooseTransportShipTo() {
 
-    if (this.criteriaModel.TransportTypeId != 'XD') {
-      this.toastr.warning('ระบุ Type of Work เป็น X Dock ก่อน', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      return
-    }
+    // if (this.criteriaModel.TransportTypeId != 'XD') {
+    //   this.toastr.warning('ระบุ Type of Work เป็น X Dock ก่อน', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    //   return
+    // }
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานที่' } });
 
@@ -949,7 +949,7 @@ export class OrderTransportFormComponent implements OnInit {
   //use
   chooseStatus() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะเอกสาร' } });
+    const dialogRef = this.dialog.open(JobStatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะเอกสาร' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -1181,7 +1181,7 @@ export class OrderTransportFormComponent implements OnInit {
       this.isMainPage = false;
       this.isFormPage = true;
   
-      this.readOrder();
+      this.readOrder('');
     }
     else{
       this.toastr.error('สถานะไม่สามารถเพิ่มงานขนส่งได้', 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -1218,9 +1218,24 @@ export class OrderTransportFormComponent implements OnInit {
     this.formModel = { OrderDateString: '' };
   }
 
-  readOrder() {
-    this.spinner.show();
+  readOrder(param) {
 
+    if(param!='')
+    {
+      if (param.key === "Enter") {
+        if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.OrderNo == '') {
+          this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          return;
+        }
+      }
+      else{
+        return;
+      }
+    }
+
+
+    this.spinner.show();
+    this.formModel.OrderStatus = this.formModel.StatusCode;
     this.formModel.userinformation = this.serviceProviderService.userinformation;
     this.formModel.Process = 'TRANSPORT';
     this.formModel.OrderDate = this.criteriaModel.OrderDateString != undefined && this.criteriaModel.OrderDateString != "Invalid date" ? moment(this.criteriaModel.OrderDateString).format('YYYY-MM-DD 00:00:00.000') : undefined;
@@ -1277,6 +1292,16 @@ export class OrderTransportFormComponent implements OnInit {
       this.toastr.warning('กรุณาระบุ SubRoute', 'แจ้งเตือนระบบ', { timeOut: 5000 });
       return false;
     }
+    if (this.criteriaModel.TransportTypeId == 'XD') {
+      if (this.criteriaModel.TransportShiptoId == null 
+        || this.criteriaModel.TransportShiptoId == '' 
+        || this.criteriaModel.TransportShiptoId == undefined){
+          this.toastr.warning('Type of Work เป็น X Dock กรุณาระบุสถานที่ส่งสินค้า', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          return
+      }
+
+    }
+
     return true;
   }
 
@@ -1508,6 +1533,8 @@ export class OrderTransportFormComponent implements OnInit {
         return '#B6B6B6'
       case 'F':
         return '#EBB146'
+        case 'H':
+          return '#66A5D9'
       default:
         break;
     }

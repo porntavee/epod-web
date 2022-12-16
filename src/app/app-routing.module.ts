@@ -35,6 +35,9 @@ import { TrackingStatusComponent } from './tracking-status/tracking-status.compo
 import { ReturnTransactionComponent } from './return-transaction/return-transaction.component';
 import { MasterRouteComponent } from './master-route/master-route.component'
 import { MasterSubrouteComponent } from './master-subroute/master-subroute.component'
+import { MasterZoneregionComponent } from './master-zoneregion/master-zoneregion.component'
+import { MasterTransportComponent } from './master-transport/master-transport.component'
+import { ReturnHubComponent } from './return-hub/return-hub.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -69,10 +72,14 @@ const routes: Routes = [
   { path: 'master-shiplocation', component: MasterShiplocationComponent },
   { path: 'return-document', component: ReturnDocumentComponent },
   { path: 'tracking-status', component: TrackingStatusComponent },
+  { path: 'return-hub', component: ReturnHubComponent },
   { path: 'return-document', component: ReturnDocumentComponent },
   { path: 'return-transaction', component: ReturnTransactionComponent },
   { path: 'master-route', component: MasterRouteComponent },
   { path: 'master-subroute', component: MasterSubrouteComponent },
+  { path: 'master-zoneregion', component: MasterZoneregionComponent },
+  { path: 'master-transport', component: MasterTransportComponent },
+
 ];
 
 @NgModule({

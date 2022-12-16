@@ -1,0 +1,167 @@
+<div *ngIf="isMainPage">
+    <div class="col s12">
+        <div class="card-panel"
+            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l8 s12">
+                    <span
+                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                        <b>ทะเบียน / เส้นทางหลัก</b>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+        <!-- [hidden]="isAdvanceSearch" -->
+        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
+            <div class="row">
+                <div class="col l3 s12 p-0">
+                    <citxt (cModel)="criteriaModel.Fillter = $event" [label]="'กรอง (รหัส/รายละเอียด)'"
+                        [data]="criteriaModel.Fillter"></citxt>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
+                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
+                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtn>
+                </div>
+            </div>
+        </div>
+        <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
+            <div class="row">
+
+            </div>
+        </div>
+    </div>
+    <div class="col s12">
+        <div class="card-panel"
+            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l2 s12">
+                    <span
+                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                        <b>รายการข้อมูล</b>
+                    </span>
+                </div>
+                <div class="col l8 s12">
+                </div>
+            </div>
+        </div>
+        <div class="card-panel" style="margin-top: 0px;">
+            <div style="overflow-x: auto;">
+                <table id="users-list-datatable" class="bordered centered striped">
+                    <thead>
+                        <tr>
+                            <th>รหัสระบบ</th>
+                            <th>รหัส</th>
+                            <th>รายละเอียด</th>
+                            <th>คำสั่ง</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
+                            <td>
+                                <div class="w100">
+                                    {{i.Id}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Code}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w300">
+                                    {{i.Description}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <a class="btn-floating blue" style="cursor: pointer;" (click)="readDetail(i)">
+                                        <i class="medium material-icons">edit</i>
+                                    </a>
+                                    <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
+                                        <i class="medium material-icons">delete</i>
+                                    </a>
+                                    
+                                </div>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col s6">
+                    <div class="row">
+                        <div class="col s6" style="margin-top: 10px;">
+                            <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="add()"></cbtn>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <div style="text-align: right;">
+                        <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป">
+                        </pagination-controls>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isFormPage">
+    <div class="col s12">
+        <div class="card-panel"
+            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l8 s12">
+                    <span
+                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                        <b>ทะเบียน / เส้นทางหลัก / รายละเอียด</b>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
+
+            <div class="row">
+                <div class="col l4 s12">
+                    <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id"
+                        [readonly]="true"></citxt>
+                </div>
+                <div class="col l4 s12">
+                    <!-- <citxt (cModel)="headerModel.Active = $event" [label]="'สถานะ'" [data]="headerModel.Active"
+                        [readonly]="true"></citxt> -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.Code = $event" [label]="'*รหัส'" [data]="headerModel.Code">
+                    </citxt>
+                </div>
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.Description = $event" [label]="'*รายละเอียด'" [data]="headerModel.Description">
+                    </citxt>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col l4 s12 p-0" style="margin-bottom: 5px;"></div>
+                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
+                    <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'" (click)="save()"></cbtn>
+                    <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="'keyboard_backspace'" (click)="back()"></cbtn>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

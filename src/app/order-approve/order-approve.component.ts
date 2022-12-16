@@ -152,14 +152,17 @@ export class OrderApproveComponent implements OnInit {
 
         this.listDetailModel = model.Data;
 
-        this.isMainPage = false;
-        this.isFormPage = true;
+        // this.isMainPage = false;
+        // this.isFormPage = true;
 
       }
       else {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
+
+      this.isMainPage = false;
+      this.isFormPage = true;
 
     }, err => {
       this.spinner.hide();
@@ -578,6 +581,8 @@ export class OrderApproveComponent implements OnInit {
         return '#B6B6B6'
       case 'F':
         return '#EBB146'
+        case 'H':
+          return '#66A5D9'
       default:
         break;
     }

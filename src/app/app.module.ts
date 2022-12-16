@@ -113,6 +113,9 @@ import { TrackingStatusComponent } from './tracking-status/tracking-status.compo
 import { ReturnTransactionComponent } from "./return-transaction/return-transaction.component";
 import { MasterRouteComponent } from './master-route/master-route.component';
 import { MasterSubrouteComponent } from './master-subroute/master-subroute.component';
+import { MasterZoneregionComponent } from './master-zoneregion/master-zoneregion.component';
+import { MasterTransportComponent } from './master-transport/master-transport.component';
+import { ReturnHubComponent } from './return-hub/return-hub.component';
 
 @NgModule({
   declarations: [
@@ -210,7 +213,10 @@ import { MasterSubrouteComponent } from './master-subroute/master-subroute.compo
     TrackingStatusComponent,
     ReturnTransactionComponent,
     MasterRouteComponent,
-    MasterSubrouteComponent
+    MasterSubrouteComponent,
+    MasterZoneregionComponent,
+    MasterTransportComponent,
+    ReturnHubComponent
   ],
   imports: [
     BrowserModule,

@@ -315,7 +315,7 @@
         <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
             <div class="row">
                 <div class="col l4 s12">
-                    <citxt (cModel)="formModel.OrderNo = $event" [label]="'Doc No.'" [data]="formModel.OrderNo"></citxt>
+                    <citxt (cModel)="formModel.OrderNo = $event" [label]="'Doc No.'" [data]="formModel.OrderNo" (keydown)="readOrder($event)"></citxt>
                 </div>
                 <div class="col l4 s12">
                     <citxt (cModel)="formModel.ShiptoDescription = $event" [label]="'ชื่อผู้รับ'" [data]="formModel.ShiptoDescription" [readonly]="true" (click)="chooseShipTo()"></citxt>
@@ -326,7 +326,7 @@
             </div>
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="formModel.InvoiceNo = $event" [label]="'เลขที่อินวอยน์'" [data]="formModel.InvoiceNo" [readonly]="true"></citxt>
+                    <citxt (cModel)="formModel.InvoiceNo = $event" [label]="'เลขที่อินวอยน์'" [data]="formModel.InvoiceNo"  (keydown)="readOrder($event)"></citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
                     <cdp (cModel)="formModel.OrderDateString = $event" [label]="'วันที่ออกเอกสาร'" [data]="formModel.OrderDateString"></cdp>
@@ -339,14 +339,14 @@
                 <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
                 <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
                     <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
-                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="readOrder()"></cbtn>
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="readOrder('')"></cbtn>
                 </div>
             </div>
         </div>
         <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
             <div class="row">
                 <div class="col s12">
-                    <citxt (cModel)="formModel.OrderNo = $event" [label]="'Doc No.'" [data]="formModel.OrderNo"></citxt>
+                    <citxt (cModel)="formModel.OrderNo = $event" [label]="'Doc No.'" [data]="formModel.OrderNo" (keydown)="readOrder($event)"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="formModel.ShiptoDescription = $event" [label]="'ชื่อผู้รับ'" [data]="formModel.ShiptoDescription" [readonly]="true" (click)="chooseShipTo()"></citxt>
@@ -355,7 +355,7 @@
                     <citxt (cModel)="formModel.ShiptoAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="formModel.ShiptoAddress" [readonly]="true" (click)="chooseShipTo()"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="formModel.InvoiceNo = $event" [label]="'เลขที่อินวอยน์'" [data]="formModel.InvoiceNo" [readonly]="true"></citxt>
+                    <citxt (cModel)="formModel.InvoiceNo = $event" [label]="'เลขที่อินวอยน์'" [data]="formModel.InvoiceNo" (keydown)="readOrder($event)"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
                     <cdp (cModel)="formModel.OrderDateString = $event" [label]="'วันที่ออกเอกสาร'" [data]="formModel.OrderDateString"></cdp>
@@ -367,7 +367,7 @@
                     <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
                 </div>
                 <div class="col s12 p-0" style="margin-bottom: 5px;">
-                    <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="readOrder()"></cbtnl>
+                    <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="readOrder('')"></cbtnl>
                 </div>
             </div>
         </div>
@@ -442,19 +442,9 @@
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
-                                <div *ngIf="i.OrderStatusDesc == 'ยืนยันแล้ว'" class="w100" style="background-color: rgb(154, 254, 154); height: 42px; padding-top: 10px;">
+                                <div class="w100" style="background-color: {{statusOrderColor(i.OrderStatus)}}; height: 42px; padding-top: 10px;">
                                     {{i.OrderStatusDesc}}
-                                </div>
-                                <div *ngIf="i.OrderStatusDesc == 'รอยืนยันใบคุมรถ'" class="w100" style="background-color: rgb(247, 131, 131); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                </div>
-                                <div *ngIf="i.OrderStatusDesc == 'ระหว่างจัดส่งสินค้า'" class="w100" style="background-color: rgb(247, 232, 131); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                </div>
-
-                                <div *ngIf="i.OrderStatusDesc != 'รอยืนยันใบคุมรถ' && i.OrderStatusDesc != 'ยืนยันแล้ว' && i.OrderStatusDesc != 'ระหว่างจัดส่งสินค้า' " class="w100" style="background-color: rgb(218, 131, 247); height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                </div>
+                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
