@@ -113,6 +113,10 @@ export class OrderTransportComponent implements OnInit {
         // param.UserID = result.empID;
         // this.costCenter = result.CostCenter;
       }
+      else{
+        this.criteriaModel.statusCode = '';
+        this.criteriaModel.statusDescription = '';
+      }
     });
   }
 
@@ -224,23 +228,7 @@ export class OrderTransportComponent implements OnInit {
     });
   }
 
-  create() {
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`epod/order-transport-form/new`])
-      // this.router.createUrlTree([`order-transport-form/new`])
-    );
 
-    window.open(url, '_blank');
-  }
-
-  edit(param) {
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`epod/order-transport-form/` + param])
-      // this.router.createUrlTree([`order-transport-form/` + param])
-    );
-
-    window.open(url, '_blank');
-  }
 
   clear() {
     this.criteriaModel = { approveDateString: '' };
@@ -394,5 +382,23 @@ export class OrderTransportComponent implements OnInit {
         break;
     }
 
+  }
+
+  create() {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`epod/order-transport-form/new`])
+      // this.router.createUrlTree([`order-transport-form/new`])
+    );
+
+    window.open(url, '_blank');
+  }
+
+  edit(param) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`epod/order-transport-form/` + param])
+      // this.router.createUrlTree([`order-transport-form/` + param])
+    );
+
+    window.open(url, '_blank');
   }
 }
