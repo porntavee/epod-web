@@ -75,6 +75,7 @@ export class OrderComponent implements OnInit {
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "OrderNo": this.criteriaModel.orderNo,
+      "InvoiceNo": this.criteriaModel.invoiceNo,
       "ShiptoId": this.criteriaModel.shipToId,
       "OrderDateStart": this.criteriaModel.orderDate != undefined && this.criteriaModel.orderDate != "Invalid date" ? moment(this.criteriaModel.orderDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
       "OrderDateEnd": this.criteriaModel.orderDateEnd != undefined && this.criteriaModel.orderDateEnd != "Invalid date" ? moment(this.criteriaModel.orderDateEnd).format('YYYY-MM-DD 00:00:00.000') : undefined,
