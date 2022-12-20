@@ -113,6 +113,10 @@ export class OrderTransportComponent implements OnInit {
         // param.UserID = result.empID;
         // this.costCenter = result.CostCenter;
       }
+      else{
+        this.criteriaModel.statusCode = '';
+        this.criteriaModel.statusDescription = '';
+      }
     });
   }
 
@@ -222,24 +226,6 @@ export class OrderTransportComponent implements OnInit {
         // this.costCenter = result.CostCenter;
       }
     });
-  }
-
-  create() {
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`order-transport-form/new`])
-      // this.router.createUrlTree([`order-transport-form/new`])
-    );
-
-    window.open(url, '_blank');
-  }
-
-  edit(param) {
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`order-transport-form/` + param])
-      // this.router.createUrlTree([`order-transport-form/` + param])
-    );
-
-    window.open(url, '_blank');
   }
 
   clear() {
@@ -394,5 +380,23 @@ export class OrderTransportComponent implements OnInit {
         break;
     }
 
+  }
+
+  create() {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`order-transport-form/new`])
+      // this.router.createUrlTree([`order-transport-form/new`])
+    );
+
+    window.open(url, '_blank');
+  }
+
+  edit(param) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`order-transport-form/` + param])
+      // this.router.createUrlTree([`order-transport-form/` + param])
+    );
+
+    window.open(url, '_blank');
   }
 }

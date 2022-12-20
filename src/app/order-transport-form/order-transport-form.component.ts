@@ -1223,7 +1223,39 @@ export class OrderTransportFormComponent implements OnInit {
   }
 
   deleteOrder(idx) {
-    this.listModel.splice(idx, 1);
+
+    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องลบรายการใช่หรือไม่?' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+
+        let criteria: any = {};
+        criteria.userinformation = this.serviceProviderService.userinformation;
+        criteria.Process = 'DELETEITEM';
+        criteria.TransportNo = this.criteriaModel.TransportNo;
+        criteria.OrderNo = this.listModel[idx].OrderNo;
+
+        this.serviceProviderService.post('api/Transport/DeleteTransportItem', criteria).subscribe(data => {
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
+          if (model.Status) {
+            this.toastr.success("ลบรายการเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.read();
+          }
+
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+
+        this.listModel.splice(idx, 1);
+
+      }
+    });
+
   }
 
   drop(event: CdkDragDrop<string[]>) {

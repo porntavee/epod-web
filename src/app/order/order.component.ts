@@ -75,6 +75,7 @@ export class OrderComponent implements OnInit {
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "OrderNo": this.criteriaModel.orderNo,
+      "InvoiceNo": this.criteriaModel.invoiceNo,
       "ShiptoId": this.criteriaModel.shipToId,
       "OrderDateStart": this.criteriaModel.orderDate != undefined && this.criteriaModel.orderDate != "Invalid date" ? moment(this.criteriaModel.orderDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
       "OrderDateEnd": this.criteriaModel.orderDateEnd != undefined && this.criteriaModel.orderDateEnd != "Invalid date" ? moment(this.criteriaModel.orderDateEnd).format('YYYY-MM-DD 00:00:00.000') : undefined,
@@ -513,29 +514,11 @@ export class OrderComponent implements OnInit {
     this.criteriaModel = { orderDate: '' };
   }
 
-  create() {
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`order-form/new`])
-      // this.router.createUrlTree([`order-form/new`])
-    );
-
-    window.open(url, '_blank');
-  }
-
-  edit(param) {
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`order-form/` + param])
-      // this.router.createUrlTree([`order-form/` + param])
-    );
-
-    window.open(url, '_blank');
-  }
-
   delete(param) {
 
     debugger
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องลบใช่หรือไม่?' } });
+    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องลบรายการใช่หรือไม่?' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -565,7 +548,7 @@ export class OrderComponent implements OnInit {
 
           if (model.Status) {
             this.criteriaModel.TransportNo = model.Data;
-            this.toastr.success("ลบใบคุมเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.toastr.success("ลบรายการเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
             this.read();
           }
 
@@ -605,4 +588,24 @@ export class OrderComponent implements OnInit {
     }
 
   }
+
+  create() {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`order-form/new`])
+      // this.router.createUrlTree([`order-form/new`])
+    );
+
+    window.open(url, '_blank');
+  }
+
+  edit(param) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`order-form/` + param])
+      // this.router.createUrlTree([`order-form/` + param])
+    );
+
+    window.open(url, '_blank');
+  }
+
+
 }
