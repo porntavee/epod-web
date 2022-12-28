@@ -108,7 +108,7 @@ export class MasterHolidayComponent  implements OnInit {
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
 
-      debugger
+      // debugger
 
     }, err => {
       this.spinner.hide();
@@ -153,6 +153,7 @@ export class MasterHolidayComponent  implements OnInit {
     this.isFormPage = false;
     this.isTimeSheetPage = false;
     this.read();
+    this.read2();
   }
 
   save() {
