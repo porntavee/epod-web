@@ -123,6 +123,7 @@ export class MasterHolidayComponent  implements OnInit {
     this.headerModel = {};
     this.headerModel = param;
     this.headerModel.Operation = 'UPDATE';
+    this.headerModel.StrDate = moment(param.Date).format('YYYYMMDDhhmmss');
 
     // debugger
 
