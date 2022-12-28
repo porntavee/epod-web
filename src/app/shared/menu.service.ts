@@ -44,12 +44,12 @@ export class MenuService {
       {
         name: 'ทะเบียน',
         items: [
+          { 'name': 'ผู้ใช้งาน', 'routing': '/master-user', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'สถานที่รับ/ส่งสินค้า', 'routing': '/master-shiplocation', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'เส้นทางหลัก / Route', 'routing': '/master-route', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'เส้นทางย่อย / SubRoute', 'routing': '/master-subroute', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'โซน', 'routing': '/master-zoneregion', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'บริษัทขนส่ง', 'routing': '/master-transport', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
-          { 'name': 'ผู้ใช้งาน', 'routing': '/master-user', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'วันหยุด', 'routing': '/master-holiday', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true }
         ]
       },
