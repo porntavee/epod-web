@@ -1,11 +1,9 @@
 <div *ngIf="isMainPage">
     <div class="col s12">
-        <div class="card-panel"
-            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
             <div class="row">
                 <div class="col l8 s12">
-                    <span
-                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
                         <b>ทะเบียน / วันหยุด</b>
                     </span>
                 </div>
@@ -17,58 +15,49 @@
             <div class="row">
 
                 <div class="col l3 s12 p-0">
-                    <ccb (cModel)="headerModel.Monday = $event" [label]="'วันจันทร์'"
-                        [data]="headerModel.Monday"></ccb>
+                    <ccb (cModel)="headerModel.Monday = $event" [label]="'วันจันทร์'" [data]="headerModel.Monday"></ccb>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <ccb (cModel)="headerModel.Tuesday = $event" [label]="'วันอังคาร'"
-                        [data]="headerModel.Tuesday"></ccb>
+                    <ccb (cModel)="headerModel.Tuesday = $event" [label]="'วันอังคาร'" [data]="headerModel.Tuesday"></ccb>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <ccb (cModel)="headerModel.Wednesday = $event" [label]="'วันพุธ'"
-                        [data]="headerModel.Wednesday"></ccb>
+                    <ccb (cModel)="headerModel.Wednesday = $event" [label]="'วันพุธ'" [data]="headerModel.Wednesday"></ccb>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <ccb (cModel)="headerModel.Thursday = $event" [label]="'วันพฤหัสบดี'"
-                        [data]="headerModel.Thursday"></ccb>
+                    <ccb (cModel)="headerModel.Thursday = $event" [label]="'วันพฤหัสบดี'" [data]="headerModel.Thursday"></ccb>
                 </div>
             </div>
             <div class="row">
 
 
                 <div class="col l3 s12 p-0">
-                    <ccb (cModel)="headerModel.Friday = $event" [label]="'วันศุกร์'"
-                        [data]="headerModel.Friday"></ccb>
+                    <ccb (cModel)="headerModel.Friday = $event" [label]="'วันศุกร์'" [data]="headerModel.Friday"></ccb>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <ccb (cModel)="headerModel.Saturday = $event" [label]="'วันเสาร์'"
-                        [data]="headerModel.Saturday"></ccb>
+                    <ccb (cModel)="headerModel.Saturday = $event" [label]="'วันเสาร์'" [data]="headerModel.Saturday"></ccb>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <ccb (cModel)="headerModel.Sunday = $event" [label]="'วันอาทิตย์'"
-                        [data]="headerModel.Sunday"></ccb>
+                    <ccb (cModel)="headerModel.Sunday = $event" [label]="'วันอาทิตย์'" [data]="headerModel.Sunday"></ccb>
                 </div>
             </div>
-        <div class="row">
-            <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
-            <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
-                <cbtn [label]="'อัพเดท'" [color]="'blue'" [icon]="'update'" (click)="update()"></cbtn>
+            <div class="row">
+                <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
+                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
+                    <cbtn [label]="'อัพเดท'" [color]="'blue'" [icon]="'update'" (click)="update()"></cbtn>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
-        <div class="row">
+        <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
+            <div class="row">
 
+            </div>
         </div>
-    </div>
     </div>
     <div class="col s12">
-        <div class="card-panel"
-            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
             <div class="row">
                 <div class="col l2 s12">
-                    <span
-                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
                         <b>รายการข้อมูล</b>
                     </span>
                 </div>
@@ -87,8 +76,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
+                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
                             <td>
                                 <div class="w100">
                                     {{i.StrDate}}
@@ -107,7 +95,7 @@
                                     <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
                                         <i class="medium material-icons">delete</i>
                                     </a>
-                                    
+
                                 </div>
 
                             </td>
@@ -139,12 +127,10 @@
 
 <div *ngIf="isFormPage">
     <div class="col s12">
-        <div class="card-panel"
-            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
             <div class="row">
                 <div class="col l8 s12">
-                    <span
-                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
                         <b>ทะเบียน / วันหยุด / รายละเอียด</b>
                     </span>
                 </div>
@@ -155,8 +141,7 @@
 
             <div class="row">
                 <div class="col l4 s12">
-                    <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id"
-                        [readonly]="true"></citxt>
+                    <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id" [readonly]="true"></citxt>
                 </div>
                 <div class="col l4 s12">
 
