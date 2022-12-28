@@ -116,6 +116,7 @@ import { MasterSubrouteComponent } from './master-subroute/master-subroute.compo
 import { MasterZoneregionComponent } from './master-zoneregion/master-zoneregion.component';
 import { MasterTransportComponent } from './master-transport/master-transport.component';
 import { ReturnHubComponent } from './return-hub/return-hub.component';
+import { MasterHolidayComponent } from './master-holiday/master-holiday.component';
 
 @NgModule({
   declarations: [
@@ -216,7 +217,8 @@ import { ReturnHubComponent } from './return-hub/return-hub.component';
     MasterSubrouteComponent,
     MasterZoneregionComponent,
     MasterTransportComponent,
-    ReturnHubComponent
+    ReturnHubComponent,
+    MasterHolidayComponent
   ],
   imports: [
     BrowserModule,

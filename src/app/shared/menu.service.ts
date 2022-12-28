@@ -50,7 +50,7 @@ export class MenuService {
           { 'name': 'โซน', 'routing': '/master-zoneregion', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'บริษัทขนส่ง', 'routing': '/master-transport', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'ผู้ใช้งาน', 'routing': '/master-user', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
-          { 'name': 'วันหยุด', 'routing': '/auto-reply', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false }
+          { 'name': 'วันหยุด', 'routing': '/master-holiday', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true }
         ]
       },
       {

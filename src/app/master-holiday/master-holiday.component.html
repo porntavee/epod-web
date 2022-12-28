@@ -6,7 +6,7 @@
                 <div class="col l8 s12">
                     <span
                         style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>ทะเบียน / บริษัทขนส่ง</b>
+                        <b>ทะเบียน / วันหยุด</b>
                     </span>
                 </div>
             </div>
@@ -15,25 +15,52 @@
         <!-- [hidden]="isAdvanceSearch" -->
         <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
             <div class="row">
+
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.Fillter = $event" [label]="'กรอง (รหัส/รายละเอียด)'"
-                        [data]="criteriaModel.Fillter"></citxt>
+                    <ccb (cModel)="headerModel.Monday = $event" [label]="'วันจันทร์'"
+                        [data]="headerModel.Monday"></ccb>
+                </div>
+                <div class="col l3 s12 p-0">
+                    <ccb (cModel)="headerModel.Tuesday = $event" [label]="'วันอังคาร'"
+                        [data]="headerModel.Tuesday"></ccb>
+                </div>
+                <div class="col l3 s12 p-0">
+                    <ccb (cModel)="headerModel.Wednesday = $event" [label]="'วันพุธ'"
+                        [data]="headerModel.Wednesday"></ccb>
+                </div>
+                <div class="col l3 s12 p-0">
+                    <ccb (cModel)="headerModel.Thursday = $event" [label]="'วันพฤหัสบดี'"
+                        [data]="headerModel.Thursday"></ccb>
                 </div>
             </div>
-
             <div class="row">
-                <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
-                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
-                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
-                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtn>
+
+
+                <div class="col l3 s12 p-0">
+                    <ccb (cModel)="headerModel.Friday = $event" [label]="'วันศุกร์'"
+                        [data]="headerModel.Friday"></ccb>
+                </div>
+                <div class="col l3 s12 p-0">
+                    <ccb (cModel)="headerModel.Saturday = $event" [label]="'วันเสาร์'"
+                        [data]="headerModel.Saturday"></ccb>
+                </div>
+                <div class="col l3 s12 p-0">
+                    <ccb (cModel)="headerModel.Sunday = $event" [label]="'วันอาทิตย์'"
+                        [data]="headerModel.Sunday"></ccb>
                 </div>
             </div>
-        </div>
-        <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
-            <div class="row">
-
+        <div class="row">
+            <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
+            <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
+                <cbtn [label]="'อัพเดท'" [color]="'blue'" [icon]="'update'" (click)="update()"></cbtn>
             </div>
         </div>
+    </div>
+    <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
+        <div class="row">
+
+        </div>
+    </div>
     </div>
     <div class="col s12">
         <div class="card-panel"
@@ -54,8 +81,7 @@
                 <table id="users-list-datatable" class="bordered centered striped">
                     <thead>
                         <tr>
-                            <th>รหัสระบบ</th>
-                            <th>รหัส</th>
+                            <th>วันที่</th>
                             <th>รายละเอียด</th>
                             <th>คำสั่ง</th>
                         </tr>
@@ -65,16 +91,11 @@
                             *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
                             <td>
                                 <div class="w100">
-                                    {{i.Id}}
+                                    {{i.StrDate}}
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.Code}}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w300">
                                     {{i.Description}}
                                 </div>
                             </td>
@@ -124,7 +145,7 @@
                 <div class="col l8 s12">
                     <span
                         style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>ทะเบียน / บริษัทขนส่ง / รายละเอียด</b>
+                        <b>ทะเบียน / วันหยุด / รายละเอียด</b>
                     </span>
                 </div>
             </div>
@@ -138,15 +159,13 @@
                         [readonly]="true"></citxt>
                 </div>
                 <div class="col l4 s12">
-                    <!-- <citxt (cModel)="headerModel.Active = $event" [label]="'สถานะ'" [data]="headerModel.Active"
-                        [readonly]="true"></citxt> -->
+
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Code = $event" [label]="'*รหัส'" [data]="headerModel.Code">
-                    </citxt>
+                    <cdp (cModel)="headerModel.StrDate = $event" [label]="'*วันที่หยุด'" [data]="headerModel.StrDate"></cdp>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
                     <citxt (cModel)="headerModel.Description = $event" [label]="'*รายละเอียด'" [data]="headerModel.Description">

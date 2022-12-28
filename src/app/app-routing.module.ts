@@ -37,6 +37,7 @@ import { MasterRouteComponent } from './master-route/master-route.component'
 import { MasterSubrouteComponent } from './master-subroute/master-subroute.component'
 import { MasterZoneregionComponent } from './master-zoneregion/master-zoneregion.component'
 import { MasterTransportComponent } from './master-transport/master-transport.component'
+import { MasterHolidayComponent } from './master-holiday/master-holiday.component'
 import { ReturnHubComponent } from './return-hub/return-hub.component';
 
 const routes: Routes = [
@@ -79,6 +80,7 @@ const routes: Routes = [
   { path: 'master-subroute', component: MasterSubrouteComponent },
   { path: 'master-zoneregion', component: MasterZoneregionComponent },
   { path: 'master-transport', component: MasterTransportComponent },
+  { path: 'master-holiday', component: MasterHolidayComponent },
 
 ];
 
