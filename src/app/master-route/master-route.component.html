@@ -57,6 +57,8 @@
                             <th>รหัสระบบ</th>
                             <th>รหัส</th>
                             <th>รายละเอียด</th>
+                            <th>On Time Delivery</th>
+                            <th>On Time Bill Return</th>
                             <th>คำสั่ง</th>
                         </tr>
                     </thead>
@@ -76,6 +78,16 @@
                             <td>
                                 <div class="w100">
                                     {{i.Description}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    +{{i.OTD}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    +{{i.OTBR}}
                                 </div>
                             </td>
                             <td>
@@ -150,6 +162,16 @@
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
                     <citxt (cModel)="headerModel.Description = $event" [label]="'*รายละเอียด'" [data]="headerModel.Description">
+                    </citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.OTD = $event" [label]="'*On Time Delivery +'" [data]="headerModel.OTD">
+                    </citxt>
+                </div>
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.OTBR = $event" [label]="'*On Time Bill Return +'" [data]="headerModel.OTBR">
                     </citxt>
                 </div>
             </div>
