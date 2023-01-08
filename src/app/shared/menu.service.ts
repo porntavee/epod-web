@@ -56,7 +56,7 @@ export class MenuService {
       {
         name: 'รายงาน',
         items: [
-          { 'name': 'Dashboard', 'routing': '/news', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false },
+          { 'name': 'Dashboard', 'routing': '/dashboard', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'Report A', 'routing': '/warning', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false },
           { 'name': 'Report B', 'routing': '/knowledge', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false },
           { 'name': 'Report C', 'routing': '/knowledge-tool', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false },

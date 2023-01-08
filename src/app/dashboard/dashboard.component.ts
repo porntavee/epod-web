@@ -12,159 +12,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class DashboardComponent implements OnInit {
 
-  follow = [];
-  unFollow = [];
-  model: any = {};
-
-  // single: any[];
-  single = [
-    {
-      "name": "IOS ",
-      "value": 50
-    },
-    {
-      "name": "Android",
-      "value": 25
-    },
-    {
-      "name": "iPad",
-      "value": 15
-    },
-    {
-      "name": "Tablet",
-      "value": 10
-    }
-  ];
-
-  single2 = [
-    {
-      "name": "ข้อความทั้งหมด",
-      "value": 100
-    },
-    {
-      "name": "เพิ่มเพื่อน",
-      "value": 50
-    },
-    {
-      "name": "บันทึกช่วยจำ",
-      "value": 20
-    },
-    {
-      "name": "ข้อความจากสมาชิก",
-      "value": 30
-    },
-    {
-      "name": "ข้อความตอบรับอัตโนมัติ",
-      "value": 60
-    }
-  ];
-
-  multi = [
-    {
-      "name": "",
-      "series": [
-        {
-          "name": "1990",
-          "value": 62000000
-        },
-        {
-          "name": "2010",
-          "value": 73000000
-        },
-        {
-          "name": "2011",
-          "value": 89400000
-        }
-      ]
-    },
-
-    {
-      "name": "",
-      "series": [
-        {
-          "name": "1990",
-          "value": 250000000
-        },
-        {
-          "name": "2010",
-          "value": 309000000
-        },
-        {
-          "name": "2011",
-          "value": 311000000
-        }
-      ]
-    },
-
-    {
-      "name": "",
-      "series": [
-        {
-          "name": "1990",
-          "value": 58000000
-        },
-        {
-          "name": "2010",
-          "value": 50000020
-        },
-        {
-          "name": "2011",
-          "value": 58000000
-        }
-      ]
-    },
-    {
-      "name": "",
-      "series": [
-        {
-          "name": "1990",
-          "value": 57000000
-        },
-        {
-          "name": "2010",
-          "value": 62000000
-        }
-      ]
-    }
-  ];
-  view: any[] = [1400, 200];
-
-  // options
-  gradient: boolean = true;
-  showLegend: boolean = true;
-  showLabels: boolean = true;
-  isDoughnut: boolean = false;
-
-  animations: boolean = true;
-  cardColor: string = '#232837';
-  cardColorFollow: string = '#aed581';
-  cardColorUnFollow: string = '#e57373';
-
-  legend: boolean = true;
-  xAxis: boolean = true;
-  yAxis: boolean = true;
-  showYAxisLabel: boolean = true;
-  showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Year';
-  yAxisLabel: string = 'Population';
-  timeline: boolean = true;
-
-  colorScheme = {
-    domain: ['#e57373', '#f06292', '#ba68c8', '#64b5f6', '#4db6ac', '#aed581', '#fff176', '#a1887f']
-  };
-
-  colorSchemeFollow = {
-    domain: ['#4db6ac']
-  };
-
-  colorSchemeUnFollow = {
-    domain: ['#f06292']
-  };
-
-  dashboardModel = [];
-
-  company: any = '';
-
   constructor(private http: HttpClient,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
@@ -173,8 +20,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.company = localStorage.getItem('company');
 
     //Object.assign(this, this.single);
 
@@ -208,40 +53,25 @@ export class DashboardComponent implements OnInit {
     // });
   }
 
-  readFollow() {
-    this.spinner.show();
-    this.serviceProviderService.post('lineFollow/read', {}).subscribe(data => {
-      let model: any = {};
-      model = data;
-      this.follow = this.follow.concat({
-        "name": "Follow",
-        "value": model.totalData
-      });
+  view: any[] = [350, 200];
+  legend: boolean = true;
+  legendPosition: string = 'below';
 
-      this.readUnFollow();
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 1000 });
-    });
-  }
+  colorScheme = {
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  };
 
-  readUnFollow() {
-    this.serviceProviderService.post('lineUnFollow/read', {}).subscribe(data => {
-      let model: any = {};
-      model = data;
-      this.unFollow = this.unFollow.concat({
-        "name": "Un Follow",
-        "value": model.totalData
-      });
-      this.spinner.hide();
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 1000 });
-    });
-  }
+  // options delivery by country
+  gradient: boolean = true;
+  showLegend: boolean = true;
+  showLabels: boolean = true;
+  isDoughnut: boolean = false;
 
-  search() {
+  // options delivery by country 2
+  animations: boolean = true;
 
+  readGaugeChart() {
+    // Object.assign(this, { this.gaugeModel });
   }
 
   onSelect(data): void {
@@ -255,6 +85,79 @@ export class DashboardComponent implements OnInit {
   onDeactivate(data): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
+
+  labelFormatting(c) {
+    return `${(c.label)} Population`;
+  }
+
+  fleetModel = [
+    {
+      "name": "Total Fleet",
+      "value": 63
+    },
+    {
+      "name": "On the Move",
+      "value": 60
+    },
+    {
+      "name": "In Maintenance",
+      "value": 3
+    }
+  ];
+
+  deliveryByCountry = [
+    {
+      "name": "BKK 20%",
+      "value": 20
+    },
+    {
+      "name": "Central 24%",
+      "value": 24
+    },
+    {
+      "name": "Up Country 35%",
+      "value": 35
+    },
+    {
+      "name": "MTDC&DEPO 21%",
+      "value": 21
+    }
+  ];
+
+  deliveryStatusModel = [
+    {
+      "name": "Within time limit",
+      "value": 549
+    }
+    // ,
+    // {
+    //   "name": "Out of time limit",
+    //   "value": 73
+    // },
+    // {
+    //   "name": "Reject",
+    //   "value": 0
+    // }
+  ];
+
+  deliveryByCountry2 = [
+    {
+      "name": "Austria",
+      "value": 19
+    },
+    {
+      "name": "Switzerland",
+      "value": 21
+    },
+    {
+      "name": "France",
+      "value": 25
+    },
+    {
+      "name": "Germany",
+      "value": 36
+    }
+  ];
 
 
 }

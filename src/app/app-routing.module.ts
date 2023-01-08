@@ -42,7 +42,7 @@ import { ReturnHubComponent } from './return-hub/return-hub.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
-  { path: 'dashboard', component: DashboardV2Component},
+  { path: 'dashboard', component: DashboardComponent},
   { path: 'pending', component: PendingComponent },
   { path: 'demo-routing', component: RoutingComponent },
   { path: 'demo-routing-param/:id', component: RoutingParamComponent },

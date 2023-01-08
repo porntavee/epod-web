@@ -31,3 +31,10 @@
     margin-left: 11px;
     margin-top: 10px !important;
 }
+
+.divx {
+    /* border: 1px solid #CCC; */
+    /* display: inline; */
+    position: relative;
+    display: inline-block;
+}

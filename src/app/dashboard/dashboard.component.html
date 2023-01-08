@@ -1,6 +1,20 @@
-<div>
-    <img *ngIf="company == 'thestar'" src="./assets/img/logo_thestar.png" class="center-block" width="50%" alt="">
-    <img *ngIf="company == 'staraccounting'" src="./assets/img/logo_staraccounting.jpg" class="center-block" width="50%" alt="">
-    <img *ngIf="company == 'hrsolution'" src="./assets/img/logo_hrsolution.jpg" class="center-block" width="50%" alt="">
-    <img *ngIf="company == 'quickspeed'" src="./assets/img/logo_quickspeed.jpg" class="center-block" width="50%" alt="">
+<div style="width: 1700px; overflow-x: auto; background-color: white;">
+    <div class="divx">
+        <ngx-charts-gauge [view]="[350, 200]" [scheme]="colorScheme" [results]="fleetModel" [legend]="legend" [legendPosition]="legendPosition" [units]="'95% \r\n xx'" [showText]="false" [showAxis]="true" [legendTitle]="'95% Fleet Efficiency'" [smallSegments]="5"
+            (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+        </ngx-charts-gauge>
+    </div>
+    <div class="divx">
+        <ngx-charts-pie-chart [view]="[500, 200]" [scheme]="colorScheme" [results]="deliveryByCountry" [gradient]="gradient" [legend]="showLegend" [legendPosition]="legendPosition" [labels]="showLabels" [doughnut]="isDoughnut" [showAxis]="true" [legendTitle]="'Percentage'"
+            (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+        </ngx-charts-pie-chart>
+    </div>
+    <div class="divx">
+        <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="deliveryStatusModel" (select)="onSelect($event)">
+        </ngx-charts-pie-grid>
+    </div>
+    <div class="divx">
+        <ngx-charts-tree-map [view]="[500, 200]" [scheme]="colorScheme" [results]="deliveryByCountry2" [gradient]="gradient" [animations]="animations" [labelFormatting]="labelFormatting" (select)="onSelect($event)">
+        </ngx-charts-tree-map>
+    </div>
 </div>
