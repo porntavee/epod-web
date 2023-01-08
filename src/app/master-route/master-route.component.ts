@@ -104,6 +104,9 @@ export class MasterRouteComponent implements OnInit {
     this.headerModel.Description = '';
     this.headerModel.Active = 'Y';
 
+    this.headerModel.OTD = '1';
+    this.headerModel.OTBR = '3';
+
 
     this.isMainPage = false;
     this.isFormPage = true;
@@ -127,6 +130,8 @@ export class MasterRouteComponent implements OnInit {
       "Code": this.headerModel.Code,
       "Description": this.headerModel.Description,
       "Active": this.headerModel.Active,
+      "OTD": this.headerModel.OTD,
+      "OTBR": this.headerModel.OTBR,
     }
 
     let json = JSON.stringify(criteria);
