@@ -36,6 +36,19 @@
 </div> -->
 
 <div class="row">
+    <div class="col l5 s12 p-0 text-right" style="margin-bottom: 5px;">
+        <cbtn [label]="'ย้อนหลัง 24 ชม.'" [color]="'grey'" [icon]="''"></cbtn>
+        <cbtn [label]="'ย้อนหลัง 7 วัน'" [color]="'grey'" [icon]="''"></cbtn>
+        <cbtn [label]="'ย้อน 30 วัน'" [color]="'grey'" [icon]="''"></cbtn>
+    </div>
+    <div class="col l3 s12 p-0 text-right" style="margin-bottom: 5px;"></div>
+    <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
+        <cbtn [label]="'รายวัน'" [color]="'grey'" [icon]="''"></cbtn>
+        <cbtn [label]="'รายสัปดาห์'" [color]="'grey'" [icon]="''"></cbtn>
+        <cbtn [label]="'รายเดือน'" [color]="'grey'" [icon]="''"></cbtn>
+    </div>
+</div>
+<div class="row">
     <div class="col l3 s12 pl-0" style="background-color:white;">
         <ngx-charts-gauge [scheme]="colorScheme" [results]="fleet" [legend]="legend" [legendPosition]="legendPosition" [units]="'95% \r\n xx'" [showText]="false" [showAxis]="true" [legendTitle]="'95% Fleet Efficiency'" [smallSegments]="5" (select)="onSelect($event)"
             (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
