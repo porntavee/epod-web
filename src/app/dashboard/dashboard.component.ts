@@ -70,6 +70,19 @@ export class DashboardComponent implements OnInit {
   // options delivery by country 2
   animations: boolean = true;
 
+  // options trip per day
+  showXAxis: boolean = true;
+  showYAxis: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Trip per Day & Outsoure';
+  showYAxisLabel: boolean = true;
+  yAxisLabel: string = 'Normalized Population';
+
+  // options delivery by country
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  timeline: boolean = true;
+
   readGaugeChart() {
     // Object.assign(this, { this.gaugeModel });
   }
@@ -90,7 +103,7 @@ export class DashboardComponent implements OnInit {
     return `${(c.label)} Population`;
   }
 
-  fleetModel = [
+  fleet = [
     {
       "name": "Total Fleet",
       "value": 63
@@ -124,7 +137,7 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  deliveryStatusModel = [
+  deliveryStatus = [
     {
       "name": "Within time limit",
       "value": 549
@@ -159,5 +172,311 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
+  tripPerDay = [
+    {
+      "name": "January 2022",
+      "series": [
+        {
+          "name": "2010",
+          "value": 73000000
+        },
+        {
+          "name": "2011",
+          "value": 89400000
+        }, 
+        {
+          "name": "1990",
+          "value": 62000000
+        }
+      ]
+    },
+  
+    {
+      "name": "February 2022",
+      "series": [
+        {
+          "name": "2010",
+          "value": 309000000
+        },
+        {
+          "name": "2011",
+          "value": 311000000
+        },
+        {
+          "name": "1990",
+          "value": 250000000
+        }
+      ]
+    },
+  
+    {
+      "name": "March 2022",
+      "series": [
+        {
+          "name": "2010",
+          "value": 50000020
+        },
+        {
+          "name": "2011",
+          "value": 58000000
+        },
+        {
+          "name": "1990",
+          "value": 58000000
+        }
+      ]
+    },
+    {
+      "name": "April 2022",
+      "series": [
+        {
+          "name": "2010",
+          "value": 62000000
+        },
+        {
+          "name": "1990",
+          "value": 57000000
+        }
+      ]
+    },
+    {
+      "name": "May 2022",
+      "series": [
+        {
+          "name": "2010",
+          "value": 62000000
+        },
+        {
+          "name": "1990",
+          "value": 57000000
+        }
+      ]
+    },
+    {
+      "name": "June 2022",
+      "series": [
+        {
+          "name": "2010",
+          "value": 62000000
+        },
+        {
+          "name": "1990",
+          "value": 57000000
+        }
+      ]
+    },
+    {
+      "name": "July 2022",
+      "series": [
+        {
+          "name": "2010",
+          "value": 62000000
+        },
+        {
+          "name": "1990",
+          "value": 57000000
+        }
+      ]
+    },
+    {
+      "name": "Auguest 2022",
+      "series": [
+        {
+          "name": "2010",
+          "value": 62000000
+        },
+        {
+          "name": "1990",
+          "value": 57000000
+        }
+      ]
+    },
+    {
+      "name": "January 2023",
+      "series": [
+        {
+          "name": "2010",
+          "value": 73000000
+        },
+        {
+          "name": "2011",
+          "value": 89400000
+        }, 
+        {
+          "name": "1990",
+          "value": 62000000
+        }
+      ]
+    },
+  
+    {
+      "name": "February 2023",
+      "series": [
+        {
+          "name": "2010",
+          "value": 309000000
+        },
+        {
+          "name": "2011",
+          "value": 311000000
+        },
+        {
+          "name": "1990",
+          "value": 250000000
+        }
+      ]
+    },
+  
+    {
+      "name": "March 2023",
+      "series": [
+        {
+          "name": "2010",
+          "value": 50000020
+        },
+        {
+          "name": "2011",
+          "value": 58000000
+        },
+        {
+          "name": "1990",
+          "value": 58000000
+        }
+      ]
+    },
+    {
+      "name": "April 2023",
+      "series": [
+        {
+          "name": "2010",
+          "value": 62000000
+        },
+        {
+          "name": "1990",
+          "value": 57000000
+        }
+      ]
+    },
+    {
+      "name": "May 2023",
+      "series": [
+        {
+          "name": "2010",
+          "value": 62000000
+        },
+        {
+          "name": "1990",
+          "value": 57000000
+        }
+      ]
+    },
+    {
+      "name": "June 2023",
+      "series": [
+        {
+          "name": "2010",
+          "value": 62000000
+        },
+        {
+          "name": "1990",
+          "value": 57000000
+        }
+      ]
+    },
+    {
+      "name": "July 2023",
+      "series": [
+        {
+          "name": "2010",
+          "value": 62000000
+        },
+        {
+          "name": "1990",
+          "value": 57000000
+        }
+      ]
+    },
+    {
+      "name": "Auguest 2023",
+      "series": [
+        {
+          "name": "2010",
+          "value": 62000000
+        },
+        {
+          "name": "1990",
+          "value": 57000000
+        }
+      ]
+    }
+  ];
 
+  deliveryByCountry3 = [
+    {
+      "name": "Germany",
+      "series": [
+        {
+          "name": "1990",
+          "value": 62000000
+        },
+        {
+          "name": "2010",
+          "value": 73000000
+        },
+        {
+          "name": "2011",
+          "value": 89400000
+        }
+      ]
+    },
+  
+    {
+      "name": "USA",
+      "series": [
+        {
+          "name": "1990",
+          "value": 250000000
+        },
+        {
+          "name": "2010",
+          "value": 309000000
+        },
+        {
+          "name": "2011",
+          "value": 311000000
+        }
+      ]
+    },
+  
+    {
+      "name": "France",
+      "series": [
+        {
+          "name": "1990",
+          "value": 58000000
+        },
+        {
+          "name": "2010",
+          "value": 50000020
+        },
+        {
+          "name": "2011",
+          "value": 58000000
+        }
+      ]
+    },
+    {
+      "name": "UK",
+      "series": [
+        {
+          "name": "1990",
+          "value": 57000000
+        },
+        {
+          "name": "2010",
+          "value": 62000000
+        }
+      ]
+    }
+  ];
 }

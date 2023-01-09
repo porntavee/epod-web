@@ -1,6 +1,6 @@
-<div style="width: 1700px; overflow-x: auto; background-color: white;">
+<!-- <div style="width: 1700px; overflow-x: auto; background-color: white;">
     <div class="divx">
-        <ngx-charts-gauge [view]="[350, 200]" [scheme]="colorScheme" [results]="fleetModel" [legend]="legend" [legendPosition]="legendPosition" [units]="'95% \r\n xx'" [showText]="false" [showAxis]="true" [legendTitle]="'95% Fleet Efficiency'" [smallSegments]="5"
+        <ngx-charts-gauge [view]="[350, 200]" [scheme]="colorScheme" [results]="fleet" [legend]="legend" [legendPosition]="legendPosition" [units]="'95% \r\n xx'" [showText]="false" [showAxis]="true" [legendTitle]="'95% Fleet Efficiency'" [smallSegments]="5"
             (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
         </ngx-charts-gauge>
     </div>
@@ -10,11 +10,91 @@
         </ngx-charts-pie-chart>
     </div>
     <div class="divx">
-        <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="deliveryStatusModel" (select)="onSelect($event)">
+        <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="deliveryStatus" (select)="onSelect($event)">
         </ngx-charts-pie-grid>
     </div>
     <div class="divx">
         <ngx-charts-tree-map [view]="[500, 200]" [scheme]="colorScheme" [results]="deliveryByCountry2" [gradient]="gradient" [animations]="animations" [labelFormatting]="labelFormatting" (select)="onSelect($event)">
         </ngx-charts-tree-map>
+    </div>
+</div>
+
+<div style="width: 1700px; overflow-x: auto; background-color: white; margin-top: 20px; vertical-align: top;">
+    <div class="divx">
+        <ngx-charts-bar-vertical-normalized [view]="[850, 300]" [scheme]="colorScheme" [results]="tripPerDay" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+        </ngx-charts-bar-vertical-normalized>
+    </div>
+    <div class="divx">
+        <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="deliveryStatus" (select)="onSelect($event)">
+        </ngx-charts-pie-grid>
+    </div>
+    <div class="divx">
+        <ngx-charts-tree-map [view]="[500, 200]" [scheme]="colorScheme" [results]="deliveryByCountry2" [gradient]="gradient" [animations]="animations" [labelFormatting]="labelFormatting" (select)="onSelect($event)">
+        </ngx-charts-tree-map>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col l3 s12 pl-0" style="background-color:white;">
+        <ngx-charts-gauge [scheme]="colorScheme" [results]="fleet" [legend]="legend" [legendPosition]="legendPosition" [units]="'95% \r\n xx'" [showText]="false" [showAxis]="true" [legendTitle]="'95% Fleet Efficiency'" [smallSegments]="5" (select)="onSelect($event)"
+            (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+        </ngx-charts-gauge>
+    </div>
+    <div class="col l3 s12">
+        <ngx-charts-pie-chart [scheme]="colorScheme" [results]="deliveryByCountry" [gradient]="gradient" [legend]="showLegend" [legendPosition]="legendPosition" [labels]="showLabels" [doughnut]="isDoughnut" [showAxis]="true" [legendTitle]="'Percentage'" (select)="onSelect($event)"
+            (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+        </ngx-charts-pie-chart>
+    </div>
+    <div class="col l3 s12">
+        <div style="width: 100%; height: 200px;">
+            <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="deliveryStatus" (select)="onSelect($event)">
+            </ngx-charts-pie-grid>
+        </div>
+        <div style="width: 100%; height: 70px; background-color: white; padding-left: 100px;">
+            <p>
+                Within time limit 549
+            </p>
+            <p>
+                Out of time limit 73
+            </p>
+            <p>
+                Reject 0
+            </p>
+        </div>
+    </div>
+    <div class="col l3 s12">
+        <ngx-charts-area-chart [view]="[300, 300]" [scheme]="colorScheme" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [xAxisLabel]="'Year'" [yAxisLabel]="'Population'" [timeline]="true" [results]="deliveryByCountry3"
+            (select)="onSelect($event)">
+        </ngx-charts-area-chart>
+    </div>
+</div>
+<div class="row">
+    <div class="col l6 s12" style="background-color:white;">
+        <ngx-charts-bar-vertical-normalized [view]="[600, 300]" [scheme]="colorScheme" [results]="tripPerDay" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+        </ngx-charts-bar-vertical-normalized>
+    </div>
+    <div class="col l3 s12">
+        <div style="width: 100%; height: 200px;">
+            <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="deliveryStatus" (select)="onSelect($event)">
+            </ngx-charts-pie-grid>
+        </div>
+        <div style="width: 100%; height: 70px; background-color: white; padding-left: 100px;">
+            <p>
+                Within time limit 549
+            </p>
+            <p>
+                Out of time limit 73
+            </p>
+            <p>
+                Reject 0
+            </p>
+        </div>
+    </div>
+    <div class="col l3 s12">
+        <ngx-charts-area-chart [view]="[300, 300]" [scheme]="colorScheme" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [xAxisLabel]="'Year'" [yAxisLabel]="'Population'" [timeline]="true" [results]="deliveryByCountry3"
+            (select)="onSelect($event)">
+        </ngx-charts-area-chart>
     </div>
 </div>
