@@ -633,6 +633,35 @@
         </div>
         <div class="card-panel" style="margin-top: 0px;">
             <div class="row">
+                <div class="col l3 s12">
+                    Manifest Number : {{headerModel.TransportNo}}
+                </div>
+                <div class="col l2 s12">
+                    Route : {{headerModel.Route}}
+                </div>
+                <div class="col l2 s12">
+                    Sub Route : {{headerModel.SubRoute}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l3 s12">
+                    License : {{headerModel.VehicleNo}}
+                </div>
+                <div class="col l2 s12">
+                    Driver : {{headerModel.DriverFirstName}}
+                </div>
+                <div class="col l2 s12">
+                    Total Drop : {{headerModel.DropNum}}
+                </div>
+                <div class="col l2 s12">
+                    Total Carton : {{headerModel.Qty}}
+                </div>
+                <div class="col l2 s12">
+                    Total Weight : {{headerModel.Weight}}
+                </div>
+            </div>
+            <br>
+            <div class="row">
                 <div class="col l8 s12">
                     <div style="overflow-x: auto;">
                         <table id="users-list-datatable" class="bordered centered striped">
@@ -682,7 +711,29 @@
                             </tbody>
                         </table>
                     </div>
-                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12">
+        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+            <div class="row">
+                <div class="col l2 s12">
+                    <!-- <i class="material-icons header-icon">
+                        featured_play_list
+                    </i> -->
+                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                        รายการข้อมูล
+                    </span>
+                </div>
+                <div class="col l8 s12">
+                    <!-- <cbtn [label]="'New+'" [color]="'blue'" [icon]="'add_circle_outline'" (click)="newTimeSheet()"></cbtn> -->
+                </div>
+            </div>
+        </div>
+        <div class="card-panel" style="margin-top: 0px;">
+            <div class="row">
+                <div class="col l8 s12">
                     <div style="overflow-x: auto;">
                         <table id="users-list-datatable" class="bordered centered striped">
                             <thead>
