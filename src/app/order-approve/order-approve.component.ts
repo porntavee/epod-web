@@ -122,8 +122,9 @@ export class OrderApproveComponent implements OnInit {
       "TransportNo": param.TransportNo
     }
 
+    debugger
     this.headerModel = param;
-    this.headerModel.DriverFirstName = '';
+    // this.headerModel.DriverFirstName = '';
     this.headerModel.DriverFirstName = this.headerModel.DriverFirstName + ' ' + this.headerModel.DriverLastName;
 
     let json = JSON.stringify(criteria);
@@ -197,6 +198,7 @@ export class OrderApproveComponent implements OnInit {
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.noti(this.headerModel.TransportNo);
         this.backToMain();
       }
       else {
@@ -581,11 +583,19 @@ export class OrderApproveComponent implements OnInit {
         return '#B6B6B6'
       case 'F':
         return '#EBB146'
-        case 'H':
-          return '#66A5D9'
+      case 'H':
+        return '#66A5D9'
       default:
         break;
     }
 
+  }
+
+  noti(param) {
+    this.serviceProviderService.postNotification(param).subscribe(data => {
+      
+    }, err => {
+      
+    });;
   }
 }

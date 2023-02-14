@@ -11,7 +11,7 @@ export class ServiceProviderService {
 
   // server: string = 'https://mangcoo.com/sino-api/';
   server: string = 'http://202.44.230.195/sino-api/';
-  
+
   version: string = '20221102';
 
   userinformation: any = {
@@ -39,7 +39,7 @@ export class ServiceProviderService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         'Authorization': 'Basic ' + btoa(basicAuth)
       })
     };
@@ -48,6 +48,37 @@ export class ServiceProviderService {
     // options.headers = headers;
     param.Version = this.version;
     return this.http.post(this.server + url, param, httpOptions);
+  }
+
+  postNotification(param) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'key=AAAACBsG56o:APA91bH-fONe0uBoEfb5QzlNEoNl7cfeIm9XYeJHUl1RC1DpxMWVJw5rwQp0cML04Tp6iRRY6D3FWescVMqzl3_kVmlXWZ7B_biAET83YDeEg3azHssGY-KsG-x-v0jZlekl_ZTbxhIJ'
+      })
+    };
+
+    let body = {
+      "to": "/topics/all",
+      "notification": {
+        "android_channel_id": "high_importance_channel",
+        "body": "แจ้งเตือนอนุมัติงาน",
+        "title": "ใบคุม " + param + " ได้อนุมัติงานแล้ว!!"
+      },
+      "data": {
+        "body": "Body of Your Notification in Data",
+        "title": "Title of Your Notification in Title",
+        "key_1": "Value for key_1",
+        "key_2": "Value for key_2",
+        "click_action": "FLUTTER_NOTIFICATION_CLICK"
+      },
+      "content_available": true,
+      "priority": "high",
+      "chanel_id": "webuild"
+    };
+
+    return this.http.post('https://fcm.googleapis.com/fcm/send', body, httpOptions);
   }
 
   postByPass(url, param) {

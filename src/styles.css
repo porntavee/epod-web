@@ -165,21 +165,21 @@ p {
 /* DDPM */
 
 .background-sidebar {
-    background: #2E8B58 !important;
+    background: #4DACE4 !important;
 }
 
 .background-header {
-    background: linear-gradient(45deg, #2E8B58, #2E8B58) !important;
+    background: linear-gradient(45deg, #4DACE4, #4DACE4) !important;
 }
 
 .background-footer {
-    background: linear-gradient(45deg, #2E8B58, #2E8B58) !important;
+    background: linear-gradient(45deg, #4DACE4, #4DACE4) !important;
 }
 
 .sidenav li a.active {
     margin: 0;
     color: #fff;
-    background: linear-gradient(45deg, #2E8B58, #2E8B58) !important;
+    background: linear-gradient(45deg, #4DACE4, #4DACE4) !important;
     /* box-shadow: 3px 3px 20px 0 rgba(255, 110, 64, .5); */
     box-shadow: 3px 3px 20px 0 rgba(105, 105, 105, .5) !important;
 }
