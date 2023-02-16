@@ -95,3 +95,10 @@
     /* background-color: #88FF88; */
     overflow: auto;
 }
+
+#scrollable-content {
+    background: #eee;
+    height: 150px;
+    width: 400px;
+    overflow-y: scroll;
+}
