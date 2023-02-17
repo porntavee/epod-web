@@ -139,6 +139,8 @@ export class TrackingStatusComponent implements OnInit {
   lat = 51.678418;
   lng = 7.809007;
 
+  timelineModel: any = {};
+
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
@@ -283,9 +285,58 @@ export class TrackingStatusComponent implements OnInit {
         this.isMainPage = false;
         this.isFormPage = true;
 
+        this.readTimeline(param);
       }
       else {
         this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  readTimeline(param) {
+    // debugger
+    // this.spinner.show();
+
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+      "TransportNo": param.TransportNo
+    }
+
+    // this.headerModel = param;
+    // this.headerModel.DriverFirstName = '';
+    // this.headerModel.DriverFirstName = this.headerModel.DriverFirstName + ' ' + this.headerModel.DriverLastName;
+
+    let json = JSON.stringify(criteria);
+    this.isDelivery = false;
+    this.serviceProviderService.post('api/Transport/GetTransportStatus', criteria).subscribe(data => {
+      // this.spinner.hide();
+      let model: any = {};
+      model = data;
+      // this.viewModel = model;
+
+      // debugger
+
+      if (model.Status) {
+        this.timelineModel = model.Data[0];
+        // this.headerModel = model.Data[0];
+
+        // this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
+        // this.headerModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
+        // this.headerModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;
+
+        // // this.headerModel = model.Data;
+
+        // this.isMainPage = false;
+        // this.isFormPage = true;
+
+      }
+      else {
+        // this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
 
