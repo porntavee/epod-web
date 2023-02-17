@@ -558,29 +558,29 @@
 
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ApproveProcess != null}">
                                 <div class="bold time">{{timelineModel.ApproveProcess}}</div>
-                                <div class="bold">อนุมัติกระบวนการ</div>
-                                <div>ApproveProcess</div>
+                                <div class="bold">รอยืนยันรับงาน</div>
+                                <!-- <div>ApproveProcess</div> -->
                             </li>
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.RecieveProcess != null}">
                                 <div class="bold time">{{timelineModel.RecieveProcess}}</div>
-                                <div class="bold">รับกระบวนการ</div>
-                                <div>RecieveProcess</div>
+                                <div class="bold">ระหว่างรับสินค้า</div>
+                                <!-- <div>RecieveProcess</div> -->
                             </li>
                             <!-- current -->
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DeliveryProcess != null}">
                                 <div class="bold time">{{timelineModel.DeliveryProcess}}</div>
-                                <div class="bold">ขั้นตอนการจัดส่ง</div>
-                                <div>DeliveryProcess</div>
+                                <div class="bold">ระหว่างจัดส่งสินค้า</div>
+                                <!-- <div>DeliveryProcess</div> -->
                             </li>
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DeliveryComplete != null}">
                                 <div class="bold time">{{timelineModel.DeliveryComplete}}</div>
-                                <div class="bold">จัดส่งเรียบร้อย</div>
-                                <div>DeliveryComplete</div>
+                                <div class="bold">จัดส่งสินค้าสำเร็จ</div>
+                                <!-- <div>DeliveryComplete</div> -->
                             </li>
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DocReturnProcess != null}">
                                 <div class="bold time">{{timelineModel.DocReturnProcess}}</div>
-                                <div class="bold">กระบวนการคืนเอกสาร</div>
-                                <div>DocReturnProcess</div>
+                                <div class="bold">คืนเอกสาร</div>
+                                <!-- <div>DocReturnProcess</div> -->
                             </li>
                         </ul>
                     </div>
