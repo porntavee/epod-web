@@ -117,6 +117,9 @@ import { MasterZoneregionComponent } from './master-zoneregion/master-zoneregion
 import { MasterTransportComponent } from './master-transport/master-transport.component';
 import { ReturnHubComponent } from './return-hub/return-hub.component';
 import { MasterHolidayComponent } from './master-holiday/master-holiday.component';
+import { ReportTransportManifestComponent } from './report-transport-manifest/report-transport-manifest.component';
+import { ReportSummaryComponent } from './report-summary/report-summary.component';
+import { ReportCustomerComponent } from './report-customer/report-customer.component';
 
 @NgModule({
   declarations: [
@@ -218,7 +221,10 @@ import { MasterHolidayComponent } from './master-holiday/master-holiday.componen
     MasterZoneregionComponent,
     MasterTransportComponent,
     ReturnHubComponent,
-    MasterHolidayComponent
+    MasterHolidayComponent,
+    ReportTransportManifestComponent,
+    ReportSummaryComponent,
+    ReportCustomerComponent
   ],
   imports: [
     BrowserModule,

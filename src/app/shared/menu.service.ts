@@ -57,9 +57,9 @@ export class MenuService {
         name: 'รายงาน',
         items: [
           { 'name': 'Dashboard', 'routing': '/dashboard', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
-          { 'name': 'Report A', 'routing': '/warning', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false },
-          { 'name': 'Report B', 'routing': '/knowledge', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false },
-          { 'name': 'Report C', 'routing': '/knowledge-tool', 'data': '', 'type': 'N', 'isActive': false, 'isShow': false },
+          { 'name': 'Transport Manifest Report', 'routing': '/transport-manifest-report', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
+          { 'name': 'Summary Report', 'routing': '/summary-report', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
+          { 'name': 'Customer Report', 'routing': '/customer-report', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
         ]
       },
       {

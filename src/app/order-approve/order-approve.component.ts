@@ -198,7 +198,7 @@ export class OrderApproveComponent implements OnInit {
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        this.noti(this.headerModel.TransportNo);
+        // this.noti(this.headerModel.TransportNo);
         this.backToMain();
       }
       else {
