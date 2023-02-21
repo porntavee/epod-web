@@ -9,6 +9,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ThrowStmt } from '@angular/compiler';
 import { ConfirmDialog, DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
+import * as XLSX from 'xlsx-js-style';
 
 @Component({
   selector: 'app-order-approve',
@@ -455,49 +456,59 @@ export class OrderApproveComponent implements OnInit {
   }
 
   reportModel: any = [];
-  exportAsXLSX(param): void {
+  exportAsXLSX(): void {
 
-    this.spinner.show();
+    // this.spinner.show();
 
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "DocNum": param.DocNum
-    }
-
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('/api/B1/getTimeSheetLog', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      // this.viewModel = model;
-
-      if (model.Status) {
-        // this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        // this.read();
-        this.reportModel = model.Data
-
-
-        // const dialogRef = this.dialog.open(DocLogDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Doc Log Report', listData: this.reportModel, listDataSearch: this.reportModel } });
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //   console.log(`Dialog result: ${result}`);
-
-        //   if (result != undefined) {
-        //      this.excelService.exportAsExcelFile(result, 'doc-log-report');
-        //   }
-        // });
-
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    let model = [];
+    this.listModel.forEach(element => {
+      model.push({
+        'TransportNo': element.TransportNo, 
+        'Driver': element.DriverFirstName + ' ' + element.DriverLastName
+      });
     });
+
+    this.excelService.exportAsExcelFile(model, 'order-approve-report');
+
+    // let criteria = {
+    //   "userinformation": this.serviceProviderService.userinformation,
+    //   "DocNum": param.DocNum
+    // }
+
+    // let json = JSON.stringify(criteria);
+
+    // this.serviceProviderService.post('/api/B1/getTimeSheetLog', criteria).subscribe(data => {
+    //   this.spinner.hide();
+    //   let model: any = {};
+    //   model = data;
+    //   // this.viewModel = model;
+
+    //   if (model.Status) {
+    //     // this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    //     // this.read();
+    //     this.reportModel = model.Data
+
+
+    //     // const dialogRef = this.dialog.open(DocLogDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Doc Log Report', listData: this.reportModel, listDataSearch: this.reportModel } });
+
+    //     // dialogRef.afterClosed().subscribe(result => {
+    //     //   console.log(`Dialog result: ${result}`);
+
+    //     //   if (result != undefined) {
+    //     //      this.excelService.exportAsExcelFile(result, 'doc-log-report');
+    //     //   }
+    //     // });
+
+    //   }
+    //   else {
+    //     this.spinner.hide();
+    //     this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    //   }
+
+    // }, err => {
+    //   this.spinner.hide();
+    //   this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    // });
 
 
   }
@@ -597,5 +608,64 @@ export class OrderApproveComponent implements OnInit {
     }, err => {
       
     });;
+  }
+
+  exportExcel(): void {
+    var archivo = [
+      {
+        nombre: 'Tomas',
+        edad: 22,
+        secundaria: true,
+      },
+      {
+        nombre: 'Cristian',
+        edad: 23,
+        secundaria: false,
+      },
+      {
+        nombre: 'Rodrigo',
+        edad: 28,
+        secundaria: true,
+      },
+      {
+        nombre: 'Romina',
+        edad: 27,
+        secundaria: false,
+      },
+    ];
+    const fecha = new Date();
+    const fechatotal =
+      fecha.getDate() +
+      '-' +
+      (fecha.getMonth() + 1) +
+      '-' +
+      fecha.getFullYear() +
+      '_' +
+      fecha.getHours() +
+      '-' +
+      fecha.getMinutes() +
+      '-' +
+      fecha.getSeconds();
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(archivo);
+    const unificadoExcel = XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      'Hoja1',
+      true
+    );
+    // console.log("Este es el resultado de unificado: ", workbook.SheetNames)
+    const nombreArchivo = `unificado-${fechatotal}.xlsx`;
+    const rutaArchivo = `api_operaciones/files/unificados/${nombreArchivo}`;
+    const colNames = ['A1', 'B1', 'C1'];
+    for (const itm of colNames) {
+      if (worksheet[itm]) {
+        worksheet[itm].s = {
+          fill: { fgColor: { rgb: '00BFFF' } },
+          font: { color: { rgb: 'FFFFFF' } },
+        };
+      }
+    }
+    XLSX.writeFile(workbook, rutaArchivo);
   }
 }
