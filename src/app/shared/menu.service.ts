@@ -31,8 +31,8 @@ export class MenuService {
         // isActive: true,
         items: [
           { 'name': 'อนุมัติงาน', 'routing': '/order-approve', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true }, //this.category?.orderApprove
-          { 'name': 'สร้างงานขนส่ง', 'routing': '/order', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
-          { 'name': 'สร้างใบคุมรถ', 'routing': '/order-transport', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
+          { 'name': 'งานขนส่ง', 'routing': '/order', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
+          { 'name': 'ใบคุมรถ', 'routing': '/order-transport', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'รับสินค้าเข้า HUB', 'routing': '/return-hub', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'คืนเอกสาร', 'routing': '/return-document', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'รายการคืนเอกสาร', 'routing': '/return-transaction', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
