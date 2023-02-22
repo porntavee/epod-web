@@ -333,6 +333,7 @@ export class ShipToDialog {
         let criteria = {
             "userinformation": this.serviceProviderService.userinformation,
             "Fillter": this.criteriaModel.Fillter,
+            "IsHub": (this.data.IsHub == undefined || this.data.IsHub == false) ? '' : 'Y',
             "Limit": 100
         }
 
