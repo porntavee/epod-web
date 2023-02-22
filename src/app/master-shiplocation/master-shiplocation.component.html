@@ -31,11 +31,9 @@
                 <div class="col l3 s12 p-0">
                     <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'เส้นทางหลัก'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
                 </div>
-
-                <div class="col l3 s12 p-0">
-                    <ccb (cModel)="criteriaModel.IsHub = $event" [label]="'HUB'" [data]="criteriaModel.IsHub"></ccb>
+                <div class="col l3 s12 p-0" style="margin-left: 130px;">
+                    <ccb (cModel)="criteriaModel.Sunday = $event" [label]="'HUB'" [data]="criteriaModel.Sunday"></ccb>
                 </div>
-
             </div>
 
 
@@ -265,7 +263,7 @@
             </div>
 
             <div>
-                <div class="col l4 s12" style="margin-top: -20px;">
+                <div class="col l4 s12" style="margin-left: 225px; margin-top: -20px;">
                     <ccb (cModel)="headerModel.Hub = $event" [label]="'HUB'" [data]="headerModel.Hub"></ccb>
                 </div>
             </div>
