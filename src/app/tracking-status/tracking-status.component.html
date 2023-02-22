@@ -26,8 +26,9 @@
             </div>
             <div class="row">
                 <!-- {{listModel|json}} -->
+                <!-- รอจัดใบคุมรถ -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; margin-left: 10px; background-color: #E16E5B;">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; margin-left: 10px; background-color: #B6B6B6;">
                         <i style="color: aliceblue;" class="material-icons">
                             event_note
                         </i>
@@ -36,8 +37,10 @@
                         <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[0].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- รออนุมัติงาน -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #F7E884;">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #B6B6B6;">
                         <i class="material-icons">
                             event_note
                         </i>
@@ -46,8 +49,10 @@
                         <p style="font-size: 20px; font-weight: 700;">{{listModel[1].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- รอคนขับรับงาน -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #F7E884;">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #B6B6B6;">
                         <i class="material-icons">
                             record_voice_over
                         </i>
@@ -56,8 +61,10 @@
                         <p style="font-size: 20px; font-weight: 700;">{{listModel[2].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- ระหว่างรับสินค้า -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #B6B6B6;">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #E7E884;">
                         <i style="color: aliceblue;" class="material-icons">
                             local_shipping
                         </i>
@@ -66,8 +73,10 @@
                         <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[3].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- ระหว่างจัดส่งสินค้า -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #79D58B;">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #E7E884;">
                         <i style="color: aliceblue;" class="material-icons">
                             local_shipping
                         </i>
@@ -76,6 +85,8 @@
                         <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[4].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- จัดส่งสินค้าสำเร็จ -->
                 <div class="col l1 s12 p-0 text-center">
                     <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #79D58B;">
                         <i style="color: aliceblue;" class="material-icons">
@@ -86,8 +97,10 @@
                         <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[5].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- จัดส่งสินค้าไม่สำเร็จ -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #66A5D9;">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #EBB146;">
                         <i style="color: aliceblue;" class="material-icons">
                             local_shipping
                         </i>
@@ -96,8 +109,10 @@
                         <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[6].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- คนขับคืนบิลเสร็จสิ้น -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #B6B6B6;">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #70D58B;">
                         <i style="color: aliceblue;" class="material-icons">
                             content_copy
                         </i>
@@ -106,8 +121,10 @@
                         <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[7].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- คืนบิลเสร็จสิ้น -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #EBB146;">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #66A5D9;">
                         <i class="material-icons">
                             content_copy
                         </i>
@@ -116,6 +133,8 @@
                         <p style="font-size: 20px; font-weight: 700;">{{listModel[8].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- สินค้าอยู่ที่ HUB -->
                 <div class="col l1 s12 p-0 text-center">
                     <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #66A5D9;">
                         <i style="color: aliceblue;" class="material-icons">
