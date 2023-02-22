@@ -31,6 +31,11 @@
                 <div class="col l3 s12 p-0">
                     <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'เส้นทางหลัก'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
                 </div>
+
+                <div class="col l3 s12 p-0">
+                    <ccb (cModel)="criteriaModel.IsHub = $event" [label]="'HUB'" [data]="criteriaModel.IsHub"></ccb>
+                </div>
+
             </div>
 
 
@@ -258,6 +263,13 @@
                     <citxt (cModel)="headerModel.Longtitude = $event" [label]="'ลองติจูด'" [data]="headerModel.Longtitude"></citxt>
                 </div>
             </div>
+
+            <div>
+                <div class="col l4 s12" style="margin-top: -20px;">
+                    <ccb (cModel)="headerModel.Hub = $event" [label]="'HUB'" [data]="headerModel.Hub"></ccb>
+                </div>
+            </div>
+
             <div class="row">
                 <!-- Hidden -->
                 <div class="row" hidden="true">

@@ -56,6 +56,7 @@ export class MasterShiplocationComponent implements OnInit {
       "SubRouteId": this.criteriaModel.SubRouteId,
       "DistrictId": this.criteriaModel.DistrictId,
       "ProvinceId": this.criteriaModel.ProvinceId,
+      "IsHub": (this.criteriaModel.IsHub == undefined || this.criteriaModel.IsHub == false) ? '' : 'Y',
     }
 
     let json = JSON.stringify(criteria);
@@ -333,7 +334,7 @@ export class MasterShiplocationComponent implements OnInit {
       "RegionId": this.headerModel.RegionId,
       "RouteId": this.headerModel.RouteId,
       "SubRouteId": this.headerModel.SubRouteId,
-
+      "Hub": this.headerModel.Hub,
     }
 
 
