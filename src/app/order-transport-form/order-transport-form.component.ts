@@ -1028,7 +1028,7 @@ export class OrderTransportFormComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-
+      console.log(result.id);
       if (result != undefined) {
 
         this.criteriaModel.VehicleTypeId = result.Id;

@@ -49,6 +49,7 @@ export class MenuService {
           { 'name': 'เส้นทางหลัก / Route', 'routing': '/master-route', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'เส้นทางย่อย / SubRoute', 'routing': '/master-subroute', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'โซน', 'routing': '/master-zoneregion', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
+          { 'name': 'ทะเบียนรถ', 'routing': '/master-vehicle', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'บริษัทขนส่ง', 'routing': '/master-transport', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true },
           { 'name': 'วันหยุด', 'routing': '/master-holiday', 'data': '', 'type': 'N', 'isActive': false, 'isShow': true }
         ]

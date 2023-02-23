@@ -36,6 +36,7 @@ import { ReturnTransactionComponent } from './return-transaction/return-transact
 import { MasterRouteComponent } from './master-route/master-route.component'
 import { MasterSubrouteComponent } from './master-subroute/master-subroute.component'
 import { MasterZoneregionComponent } from './master-zoneregion/master-zoneregion.component'
+import { MasterVehicleComponent } from './master-vehicle/master-vehicle.component'
 import { MasterTransportComponent } from './master-transport/master-transport.component'
 import { MasterHolidayComponent } from './master-holiday/master-holiday.component'
 import { ReturnHubComponent } from './return-hub/return-hub.component';
@@ -82,6 +83,7 @@ const routes: Routes = [
   { path: 'master-route', component: MasterRouteComponent },
   { path: 'master-subroute', component: MasterSubrouteComponent },
   { path: 'master-zoneregion', component: MasterZoneregionComponent },
+  { path: 'master-vehicle', component: MasterVehicleComponent },
   { path: 'master-transport', component: MasterTransportComponent },
   { path: 'master-holiday', component: MasterHolidayComponent },
   { path: 'transport-manifest-report', component: ReportTransportManifestComponent },

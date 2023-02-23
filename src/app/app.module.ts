@@ -120,6 +120,7 @@ import { MasterHolidayComponent } from './master-holiday/master-holiday.componen
 import { ReportTransportManifestComponent } from './report-transport-manifest/report-transport-manifest.component';
 import { ReportSummaryComponent } from './report-summary/report-summary.component';
 import { ReportCustomerComponent } from './report-customer/report-customer.component';
+import { MasterVehicleComponent } from './master-vehicle/master-vehicle.component';
 
 @NgModule({
   declarations: [
@@ -224,7 +225,8 @@ import { ReportCustomerComponent } from './report-customer/report-customer.compo
     MasterHolidayComponent,
     ReportTransportManifestComponent,
     ReportSummaryComponent,
-    ReportCustomerComponent
+    ReportCustomerComponent,
+    MasterVehicleComponent
   ],
   imports: [
     BrowserModule,
