@@ -78,6 +78,7 @@
                             <th>กลุ่มผู้ใช้งาน</th>
                             <th>เบอร์โทร</th>
                             <th>HUB</th>
+                            <th>ขนส่ง</th>
                             <th>ทะเบียนรถ</th>
                             <th>อีเมล์</th>
                             <th>คำสั่ง</th>
@@ -118,7 +119,12 @@
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.ShiptoDescription}}
+                                    {{i.HubDescription}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.TransportDescription}}
                                 </div>
                             </td>
                             <td>
@@ -258,7 +264,11 @@
 
             <div class="row">
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.ShiptoDescription = $event" [label]="'HUB'" [data]="headerModel.ShiptoDescription" [readonly]="true" (click)="chooseTransportShipTo()"></citxt>
+                    <citxt (cModel)="headerModel.HubDescription = $event" [label]="'HUB'" [data]="headerModel.HubDescription" [readonly]="true" (click)="chooseTransportShipTo()"></citxt>
+                </div>
+                <div class="col l4 s12 p-0" style="margin-top: -20px;">
+                    <citxt (cModel)="headerModel.TransportDescription = $event" [label]="'บริษัทขนส่ง'" [data]="headerModel.TransportDescription" [readonly]="true" (click)="chooseTransport()">
+                    </citxt>
                 </div>
             </div>
 

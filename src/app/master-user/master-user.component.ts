@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
-import { ConfirmDialog, GroupUserDialog, ShipToDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog, GroupUserDialog, RouteDialog, ShipToDialog, VehicleDialog } from '../dialog/dialog';
 
 @Component({
   selector: 'app-master-user',
@@ -27,7 +27,7 @@ export class MasterUserComponent implements OnInit {
   models: any = []; //ข้อมูลในตารางหน้า Form
   timeSheetModel: any = {};
   dateControl = new FormControl(moment().format('YYYYMMDD'));
-
+  listTransport: any = [];
   mode: any = 'create';
 
   p = 1;
@@ -41,7 +41,7 @@ export class MasterUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.read();
-
+    this.readTransport();
   }
 
   viewModel: any;
@@ -70,6 +70,32 @@ export class MasterUserComponent implements OnInit {
       }
       else {
         this.listModel = [];
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  readTransport() {
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+      "Code": ""
+    }
+
+    // let json = JSON.stringify(criteria);
+    this.serviceProviderService.post('api/Masters/GetTransport', criteria).subscribe(data => {
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+        this.listTransport = model.Data;
+      }
+      else {
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
@@ -227,11 +253,23 @@ export class MasterUserComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        // this.criteriaModel.transportTypeId = result.Id;
-        this.headerModel.ShiptoId = result.Id;
-        this.headerModel.ShiptoCode = result.Code;
-        this.headerModel.ShiptoAddress = result.Address;
-        this.headerModel.ShiptoDescription = result.Code + ' - ' + result.CustomerName;
+        this.headerModel.HubId = result.Id;
+        this.headerModel.HubCode = result.Code;
+        this.headerModel.HubDescription = result.Code + ' - ' + result.CustomerName;
+      }
+    });
+  }
+  chooseTransport() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport', listData: this.listTransport, listDataSearch: this.listTransport } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.headerModel.TransportId = result.Id;
+        this.headerModel.TransportCode = result.Code;
+        this.headerModel.TransportDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -240,7 +278,6 @@ export class MasterUserComponent implements OnInit {
       }
     });
   }
-  
   save() {
     this.spinner.show();
 
@@ -261,7 +298,8 @@ export class MasterUserComponent implements OnInit {
       "Email": this.headerModel.Email,
       "Sex": this.headerModel.Sex,
       "Active": this.headerModel.Active,
-      "ShiptoId": this.headerModel.ShiptoId,
+      "HubId": this.headerModel.HubId,
+      "TransportId": this.headerModel.TransportId,
     }
 
     let json = JSON.stringify(criteria);

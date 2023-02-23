@@ -116,15 +116,9 @@ export class MasterVehicleComponent implements OnInit {
       console.log(result);
 
       if (result != undefined) {
-        this.criteriaModel.Id = result.Id;
-        this.criteriaModel.VehicleTypeId = result.VehicleTypeId;
-        this.criteriaModel.VehicleTypeCode = result.Code;
-        this.criteriaModel.VehicleTypeDescription = result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        this.headerModel.VehicleTypeId = result.Id;
+        this.headerModel.VehicleTypeCode = result.Code;
+        this.headerModel.VehicleTypeDescription = result.Description;
       }
     });
   }
@@ -174,7 +168,7 @@ export class MasterVehicleComponent implements OnInit {
     this.spinner.show();
     this.headerModel.Operation = 'INSERT';
     this.headerModel.Id = 'Auto';
-    this.headerModel.VehicleTypeId = 'Auto';
+    this.headerModel.VehicleTypeId = '';
     this.headerModel.Code = '';
     this.headerModel.Description = '';
     this.headerModel.Active = 'Y';
