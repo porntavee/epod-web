@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
-import { ConfirmDialog, GroupUserDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog, GroupUserDialog, ShipToDialog, VehicleDialog } from '../dialog/dialog';
 
 @Component({
   selector: 'app-master-user',
@@ -214,6 +214,33 @@ export class MasterUserComponent implements OnInit {
     this.read();
   }
 
+  chooseTransportShipTo() {
+
+    // if (this.criteriaModel.TransportTypeId != 'XD') {
+    //   this.toastr.warning('ระบุ Type of Work เป็น X Dock ก่อน', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    //   return
+    // }
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานที่',IsHub :'Y' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.headerModel.ShiptoId = result.Id;
+        this.headerModel.ShiptoCode = result.Code;
+        this.headerModel.ShiptoAddress = result.Address;
+        this.headerModel.ShiptoDescription = result.Code + ' - ' + result.CustomerName;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+  
   save() {
     this.spinner.show();
 
@@ -234,6 +261,7 @@ export class MasterUserComponent implements OnInit {
       "Email": this.headerModel.Email,
       "Sex": this.headerModel.Sex,
       "Active": this.headerModel.Active,
+      "ShiptoId": this.headerModel.ShiptoId,
     }
 
     let json = JSON.stringify(criteria);

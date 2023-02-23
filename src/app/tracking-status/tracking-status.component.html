@@ -21,33 +21,38 @@
                     <h1>&nbsp;</h1>
                 </div>
                 <div class="col l3 s12">
-                    <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="read()"></cbtn>
+                    <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="readSumStatus()"></cbtn>
                 </div>
             </div>
             <div class="row">
                 <!-- {{listModel|json}} -->
+                <!-- รอจัดใบคุมรถ -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; margin-left: 10px; background-color: rgb(255, 229, 177);">
-                        <i class="material-icons">
-                            event_note
-                        </i>
-                        <br>
-                        <p>{{listModel[0].Description}}</p>
-                        <p style="font-size: 20px; font-weight: 700;">{{listModel[0].NumStatus}}</p>
-                    </div>
-                </div>
-                <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: rgb(247, 131, 131);">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; margin-left: 10px; background-color: #B6B6B6;">
                         <i style="color: aliceblue;" class="material-icons">
                             event_note
                         </i>
                         <br>
-                        <p style="color: aliceblue;">{{listModel[1].Description}}</p>
-                        <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[1].NumStatus}}</p>
+                        <p style="color: aliceblue;">{{listModel[0].Description}}</p>
+                        <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[0].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- รออนุมัติงาน -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: rgb(131, 247, 230);">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #B6B6B6;">
+                        <i class="material-icons">
+                            event_note
+                        </i>
+                        <br>
+                        <p>{{listModel[1].Description}}</p>
+                        <p style="font-size: 20px; font-weight: 700;">{{listModel[1].NumStatus}}</p>
+                    </div>
+                </div>
+
+                <!-- รอคนขับรับงาน -->
+                <div class="col l1 s12 p-0 text-center">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #B6B6B6;">
                         <i class="material-icons">
                             record_voice_over
                         </i>
@@ -56,8 +61,10 @@
                         <p style="font-size: 20px; font-weight: 700;">{{listModel[2].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- ระหว่างรับสินค้า -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: rgb(133, 131, 247);">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #E7E884;">
                         <i style="color: aliceblue;" class="material-icons">
                             local_shipping
                         </i>
@@ -66,18 +73,22 @@
                         <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[3].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- ระหว่างจัดส่งสินค้า -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: rgb(247, 232, 131);">
-                        <i class="material-icons">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #E7E884;">
+                        <i style="color: aliceblue;" class="material-icons">
                             local_shipping
                         </i>
                         <br>
-                        <p>{{listModel[4].Description}}</p>
-                        <p style="font-size: 20px; font-weight: 700;">{{listModel[4].NumStatus}}</p>
+                        <p style="color: aliceblue;">{{listModel[4].Description}}</p>
+                        <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[4].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- จัดส่งสินค้าสำเร็จ -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: rgb(247, 131, 239);">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #79D58B;">
                         <i style="color: aliceblue;" class="material-icons">
                             local_shipping
                         </i>
@@ -86,8 +97,10 @@
                         <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[5].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- จัดส่งสินค้าไม่สำเร็จ -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: rgb(182, 182, 182);">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #EBB146;">
                         <i style="color: aliceblue;" class="material-icons">
                             local_shipping
                         </i>
@@ -96,8 +109,10 @@
                         <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[6].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- คนขับคืนบิลเสร็จสิ้น -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: rgb(182, 182, 182);">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #70D58B;">
                         <i style="color: aliceblue;" class="material-icons">
                             content_copy
                         </i>
@@ -106,8 +121,10 @@
                         <p style="font-size: 20px; font-weight: 700; color: aliceblue;">{{listModel[7].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- คืนบิลเสร็จสิ้น -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: rgb(154, 254, 154);">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #66A5D9;">
                         <i class="material-icons">
                             content_copy
                         </i>
@@ -116,8 +133,10 @@
                         <p style="font-size: 20px; font-weight: 700;">{{listModel[8].NumStatus}}</p>
                     </div>
                 </div>
+
+                <!-- สินค้าอยู่ที่ HUB -->
                 <div class="col l1 s12 p-0 text-center">
-                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: rgb(182, 182, 182);">
+                    <div class="card-panel" style="height: 120px; margin-right: 10px; background-color: #66A5D9;">
                         <i style="color: aliceblue;" class="material-icons">
                             event_busy
                         </i>

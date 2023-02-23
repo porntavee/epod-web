@@ -83,6 +83,7 @@ export class OrderApproveComponent implements OnInit {
       "TransportTypeId": this.criteriaModel.typeOfWorkCode,
       "VehicleId": this.criteriaModel.vehicleId,
       "RouteId": this.criteriaModel.routeId,
+      "Process": "APPROVE",
     }
 
     let json = JSON.stringify(criteria);
