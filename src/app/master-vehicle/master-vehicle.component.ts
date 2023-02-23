@@ -9,7 +9,6 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 
 
 @Component({
-  selector: 'app-master-vehecle',
   templateUrl: './master-vehicle.component.html',
   styleUrls: ['./master-vehicle.component.css']
 })
@@ -90,6 +89,7 @@ export class MasterVehicleComponent implements OnInit {
     this.serviceProviderService.post('api/Masters/GetVehicleType', criteria).subscribe(data => {
       let model: any = {};
       model = data;
+      console.log('model', model);
       this.viewModel = model;
 
       if (model.Status) {
@@ -113,10 +113,11 @@ export class MasterVehicleComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      console.log(result);
 
       if (result != undefined) {
-
-        this.criteriaModel.VehicleTypeId = result.Id;
+        this.criteriaModel.Id = result.Id;
+        this.criteriaModel.VehicleTypeId = result.VehicleTypeId;
         this.criteriaModel.VehicleTypeCode = result.Code;
         this.criteriaModel.VehicleTypeDescription = result.Description;
         // param.Code = result.Code;
@@ -173,6 +174,7 @@ export class MasterVehicleComponent implements OnInit {
     this.spinner.show();
     this.headerModel.Operation = 'INSERT';
     this.headerModel.Id = 'Auto';
+    this.headerModel.VehicleTypeId = 'Auto';
     this.headerModel.Code = '';
     this.headerModel.Description = '';
     this.headerModel.Active = 'Y';
@@ -197,6 +199,7 @@ export class MasterVehicleComponent implements OnInit {
       "userinformation": this.serviceProviderService.userinformation,
       "Operation": this.headerModel.Operation,
       "Id": this.headerModel.Id,
+      "VehicleTypeId": this.headerModel.VehicleTypeId,
       "Code": this.headerModel.Code,
       "Description": this.headerModel.Description,
       "Active": this.headerModel.Active,
