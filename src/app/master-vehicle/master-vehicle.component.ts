@@ -168,11 +168,14 @@ export class MasterVehicleComponent implements OnInit {
     this.spinner.show();
     this.headerModel.Operation = 'INSERT';
     this.headerModel.Id = 'Auto';
-    this.headerModel.VehicleTypeId = '';
     this.headerModel.Code = '';
     this.headerModel.Description = '';
     this.headerModel.Active = 'Y';
 
+    this.headerModel.VehicleTypeId = '';
+    this.headerModel.VehicleTypeCode ='';
+    this.headerModel.VehicleTypeDescription = '';
+    
 
     this.isMainPage = false;
     this.isFormPage = true;

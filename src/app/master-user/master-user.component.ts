@@ -228,6 +228,14 @@ export class MasterUserComponent implements OnInit {
     this.headerModel.VehicleId = '';
     this.headerModel.VehicleNo = '';
 
+    this.headerModel.HubId = '';
+    this.headerModel.HubCode  = '';
+    this.headerModel.HubDescription  = '';
+    
+    this.headerModel.TransportId  = '';
+    this.headerModel.TransportCode = '';
+    this.headerModel.TransportDescription  = '';
+
     this.isMainPage = false;
     this.isFormPage = true;
     this.spinner.hide();
