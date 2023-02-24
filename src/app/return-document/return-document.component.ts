@@ -276,11 +276,11 @@ export class ReturnDocumentComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        this.criteriaModel.PopupTransportNo = result.TransportNo;
-        this.readDetail(result.TransportNo);
+        this.criteriaModel.TransportNo = result.TransportNo;
+        this.readDetail(this.criteriaModel);
       }
       else{
-        this.criteriaModel.PopupTransportNo='';
+        this.criteriaModel.TransportNo='';
       }
     });
   }
