@@ -101,18 +101,19 @@ export class ReturnDocumentComponent implements OnInit {
   }
 
   readDetail(param) {
+
     this.spinner.show();
+
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": param.TransportNo
     }
 
+    debugger
+
     this.headerModel = param;
-    this.headerModel.DriverFirstName = this.headerModel.DriverFirstName + ' ' + this.headerModel.DriverLastName;
-
     let json = JSON.stringify(criteria);
-
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
@@ -123,9 +124,6 @@ export class ReturnDocumentComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
-          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
         });
 
         this.listDetailModel = model.Data;
@@ -272,22 +270,17 @@ export class ReturnDocumentComponent implements OnInit {
   //use
   chooseTransportNo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.' } });
+    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.', Process:'ADMIN_RETRURN' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.transportNo = result.TransportNo;
-        // this.criteriaModel.shipToCode = result.Code;
-        // this.criteriaModel.shipToAddress = result.Address;
-        // this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        this.criteriaModel.PopupTransportNo = result.TransportNo;
+        this.readDetail(result.TransportNo);
+      }
+      else{
+        this.criteriaModel.PopupTransportNo='';
       }
     });
   }

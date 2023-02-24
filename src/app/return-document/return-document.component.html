@@ -20,6 +20,9 @@
                 <div class="col l3 s12 p-0">
                     <citxt (cModel)="criteriaModel.TransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.TransportNo" (keydown)="read($event)"></citxt>
                 </div>
+                <div class="col l3 s12 p-0">
+                    <citxt (cModel)="criteriaModel.PopupTransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.PopupTransportNo" [readonly]="true" (click)="chooseTransportNo()"></citxt>
+                </div>
             </div>
             <div class="row">
                 <div class="col l3 s12 p-0">

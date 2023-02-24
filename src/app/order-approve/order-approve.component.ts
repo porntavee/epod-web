@@ -84,6 +84,7 @@ export class OrderApproveComponent implements OnInit {
       "VehicleId": this.criteriaModel.vehicleId,
       "RouteId": this.criteriaModel.routeId,
       "Process": "APPROVE",
+      "TransportDate": this.criteriaModel.TransportDate != undefined && this.criteriaModel.TransportDate != "Invalid date" ? moment(this.criteriaModel.TransportDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
     }
 
     let json = JSON.stringify(criteria);
@@ -548,7 +549,7 @@ export class OrderApproveComponent implements OnInit {
   }
 
   clear() {
-    this.criteriaModel = { apptDate: '' };
+    this.criteriaModel = { apptDate: '', TransportDate: '' };
   }
 
   statusTransportColor(param) {

@@ -394,6 +394,7 @@ export class TransportNoDialog {
         let criteria = {
             "userinformation": this.serviceProviderService.userinformation,
             "TransportNo": this.criteriaModel.TransportNo,
+            "Process":this.data.Process
         }
 
         // let json = JSON.stringify(criteria);

@@ -47,6 +47,8 @@ export class OrderTransportComponent implements OnInit {
     // this.criteriaModel.statusCode = 'A';
     // this.criteriaModel.statusDescription = 'A - รอยืนยันใบคุม';
 
+    const date = new Date();
+    this.criteriaModel.TransportDate = moment(date.setDate(date.getDate())).format('YYYYMMDD');
 
     this.read();
   }
@@ -64,6 +66,8 @@ export class OrderTransportComponent implements OnInit {
       "TransportStatus": this.criteriaModel.statusCode,
       "TransportTypeId": this.criteriaModel.typeOfWorkCode,
       "VehicleId": this.criteriaModel.vehicleId,
+      "TransportDate": this.criteriaModel.TransportDate != undefined && this.criteriaModel.TransportDate != "Invalid date" ? moment(this.criteriaModel.TransportDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+    
     }
 
     let json = JSON.stringify(criteria);
@@ -229,7 +233,7 @@ export class OrderTransportComponent implements OnInit {
   }
 
   clear() {
-    this.criteriaModel = { approveDateString: '' };
+    this.criteriaModel = { approveDateString: '' ,TransportDate:''};
   }
 
 
