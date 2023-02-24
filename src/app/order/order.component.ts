@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { TransportNoDialog, ShipToDialog, JobStatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, ConfirmDialog } from '../dialog/dialog';
+import { TransportNoDialog, ShipToDialog, JobStatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, ConfirmDialog, UploadOrderDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -516,7 +516,6 @@ export class OrderComponent implements OnInit {
 
   delete(param) {
 
-    debugger
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องลบรายการใช่หรือไม่?' } });
 
@@ -581,8 +580,8 @@ export class OrderComponent implements OnInit {
         return '#B6B6B6'
       case 'F':
         return '#EBB146'
-        case 'H':
-          return '#66A5D9'
+      case 'H':
+        return '#66A5D9'
       default:
         break;
     }
@@ -605,6 +604,96 @@ export class OrderComponent implements OnInit {
     );
 
     window.open(url, '_blank');
+  }
+
+  upload() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(UploadOrderDialog, { disableClose: false, height: '600px', width: '1000px', data: { title: 'คุณต้องลบรายการใช่หรือไม่?' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (!result) {
+        return;
+      }
+      else {
+
+
+
+        // this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+        // this.criteriaModel.OrderDate = moment(this.criteriaModel.OrderDate).format('YYYY-MM-DDT00:00:00');
+        // this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
+        // this.criteriaModel.UoM = this.criteriaModel.UoM;
+        // this.criteriaModel.Process = "CREATE";
+
+        debugger
+        const [day, month, year] = result[0].IssueDate.split('/');
+        const date = new Date(+year, +month - 1, +day);
+        console.log(moment(date).format('YYYY-MM-DDT00:00:00'));
+        console.log(moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DDT00:00:00'));
+
+        // this.criteriaModel = {
+        //   "OrderDate": moment(result.IssueDate).format('YYYY-MM-DDT00:00:00'),
+        //   "OrderEstimate": moment(this.criteriaModel.IssueDate.setDate(this.criteriaModel.IssueDate.getDate() + 1)).format('YYYY-MM-DDT00:00:00'),
+        //   "InvoiceNo": "1",
+        //   "Comment": "1",
+        //   "ReferenceNo": "1",
+        //   "OrderTypeDescription": "NM - Normal",
+        //   "PurchaseNo": "1",
+        //   "CBM": "1",
+        //   "OwnerDescription": "81430 - บริษัท ปตท.บริหารธุรกิจค้าปลีก จำกัด(ปทุมธานี-ลาดหลุมแก้ว กม.26)",
+        //   "Qty": "1",
+        //   "ShiptoDescription": "81971 - หจก.พัชรัตน์เกียรติ",
+        //   "Weight": "1",
+        //   "ShiptoAddress": "154/89 ม.7 ถ.ศรีพรหมโสภิต ต.บางมัญ อ.เมืองสิงห์บุรี จ.สิงห์บุรี 16000 โทร.093-94",
+        //   "RouteDescription": "0010000000067",
+        //   "SubRouteDescription": "0010000001374",
+        //   "OrderTypeId": "NM",
+        //   "OwnerId": "0010000000033",
+        //   "ShiptoId": "0010000000233",
+        //   "ShiptoCode": "81971",
+        //   "ShiptoMobile": "",
+        //   "userinformation": {
+        //     "UserId": "0010000000000",
+        //     "UserName": "demow",
+        //     "GroupCode": "S",
+        //     "dbName": "WTX-EPOD",
+        //     "Version": "22.11.01.01"
+        //   },
+        //   "Version": "20221102"
+        // }
+
+
+        // let json = JSON.stringify(this.criteriaModel);
+
+        // // debugger;
+
+        // this.serviceProviderService.post('api/Transport/CreateOrder', this.criteriaModel).subscribe(data => {
+        //   this.spinner.hide();
+        //   let model: any = {};
+        //   model = data;
+        //   this.viewModel = model;
+
+        //   if (model.Status) {
+        //     this.criteriaModel.OrderNo = model.Data;
+        //     this.toastr.success("บันทึกข้อมูลเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        //     this.id = this.criteriaModel.OrderNo;
+        //     this.ngOnInit();
+        //     // window.self.close(); 
+        //     // this.listModel = model.Data;
+        //   }
+        //   else {
+        //     // this.listModel = [];
+        //     this.spinner.hide();
+        //     this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        //   }
+
+        // }, err => {
+        //   this.spinner.hide();
+        //   this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        // });
+      }
+    });
   }
 
 

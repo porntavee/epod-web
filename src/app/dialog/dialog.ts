@@ -2,6 +2,8 @@ import { Component, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
 import { ServiceProviderService } from "../shared/service-provider.service";
+import * as XLSX from 'xlsx-js-style';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'confirm-dialog',
@@ -868,5 +870,60 @@ export class DocReturnDialog {
 
     ok(param) {
         this.dialogRef.close(param);
+    }
+}
+
+
+@Component({
+    selector: 'upload-order-dialog',
+    templateUrl: 'upload-order-dialog.html',
+})
+export class UploadOrderDialog {
+    constructor(
+        private spinner: NgxSpinnerService,
+        public dialogRef: MatDialogRef<ConfirmDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+    cancel() {
+        this.dialogRef.close(false);
+    }
+
+    ok() {
+        this.dialogRef.close(this.listData);
+    }
+
+    // excel
+    listData: any = [];
+    onFileChange(ev) {
+        this.spinner.show();
+        let workBook = null;
+        let jsonData = null;
+        const reader = new FileReader();
+        const file = ev.target.files[0];
+        reader.onload = (event) => {
+            const data = reader.result;
+            workBook = XLSX.read(data, { type: 'binary' });
+            jsonData = workBook.SheetNames.reduce((initial, name) => {
+                const sheet = workBook.Sheets[name];
+                initial[name] = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+                this.listData = initial[name];
+                // debugger
+                initial[name].forEach((e, i) => {
+                    Object.entries(e).forEach(([, value], index) => {
+                        if (index == 0)
+                            this.listData[i].codeShort = value.toString();
+                        if (index == 1)
+                            this.listData[i].titleShort = value;
+                        if (index == 2)
+                            this.listData[i].title = value;
+                        if (index == 3)
+                            this.listData[i].titleEN = value;
+                    });
+                });
+                this.spinner.hide();
+                // return initial;
+            }, {});
+        }
+        reader.readAsBinaryString(file);
     }
 }

@@ -1,0 +1,147 @@
+<h1 mat-dialog-title>อัพโหลด</h1>
+<div mat-dialog-content>
+    <!-- {{data.title}} <br> -->
+    <div class="row">
+        <div class="col s6" style="padding: 24px;">
+            <input type="file" (change)="onFileChange($event)" />
+        </div>
+    </div>
+    <div style="overflow-x:auto;">
+        <table id="users-list-datatable" class="bordered centered striped">
+            <thead>
+                <tr>
+                    <!-- <th>
+                    <span class="header-checkbox">
+                        <label>
+                            <input type="checkbox" [(ngModel)]="itemSelected"
+                                (change)="checkUncheckAll()" />
+                            <span style="padding-left: 20px;"></span>
+                        </label>
+                    </span>
+                </th> -->
+                    <th>ลำดับ</th>
+                    <th>Invoice</th>
+                    <th>Issue Date</th>
+                    <th>Type Of Work</th>
+                    <th>Appt. Date</th>
+                    <th>Sender Code</th>
+                    <th>Recipient Code</th>
+                    <th>Recipient Addr</th>
+                    <th>Route</th>
+                    <th>Sub Route</th>
+                    <th>Reference No.</th>
+                    <th>PO No.</th>
+                    <th>CBM</th>
+                    <th>Carton</th>
+                    <th>Weight</th>
+                    <th>Remark</th>
+                    <!-- <th>จัดการ</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of listData; let idx = index">
+                    <!-- <td>
+                   <div class="w20" [hidden]="!checkPermission(i.category, 'deleteAction')">
+                        <label>
+                            <input type="checkbox" [(ngModel)]="i.isSelected"
+                                (change)="isAllSelected(i.category, 'deleteAction')" />
+                            <span></span>
+                        </label>
+                    </div>
+                </td> -->
+                    <td>
+                        <div class="w30">
+                            {{idx + 1}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.InvoiceNo}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.IssueDate}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.TypeOfWork}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.ApptDate}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.SenderCode}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.RecipientCode}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.RecipientAddr}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.Route}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.SubRoute}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.ReferenceNo}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.PONo}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.CBM}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.Carton}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.Weight}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.Remark}}
+                        </div>
+                    </td>
+                    <!-- <td>
+                    <div class="w150">
+                        <cbtne [label]="'แก้ไข'"></cbtne>
+                    </div>
+                </td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <cbtn [label]="'ยืนยัน'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn>
+    <cbtn [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn>
+</div>
+<!-- <div mat-dialog-actions>
+    <cbtn [label]="'ยืนยัน'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn>
+    <cbtn [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn>
+</div> -->
