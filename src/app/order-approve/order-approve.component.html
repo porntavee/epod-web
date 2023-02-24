@@ -68,6 +68,12 @@
             </div>
 
             <div class="row">
+                <div class="col l3 s12 pl-0" style="margin-top: -20px;">
+                    <cdp (cModel)="criteriaModel.TransportDate = $event" [label]="'วันที่สร้างเอกสาร'" [data]="criteriaModel.TransportDate"></cdp>
+                </div>
+            </div>
+
+            <div class="row">
                 <!-- <div class="col l5 s12" style="margin-bottom: 15px;">
                     <csop (cModel)="criteriaModel.FirstName = $event" [label]="'First Name'" [data]="criteriaModel.FirstName" [sources]="listFirstName">
                     </csop>
