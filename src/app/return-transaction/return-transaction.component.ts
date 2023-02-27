@@ -64,6 +64,7 @@ export class ReturnTransactionComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
           element.AdminReturnDate = moment(element.AdminReturnDate).format('DD-MM-YYYY h:mm:ss');
         });
 

@@ -226,6 +226,7 @@ export class TrackingStatusComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
@@ -277,6 +278,7 @@ export class TrackingStatusComponent implements OnInit {
         this.headerModel = model.Data[0];
 
         this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
+        this.headerModel.InvoiceDate = moment(model.Data[0].InvoiceDate).format('DD-MM-YYYY');
         this.headerModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
         this.headerModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;
 
