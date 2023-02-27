@@ -90,7 +90,9 @@ export class OrderTransportFormComponent implements OnInit {
     this.readTransport();
     // this.readRoute();
     this.readVehicleType();
-
+    console.log(this.id);
+    // debugger;
+    
     if (this.id != 'new') {
       this.read();
     }

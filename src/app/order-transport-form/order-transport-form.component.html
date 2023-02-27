@@ -180,8 +180,10 @@
                             <th>CBM</th>
                             <th>Carton</th>
                             <th>Weight (kg.)</th>
+                            <th>InvoiceDate</th>
                             <th>หมายเหตุ</th>
                             <th>คำสั่ง</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -252,7 +254,11 @@
                                     {{i.Weight}}
                                 </div>
                             </td>
-
+                            <td>
+                                <div class="w100">
+                                    {{i.InvoiceDate}}
+                                </div>
+                            </td>
                             <td>
                                 <div class="w300">
                                     {{i.Comment}}
