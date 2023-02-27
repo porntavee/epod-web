@@ -55,9 +55,9 @@
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
                     <citxt (cModel)="criteriaModel.statusDescription = $event" [label]="'สถานะ'" [data]="criteriaModel.statusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
                 </div>
-                <!-- <div class="col l3 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.statusDescription = $event" [label]="'สถานะ'" [data]="criteriaModel.statusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
-                </div> -->
+                <div class="col l4 s12 pl-0" style="margin-top: -20px;">
+                    <cdp (cModel)="criteriaModel.InvoiceDate = $event" [label]="'InvoiceDate'" [data]="criteriaModel.InvoiceDate"></cdp>
+                </div>
                 <!-- <div class="col l4 s12 pl-0" style="margin-top: -20px;">
                     <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
                 </div> -->
@@ -150,6 +150,7 @@
                             <th>Cus Code</th>
                             <th>Ship To</th>
                             <th>ที่อยู่ผู้รับ</th>
+                            <th>InvoiceDate</th>
                             <th>Appt. Date</th>
                             <th>CBM</th>
                             <th>Carton</th>
@@ -212,6 +213,12 @@
                                 </div>
                             </td>
                             <td>
+                                <div class="w100">
+                                    {{i.InvoiceDate}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
+                                </div>
+                            </td>
+                            <td>
                                 <div class="w150">
                                     {{i.OrderEstimate}}
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.U_HMC_Hour" name="i.U_HMC_Hour" id="i.U_HMC_Hour" type="text" class="input-text-1"> -->
@@ -245,7 +252,7 @@
                                 <div class="w100">
                                     <a class="btn-floating blue" style="cursor: pointer;" (click)="edit(i.OrderNo)">
                                         <i class="medium material-icons">edit</i>
-                                    </a>
+                                    </a> &nbsp; 
                                     <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i.OrderNo)">
                                         <i class="medium material-icons">delete</i>
                                     </a>

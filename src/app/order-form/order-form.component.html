@@ -113,11 +113,19 @@
 
             <div class="row">
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
+                    <cdp (cModel)="criteriaModel.InvoiceDate = $event" [label]="'** InvoiceDate'" [data]="criteriaModel.InvoiceDate"></cdp>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col l4 s12 p-0" style="margin-top: -20px;">
                     <!-- <citxt (cModel)="criteriaModel.ShiptoAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="criteriaModel.ShiptoAddress" [readonly]="true" (click)="chooseShipTo()"></citxt> -->
                     <ctxta (cModel)="criteriaModel.ShiptoAddress = $event" [label]="'** ที่อยู่ผู้รับ'" [data]="criteriaModel.ShiptoAddress" (click)="chooseShipTo()">
                     </ctxta>
                 </div>
             </div>
+            
+            
 
             <div class="row">
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">

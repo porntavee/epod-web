@@ -117,6 +117,7 @@ export class OrderFormComponent implements OnInit {
         this.criteriaModel.ShiptoId = model.Data[0].ShiptoId;
         this.criteriaModel.ShiptoCode = model.Data[0].ShiptoCode;
         this.criteriaModel.ShiptoAddress = model.Data[0].Address;
+        this.criteriaModel.InvoiceDate = model.Data[0].InvoiceDate;
         this.criteriaModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;;
         this.criteriaModel.ShiptoMobile = model.Data[0].Mobile;
 
@@ -125,6 +126,8 @@ export class OrderFormComponent implements OnInit {
         this.criteriaModel.subRouteId = model.Data[0].SubRouteId;
         this.criteriaModel.RouteDescription =  model.Data[0].Route;
         this.criteriaModel.SubRouteDescription = model.Data[0].SubRoute;
+
+        console.log(this.criteriaModel);
 
 
         // this.criteriaModel.OwnerDescription = model.Data[0].OwnerName;

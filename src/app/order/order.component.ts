@@ -69,6 +69,9 @@ export class OrderComponent implements OnInit {
   }
 
   viewModel: any;
+  formatDate(date) {
+    return (date != undefined && date != "Invalid date") ? moment(date).format('YYYY-MM-DD 00:00:00.000') : undefined
+  }
   read() {
     this.spinner.show();
 
@@ -76,9 +79,10 @@ export class OrderComponent implements OnInit {
       "userinformation": this.serviceProviderService.userinformation,
       "OrderNo": this.criteriaModel.orderNo,
       "InvoiceNo": this.criteriaModel.invoiceNo,
+      "InvoiceDate": this.formatDate(this.criteriaModel.InvoiceDate),
       "ShiptoId": this.criteriaModel.shipToId,
-      "OrderDateStart": this.criteriaModel.orderDate != undefined && this.criteriaModel.orderDate != "Invalid date" ? moment(this.criteriaModel.orderDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "OrderDateEnd": this.criteriaModel.orderDateEnd != undefined && this.criteriaModel.orderDateEnd != "Invalid date" ? moment(this.criteriaModel.orderDateEnd).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "OrderDateStart": this.formatDate(this.criteriaModel.orderDateStart),
+      "OrderDateEnd": this.formatDate(this.criteriaModel.orderDateEnd),
       "OrderStatus": this.criteriaModel.statusCode,
     }
 
@@ -93,6 +97,7 @@ export class OrderComponent implements OnInit {
       if (model.Status) {
 
         model.Data.forEach(element => {
+          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
           element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
           element.OrderDate = moment(element.OrderDate).format('DD-MM-YYYY');
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
@@ -207,6 +212,8 @@ export class OrderComponent implements OnInit {
       // "TTRANSPORTDS": this.listDetailModel
     }
 
+  
+
     let json = JSON.stringify(criteria);
 
     this.serviceProviderService.post('api/Transport/CancelTransport', criteria).subscribe(data => {
@@ -239,7 +246,12 @@ export class OrderComponent implements OnInit {
   //use
   chooseTransportNo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.' } });
+    const dialogRef = this.dialog.open(TransportNoDialog, { 
+      disableClose: false, 
+      height: '400px', 
+      width: '800px', 
+      data: { title: 'Transport No.' } 
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

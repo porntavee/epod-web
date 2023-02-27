@@ -672,12 +672,11 @@
                             <th>Cus Code</th>
                             <th>Ship To</th>
                             <th>ที่อยู่ผู้รับ</th>
-
+                            <th>InvoiceDate</th>
                             <th>Appt. Date</th>
                             <th>CBM</th>
                             <th>Carton</th>
                             <th>Weight (kg.)</th>
-
                             <th>หมายเหตุ</th>
                         </tr>
                     </thead>
@@ -794,7 +793,12 @@
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
-
+                            <td>
+                                <div class="w100">
+                                    {{i.InvoiceDate}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.OrderEstimateStr}}
