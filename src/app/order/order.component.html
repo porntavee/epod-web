@@ -41,10 +41,10 @@
                     <!-- <citxt (cModel)="criteriaModel.invoiceNo = $event" [label]="'Invoice No.'" [data]="criteriaModel.invoiceNo" [readonly]="true" (click)="chooseVehicle()"></citxt> -->
                 </div>
                 <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <cdp (cModel)="criteriaModel.orderDate = $event" [label]="'วันที่ออกเอกสาร'" [data]="criteriaModel.orderDate"></cdp>
+                    <cdp (cModel)="criteriaModel.orderDate = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.orderDate"></cdp>
                 </div>
                 <div class="col l4 s12 pl-0" style="margin-top: -20px;">
-                    <cdp (cModel)="criteriaModel.orderDateEnd = $event" [label]="'ถึงวันที่ออกเอกสาร'" [data]="criteriaModel.orderDateEnd"></cdp>
+                    <cdp (cModel)="criteriaModel.orderDateEnd = $event" [label]="'ถึงวันที่เอกสาร'" [data]="criteriaModel.orderDateEnd"></cdp>
                 </div>
             </div>
 
@@ -89,7 +89,7 @@
                     <citxt (cModel)="criteriaModel.invoiceNo = $event" [label]="'Invoice No.'" [data]="criteriaModel.invoiceNo" [readonly]="true" (click)="chooseRoute()"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="criteriaModel.orderDate = $event" [label]="'วันที่ออกเอกสาร'" [data]="criteriaModel.orderDate"></cdp>
+                    <cdp (cModel)="criteriaModel.orderDate = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.orderDate"></cdp>
                 </div>
                 <!-- <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="criteriaModel.toDescription = $event" [label]="'ถึง'" [data]="criteriaModel.toDescription" [readonly]="true" (click)="chooseVehicle()"></citxt>
@@ -330,7 +330,7 @@
                     <cinum (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence || 0"></cinum>
                 </div> -->
                 <!-- <div class="col l4 s12">
-                    <cdp (cModel)="criteriaModel.startDate = $event" [label]="'วันที่สร้าง'" [data]="criteriaModel.startDate">
+                    <cdp (cModel)="criteriaModel.startDate = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.startDate">
                     </cdp>
                 </div>
                 <div class="col l4 s12">
@@ -354,7 +354,7 @@
 
             <div class="row">
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.TransportDate = $event" [label]="'วันที่สร้างเอกสาร'" [data]="headerModel.TransportDate" [readonly]="true"></citxt>
+                    <citxt (cModel)="headerModel.TransportDate = $event" [label]="'วันที่เอกสาร'" [data]="headerModel.TransportDate" [readonly]="true"></citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
                     <citxt (cModel)="headerModel.Route = $event" [label]="'Route'" [data]="headerModel.Route" [readonly]="true"></citxt>
@@ -445,7 +445,7 @@
                     <citxt (cModel)="headerModel.Vehicle = $event" [label]="'Truck License'" [data]="headerModel.Vehicle" [readonly]="true"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.TransportDate = $event" [label]="'วันที่สร้างเอกสาร'" [data]="headerModel.TransportDate" [readonly]="true"></citxt>
+                    <citxt (cModel)="headerModel.TransportDate = $event" [label]="'วันที่เอกสาร'" [data]="headerModel.TransportDate" [readonly]="true"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="headerModel.Route = $event" [label]="'Route'" [data]="headerModel.Route" [readonly]="true"></citxt>

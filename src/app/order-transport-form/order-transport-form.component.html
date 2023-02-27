@@ -19,7 +19,7 @@
                     </citxt>
                 </div>
                 <div class="col l4 s12 p-0">
-                    <cdp (cModel)="criteriaModel.TransportDateString = $event" [label]="'วันที่สร้างเอกสาร'" [data]="criteriaModel.TransportDateString"></cdp>
+                    <cdp (cModel)="criteriaModel.TransportDateString = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.TransportDateString"></cdp>
                 </div>
             </div>
             <div class="row">
@@ -104,7 +104,7 @@
                     <ctxta (cModel)="criteriaModel.ReceiveFromAddress = $event" [label]="''" [data]="criteriaModel.ReceiveFromAddress"></ctxta>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="criteriaModel.TransportDateString = $event" [label]="'วันที่สร้างเอกสาร'" [data]="criteriaModel.TransportDateString"></cdp>
+                    <cdp (cModel)="criteriaModel.TransportDateString = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.TransportDateString"></cdp>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'Route'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
@@ -333,7 +333,7 @@
                     <citxt (cModel)="formModel.InvoiceNo = $event" [label]="'เลขที่อินวอยน์'" [data]="formModel.InvoiceNo"  (keydown)="readOrder($event)"></citxt>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
-                    <cdp (cModel)="formModel.OrderDateString = $event" [label]="'วันที่ออกเอกสาร'" [data]="formModel.OrderDateString"></cdp>
+                    <cdp (cModel)="formModel.OrderDateString = $event" [label]="'วันที่เอกสาร'" [data]="formModel.OrderDateString"></cdp>
                 </div>
                 <div class="col l4 s12" style="margin-top: -20px;">
                     <citxt (cModel)="formModel.StatusDescription = $event" [label]="'สถานะ'" [data]="formModel.StatusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
@@ -362,7 +362,7 @@
                     <citxt (cModel)="formModel.InvoiceNo = $event" [label]="'เลขที่อินวอยน์'" [data]="formModel.InvoiceNo" (keydown)="readOrder($event)"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="formModel.OrderDateString = $event" [label]="'วันที่ออกเอกสาร'" [data]="formModel.OrderDateString"></cdp>
+                    <cdp (cModel)="formModel.OrderDateString = $event" [label]="'วันที่เอกสาร'" [data]="formModel.OrderDateString"></cdp>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="formModel.StatusDescription = $event" [label]="'สถานะ'" [data]="formModel.StatusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>

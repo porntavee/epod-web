@@ -183,11 +183,11 @@ export class LineCriteriaComponent implements OnInit {
           'หัวข้อ': e.title,
           'จำนวน': e.view,
           'สถานนะ': e.isActive == true ? "เปิดการใช้งาน" : "ปิดการใช้งาน",
-          'วันที่สร้าง': DateFormatPipe.transform(e.createDate),
+          'วันที่เอกสาร': DateFormatPipe.transform(e.createDate),
         })
       });
       let txt = '_' + moment(Date.now()).format('DD-MM-YYYY HH:mm:ss');
-      this.excelService.downloadFileCSV(result, "รายงาน_Tag" + txt, ['หัวข้อ', 'จำนวน', 'สถานนะ', 'วันที่สร้าง']);
+      this.excelService.downloadFileCSV(result, "รายงาน_Tag" + txt, ['หัวข้อ', 'จำนวน', 'สถานนะ', 'วันที่เอกสาร']);
       // this.excelService.exportAsExcelFile(result, this.appService.title);
     }, err => {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
