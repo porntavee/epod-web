@@ -61,6 +61,8 @@ export class MasterShiplocationComponent implements OnInit {
 
     let json = JSON.stringify(criteria);
 
+    // debugger
+
     this.serviceProviderService.post('api/Masters/GetShipto', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
