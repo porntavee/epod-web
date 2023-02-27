@@ -176,11 +176,11 @@
                             <th>Cus Code</th>
                             <th>Ship To</th>
                             <th>ที่อยู่ผู้รับ</th>
+                            <th>Invoice Date</th>
                             <th>Appt. Date</th>
                             <th>CBM</th>
                             <th>Carton</th>
                             <th>Weight (kg.)</th>
-                            <th>InvoiceDate</th>
                             <th>หมายเหตุ</th>
                             <th>คำสั่ง</th>
                             
@@ -233,7 +233,11 @@
                                     {{i.ShiptoAdress}}
                                 </div>
                             </td>
-
+                            <td>
+                                <div class="w100">
+                                    {{i.InvoiceDate}}
+                                </div>
+                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.OrderEstimateStr}}
@@ -252,11 +256,6 @@
                             <td>
                                 <div class="w100">
                                     {{i.Weight}}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.InvoiceDate}}
                                 </div>
                             </td>
                             <td>
@@ -417,7 +416,7 @@
                             <th>Cus Code</th>
                             <th>Ship To</th>
                             <th>ที่อยู่ผู้รับ</th>
-
+                            <th>Invoice Date</th>
                             <th>Appt. Date</th>
                             <th>CBM</th>
                             <th>Carton</th>
@@ -481,7 +480,11 @@
                                     {{i.Address}}
                                 </div>
                             </td>
-
+                            <td>
+                                <div class="w100">
+                                    {{i.InvoiceDate}}
+                                </div>
+                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.OrderEstimateStr}}

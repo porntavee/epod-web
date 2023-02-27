@@ -20,6 +20,9 @@
                 <div class="col l3 s12 p-0">
                     <citxt (cModel)="criteriaModel.TransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.TransportNo" (keydown)="read($event)"></citxt>
                 </div>
+                <div class="col l3 s12 p-0">
+                    <citxt (cModel)="criteriaModel.PopupTransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.PopupTransportNo" [readonly]="true" (click)="chooseTransportNo()"></citxt>
+                </div>
             </div>
             <div class="row">
                 <div class="col l3 s12 p-0">
@@ -106,6 +109,7 @@
                             <th>Cus Code</th>
                             <th>ShipTo</th>
                             <th>ที่อยู่ผู้รับ</th>
+                            <th>Invoice Date</th>
                             <th>Appt. Date</th>
                             <th>CBM</th>
                             <th>Carton</th>
@@ -213,6 +217,11 @@
                                     {{i.ShiptoAdress}}
                                 </div>
                             </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.InvoiceDate}}
+                                </div>
+                            </td>                
                             <td>
                                 <div class="w100">
                                     {{i.OrderEstimate}}
@@ -526,7 +535,7 @@
                             <th>Cus Code</th>
                             <th>Ship To</th>
                             <th>ที่อยู่ผู้รับ</th>
-
+                            <th>Invoice Date</th>
                             <th>Appt. Date</th>
                             <th>CBM</th>
                             <th>Carton</th>
@@ -651,7 +660,12 @@
                                     <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
                                 </div>
                             </td>
-
+                            <td>
+                                <div class="w100">
+                                    {{i.InvoiceDate}}
+                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                                </div>
+                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.OrderEstimateStr}}
