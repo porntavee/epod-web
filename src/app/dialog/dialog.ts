@@ -828,6 +828,7 @@ export class JobStatusDialog {
     }
 }
 
+
 @Component({
     selector: 'docreturn-dialog',
     templateUrl: 'docreturn-dialog.html',
@@ -928,3 +929,5 @@ export class UploadOrderDialog {
         reader.readAsBinaryString(file);
     }
 }
+
+

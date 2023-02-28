@@ -12,10 +12,10 @@
         <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <cdp (cModel)="criteriaModel.startDate = $event" [label]="'เลือกช่วงเวลา'" [data]="criteriaModel.startDate"></cdp>
+                    <cdp (cModel)="criteriaModelStatus.startDate = $event" [label]="'เลือกช่วงเวลา'" [data]="criteriaModelStatus.startDate"></cdp>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <cdp (cModel)="criteriaModel.endDate = $event" [label]="'จนถึง'" [data]="criteriaModel.endDate"></cdp>
+                    <cdp (cModel)="criteriaModelStatus.endDate = $event" [label]="'จนถึง'" [data]="criteriaModelStatus.endDate"></cdp>
                 </div>
                 <div class="col l1 s12 p-0">
                     <h1>&nbsp;</h1>
@@ -190,12 +190,17 @@
                     <citxt (cModel)="criteriaModel.driverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.driverDescription" [readonly]="true" (click)="chooseDriver()"></citxt>
                 </div>
                 <div class="col l3 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.statusDescription = $event" [label]="'สถานะ'" [data]="criteriaModel.statusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
+                    <citxt (cModel)="criteriaModel.transportstatusDescription = $event" [label]="'สถานะใบคุม'" [data]="criteriaModel.transportstatusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
                 </div>
                 <div class="col l3 s12 pl-0" style="margin-top: -20px;">
                     <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
                 </div>
             </div>
+            <!-- <div class="row">
+                <div class="col l3 s12 p-0" style="margin-top: -20px;">
+                    <citxt (cModel)="criteriaModel.orderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.orderstatusDescription" [readonly]="true" (click)="chooseOrderStatus()"></citxt>
+                </div>
+            </div> -->
             <div class="row">
                 <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
                 <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
@@ -228,18 +233,15 @@
                     <citxt (cModel)="criteriaModel.driverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.driverDescription" [readonly]="true" (click)="chooseDriver()"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.statusDescription = $event" [label]="'สถานะ'" [data]="criteriaModel.statusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
+                    <citxt (cModel)="criteriaModel.transportstatusDescription = $event" [label]="'สถานะใบคุม'" [data]="criteriaModel.transportstatusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
                 </div>
+              
                 <!-- <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="criteriaModel.LastDateFrom = $event" [label]="'Last Date From'" [data]="criteriaModel.LastDateFrom"></cdp>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="criteriaModel.LastDateTo = $event" [label]="'Last Date To'" [data]="criteriaModel.LastDateTo"></cdp>
+                    <citxt (cModel)="criteriaModel.orderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.orderstatusDescription" [readonly]="true" (click)="chooseOrderStatus()"></citxt>
                 </div> -->
-
 
                 <div class="col s12 p-0" style="margin-bottom: 5px;">
                     <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
@@ -282,6 +284,8 @@
                             <!-- <th></th> -->
                             <th>Shipment No.</th>
                             <th>เลขที่อินวอยน์</th>
+                            <th>สถานะใบคุม</th>
+                            <th>สถานะงานขนส่ง</th>
                             <th>Doc Type</th>
                             <th>Doc No.</th>
                             <th>PO</th>
@@ -293,7 +297,7 @@
                             <th>CBM</th>
                             <th>Carton</th>
                             <th>Weight(kg.)</th>
-                            <th>สถานะ</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -342,6 +346,17 @@
                                     {{i.InvoiceNo}}
                                 </div>
                             </td>
+                            <td style="padding: 0 0 0 0 !important;">
+                                <div class="w100" style="background-color: {{statusTransportColor(i.TransportStatus)}}; height: 42px; padding-top: 10px;">
+                                    {{i.TransportStatusDesc}}    
+                                </div>
+                            </td>
+                            <td style="padding: 0 0 0 0 !important;">
+                                <div class="w100" style="background-color: {{statusOrderColor(i.OrderStatus)}}; height: 42px; padding-top: 10px;">
+                                    {{i.OrderStatusDesc}}    
+                                </div>
+                            </td>
+                          
                             <td>
                                 <div class="w100">
                                     {{i.OrderType}}
@@ -397,12 +412,7 @@
                                     {{i.Weight}}
                                 </div>
                             </td>
-                            <td style="padding: 0 0 0 0 !important;">
-                                <div class="w100" style="background-color: {{statusTransportColor(i.TransportStatus)}}; height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
+  
                         </tr>
                     </tbody>
                 </table>
