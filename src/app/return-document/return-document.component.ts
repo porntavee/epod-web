@@ -130,7 +130,7 @@ export class ReturnDocumentComponent implements OnInit {
           if (dup.length == 0)
           {
             element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
-            element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
+            element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
             this.listModel.push(element);
           }
       
@@ -196,7 +196,7 @@ export class ReturnDocumentComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
         });
 
         this.listDetailModel = model.Data;

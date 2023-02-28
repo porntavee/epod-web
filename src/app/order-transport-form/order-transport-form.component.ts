@@ -156,7 +156,7 @@ export class OrderTransportFormComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
         });
       }
       else {
@@ -1301,7 +1301,7 @@ export class OrderTransportFormComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
           // element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');

@@ -74,6 +74,7 @@ export class OrderFormComponent implements OnInit {
     const date = new Date();
 
     this.criteriaModel.OrderDate = moment(date).format('YYYYMMDD');
+    this.criteriaModel.InvoiceDate = moment(date).format('YYYYMMDD');
     this.criteriaModel.OrderEstimate = moment(date.setDate(date.getDate() + 1)).format('YYYYMMDD');
     // this.read();
     // this.readRoute();
@@ -181,6 +182,7 @@ export class OrderFormComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
@@ -590,17 +592,24 @@ export class OrderFormComponent implements OnInit {
     this.criteriaModel = { apptDate: '' };
   }
 
+  formatDate(date) {
+    return (date != undefined && date != "Invalid date") ? moment(date).format('YYYY-MM-DD 00:00:00.000') : undefined
+  }
+
   create() {
 
     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
     this.criteriaModel.OrderDate = moment(this.criteriaModel.OrderDate).format('YYYY-MM-DDT00:00:00');
     this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
+    this.criteriaModel.InvoiceDate =this.formatDate(this.criteriaModel.InvoiceDate);
     this.criteriaModel.UoM = this.criteriaModel.UoM;
     this.criteriaModel.Process = "CREATE";
 
     let json = JSON.stringify(this.criteriaModel);
 
     // debugger;
+
+    console.log(json);
 
     this.serviceProviderService.post('api/Transport/CreateOrder', this.criteriaModel).subscribe(data => {
       this.spinner.hide();
@@ -633,6 +642,7 @@ export class OrderFormComponent implements OnInit {
     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
     this.criteriaModel.OrderDate = moment(this.criteriaModel.OrderDate).format('YYYY-MM-DDT00:00:00');
     this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
+    this.criteriaModel.InvoiceDate =this.formatDate(this.criteriaModel.InvoiceDate);
     this.criteriaModel.UoM = this.criteriaModel.UoM;
     this.criteriaModel.Process = "UPDATE";
 

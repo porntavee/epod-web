@@ -95,7 +95,7 @@ export class ReturnHubComponent  implements OnInit {
           if (dup.length == 0)
           {
             element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
-            element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
+            element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
             this.listModel.push(element);
           }
       
@@ -142,7 +142,7 @@ export class ReturnHubComponent  implements OnInit {
 
   //         model.Data.forEach(element => {
   //           element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
-  //           element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
+  //           element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
   //           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
   //           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
   //           this.listModel.push(element);
@@ -187,7 +187,7 @@ export class ReturnHubComponent  implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');

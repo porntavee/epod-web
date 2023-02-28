@@ -77,7 +77,6 @@ export class OrderApproveComponent implements OnInit {
       "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": this.criteriaModel.transportNo,
       "ShiptoId": this.criteriaModel.shipToId,
-      "InvoiceDate": this.criteriaModel.InvoiceDate,
       "OrderEstimate": this.criteriaModel.apptDate != undefined && this.criteriaModel.apptDate != "Invalid date" ? moment(this.criteriaModel.apptDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
       "DriverId": this.criteriaModel.driverId,
       "TransportStatus": this.criteriaModel.statusCode,
@@ -86,6 +85,7 @@ export class OrderApproveComponent implements OnInit {
       "RouteId": this.criteriaModel.routeId,
       "Process": "APPROVE",
       "TransportDate": this.criteriaModel.TransportDate != undefined && this.criteriaModel.TransportDate != "Invalid date" ? moment(this.criteriaModel.TransportDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "InvoiceDate": this.criteriaModel.InvoiceDate != undefined && this.criteriaModel.InvoiceDate != "Invalid date" ? moment(this.criteriaModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
     }
 
     let json = JSON.stringify(criteria);
@@ -143,7 +143,7 @@ export class OrderApproveComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
@@ -193,6 +193,8 @@ export class OrderApproveComponent implements OnInit {
     }
 
     let json = JSON.stringify(criteria);
+
+    // console.log(json);
 
     this.serviceProviderService.post('api/Transport/ApproveTransport', criteria).subscribe(data => {
       this.spinner.hide();

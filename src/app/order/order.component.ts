@@ -97,7 +97,7 @@ export class OrderComponent implements OnInit {
       if (model.Status) {
 
         model.Data.forEach(element => {
-          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
           element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
           element.OrderDate = moment(element.OrderDate).format('DD-MM-YYYY');
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
@@ -141,6 +141,7 @@ export class OrderComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
