@@ -88,6 +88,7 @@
                             <th>Cus Code</th>
                             <th>Ship To</th>
                             <th>ที่อยู่ผู้รับ</th>
+                            <th>Invoice Date</th>
                             <th>Appt. Date</th>
                             <th>CBM</th>
                             <th>Carton</th>
@@ -173,7 +174,11 @@
                                     {{i.ShiptoAdress}}
                                 </div>
                             </td>
-
+                            <td>
+                                <div class="w100">
+                                    {{i.InvoiceDateStr}}
+                                </div>
+                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.OrderEstimateStr}}

@@ -64,41 +64,105 @@ export class ReturnHubComponent  implements OnInit {
         return;
       }
 
-      this.spinner.show();
-
-      this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
-      this.criteriaModel.Process = 'ADMIN_RETRURNHUB';
-
-      this.serviceProviderService.post('api/Transport/GetTransportDetail', this.criteriaModel).subscribe(data => {
-        this.spinner.hide();
-        let model: any = {};
-        model = data;
-        this.viewModel = model;
-
-        if (model.Status) {
-
-          model.Data.forEach(element => {
-            element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
-            // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-            // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
-            this.listModel.push(element);
-          });
-
-          this.criteriaModel.InvoiceNo = '';
-          this.criteriaModel.TransportNo = '';
-        }
-        else {
-          // this.listModel = [];
-          this.spinner.hide();
-          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        }
-
-      }, err => {
-        this.spinner.hide();
-        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      });
+      this.readTransport(param);
     }
   }
+
+  readTransport(param) {
+
+    if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '') {
+      this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return;
+    }
+
+    this.spinner.show();
+
+    this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+    this.criteriaModel.Process = 'ADMIN_RETRURNHUB';
+
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', this.criteriaModel).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+
+        model.Data.forEach(element => {
+
+          let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
+
+          if (dup.length == 0)
+          {
+            element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
+            element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
+            this.listModel.push(element);
+          }
+      
+        });
+
+      
+        this.criteriaModel.InvoiceNo = '';
+        this.criteriaModel.TransportNo = '';
+      }
+      else {
+        // this.listModel = [];
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+
+  }
+
+  // read(param) {
+
+  //   if (param.key === "Enter") {
+
+  //     if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '') {
+  //       this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  //       return;
+  //     }
+
+  //     this.spinner.show();
+
+  //     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+  //     this.criteriaModel.Process = 'ADMIN_RETRURNHUB';
+
+  //     this.serviceProviderService.post('api/Transport/GetTransportDetail', this.criteriaModel).subscribe(data => {
+  //       this.spinner.hide();
+  //       let model: any = {};
+  //       model = data;
+  //       this.viewModel = model;
+
+  //       if (model.Status) {
+
+  //         model.Data.forEach(element => {
+  //           element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
+  //           element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
+  //           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+  //           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+  //           this.listModel.push(element);
+  //         });
+
+  //         this.criteriaModel.InvoiceNo = '';
+  //         this.criteriaModel.TransportNo = '';
+  //       }
+  //       else {
+  //         // this.listModel = [];
+  //         this.spinner.hide();
+  //         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  //       }
+
+  //     }, err => {
+  //       this.spinner.hide();
+  //       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  //     });
+  //   }
+  // }
 
   readDetail(param) {
     this.spinner.show();
@@ -123,6 +187,7 @@ export class ReturnHubComponent  implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
@@ -269,28 +334,6 @@ export class ReturnHubComponent  implements OnInit {
     return param;
   }
 
-  //use
-  chooseTransportNo() {
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.' } });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-
-      if (result != undefined) {
-        // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.transportNo = result.TransportNo;
-        // this.criteriaModel.shipToCode = result.Code;
-        // this.criteriaModel.shipToAddress = result.Address;
-        // this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
-      }
-    });
-  }
 
   //use
   chooseShipTo() {
@@ -469,6 +512,24 @@ export class ReturnHubComponent  implements OnInit {
       }
     });
   }
+
+      chooseTransportNo() {
+      //ต้องเอาไปใส่ใน app.module ที่ declarations
+      const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.', Process:'ADMIN_RETRURNHUB' } });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+  
+        if (result != undefined) {
+          this.criteriaModel.PopupTransportNo= result.TransportNo; 
+          this.criteriaModel.TransportNo = result.TransportNo;
+          this.readTransport(this.criteriaModel);
+        }
+        else{
+          this.criteriaModel.TransportNo='';
+        }
+      });
+    }
 
   backToMain() {
     this.isMainPage = true;

@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog } from '../dialog/dialog';
+import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, JobStatusDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -117,7 +117,8 @@ export class TrackingStatusComponent implements OnInit {
     }
   ];
   headerModel: any = {};
-  criteriaModel: any = {} //ค้นหา
+  criteriaModel: any = {}; //ค้นหา
+  criteriaModelStatus:any={};
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
@@ -151,8 +152,10 @@ export class TrackingStatusComponent implements OnInit {
   ngOnInit(): void {
     const startDate = new Date();
     const endDate = new Date();
-    this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
-    this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
+    // this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
+    this.criteriaModelStatus.startDate = moment(startDate).format('YYYYMMDD');
+    this.criteriaModelStatus.endDate = moment(endDate).format('YYYYMMDD');
+
     this.readSumStatus();
     this.read();
   }
@@ -164,8 +167,8 @@ export class TrackingStatusComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "BeginDate": this.criteriaModel.startDate != undefined && this.criteriaModel.startDate != "Invalid date" ? moment(this.criteriaModel.startDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "EndDate": this.criteriaModel.endDate != undefined && this.criteriaModel.endDate != "Invalid date" ? moment(this.criteriaModel.endDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "InvoiceDateStart": this.criteriaModelStatus.startDate != undefined && this.criteriaModelStatus.startDate != "Invalid date" ? moment(this.criteriaModelStatus.startDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "InvoiceDateEnd": this.criteriaModelStatus.endDate != undefined && this.criteriaModelStatus.endDate != "Invalid date" ? moment(this.criteriaModelStatus.endDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
 
     }
 
@@ -205,17 +208,17 @@ export class TrackingStatusComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.criteriaModel.transportNo,
-      "ShiptoId": this.criteriaModel.shipToId,
-      "RouteId": this.criteriaModel.routeDescription,
-      "OrderEstimate":  this.criteriaModel.apptDate != undefined &&  this.criteriaModel.apptDate != "Invalid date" ? moment( this.criteriaModel.apptDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "VehicleNo": this.criteriaModel.vehicleId,
-      "DriverId": this.criteriaModel.driverId,
-      "OrderStatus": this.criteriaModel.statusCode,
-      "OrderTypeId": this.criteriaModel.typeOfWorkCode,
+      "TransportNo": this.criteriaModel.transportNo != undefined ? this.criteriaModel.transportNo : '',
+      "TransportStatus": this.criteriaModel.transportstatusCode != undefined ?this.criteriaModel.transportstatusCode : '',
+      "OrderStatus": this.criteriaModel.orderstatusCode != undefined ? this.criteriaModel.orderstatusCode : '',
+      "OrderTypeId": this.criteriaModel.typeOfWorkCode != undefined ? this.criteriaModel.typeOfWorkCode : '',
+      "InvoiceDateStart": this.criteriaModelStatus.startDate != undefined && this.criteriaModelStatus.startDate != "Invalid date" ? moment(this.criteriaModelStatus.startDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "InvoiceDateEnd": this.criteriaModelStatus.endDate != undefined && this.criteriaModelStatus.endDate != "Invalid date" ? moment(this.criteriaModelStatus.endDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
     }
 
     let json = JSON.stringify(criteria);
+
+    console.log(json);
 
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
       this.spinner.hide();
@@ -226,6 +229,7 @@ export class TrackingStatusComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
@@ -277,6 +281,7 @@ export class TrackingStatusComponent implements OnInit {
         this.headerModel = model.Data[0];
 
         this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
+        this.headerModel.InvoiceDate = moment(model.Data[0].InvoiceDate).format('DD-MM-YYYY');
         this.headerModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
         this.headerModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;
 
@@ -491,8 +496,8 @@ export class TrackingStatusComponent implements OnInit {
 
       if (result != undefined) {
         // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.statusCode = result.Code;
-        this.criteriaModel.statusDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.transportstatusCode = result.Code;
+        this.criteriaModel.transportstatusDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -501,6 +506,26 @@ export class TrackingStatusComponent implements OnInit {
       }
     });
   }
+
+  // chooseOrderStatus() {
+  //   //ต้องเอาไปใส่ใน app.module ที่ declarations
+  //   const dialogRef = this.dialog.open(TransportStatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะ' } });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(`Dialog result: ${result}`);
+
+  //     if (result != undefined) {
+  //       // this.criteriaModel.transportTypeId = result.Id;
+  //       this.criteriaModel.orderstatusCode = result.Code;
+  //       this.criteriaModel.orderstatusDescription = result.Code + ' - ' + result.Description;
+  //       // param.Code = result.Code;
+  //       // param.FirstName = result.firstName;
+  //       // param.LastName = result.lastName;
+  //       // param.UserID = result.empID;
+  //       // this.costCenter = result.CostCenter;
+  //     }
+  //   });
+  // }
 
   //use
   chooseTypeOfWork() {
@@ -713,6 +738,11 @@ export class TrackingStatusComponent implements OnInit {
 
   clear() {
     this.criteriaModel = { apptDate: '' };
+
+    // const startDate = new Date();
+    // const endDate = new Date();
+    // this.criteriaModel.startDate = moment(startDate).format('YYYYMMDD');
+    // this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
   }
 
   statusTransportColor(param) {
@@ -738,4 +768,33 @@ export class TrackingStatusComponent implements OnInit {
     }
 
   }
+
+  statusOrderColor(param) {
+    switch (param) {
+      case 'C':
+        return '#E16E5B'
+      case 'D':
+        return '#F7E884'
+      case 'L':
+        return '#F7E884'
+      case 'O':
+        return '#B6B6B6'
+      case 'P':
+        return '#79D58B'
+      case 'R':
+        return '#79D58B'
+      case 'S':
+        return '#66A5D9'
+      case 'W':
+        return '#B6B6B6'
+      case 'F':
+        return '#EBB146'
+      case 'H':
+        return '#66A5D9'
+      default:
+        break;
+    }
+
+  }
+
 }

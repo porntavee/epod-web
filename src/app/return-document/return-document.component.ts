@@ -64,41 +64,113 @@ export class ReturnDocumentComponent implements OnInit {
         return;
       }
 
-      this.spinner.show();
+      this.readTransport(param);
 
-      this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
-      this.criteriaModel.Process = 'ADMIN_RETRURN';
+      // this.spinner.show();
 
-      this.serviceProviderService.post('api/Transport/GetTransportDetail', this.criteriaModel).subscribe(data => {
-        this.spinner.hide();
-        let model: any = {};
-        model = data;
-        this.viewModel = model;
+      // this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+      // this.criteriaModel.Process = 'ADMIN_RETRURN';
 
-        if (model.Status) {
+      // this.serviceProviderService.post('api/Transport/GetTransportDetail', this.criteriaModel).subscribe(data => {
+      //   this.spinner.hide();
+      //   let model: any = {};
+      //   model = data;
+      //   this.viewModel = model;
 
-          model.Data.forEach(element => {
-            element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
-            // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-            // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
-            this.listModel.push(element);
-          });
+      //   if (model.Status) {
 
-          this.criteriaModel.InvoiceNo = '';
-          this.criteriaModel.TransportNo = '';
-        }
-        else {
-          // this.listModel = [];
-          this.spinner.hide();
-          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        }
+      //     model.Data.forEach(element => {
+      //       element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
+      //       // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+      //       // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+      //       this.listModel.push(element);
+      //     });
 
-      }, err => {
-        this.spinner.hide();
-        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      });
+      //     this.criteriaModel.InvoiceNo = '';
+      //     this.criteriaModel.TransportNo = '';
+      //   }
+      //   else {
+      //     // this.listModel = [];
+      //     this.spinner.hide();
+      //     this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      //   }
+
+      // }, err => {
+      //   this.spinner.hide();
+      //   this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      // });
+
     }
   }
+
+  readTransport(param) {
+
+    if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '') {
+      this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return;
+    }
+
+    this.spinner.show();
+
+    this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+    this.criteriaModel.Process = 'ADMIN_RETRURN';
+
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', this.criteriaModel).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+
+        model.Data.forEach(element => {
+
+          let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
+
+          if (dup.length == 0)
+          {
+            element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
+            element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
+            this.listModel.push(element);
+          }
+      
+        });
+
+      
+        this.criteriaModel.InvoiceNo = '';
+        this.criteriaModel.TransportNo = '';
+      }
+      else {
+        // this.listModel = [];
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+
+  }
+
+    //use
+    chooseTransportNo() {
+      //ต้องเอาไปใส่ใน app.module ที่ declarations
+      const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.', Process:'ADMIN_RETRURN' } });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+  
+        if (result != undefined) {
+          this.criteriaModel.PopupTransportNo= result.TransportNo; 
+          this.criteriaModel.TransportNo = result.TransportNo;
+          this.readTransport(this.criteriaModel);
+        }
+        else{
+          this.criteriaModel.TransportNo='';
+        }
+      });
+    }
 
   readDetail(param) {
 
@@ -122,6 +194,7 @@ export class ReturnDocumentComponent implements OnInit {
 
         model.Data.forEach(element => {
           element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
         });
 
         this.listDetailModel = model.Data;
@@ -265,23 +338,6 @@ export class ReturnDocumentComponent implements OnInit {
     return param;
   }
 
-  //use
-  chooseTransportNo() {
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.', Process:'ADMIN_RETRURN' } });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-
-      if (result != undefined) {
-        this.criteriaModel.TransportNo = result.TransportNo;
-        this.readDetail(this.criteriaModel);
-      }
-      else{
-        this.criteriaModel.TransportNo='';
-      }
-    });
-  }
 
   //use
   chooseShipTo() {
