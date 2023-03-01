@@ -618,20 +618,53 @@ export class OrderComponent implements OnInit {
       }
       else {
 
+        this.spinner.show();
 
 
-        // this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+        this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
         // this.criteriaModel.OrderDate = moment(this.criteriaModel.OrderDate).format('YYYY-MM-DDT00:00:00');
         // this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
         // this.criteriaModel.UoM = this.criteriaModel.UoM;
         // this.criteriaModel.Process = "CREATE";
 
-        debugger
-        const [day, month, year] = result[0].IssueDate.split('/');
-        const date = new Date(+year, +month - 1, +day);
-        console.log(moment(date).format('YYYY-MM-DDT00:00:00'));
-        console.log(moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DDT00:00:00'));
+        // const [day, month, year] = result[0].IssueDate.split('/');
+        // const date = new Date(+year, +month - 1, +day);
+        // console.log(moment(date).format('YYYY-MM-DDT00:00:00'));
+        // console.log(moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DDT00:00:00'));
 
+        let model: any = [];
+        result.forEach(element => {
+
+          const [day, month, year] = element.IssueDate.split('/');
+          const date = new Date(+year, +month - 1, +day);
+          // console.log(moment(date).format('YYYY-MM-DDT00:00:00'));
+          // console.log(moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DDT00:00:00'));
+
+          model.push({
+            "OrderDate": moment(date).format('YYYY-MM-DDT00:00:00'),
+            "OrderEstimate": moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DDT00:00:00'),
+            "InvoiceNo": element.InvoiceNo,
+            "Comment": element.Remark,
+            "ReferenceNo": element.ReferenceNo,
+            "OrderTypeDescription": "",
+            "PurchaseNo": element.PONo,
+            "CBM": element.CBM,
+            "OwnerDescription": "",
+            "Qty": element.Carton,
+            "ShiptoDescription": "",
+            "Weight": element.Weight,
+            "ShiptoAddress": "",
+            "Route": element.Route,
+            "SubRoute": element.SubRoute,
+            "OrderTypeId": element.TypeOfWork,
+            "OwnerId": element.SenderCode,
+            "ShiptoId": "",
+            "ShiptoCode": element.RecipientCode,
+            "ShiptoMobile": "",
+          })
+        });
+
+        this.criteriaModel.TTRANSPORTDLIST = model;
         // this.criteriaModel = {
         //   "OrderDate": moment(result.IssueDate).format('YYYY-MM-DDT00:00:00'),
         //   "OrderEstimate": moment(this.criteriaModel.IssueDate.setDate(this.criteriaModel.IssueDate.getDate() + 1)).format('YYYY-MM-DDT00:00:00'),
@@ -664,34 +697,35 @@ export class OrderComponent implements OnInit {
         // }
 
 
-        // let json = JSON.stringify(this.criteriaModel);
+        let json = JSON.stringify(this.criteriaModel);
 
-        // // debugger;
+        debugger;
 
-        // this.serviceProviderService.post('api/Transport/CreateOrder', this.criteriaModel).subscribe(data => {
-        //   this.spinner.hide();
-        //   let model: any = {};
-        //   model = data;
-        //   this.viewModel = model;
+        this.serviceProviderService.post('api/Transport/CreateOrders', this.criteriaModel).subscribe(data => {
+          debugger
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
+          this.viewModel = model;
 
-        //   if (model.Status) {
-        //     this.criteriaModel.OrderNo = model.Data;
-        //     this.toastr.success("บันทึกข้อมูลเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        //     this.id = this.criteriaModel.OrderNo;
-        //     this.ngOnInit();
-        //     // window.self.close(); 
-        //     // this.listModel = model.Data;
-        //   }
-        //   else {
-        //     // this.listModel = [];
-        //     this.spinner.hide();
-        //     this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        //   }
+          if (model.Status) {
+            this.criteriaModel.OrderNo = model.Data;
+            this.toastr.success("บันทึกข้อมูลเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            // this.id = this.criteriaModel.OrderNo;
+            // this.ngOnInit();
+            // window.self.close(); 
+            // this.listModel = model.Data;
+          }
+          else {
+            // this.listModel = [];
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
 
-        // }, err => {
-        //   this.spinner.hide();
-        //   this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        // });
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
       }
     });
   }

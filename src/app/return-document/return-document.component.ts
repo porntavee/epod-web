@@ -110,8 +110,6 @@ export class ReturnDocumentComponent implements OnInit {
       "TransportNo": param.TransportNo
     }
 
-    debugger
-
     this.headerModel = param;
     let json = JSON.stringify(criteria);
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
