@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, JobStatusDialog } from '../dialog/dialog';
+import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, JobStatusDialog, JobOrderStatusDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -210,7 +210,7 @@ export class TrackingStatusComponent implements OnInit {
       "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": this.criteriaModel.transportNo != undefined ? this.criteriaModel.transportNo : '',
       "TransportStatus": this.criteriaModel.transportstatusCode != undefined ?this.criteriaModel.transportstatusCode : '',
-      "OrderStatus": this.criteriaModel.orderstatusCode != undefined ? this.criteriaModel.orderstatusCode : '',
+      "OrderStatus": this.criteriaModel.joborderstatusCode != undefined ? this.criteriaModel.joborderstatusCode : '',
       "OrderTypeId": this.criteriaModel.typeOfWorkCode != undefined ? this.criteriaModel.typeOfWorkCode : '',
       "InvoiceDateStart": this.criteriaModelStatus.startDate != undefined && this.criteriaModelStatus.startDate != "Invalid date" ? moment(this.criteriaModelStatus.startDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
       "InvoiceDateEnd": this.criteriaModelStatus.endDate != undefined && this.criteriaModelStatus.endDate != "Invalid date" ? moment(this.criteriaModelStatus.endDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
@@ -503,25 +503,25 @@ export class TrackingStatusComponent implements OnInit {
     });
   }
 
-  // chooseOrderStatus() {
-  //   //ต้องเอาไปใส่ใน app.module ที่ declarations
-  //   const dialogRef = this.dialog.open(TransportStatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะ' } });
+  chooseJobOrderStatus() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(JobOrderStatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะ' } });
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
 
-  //     if (result != undefined) {
-  //       // this.criteriaModel.transportTypeId = result.Id;
-  //       this.criteriaModel.orderstatusCode = result.Code;
-  //       this.criteriaModel.orderstatusDescription = result.Code + ' - ' + result.Description;
-  //       // param.Code = result.Code;
-  //       // param.FirstName = result.firstName;
-  //       // param.LastName = result.lastName;
-  //       // param.UserID = result.empID;
-  //       // this.costCenter = result.CostCenter;
-  //     }
-  //   });
-  // }
+      if (result != undefined) {
+        // this.criteriaModel.transportTypeId = result.Id;
+        this.criteriaModel.joborderstatusCode = result.Code;
+        this.criteriaModel.joborderstatusDescription = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
 
   //use
   chooseTypeOfWork() {

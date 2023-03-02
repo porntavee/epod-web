@@ -196,11 +196,11 @@
                     <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
                 </div>
             </div>
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col l3 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.orderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.orderstatusDescription" [readonly]="true" (click)="chooseOrderStatus()"></citxt>
+                    <citxt (cModel)="criteriaModel.joborderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.joborderstatusDescription" [readonly]="true" (click)="chooseJobOrderStatus()"></citxt>
                 </div>
-            </div> -->
+            </div>
             <div class="row">
                 <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
                 <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
@@ -239,9 +239,9 @@
                     <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
                 </div>
 
-                <!-- <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.orderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.orderstatusDescription" [readonly]="true" (click)="chooseOrderStatus()"></citxt>
-                </div> -->
+                <div class="col s12" style="margin-top: -10px;">
+                    <citxt (cModel)="criteriaModel.joborderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.joborderstatusDescription" [readonly]="true" (click)="chooseJobOrderStatus()"></citxt>
+                </div>
 
                 <div class="col s12 p-0" style="margin-bottom: 5px;">
                     <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>

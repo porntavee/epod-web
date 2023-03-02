@@ -829,7 +829,6 @@ export class JobStatusDialog {
     }
 }
 
-
 @Component({
     selector: 'docreturn-dialog',
     templateUrl: 'docreturn-dialog.html',
@@ -930,5 +929,53 @@ export class UploadOrderDialog {
         reader.readAsBinaryString(file);
     }
 }
+
+@Component({
+    selector: 'joborder-status-dialog',
+    templateUrl: 'joborder-status-dialog.html',
+})
+export class JobOrderStatusDialog {
+    constructor(
+        public dialogRef: MatDialogRef<JobOrderStatusDialog>,
+        private serviceProviderService: ServiceProviderService,
+        private toastr: ToastrService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.read();
+    }
+
+    criteriaModel: any = {};
+
+    read() {
+        let criteria = {
+            "userinformation": this.serviceProviderService.userinformation,
+            "Fillter": this.criteriaModel.Fillter
+        }
+
+        // let json = JSON.stringify(criteria);
+        this.serviceProviderService.post('api/Masters/GetJobOrderStatus', criteria).subscribe(data => {
+            let model: any = {};
+            model = data;
+
+            if (model.Status) {
+                this.data.listData = model.Data;
+            }
+            else {
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+        }, err => {
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+    }
+
+    cancel() {
+        this.dialogRef.close(undefined);
+    }
+
+    ok(param) {
+        this.dialogRef.close(param);
+    }
+}
+
+
 
 
