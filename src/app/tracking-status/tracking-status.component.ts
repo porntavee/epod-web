@@ -156,8 +156,9 @@ export class TrackingStatusComponent implements OnInit {
     this.criteriaModelStatus.startDate = moment(startDate).format('YYYYMMDD');
     this.criteriaModelStatus.endDate = moment(endDate).format('YYYYMMDD');
 
-    this.readSumStatus();
-    this.read();
+    this.readAll();
+    // this.readSumStatus();
+    // this.read();
   }
 
 
@@ -254,6 +255,11 @@ export class TrackingStatusComponent implements OnInit {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
+  }
+
+  readAll(){
+    this.readSumStatus();
+    this.read();
   }
 
   readDetail(param) {
