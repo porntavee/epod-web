@@ -308,7 +308,8 @@ export class TrackingStatusComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": param.TransportNo
+      "TransportNo": param.TransportNo,
+      "OrderNo": param.OrderNo
     }
 
     // this.headerModel = param;
@@ -317,7 +318,7 @@ export class TrackingStatusComponent implements OnInit {
 
     let json = JSON.stringify(criteria);
     this.isDelivery = false;
-    this.serviceProviderService.post('api/Transport/GetTransportStatus', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Transport/GetTransportOrderStatus', criteria).subscribe(data => {
       // this.spinner.hide();
       let model: any = {};
       model = data;
