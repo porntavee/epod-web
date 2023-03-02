@@ -355,6 +355,10 @@ export class TrackingStatusComponent implements OnInit {
     });
   }
 
+  formatDateTime(param) {
+    return moment(param).format('DD/MM/YYYY HH:mm:ss');
+  }
+
   confirm() {
     this.spinner.show();
 
