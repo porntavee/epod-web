@@ -283,6 +283,7 @@
                             </th> -->
                             <!-- <th></th> -->
                             <th>Shipment No.</th>
+                            <th>ใบคุมรถ</th>
                             <th>เลขที่อินวอยน์</th>
                             <th>สถานะใบคุม</th>
                             <th>สถานะงานขนส่ง</th>
@@ -339,6 +340,11 @@
                             <td>
                                 <div class="w100">
                                     <a style="cursor: pointer;" (click)="readDetail(i)">{{i.ShipmentNo}}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a>
                                 </div>
                             </td>
                             <td>
