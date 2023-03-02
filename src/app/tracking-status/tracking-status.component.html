@@ -238,7 +238,7 @@
                 <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
                 </div>
-              
+
                 <!-- <div class="col s12" style="margin-top: -10px;">
                     <citxt (cModel)="criteriaModel.orderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.orderstatusDescription" [readonly]="true" (click)="chooseOrderStatus()"></citxt>
                 </div> -->
@@ -297,7 +297,7 @@
                             <th>CBM</th>
                             <th>Carton</th>
                             <th>Weight(kg.)</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
@@ -348,15 +348,15 @@
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
                                 <div class="w100" style="background-color: {{statusTransportColor(i.TransportStatus)}}; height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}    
+                                    {{i.TransportStatusDesc}}
                                 </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
                                 <div class="w100" style="background-color: {{statusOrderColor(i.OrderStatus)}}; height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}    
+                                    {{i.OrderStatusDesc}}
                                 </div>
                             </td>
-                          
+
                             <td>
                                 <div class="w100">
                                     {{i.OrderType}}
@@ -412,7 +412,7 @@
                                     {{i.Weight}}
                                 </div>
                             </td>
-  
+
                         </tr>
                     </tbody>
                 </table>

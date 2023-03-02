@@ -245,7 +245,7 @@ export class TrackingStatusComponent implements OnInit {
         this.viewModel2 = model.Data;
       }
       else {
-        this.listModel = [];
+        this.viewModel2 = [];
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
@@ -304,7 +304,6 @@ export class TrackingStatusComponent implements OnInit {
   }
 
   readTimeline(param) {
-    // debugger
     // this.spinner.show();
 
     let criteria = {
@@ -323,8 +322,6 @@ export class TrackingStatusComponent implements OnInit {
       let model: any = {};
       model = data;
       // this.viewModel = model;
-
-      // debugger
 
       if (model.Status) {
         this.timelineModel = model.Data[0];
@@ -419,7 +416,6 @@ export class TrackingStatusComponent implements OnInit {
           if (model.Status) {
             this.spinner.hide();
             this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            debugger
             this.backToMain();
           }
           else {

@@ -282,6 +282,7 @@ export class StatusDialog {
 
         // let json = JSON.stringify(criteria);
         this.serviceProviderService.post('api/Masters/GetTransportStatus', criteria).subscribe(data => {
+
             let model: any = {};
             model = data;
 
