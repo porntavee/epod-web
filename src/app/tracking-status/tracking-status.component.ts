@@ -228,7 +228,7 @@ export class TrackingStatusComponent implements OnInit {
       if (model.Status) {
 
         model.Data.forEach(element => {
-          element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
+          element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
           element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
