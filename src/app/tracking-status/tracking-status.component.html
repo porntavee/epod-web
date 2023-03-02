@@ -21,7 +21,7 @@
                     <h1>&nbsp;</h1>
                 </div>
                 <div class="col l3 s12">
-                    <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="readSumStatus()"></cbtn>
+                    <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="readAll()"></cbtn>
                 </div>
             </div>
             <div class="row">
@@ -196,11 +196,11 @@
                     <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
                 </div>
             </div>
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col l3 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.orderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.orderstatusDescription" [readonly]="true" (click)="chooseOrderStatus()"></citxt>
+                    <citxt (cModel)="criteriaModel.joborderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.joborderstatusDescription" [readonly]="true" (click)="chooseJobOrderStatus()"></citxt>
                 </div>
-            </div> -->
+            </div>
             <div class="row">
                 <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
                 <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
@@ -239,9 +239,9 @@
                     <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
                 </div>
 
-                <!-- <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.orderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.orderstatusDescription" [readonly]="true" (click)="chooseOrderStatus()"></citxt>
-                </div> -->
+                <div class="col s12" style="margin-top: -10px;">
+                    <citxt (cModel)="criteriaModel.joborderstatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.joborderstatusDescription" [readonly]="true" (click)="chooseJobOrderStatus()"></citxt>
+                </div>
 
                 <div class="col s12 p-0" style="margin-bottom: 5px;">
                     <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
@@ -283,6 +283,7 @@
                             </th> -->
                             <!-- <th></th> -->
                             <th>Shipment No.</th>
+                            <th>ใบคุมรถ</th>
                             <th>เลขที่อินวอยน์</th>
                             <th>สถานะใบคุม</th>
                             <th>สถานะงานขนส่ง</th>
@@ -343,6 +344,11 @@
                             </td>
                             <td>
                                 <div class="w100">
+                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
                                     {{i.InvoiceNo}}
                                 </div>
                             </td>
@@ -389,12 +395,12 @@
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.InvoiceDate}}
+                                    {{i.InvoiceDateStr}}
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.OrderEstimate}}
+                                    {{i.OrderEstimateStr}}
                                 </div>
                             </td>
                             <td>
