@@ -21,6 +21,9 @@ export class MasterVehicleComponent implements OnInit {
   listDetailModel: any = [];
   headerModel: any = {};
   criteriaModel: any = {} //ค้นหา
+  criteria: object = { 
+    "userinformation": this.serviceProviderService.userinformation
+  };
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
@@ -42,7 +45,6 @@ export class MasterVehicleComponent implements OnInit {
   ngOnInit(): void {
     this.read();
     this.readVehicleType();
-
   }
 
   viewModel: any;
@@ -50,17 +52,16 @@ export class MasterVehicleComponent implements OnInit {
     this.spinner.show();
 
     this.headerModel.Operation = 'SELECT';
+    
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Fillter": this.criteriaModel.Fillter,
     }
+    criteria = {...this.criteria, ...criteria};
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/GetVehicle', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/GetVehicle', criteria)
+    .subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+      let model: any = data;
       this.viewModel = model;
 
       if (model.Status) {
@@ -78,18 +79,24 @@ export class MasterVehicleComponent implements OnInit {
     });
   }
 
+  // Set Header Model.
+  setHeaderModel(model) {
+    // Setting header model.
+    for (const key in model) {
+      this.headerModel[key] = model[key];
+    } 
+  }
+
   //use
   readVehicleType() {
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Code": ""
     }
+    criteria = {...this.criteria, ...criteria};
 
-    // let json = JSON.stringify(criteria);
-    this.serviceProviderService.post('api/Masters/GetVehicleType', criteria).subscribe(data => {
-      let model: any = {};
-      model = data;
-      console.log('model', model);
+    this.serviceProviderService.post('api/Masters/GetVehicleType', criteria)
+    .subscribe(data => {
+      let model: any = data;
       this.viewModel = model;
 
       if (model.Status) {
@@ -109,37 +116,55 @@ export class MasterVehicleComponent implements OnInit {
   //use
   chooseVehicleType() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Truck Type', listData: this.listVehicleType, listDataSearch: this.listVehicleType } });
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false, 
+      height: '400px', 
+      width: '800px', 
+      data: { title: 'Truck Type', 
+        listData: this.listVehicleType, 
+        listDataSearch: this.listVehicleType 
+      } 
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       console.log(result);
 
       if (result != undefined) {
-        this.headerModel.VehicleTypeId = result.Id;
-        this.headerModel.VehicleTypeCode = result.Code;
-        this.headerModel.VehicleTypeDescription = result.Description;
+         // Declare setting local criteria model.
+         let _criteriaModel = {
+          vehicleTypeId: result.TypeId,
+          VehicleTypeCode: result.Code,
+          VehicleTypeDescription: result.Description,
+        }
+        // Setting header model.
+        this.setHeaderModel(_criteriaModel);
       }
     });
   }
     //use
     chooseVehicle() {
       //ต้องเอาไปใส่ใน app.module ที่ declarations
-      const dialogRef = this.dialog.open(VehicleDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'ทะเบียนรถ' } });
+      const dialogRef = this.dialog.open(VehicleDialog, {
+        disableClose: false,
+        height: '400px',
+        width: '800px',
+        data: { title: 'ทะเบียนรถ' } 
+      });
   
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
   
         if (result != undefined) {
-          this.criteriaModel.vehicleId = result.Id;
-          this.criteriaModel.vehicleCode = result.Code;
-          this.criteriaModel.vehicleTypeId = result.TypeId;
-          this.criteriaModel.vehicleDescription = result.Code + ' - ' + result.Description;
-          // param.Code = result.Code;
-          // param.FirstName = result.firstName;
-          // param.LastName = result.lastName;
-          // param.UserID = result.empID;
-          // this.costCenter = result.CostCenter;
+          // Declare setting local criteria model.
+          let _criteriaModel = {
+            vehicleId: result.Id,
+            vehicleCode: result.Code,
+            vehicleTypeId: result.TypeId,
+            vehicleDescription: result.Code + ' - ' + result.Description,
+          }
+          // Setting header model.
+          this.setHeaderModel(_criteriaModel);
         }
       });
     }
@@ -148,9 +173,9 @@ export class MasterVehicleComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Id": param.Id
     }
+    criteria = {...this.criteria, ...criteria};
 
     this.headerModel = param;
     this.headerModel.Operation = 'UPDATE';
@@ -166,16 +191,20 @@ export class MasterVehicleComponent implements OnInit {
 
   add() {
     this.spinner.show();
-    this.headerModel.Operation = 'INSERT';
-    this.headerModel.Id = 'Auto';
-    this.headerModel.Code = '';
-    this.headerModel.Description = '';
-    this.headerModel.Active = 'Y';
 
-    this.headerModel.VehicleTypeId = '';
-    this.headerModel.VehicleTypeCode ='';
-    this.headerModel.VehicleTypeDescription = '';
-    
+    // Declare setting local header model.
+    let _headerModel = {
+      Operation: 'INSERT',
+      Id : 'Auto',
+      Code : '',
+      Description : '',
+      Active : 'Y',
+      VehicleTypeId : '',
+      VehicleTypeCode : '',
+      VehicleTypeDescription : '',
+    }
+   // Setting header model.
+   this.setHeaderModel(_headerModel);
 
     this.isMainPage = false;
     this.isFormPage = true;
@@ -193,7 +222,6 @@ export class MasterVehicleComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Operation": this.headerModel.Operation,
       "Id": this.headerModel.Id,
       "VehicleTypeId": this.headerModel.VehicleTypeId,
@@ -201,13 +229,12 @@ export class MasterVehicleComponent implements OnInit {
       "Description": this.headerModel.Description,
       "Active": this.headerModel.Active,
     }
+    criteria = {...this.criteria, ...criteria};
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/SaveVehicle', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/SaveVehicle', criteria)
+    .subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+      let model: any = data;
       console.log(data);
       if (model.Status) {
         this.spinner.hide();
@@ -228,40 +255,39 @@ export class MasterVehicleComponent implements OnInit {
   delete(param) {
 
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'} });
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      disableClose: false,
+      height: '150px',
+      width: '300px',
+      data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'} 
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (result) {
-         this.spinner.show();
+        this.spinner.show();
 
-         this.headerModel.Operation = 'DELETE';
+        this.headerModel.Operation = 'DELETE';
         let criteria = {
-          "userinformation": this.serviceProviderService.userinformation,
           "Operation": this.headerModel.Operation,
           "Id": param.Id ,
         }
+        criteria = {...this.criteria, ...criteria};
 
-        let json = JSON.stringify(criteria);
-
-        this.serviceProviderService.post('api/Masters/SaveVehicle', criteria).subscribe(data => {
+        this.serviceProviderService.post('api/Masters/SaveVehicle', criteria)
+        .subscribe(data => {
           this.spinner.hide();
-          let model: any = {};
-          model = data;
+          let model: any = data;
           this.viewModel = model;
 
           if (model.Status) {
-            this.spinner.hide();
             this.toastr.success('เสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            // debugger
             this.back();
           }
           else {
-            this.spinner.hide();
             this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
           }
-
         }, err => {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });

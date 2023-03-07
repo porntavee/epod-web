@@ -1,0 +1,48 @@
+/* OHM css Clean code. */
+.card-panel-header, .table-panel-header  {
+    padding: 2px !important;
+    margin-bottom: 0px !important;
+    background-color:lavender !important;
+    vertical-align: text-top !important;
+}
+
+.card-panel-header-label, .table-panel-header-lebel {
+    position: relative !important;
+    float: left !important; 
+    font-size: 1em !important;
+    font-weight: 800;
+    color: #6B6F82 !important;
+    padding-left: 20px !important;
+    padding-top: 10px !important;
+    margin-bottom: 5px !important;
+}
+
+.table-overflow-x {
+    overflow-x: auto !important;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.reset-margin-top {
+    margin-top: 0px !important;
+}
+
+.margin-top-10 {
+    margin-top: 10px !important;
+}
+.margin-top-mminus-20 {
+    margin-top: -20px !important;
+}
+
+.button-position {
+    float: right !important;
+}
+.min-width-100 {
+    min-width: 100px !important;
+}
+
+.min-width-150 {
+    min-width: 122px !important;
+}

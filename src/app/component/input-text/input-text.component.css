@@ -1,0 +1,13 @@
+.input-label {
+    padding: 15px 0px 0px !important;
+}
+
+.input-not-readonly {
+    height: 20px !important;
+}
+
+.input-readonly {
+    height: 20px !important; 
+    background-color:rgb(200, 200, 200) !important; 
+    color: black !important;
+}
