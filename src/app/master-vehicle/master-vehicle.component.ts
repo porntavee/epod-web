@@ -157,6 +157,7 @@ export class MasterVehicleComponent implements OnInit {
 
   clear() {
     this.criteriaModel = {};
+    this.read();
   }
 
   add() {
@@ -262,7 +263,8 @@ export class MasterVehicleComponent implements OnInit {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
-
+        
+      this.clear();
       this.read();
       }
     });
