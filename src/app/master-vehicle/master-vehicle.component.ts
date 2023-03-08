@@ -23,7 +23,7 @@ export class MasterVehicleComponent implements OnInit {
   criteriaModel: any = {} //ค้นหา
   criteria: object = { 
     "userinformation": this.serviceProviderService.userinformation
-  };
+  }; // User information
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
@@ -52,7 +52,6 @@ export class MasterVehicleComponent implements OnInit {
     this.spinner.show();
 
     this.headerModel.Operation = 'SELECT';
-    
     let criteria = {
       "Fillter": this.criteriaModel.Fillter,
     }
@@ -79,12 +78,12 @@ export class MasterVehicleComponent implements OnInit {
     });
   }
 
-  // Set Header Model.
+  // Set Header Model By Ohm.
   setHeaderModel(model) {
     // Setting header model.
     for (const key in model) {
       this.headerModel[key] = model[key];
-    } 
+    }
   }
 
   //use
@@ -127,13 +126,10 @@ export class MasterVehicleComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      console.log(result);
-
       if (result != undefined) {
          // Declare setting local criteria model.
          let _criteriaModel = {
-          vehicleTypeId: result.TypeId,
+          VehicleTypeId: result.Id,
           VehicleTypeCode: result.Code,
           VehicleTypeDescription: result.Description,
         }
@@ -142,32 +138,6 @@ export class MasterVehicleComponent implements OnInit {
       }
     });
   }
-    //use
-    chooseVehicle() {
-      //ต้องเอาไปใส่ใน app.module ที่ declarations
-      const dialogRef = this.dialog.open(VehicleDialog, {
-        disableClose: false,
-        height: '400px',
-        width: '800px',
-        data: { title: 'ทะเบียนรถ' } 
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-  
-        if (result != undefined) {
-          // Declare setting local criteria model.
-          let _criteriaModel = {
-            vehicleId: result.Id,
-            vehicleCode: result.Code,
-            vehicleTypeId: result.TypeId,
-            vehicleDescription: result.Code + ' - ' + result.Description,
-          }
-          // Setting header model.
-          this.setHeaderModel(_criteriaModel);
-        }
-      });
-    }
 
   readDetail(param) {
     this.spinner.show();
