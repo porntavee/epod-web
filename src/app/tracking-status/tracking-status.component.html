@@ -756,17 +756,21 @@
             </div>
             <br>
             <div class="row">
-                <div class="col l8 s12">
+                <div class="col l12 s12">
                     <div style="overflow-x: auto;">
                         <table id="users-list-datatable" class="bordered centered striped">
                             <thead>
                                 <tr>
                                     <th>ลำดับ</th>
-                                    <th>Location/Customer Name.</th>
-                                    <th>Type of work</th>
-                                    <th>Plan In</th>
-                                    <th>Actual In</th>
+                                    <th>SO No.</th>
+                                    <th>Doc. Type</th>
+                                    <th>Invoice No.</th>
+                                    <th>Invoice Date</th>
+                                    <th>Customer Name/ShipTo</th>
+                                    <th>App Date</th>
+                                    <th>Actual Arrive</th>
                                     <th>Status</th>
+                                    <th>Transport By</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -778,27 +782,47 @@
                                     </td>
                                     <td style="cursor: pointer !important;">
                                         <div class="w100">
-                                            {{i.CustomerName}}
+                                            {{i.OrderNo}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.TypeOfWork}}
+                                            {{i.OrderType}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.PlanIn}}
+                                            {{i.InvoiceNo}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.ActualIn}}
+                                            {{formatDate(i.InvoiceDate)}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.Status}}
+                                            {{i.ShiptoName}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w100">
+                                            {{formatDate(i.OrderEstimate)}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w100">
+                                            <!-- {{formatDateTime(i.OrderDate)}} -->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w100">
+                                            {{i.OrderStatusDesc}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="w100">
+                                            <!-- {{i.OrderStatusDesc}} -->
                                         </div>
                                     </td>
                                 </tr>

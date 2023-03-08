@@ -83,20 +83,20 @@ export class TrackingStatusComponent implements OnInit {
     }
   ]; //ข้อมูลในตารางหน้า Main
   listDetailModel: any = [
-    {
-      CustomerName: "Pick Up order",
-      TypeOfWork: "Normal",
-      PlanIn: "25/9/2022",
-      ActualIn: "25/9/2022",
-      Status: "Complete"
-    },
-    {
-      CustomerName: "Customer1",
-      TypeOfWork: "Service",
-      PlanIn: "25/9/2022",
-      ActualIn: "",
-      Status: "Pending"
-    }
+    // {
+    //   CustomerName: "Pick Up order",
+    //   TypeOfWork: "Normal",
+    //   PlanIn: "25/9/2022",
+    //   ActualIn: "25/9/2022",
+    //   Status: "Complete"
+    // },
+    // {
+    //   CustomerName: "Customer1",
+    //   TypeOfWork: "Service",
+    //   PlanIn: "25/9/2022",
+    //   ActualIn: "",
+    //   Status: "Pending"
+    // }
   ];
 
   listDetailModel2: any = [
@@ -296,7 +296,57 @@ export class TrackingStatusComponent implements OnInit {
         this.isMainPage = false;
         this.isFormPage = true;
 
+        this.readDetailOrder(param);
         this.readTimeline(param);
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+  }
+
+  readDetailOrder(param) {
+    // this.spinner.show();
+
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+      "TransportNo": param.TransportNo
+    }
+
+    // this.headerModel = param;
+    // this.headerModel.DriverFirstName = '';
+    // this.headerModel.DriverFirstName = this.headerModel.DriverFirstName + ' ' + this.headerModel.DriverLastName;
+
+    let json = JSON.stringify(criteria);
+    this.isDelivery = false;
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+      // this.spinner.hide();
+      let model: any = {};
+      model = data;
+      // this.viewModel = model;
+
+      if (model.Status) {
+
+        this.listDetailModel = model.Data;
+        
+        debugger
+        
+        // this.headerModel.InvoiceDate = moment(model.Data[0].InvoiceDate).format('DD-MM-YYYY');
+        // this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
+        // this.headerModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
+        // this.headerModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;
+
+        // this.headerModel = model.Data;
+
+        // this.isMainPage = false;
+        // this.isFormPage = true;
+
+        // this.readTimeline(param);
       }
       else {
         this.spinner.hide();
@@ -357,6 +407,10 @@ export class TrackingStatusComponent implements OnInit {
 
   formatDateTime(param) {
     return moment(param).format('DD/MM/YYYY HH:mm:ss');
+  }
+
+  formatDate(param) {
+    return moment(param).format('DD/MM/YYYY');
   }
 
   confirm() {
