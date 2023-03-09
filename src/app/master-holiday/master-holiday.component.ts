@@ -32,7 +32,7 @@ export class MasterHolidayComponent  implements OnInit {
 
   mode: any = 'create';
 
-  p = 1;
+  currentPage = 1;
 
   listGroupUser: any = [];
 

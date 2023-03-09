@@ -6,22 +6,23 @@
                     ทะเบียน / ทะเบียนรถ
                 </label>
             </div>
-
         </div>
+
         <!-- [hidden]="isAdvanceSearch" -->
         <div class="card-panel hide-on-med-and-down reset-margin-top">
             <div class="row">
                 <div class="col l3 s12 p-0">
                     <citxt 
                         (cModel)="criteriaModel.Fillter = $event" 
-                        [label]="'กรอก (รหัส/รายละเอียด)'"
+                        [label]="'กรอง (รหัส/รายละเอียด)'"
                         [data]="criteriaModel.Fillter">
                     </citxt>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col button-position">
+                <div class="col l8 s12 p-0 margin-bottom-5"></div>
+                <div class="col l4 s12 p-0 text-right margin-bottom-5">
                     <cbtn 
                         [label]="'ล้าง'"
                         [color]="'red'"
@@ -38,9 +39,7 @@
             </div>
         </div>
         <div class="card-panel hide-on-large-only reset-margin-top">
-            <div class="row">
-
-            </div>
+            <div class="row"></div>
         </div>
     </div>
     <div class="col s12">
@@ -138,10 +137,9 @@
                     </label>
                 </div>
             </div>
-
         </div>
-        <div class="card-panel hide-on-med-and-down reset-margin-top">
 
+        <div class="card-panel hide-on-med-and-down reset-margin-top">
             <div class="row">
                 <div class="col l4 s12">
                     <citxt 

@@ -102,7 +102,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
+                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: currentPage }; let idx = index">
                             <td>
                                 <div class="w100">
                                     {{i.StrDate}}
@@ -148,7 +148,7 @@
                 <div class="col s6">
                     <div style="text-align: right;">
                         <pagination-controls
-                            (pageChange)="p = $event"
+                            (pageChange)="currentPage = $event"
                             previousLabel="ก่อนหน้า" 
                             nextLabel="ถัดไป">
                         </pagination-controls>

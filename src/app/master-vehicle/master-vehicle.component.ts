@@ -61,8 +61,8 @@ export class MasterVehicleComponent implements OnInit {
     criteria = {...this.criteria, ...criteria};
 
     if (this.isDebugMode) {
-      Logger.info('master-vehicle.component', 'read', this.criteria)
-      Logger.info('master-vehicle.component', 'read', criteria)
+      Logger.info('master-vehicle', 'read', this.criteria)
+      Logger.info('master-vehicle', 'read', criteria)
     }
     
     this.serviceProviderService.post('api/Masters/GetVehicle', criteria)
@@ -218,7 +218,6 @@ export class MasterVehicleComponent implements OnInit {
     .subscribe(data => {
       this.spinner.hide();
       let model: any = data;
-      console.log(data);
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -246,7 +245,9 @@ export class MasterVehicleComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if (this.isDebugMode) {
+        Logger.info('master-transport', 'delete', result)
+      }
 
       if (result) {
         this.spinner.show();

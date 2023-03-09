@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialog } from '../dialog/dialog';
 import { ServiceProviderService } from '../shared/service-provider.service';
+import { Logger } from '../shared/logger.service';
 
 @Component({
   templateUrl: './master-transport.component.html',
@@ -13,6 +14,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 })
 export class MasterTransportComponent  implements OnInit {
 
+  isDebugMode: boolean = true;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
@@ -31,7 +33,7 @@ export class MasterTransportComponent  implements OnInit {
 
   mode: any = 'create';
 
-  p = 1;
+  currentPage = 1;
 
   listGroupUser: any = [];
 
@@ -47,12 +49,18 @@ export class MasterTransportComponent  implements OnInit {
   viewModel: any;
   read() {
     this.spinner.show();
-
+    // Reset current page to 1 for search.
+    this.currentPage = 1;
     this.headerModel.Operation = 'SELECT';
     let criteria = {
       "Fillter": this.criteriaModel.Fillter,
     }
     criteria = {...this.criteria, ...criteria};
+
+    if (this.isDebugMode) {
+      Logger.info('master-transport', 'read', this.criteria)
+      Logger.info('master-transport', 'read', criteria)
+    }
 
     this.serviceProviderService.post('api/Masters/GetTransport', criteria)
     .subscribe(data => {
@@ -101,6 +109,11 @@ export class MasterTransportComponent  implements OnInit {
 
   clear() {
     this.criteriaModel = {};
+    if (this.isDebugMode) {
+      Logger.info('master-transport', 'clear', this.criteria)
+    }
+      
+    this.read();
   }
 
   add() {
@@ -174,7 +187,9 @@ export class MasterTransportComponent  implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if (this.isDebugMode) {
+        Logger.info('master-transport', 'delete', result)
+      }
 
       if (result) {
          this.spinner.show();
@@ -208,7 +223,8 @@ export class MasterTransportComponent  implements OnInit {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
-
+      
+      this.clear();
       this.read();
       }
     });

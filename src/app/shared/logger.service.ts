@@ -18,7 +18,7 @@ export class Logger {
    */
   public static debug(module: string, method: string, message?: any, devOnly?: boolean) {
     // tslint:disable-next-line
-    console.debug('DEBUG :-) ', this.getMessage(module, method, message, devOnly));
+    console.debug(`DEBUG :-) ${this.getMessage(module, method, message, devOnly)}`);
   }
 
   /**
@@ -28,7 +28,9 @@ export class Logger {
    */
   public static info(module: string, method: string, message?: any, devOnly?: boolean) {
     // tslint:disable-next-line
-    console.info('INFO :-) ', this.getMessage(module, method, message, devOnly));
+    // console.info(`INFO :-) ${this.getMessage(module, method, message, devOnly)}`);
+    console.info(`INFO :-) ${this.getMessage(module, method, message, devOnly)}`);
+    console.info(message);
   }
 
   /**
@@ -37,7 +39,8 @@ export class Logger {
    * @param [devOnly] Only logs in development if true.
    */
   public static warn(module: string, method: string, message?: any, devOnly?: boolean) {
-    console.warn('WARN :-) ', this.getMessage(module, method, message, devOnly));
+    console.warn(`WARN :-) ${this.getMessage(module, method, message, devOnly)}`);
+    console.warn(message);
   }
 
   /**
@@ -46,7 +49,8 @@ export class Logger {
    * @param [devOnly] Only logs in development if true.
    */
   public static error(module: string, method: string, message?: any, devOnly?: boolean) {
-    console.error('ERROR :-) ',this.getMessage(module, method, message, devOnly));
+    console.error(`ERROR :-) ${this.getMessage(module, method, message, devOnly)}`);
+    console.error(message);
   }
 
   /**
@@ -56,7 +60,8 @@ export class Logger {
   public static devOnly(module: string, method: string, message?: any) {
     // if (!environment.production) {
     //   // tslint:disable-next-line
-    console.log('DEVONLY :-) ', this.getMessage(module, method, message));
+    console.log(`DEVONLY :-)  ${this.getMessage(module, method, message)}`);
+    console.log(message)
     // }
   }
 
@@ -67,7 +72,7 @@ export class Logger {
   public static techDebt(module: string, method: string, message?: any) {
 		// if (!environment.production) {
 		// 	// tslint:disable-next-line
-    console.warn(`TECHDEBT: ${this.getMessage(module, method, message, false)}`);
+    console.warn(`TECHDEBT:-) ${this.getMessage(module, method, message, false)}`);
 		// }
 	}
   
