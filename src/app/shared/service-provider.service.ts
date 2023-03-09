@@ -10,7 +10,7 @@ export class ServiceProviderService {
   // ng build --base-href "/epod/" --prod --aot --output-hashing=all
   // ng build --prod --aot --output-hashing=all
 
-  // server: string = 'https://mangcoo.com/sino-api/';
+  // server: string = 'http://202.44.230.195/sino-api/';
   server: string = 'http://202.44.230.195/test-sino-api/';
 
   version: string = '20221102';
