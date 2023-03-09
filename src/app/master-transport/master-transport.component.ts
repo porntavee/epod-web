@@ -8,7 +8,6 @@ import { ConfirmDialog } from '../dialog/dialog';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
 @Component({
-  selector: 'app-master-transport',
   templateUrl: './master-transport.component.html',
   styleUrls: ['./master-transport.component.css']
 })
@@ -21,6 +20,9 @@ export class MasterTransportComponent  implements OnInit {
   listDetailModel: any = [];
   headerModel: any = {};
   criteriaModel: any = {} //ค้นหา
+  criteria: object = { 
+    "userinformation": this.serviceProviderService.userinformation
+  }; // User Information.
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
@@ -40,7 +42,6 @@ export class MasterTransportComponent  implements OnInit {
 
   ngOnInit(): void {
     this.read();
-
   }
 
   viewModel: any;
@@ -49,16 +50,14 @@ export class MasterTransportComponent  implements OnInit {
 
     this.headerModel.Operation = 'SELECT';
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Fillter": this.criteriaModel.Fillter,
     }
+    criteria = {...this.criteria, ...criteria};
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/GetTransport', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/GetTransport', criteria)
+    .subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+      let model: any = data;
       this.viewModel = model;
 
       if (model.Status) {
@@ -76,13 +75,21 @@ export class MasterTransportComponent  implements OnInit {
     });
   }
 
+  // Set Header Model By Ohm.
+  setHeaderModel(model) {
+    // Setting header model.
+    for (const key in model) {
+      this.headerModel[key] = model[key];
+    } 
+  }
+
   readDetail(param) {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Id": param.Id
     }
+    criteria = {...this.criteria, ...criteria};
 
     this.headerModel = param;
     this.headerModel.Operation = 'UPDATE';
@@ -98,12 +105,17 @@ export class MasterTransportComponent  implements OnInit {
 
   add() {
     this.spinner.show();
-    this.headerModel.Operation = 'INSERT';
-    this.headerModel.Id = 'Auto';
-    this.headerModel.Code = '';
-    this.headerModel.Description = '';
-    this.headerModel.Active = 'Y';
 
+    // Declare setting local header model.
+    let _headerModel = {
+      Operation: 'INSERT',
+      Id : 'Auto',
+      Code : '',
+      Description : '',
+      Active: 'Y'
+    }
+   // Setting header model.
+   this.setHeaderModel(_headerModel);
 
     this.isMainPage = false;
     this.isFormPage = true;
@@ -128,10 +140,10 @@ export class MasterTransportComponent  implements OnInit {
       "Description": this.headerModel.Description,
       "Active": this.headerModel.Active,
     }
+    criteria = {...this.criteria, ...criteria};
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/SaveTransport', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/SaveTransport', criteria)
+    .subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
@@ -154,7 +166,12 @@ export class MasterTransportComponent  implements OnInit {
   delete(param) {
 
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'} });
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      disableClose: false,
+      height: '150px',
+      width: '300px',
+      data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'}
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -164,14 +181,13 @@ export class MasterTransportComponent  implements OnInit {
 
          this.headerModel.Operation = 'DELETE';
         let criteria = {
-          "userinformation": this.serviceProviderService.userinformation,
           "Operation": this.headerModel.Operation,
           "Id": param.Id ,
         }
+        criteria = {...this.criteria, ...criteria};
 
-        let json = JSON.stringify(criteria);
-
-        this.serviceProviderService.post('api/Masters/SaveTransport', criteria).subscribe(data => {
+        this.serviceProviderService.post('api/Masters/SaveTransport', criteria)
+        .subscribe(data => {
           this.spinner.hide();
           let model: any = {};
           model = data;

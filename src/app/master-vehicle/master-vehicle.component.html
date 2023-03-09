@@ -15,7 +15,7 @@
                     <citxt 
                         (cModel)="criteriaModel.Fillter = $event" 
                         [label]="'&nbsp;กรอก (รหัส/รายละเอียด)'"
-                        [data]="criteriaModel.Fillter">
+                        [data]="criteriaModel.Fillter | async">
                     </citxt>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                     </thead>
                     <tbody>
                         <tr
-                            *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p }; let idx = index">
+                            *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: currentPage }; let idx = index">
                             <td class="min-width-100">
                                 {{i.Id}}
                             </td>
@@ -115,7 +115,7 @@
                 <div class="col s6">
                     <div class="text-right">
                         <pagination-controls 
-                            (pageChange)="p = $event" 
+                            (pageChange)="currentPage = $event" 
                             previousLabel="ก่อนหน้า"
                             nextLabel="ถัดไป">
                         </pagination-controls>

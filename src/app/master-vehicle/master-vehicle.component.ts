@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialog, RouteDialog,  VehicleDialog } from '../dialog/dialog';
 import { ServiceProviderService } from '../shared/service-provider.service';
+import { Logger } from '../shared/logger.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 })
 export class MasterVehicleComponent implements OnInit {
 
+  isDebugMode: boolean = true;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
@@ -33,7 +35,7 @@ export class MasterVehicleComponent implements OnInit {
 
   mode: any = 'create';
 
-  p = 1;
+  currentPage: number = 1;
 
   listGroupUser: any = [];
 
@@ -50,13 +52,19 @@ export class MasterVehicleComponent implements OnInit {
   viewModel: any;
   read() {
     this.spinner.show();
-
+    // Reset current page to 1 for search.
+    this.currentPage = 1;
     this.headerModel.Operation = 'SELECT';
     let criteria = {
       "Fillter": this.criteriaModel.Fillter,
     }
     criteria = {...this.criteria, ...criteria};
 
+    if (this.isDebugMode) {
+      Logger.info('master-vehicle.component', 'read', this.criteria)
+      Logger.info('master-vehicle.component', 'read', criteria)
+    }
+    
     this.serviceProviderService.post('api/Masters/GetVehicle', criteria)
     .subscribe(data => {
       this.spinner.hide();
@@ -157,6 +165,10 @@ export class MasterVehicleComponent implements OnInit {
 
   clear() {
     this.criteriaModel = {};
+    if (this.isDebugMode) {
+      Logger.info('master-vehicle', 'clear', this.criteria)
+    }
+      
     this.read();
   }
 
@@ -263,7 +275,6 @@ export class MasterVehicleComponent implements OnInit {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
-        
       this.clear();
       this.read();
       }
