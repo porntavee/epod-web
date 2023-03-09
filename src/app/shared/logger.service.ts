@@ -67,7 +67,7 @@ export class Logger {
   public static techDebt(module: string, method: string, message?: any) {
 		// if (!environment.production) {
 		// 	// tslint:disable-next-line
-			console.warn(`TECHDEBT: ${this.getMessage(module, method, message, false)}`);
+    console.warn(`TECHDEBT: ${this.getMessage(module, method, message, false)}`);
 		// }
 	}
   
