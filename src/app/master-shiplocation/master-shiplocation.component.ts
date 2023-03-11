@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { ConfirmDialog ,RoutingDialog, SubRoutingDialog,RegionDialog,ProvinceDialog,DistrictDialog } from '../dialog/dialog';
+import { Logger } from '../shared/logger.service';
 
 @Component({
   selector: 'app-master-shiplocation',
@@ -14,6 +15,7 @@ import { ConfirmDialog ,RoutingDialog, SubRoutingDialog,RegionDialog,ProvinceDia
 })
 export class MasterShiplocationComponent implements OnInit, AfterContentChecked {
 
+  isDebugMode: boolean = true;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
@@ -21,6 +23,9 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
   listDetailModel: any = [];
   headerModel: any = {};
   criteriaModel: any = {} //ค้นหา
+  criteria: object = { 
+    "userinformation": this.serviceProviderService.userinformation
+  }; // User information
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
@@ -39,7 +44,6 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
 
   ngOnInit(): void {
     this.read();
-
   }
 
   viewModel: any;
@@ -281,13 +285,18 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     });
   }
 
+  clearAndReloadData() {
+    // Clear criteriaModel.
+    this.criteriaModel = {};
+    Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
 
-  clear() {
-    this.criteriaModel = { apptDate: '' };
+    // Reload Table data.
+    this.read();
   }
 
   add() {
     this.spinner.show();
+    
     this.headerModel.Operation = 'INSERT';
     this.headerModel.Code = 'Auto';
 
@@ -416,8 +425,8 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
-
-      this.read();
+        // Clear criteriaModel and Reload Table Data.
+        this.clearAndReloadData();
       }
     });
   }

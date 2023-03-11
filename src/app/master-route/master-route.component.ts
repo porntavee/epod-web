@@ -14,6 +14,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 })
 export class MasterRouteComponent implements OnInit, AfterContentChecked {
 
+  isDebugMode: boolean = true;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
@@ -53,8 +54,7 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
       "Fillter": this.criteriaModel.Fillter,
     }
     criteria = {...this.criteria, ...criteria};
-    Logger.info('master-subroute', 'read', this.criteria)
-    Logger.info('master-subroute', 'read', criteria)
+    Logger.info('master-subroute', 'read-criteria', criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Masters/GetRoute', criteria)
     .subscribe(data => {
@@ -124,7 +124,7 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
   clearAndReloadData() {
     // Clear criteriaModel.
     this.criteriaModel = {};
-    Logger.info('master-vehicle', 'clear', this.criteria)
+    Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
 
     // Reload Table data.
     this.read();
@@ -200,7 +200,7 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-route', 'delete', result)
+      Logger.info('master-route', 'delete', result, this.isDebugMode)
 
       if (result) {
          this.spinner.show();

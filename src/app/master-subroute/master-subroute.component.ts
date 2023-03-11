@@ -56,8 +56,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
       "Fillter": this.criteriaModel.Fillter,
     }
     criteria = {...this.criteria, ...criteria};
-    Logger.info('master-subroute', 'read', this.criteria)
-    Logger.info('master-subroute', 'read', criteria)
+    Logger.info('master-subroute', 'read', criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Masters/GetSubRoute', criteria)
     .subscribe(data => {
@@ -140,7 +139,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
   clearAndReloadData() {
     // Clear criteriaModel.
     this.criteriaModel = {};
-    Logger.info('master-vehicle', 'clear', this.criteria)
+    Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
 
     // Reload Table data.
     this.read();
@@ -219,7 +218,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-subroute', 'delete', result)
+      Logger.info('master-subroute', 'delete', result, this.isDebugMode)
 
       if (result) {
          this.spinner.show();
@@ -264,7 +263,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
       data: { title: 'เส้นทางหลัก' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-subroute', 'chooseRoute', result)
+      Logger.info('master-subroute', 'chooseRoute', result, this.isDebugMode)
 
       if (result != undefined) {
         let criterai = {
@@ -294,7 +293,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-subroute', 'chooseRoute2', result)
+      Logger.info('master-subroute', 'chooseRoute2', result, this.isDebugMode)
 
       if (result != undefined) {
         let criterai = {

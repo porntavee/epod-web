@@ -55,10 +55,7 @@ export class MasterZoneregionComponent implements OnInit, AfterContentChecked {
       "Fillter": this.criteriaModel.Fillter,
     }
     criteria = {...this.criteria, ...criteria};
-    if (this.isDebugMode) {
-      Logger.info('master-zoneregion', 'read', this.criteria)
-      Logger.info('master-zoneregion', 'read', criteria)
-    }
+    Logger.info('master-zoneregion', 'read', criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Masters/GetRegion', criteria)
     .subscribe(data => {
@@ -112,12 +109,12 @@ export class MasterZoneregionComponent implements OnInit, AfterContentChecked {
     this.spinner.hide();
   }
 
-  clear() {
+  clearAndReloadData() {
+    // Clear criteriaModel.
     this.criteriaModel = {};
-    if (this.isDebugMode) {
-      Logger.info('master-zoneregion', 'clear', this.criteria)
-    }
-      
+    Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
+
+    // Reload Table data.
     this.read();
   }
 
@@ -190,7 +187,7 @@ export class MasterZoneregionComponent implements OnInit, AfterContentChecked {
 
     dialogRef.afterClosed().subscribe(result => {
       if (this.isDebugMode) {
-        Logger.info('master-zoneregion', 'delete', result)
+        Logger.info('master-zoneregion', 'delete', result, this.isDebugMode)
       }
 
       if (result) {

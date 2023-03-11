@@ -57,12 +57,8 @@ export class MasterTransportComponent  implements OnInit, AfterContentChecked {
       "Fillter": this.criteriaModel.Fillter,
     }
     criteria = {...this.criteria, ...criteria};
-
-    if (this.isDebugMode) {
-      Logger.info('master-transport', 'read', this.criteria)
-      Logger.info('master-transport', 'read', criteria)
-    }
-
+    Logger.info('master-transport', 'read', criteria, this.isDebugMode)
+    
     this.serviceProviderService.post('api/Masters/GetTransport', criteria)
     .subscribe(data => {
       this.spinner.hide();
@@ -115,12 +111,12 @@ export class MasterTransportComponent  implements OnInit, AfterContentChecked {
     this.spinner.hide();
   }
 
-  clear() {
+  clearAndReloadData() {
+    // Clear criteriaModel.
     this.criteriaModel = {};
-    if (this.isDebugMode) {
-      Logger.info('master-transport', 'clear', this.criteria)
-    }
-      
+    Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
+
+    // Reload Table data.
     this.read();
   }
 
@@ -195,9 +191,7 @@ export class MasterTransportComponent  implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (this.isDebugMode) {
-        Logger.info('master-transport', 'delete', result)
-      }
+      Logger.info('master-transport', 'delete', result, this.isDebugMode)
 
       if (result) {
          this.spinner.show();
@@ -232,8 +226,7 @@ export class MasterTransportComponent  implements OnInit, AfterContentChecked {
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
       
-      this.clear();
-      this.read();
+      this.clearAndReloadData();
       }
     });
   }

@@ -16,6 +16,7 @@ import { Logger } from '../shared/logger.service';
 })
 export class MasterUserComponent implements OnInit, AfterContentChecked {
 
+  isDebugMode: boolean = true;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
@@ -62,8 +63,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
       "GroupCode": this.criteriaModel.GroupCode,
     }
     criteria = {...this.criteria, ...criteria};
-    Logger.info('master-user', 'read', this.criteria)
-    Logger.info('master-user', 'read', criteria)
+    Logger.info('master-user', 'read', criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Masters/GetUser', criteria).subscribe(data => {
       this.spinner.hide();
@@ -226,7 +226,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
   clearAndReloadData() {
     // Clear criteriaModel.
     this.criteriaModel = { apptDate: ''};
-    Logger.info('master-vehicle', 'clear', this.criteria)
+    Logger.info('master-vehicle', 'clear', this.criteria, this.isDebugMode)
 
     // Reload Table data.
     this.read();

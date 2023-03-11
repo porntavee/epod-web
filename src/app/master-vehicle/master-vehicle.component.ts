@@ -57,8 +57,7 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
       "Fillter": this.criteriaModel.Fillter,
     }
     criteria = {...this.criteria, ...criteria};
-    Logger.info('master-vehicle', 'read', this.criteria)
-    Logger.info('master-vehicle', 'read', criteria)
+    Logger.info('master-vehicle', 'read', criteria, this.isDebugMode)
     
     this.serviceProviderService.post('api/Masters/GetVehicle', criteria)
     .subscribe(data => {
@@ -179,7 +178,7 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
   clearAndReloadData() {
     // Clear criteriaModel.
     this.criteriaModel = {};
-    Logger.info('master-vehicle', 'clear', this.criteria)
+    Logger.info('master-vehicle', 'clear', this.criteria, this.isDebugMode)
 
     // Reload Table data.
     this.read();
@@ -255,7 +254,7 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-vehicle', 'delete', result)
+      Logger.info('master-vehicle', 'delete', result, this.isDebugMode)
       
       if (result) {
         this.spinner.show();
