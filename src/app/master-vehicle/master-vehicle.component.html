@@ -27,7 +27,7 @@
                         [label]="'ล้าง'"
                         [color]="'red'"
                         [icon]="'clear'"
-                        (click)="clear()">
+                        (click)="clearAndReloadData()">
                     </cbtn>
                     <cbtn 
                         [label]="'ค้นหา'"
@@ -86,7 +86,7 @@
                                     <a class="btn-floating blue cursor-pointer" 
                                         (click)="readDetail(i)">
                                         <i class="medium material-icons">edit</i>
-                                    </a> &nbsp;
+                                    </a>&nbsp;
                                     <a class="btn-floating red cursor-pointer" 
                                         (click)="delete(i)">
                                         <i class="medium material-icons">delete</i>

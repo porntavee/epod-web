@@ -5,8 +5,8 @@ import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialog, RouteDialog,  VehicleDialog } from '../dialog/dialog';
-import { ServiceProviderService } from '../shared/service-provider.service';
 import { Logger } from '../shared/logger.service';
+import { ServiceProviderService } from '../shared/service-provider.service';
 
 
 @Component({
@@ -32,11 +32,8 @@ export class MasterVehicleComponent implements OnInit {
   timeSheetModel: any = {};
   dateControl = new FormControl(moment().format('YYYYMMDD'));
   listVehicleType: any = [];
-
   mode: any = 'create';
-
   currentPage: number = 1;
-
   listGroupUser: any = [];
 
   constructor(public dialog: MatDialog,
@@ -73,8 +70,7 @@ export class MasterVehicleComponent implements OnInit {
 
       if (model.Status) {
         this.listModel = model.Data;
-      }
-      else {
+      } else {
         this.listModel = [];
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -94,6 +90,20 @@ export class MasterVehicleComponent implements OnInit {
     }
   }
 
+  // Set to Form Page By Ohm.
+  setToFromPage() {
+    this.isMainPage = false;
+    this.isFormPage = true;
+    this.spinner.hide();
+  }
+
+  // Set to Form Page By Ohm.
+  setToMainPage() {
+    this.isMainPage = true;
+    this.isFormPage = false;
+    this.spinner.hide();
+  }
+
   //use
   readVehicleType() {
     let criteria = {
@@ -108,8 +118,7 @@ export class MasterVehicleComponent implements OnInit {
 
       if (model.Status) {
         this.listVehicleType = model.Data;
-      }
-      else {
+      } else {
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
@@ -158,17 +167,17 @@ export class MasterVehicleComponent implements OnInit {
     this.headerModel = param;
     this.headerModel.Operation = 'UPDATE';
 
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.spinner.hide();
+    // Set to from page.
+   this.setToFromPage();
   }
 
-  clear() {
+  clearAndReloadData() {
+    // Clear criteriaModel.
     this.criteriaModel = {};
     if (this.isDebugMode) {
       Logger.info('master-vehicle', 'clear', this.criteria)
     }
-      
+    // Reload Table data.
     this.read();
   }
 
@@ -188,10 +197,8 @@ export class MasterVehicleComponent implements OnInit {
     }
    // Setting header model.
    this.setHeaderModel(_headerModel);
-
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.spinner.hide();
+   // Set to from page.
+   this.setToFromPage();
   }
 
   back() {
@@ -217,13 +224,13 @@ export class MasterVehicleComponent implements OnInit {
     this.serviceProviderService.post('api/Masters/SaveVehicle', criteria)
     .subscribe(data => {
       this.spinner.hide();
+
       let model: any = data;
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
         this.back();
-      }
-      else {
+      } else {
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
@@ -235,7 +242,6 @@ export class MasterVehicleComponent implements OnInit {
   }
 
   delete(param) {
-
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(ConfirmDialog, {
       disableClose: false,
@@ -246,7 +252,7 @@ export class MasterVehicleComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (this.isDebugMode) {
-        Logger.info('master-transport', 'delete', result)
+        Logger.info('master-vehicle', 'delete', result)
       }
 
       if (result) {
@@ -262,23 +268,21 @@ export class MasterVehicleComponent implements OnInit {
         this.serviceProviderService.post('api/Masters/SaveVehicle', criteria)
         .subscribe(data => {
           this.spinner.hide();
+
           let model: any = data;
           this.viewModel = model;
-
           if (model.Status) {
             this.toastr.success('เสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
             this.back();
-          }
-          else {
+          } else {
             this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
           }
         }, err => {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
-      
-      this.clear();
-      this.read();
+      // Clear criteriaModel and Reload Table Data.
+      this.clearAndReloadData();
       }
     });
   }

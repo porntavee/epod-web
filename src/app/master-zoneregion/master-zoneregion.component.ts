@@ -5,16 +5,17 @@ import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialog } from '../dialog/dialog';
+import { Logger } from '../shared/logger.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
 
 @Component({
-  selector: 'app-master-zoneregion',
   templateUrl: './master-zoneregion.component.html',
   styleUrls: ['./master-zoneregion.component.css']
 })
 export class MasterZoneregionComponent implements OnInit {
 
+  isDebugMode: boolean = true;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
@@ -22,16 +23,16 @@ export class MasterZoneregionComponent implements OnInit {
   listDetailModel: any = [];
   headerModel: any = {};
   criteriaModel: any = {} //ค้นหา
+  criteria: object = { 
+    "userinformation": this.serviceProviderService.userinformation
+  }; // User information
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
   timeSheetModel: any = {};
   dateControl = new FormControl(moment().format('YYYYMMDD'));
-
   mode: any = 'create';
-
-  p = 1;
-
+  currentPage = 1;
   listGroupUser: any = [];
 
   constructor(public dialog: MatDialog,
@@ -41,25 +42,27 @@ export class MasterZoneregionComponent implements OnInit {
 
   ngOnInit(): void {
     this.read();
-
   }
 
   viewModel: any;
   read() {
     this.spinner.show();
-
+    // Reset current page to 1 for search.
+    this.currentPage = 1;
     this.headerModel.Operation = 'SELECT';
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Fillter": this.criteriaModel.Fillter,
     }
+    criteria = {...this.criteria, ...criteria};
+    if (this.isDebugMode) {
+      Logger.info('master-zoneregion', 'read', this.criteria)
+      Logger.info('master-zoneregion', 'read', criteria)
+    }
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/GetRegion', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/GetRegion', criteria)
+    .subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+      let model: any = data;
       this.viewModel = model;
 
       if (model.Status) {
@@ -76,14 +79,22 @@ export class MasterZoneregionComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
   }
+  
+   // Set Header Model By Ohm.
+   setHeaderModel(model) {
+    // Setting header model.
+    for (const key in model) {
+      this.headerModel[key] = model[key];
+    }
+  }
 
   readDetail(param) {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Id": param.Id
     }
+    criteria = {...this.criteria, ...criteria};
 
     this.headerModel = param;
     this.headerModel.Operation = 'UPDATE';
@@ -95,16 +106,25 @@ export class MasterZoneregionComponent implements OnInit {
 
   clear() {
     this.criteriaModel = {};
+    if (this.isDebugMode) {
+      Logger.info('master-zoneregion', 'clear', this.criteria)
+    }
+      
+    this.read();
   }
 
   add() {
     this.spinner.show();
-    this.headerModel.Operation = 'INSERT';
-    this.headerModel.Id = 'Auto';
-    this.headerModel.Code = '';
-    this.headerModel.Description = '';
-    this.headerModel.Active = 'Y';
+    // Declare setting local header model.
+    let _headerModel = {
+      Operation: 'INSERT',
+      Id : 'Auto',
+      Code : '',
+      Description : '',
+      Active : 'Y',
 
+    }
+   this.setHeaderModel(_headerModel);
 
     this.isMainPage = false;
     this.isFormPage = true;
@@ -130,12 +150,11 @@ export class MasterZoneregionComponent implements OnInit {
       "Active": this.headerModel.Active,
     }
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/SaveRegion', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/SaveRegion', criteria)
+    .subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+
+      let model: any = data;
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -153,12 +172,18 @@ export class MasterZoneregionComponent implements OnInit {
   }
 
   delete(param) {
-
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'} });
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      disableClose: false,
+      height: '150px',
+      width: '300px',
+      data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'}
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if (this.isDebugMode) {
+        Logger.info('master-zoneregion', 'delete', result)
+      }
 
       if (result) {
          this.spinner.show();
@@ -172,19 +197,18 @@ export class MasterZoneregionComponent implements OnInit {
 
         let json = JSON.stringify(criteria);
 
-        this.serviceProviderService.post('api/Masters/SaveRegion', criteria).subscribe(data => {
+        this.serviceProviderService.post('api/Masters/SaveRegion', criteria)
+        .subscribe(data => {
           this.spinner.hide();
-          let model: any = {};
-          model = data;
-          this.viewModel = model;
 
+          let model: any = data;
+          this.viewModel = model;
           if (model.Status) {
             this.spinner.hide();
             this.toastr.success('เสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
             // debugger
             this.back();
-          }
-          else {
+          } else {
             this.spinner.hide();
             this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
           }
