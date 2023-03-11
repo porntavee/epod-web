@@ -16,9 +16,12 @@ export class Logger {
    * @param [message] Optional message to log. Accepts objects too. Avoid circular json object references!
    * @param [devOnly] Only logs in development if true.
    */
-  public static debug(module: string, method: string, message?: any, devOnly?: boolean) {
+  public static debug(module: string, method: string, message?: any, isDebugMode?:boolean, devOnly?: boolean) {
     // tslint:disable-next-line
-    console.debug(`DEBUG :-) ${this.getMessage(module, method, message, devOnly)}`);
+    if (!isDebugMode) return;
+
+      console.debug(`DEBUG :-) ${this.getMessage(module, method, message, devOnly)}`);
+      if (typeof message == 'object') console.debug(message);
   }
 
   /**
@@ -26,11 +29,13 @@ export class Logger {
    * @param [message] Optional message to log. Accepts objects too. Avoid circular json object references!
    * @param [devOnly] Only logs in development if true.
    */
-  public static info(module: string, method: string, message?: any, devOnly?: boolean) {
+  public static info(module: string, method: string, message?: any, isDebugMode?:boolean, devOnly?: boolean) {
     // tslint:disable-next-line
     // console.info(`INFO :-) ${this.getMessage(module, method, message, devOnly)}`);
+    if (!isDebugMode) return;
+    
     console.info(`INFO :-) ${this.getMessage(module, method, message, devOnly)}`);
-    console.info(message);
+    if (typeof message == 'object') console.info(message);
   }
 
   /**
@@ -38,9 +43,11 @@ export class Logger {
    * @param [message] Optional message to log. Accepts objects too. Avoid circular json object references!
    * @param [devOnly] Only logs in development if true.
    */
-  public static warn(module: string, method: string, message?: any, devOnly?: boolean) {
+  public static warn(module: string, method: string, message?: any, isDebugMode?:boolean, devOnly?: boolean) {
+    if (!isDebugMode) return;
+
     console.warn(`WARN :-) ${this.getMessage(module, method, message, devOnly)}`);
-    console.warn(message);
+    if (typeof message == 'object') console.warn(message);
   }
 
   /**
@@ -48,20 +55,24 @@ export class Logger {
    * @param [message] Optional message to log. Accepts objects too. Avoid circular json object references!
    * @param [devOnly] Only logs in development if true.
    */
-  public static error(module: string, method: string, message?: any, devOnly?: boolean) {
+  public static error(module: string, method: string, message?: any, isDebugMode?:boolean, devOnly?: boolean) {
+    if (!isDebugMode) return;
+
     console.error(`ERROR :-) ${this.getMessage(module, method, message, devOnly)}`);
-    console.error(message);
+    if (typeof message == 'object') console.error(message);
   }
 
   /**
    * Logs a consistent log message format to the console in development only.
    * @param [message] Optional message to log. Accepts objects too. Avoid circular json object references!
    */
-  public static devOnly(module: string, method: string, message?: any) {
+  public static devOnly(module: string, method: string, message?: any, isDebugMode?:boolean) {
     // if (!environment.production) {
     //   // tslint:disable-next-line
+    if (!isDebugMode) return;
+
     console.log(`DEVONLY :-)  ${this.getMessage(module, method, message)}`);
-    console.log(message)
+    if (typeof message == 'object') console.log(message)
     // }
   }
 
@@ -69,14 +80,16 @@ export class Logger {
    * Logs a consistent warning message to the console in development only.
    * @param [message] Optional message to log. Accepts objects too. Avoid circular json object references!
    */
-  public static techDebt(module: string, method: string, message?: any) {
+  public static techDebt(module: string, method: string, message?: any, isDebugMode?:boolean) {
 		// if (!environment.production) {
 		// 	// tslint:disable-next-line
+    if (!isDebugMode) return;
+
     console.warn(`TECHDEBT:-) ${this.getMessage(module, method, message, false)}`);
 		// }
 	}
   
-  private static getMessage(module: string, method: string, message?: any, devOnly?: boolean) {
+  private static getMessage(module: string, method: string, message?: any, devOnly?: boolean, isDebugMode?:boolean) {
     const type = typeof message;
     // if ((devOnly && environment.production) || type === 'undefined' || (type === 'string' && message.length === 0)) {
       if ((devOnly) || type === 'undefined' || (type === 'string' && message.length === 0)) {
