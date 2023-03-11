@@ -57,11 +57,8 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
       "Fillter": this.criteriaModel.Fillter,
     }
     criteria = {...this.criteria, ...criteria};
-
-    if (this.isDebugMode) {
-      Logger.info('master-vehicle', 'read', this.criteria)
-      Logger.info('master-vehicle', 'read', criteria)
-    }
+    Logger.info('master-vehicle', 'read', this.criteria)
+    Logger.info('master-vehicle', 'read', criteria)
     
     this.serviceProviderService.post('api/Masters/GetVehicle', criteria)
     .subscribe(data => {
@@ -96,7 +93,6 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
   ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();
   }
-  /*-------------------------------------- End Ohm ----------------------------------*/
 
   // Set to Form Page By Ohm.
   setToFromPage() {
@@ -111,6 +107,7 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
     this.isFormPage = false;
     this.spinner.hide();
   }
+  /*-------------------------------------- End Ohm ----------------------------------*/
 
   //use
   readVehicleType() {
@@ -176,15 +173,14 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
     this.headerModel.Operation = 'UPDATE';
 
     // Set to from page.
-   this.setToFromPage();
+    this.setToFromPage();
   }
 
   clearAndReloadData() {
     // Clear criteriaModel.
     this.criteriaModel = {};
-    if (this.isDebugMode) {
-      Logger.info('master-vehicle', 'clear', this.criteria)
-    }
+    Logger.info('master-vehicle', 'clear', this.criteria)
+
     // Reload Table data.
     this.read();
   }
@@ -259,10 +255,8 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (this.isDebugMode) {
-        Logger.info('master-vehicle', 'delete', result)
-      }
-
+      Logger.info('master-vehicle', 'delete', result)
+      
       if (result) {
         this.spinner.show();
 

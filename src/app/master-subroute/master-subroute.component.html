@@ -1,60 +1,71 @@
+<!-- Start Main Page -->
 <div *ngIf="isMainPage">
+    <!-- Start Subroute Filter -->
     <div class="col s12">
-        <div class="card-panel"
-            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <span
-                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>ทะเบียน / เส้นทางย่อย</b>
-                    </span>
-                </div>
-            </div>
-
-        </div>
-        <!-- [hidden]="isAdvanceSearch" -->
-        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
-            <div class="row">
-                <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'เส้นทางหลัก'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
-                </div>
-                
-                <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.Fillter = $event" [label]="'กรอง (รหัส/รายละเอียด)'"
-                        [data]="criteriaModel.Fillter"></citxt>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
-                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
-                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
-                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtn>
+                    <label class="card-panel-header-label">
+                        ทะเบียน / เส้นทางย่อย
+                    </label>
                 </div>
             </div>
         </div>
-        <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
+        <div class="card-panel hide-on-med-and-down reset-margin-top">
             <div class="row">
-
+                <div class="col l3 s12 p-0">
+                    <citxt
+                        (cModel)="criteriaModel.RouteDescription = $event" 
+                        [label]="'เส้นทางหลัก'"
+                        [data]="criteriaModel.RouteDescription"
+                        [readonly]="true"
+                        (click)="chooseRoute()">
+                    </citxt>
+                </div>
+                <div class="col l3 s12 p-0">
+                    <citxt
+                        (cModel)="criteriaModel.Fillter = $event" 
+                        [label]="'กรอง (รหัส/รายละเอียด)'"
+                        [data]="criteriaModel.Fillter">
+                    </citxt>
+                </div>
             </div>
+            <div class="row">
+                <div class="col l8 s12 p-0 margin-bottom-5"></div>
+                <div class="col l4 s12 p-0 text-right margin-bottom-5">
+                    <cbtn 
+                        [label]="'ล้าง'"
+                        [color]="'red'"
+                        [icon]="'clear'"
+                        (click)="clearAndReloadData()">
+                    </cbtn>
+                    <cbtn 
+                        [label]="'ค้นหา'"
+                        [color]="'blue'"
+                        [icon]="'search'"
+                        (click)="read()">
+                    </cbtn>
+                </div>
+            </div>
+        </div>
+        <div class="card-panel hide-on-large-only reset-margin-top">
+            <div class="row"></div>
         </div>
     </div>
+    <!-- End Subroute Filter -->
+    <!-- Start Subroute Table -->
     <div class="col s12">
-        <div class="card-panel"
-            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel table-panel-header">
             <div class="row">
-                <div class="col l2 s12">
-                    <span
-                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>รายการข้อมูล</b>
-                    </span>
-                </div>
                 <div class="col l8 s12">
+                    <label class="card-panel-header-label">
+                        รายการข้อมูล
+                    </label>
                 </div>
             </div>
         </div>
-        <div class="card-panel" style="margin-top: 0px;">
-            <div style="overflow-x: auto;">
+        <div class="card-panel reset-margin-top">
+            <div class="overflow-x">
                 <table id="users-list-datatable" class="bordered centered striped">
                     <thead>
                         <tr>
@@ -66,114 +77,134 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
-                            <td>
-                                <div class="w100">
-                                    {{i.Id}}
-                                </div>
+                        <tr *ngFor="let i of listModel |
+                            paginate: { itemsPerPage: 10,currentPage: currentPage };
+                            let idx = index">
+                            <td class="min-width-100">
+                                {{i.Id}}
+                            </td>
+                            <td class="min-width-100">
+                                {{i.Route}}
+                            </td>
+                            <td class="min-width-100">
+                                {{i.Code}}
+                            </td>
+                            <td class="min-width-100">
+                                {{i.Description}}
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.Route}}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Code}}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Description}}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    <a class="btn-floating blue" style="cursor: pointer;" (click)="readDetail(i)">
+                                    <a class="btn-floating blue cursor-pointer"
+                                        (click)="readDetail(i)">
                                         <i class="medium material-icons">edit</i>
-                                    </a>
-                                    <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
+                                    </a>&nbsp;
+                                    <a class="btn-floating red cursor-pointer"
+                                        (click)="delete(i)">
                                         <i class="medium material-icons">delete</i>
                                     </a>
-                                    
                                 </div>
-
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-
             <div class="row">
                 <div class="col s6">
                     <div class="row">
-                        <div class="col s6" style="margin-top: 10px;">
-                            <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="add()"></cbtn>
+                        <div class="col l4 s12 margin-top-10">
+                            <cbtn 
+                            [label]="'สร้าง'"
+                            [color]="'blue'"
+                            [icon]="'add'"
+                            (click)="add()">
+                        </cbtn>
                         </div>
                     </div>
                 </div>
                 <div class="col s6">
-                    <div style="text-align: right;">
-                        <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป">
+                    <div class="text-right">
+                        <pagination-controls
+                            (pageChange)="currentPage = $event"
+                            previousLabel="ก่อนหน้า"
+                            nextLabel="ถัดไป">
                         </pagination-controls>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
-
+<!-- End Main Page -->
+<!-- Start Add Subroute Page -->
 <div *ngIf="isFormPage">
     <div class="col s12">
-        <div class="card-panel"
-            style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <span
-                        style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>ทะเบียน / เส้นทางย่อย / รายละเอียด</b>
-                    </span>
-                </div>
-            </div>
-
-        </div>
-        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
-
-            <div class="row">
-                <div class="col l4 s12">
-                    <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id"
-                        [readonly]="true"></citxt>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col l4 s12">
-                    <citxt (cModel)="headerModel.RouteDescription = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.RouteDescription" [readonly]="true" (click)="chooseRoute2()"></citxt>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Code = $event" [label]="'*รหัส'" [data]="headerModel.Code">
-                    </citxt>
-                </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Description = $event" [label]="'*รายละเอียด'" [data]="headerModel.Description">
-                    </citxt>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col l4 s12 p-0" style="margin-bottom: 5px;"></div>
-                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
-                    <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'" (click)="save()"></cbtn>
-                    <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="'keyboard_backspace'" (click)="back()"></cbtn>
+                    <label class="card-panel-header-label">
+                        ทะเบียน / เส้นทางย่อย / รายละเอียด
+                    </label>
                 </div>
             </div>
         </div>
-
+        <!-- Start Add Subroute Form -->
+        <div class="card-panel hide-on-med-and-down reset-margin-top">
+            <div class="row">
+                <div class="col l4 s12">
+                    <citxt
+                        (cModel)="headerModel.Id = $event" 
+                        [label]="'รหัสระบบ'"
+                        [data]="headerModel.Id"
+                        [readonly]="true">
+                    </citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l4 s12">
+                    <citxt
+                        (cModel)="headerModel.RouteDescription = $event" 
+                        [label]="'เส้นทางหลัก'"
+                        [data]="headerModel.RouteDescription"
+                        [readonly]="true"
+                        (click)="chooseRoute2()">
+                    </citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.Code = $event" 
+                        [label]="'*รหัส'"
+                        [data]="headerModel.Code">
+                    </citxt>
+                </div>
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.Description = $event" 
+                        [label]="'*รายละเอียด'"
+                        [data]="headerModel.Description">
+                    </citxt>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l4 s12 p-0 margin-bottom-5"></div>
+                <div class="col l4 s12 p-0 text-right margin-bottom-5">
+                    <cbtn 
+                    [label]="'บันทึก'"
+                    [color]="'blue'"
+                    [icon]="'save'"
+                    (click)="save()">
+                </cbtn>
+                    <cbtn 
+                    [label]="'กลับ'"
+                    [color]="'grey'"
+                    [icon]="'keyboard_backspace'"
+                    (click)="back()">
+                </cbtn>
+                </div>
+            </div>
+        </div>
+        <!-- End Add Subroute Form -->
     </div>
 </div>
+<!--End Add Subroute Page -->

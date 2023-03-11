@@ -29,7 +29,7 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
 
   mode: any = 'create';
 
-  p = 1;
+  currentPage = 1;
 
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
@@ -46,6 +46,8 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
   read() {
     this.spinner.show();
 
+    // Reset current page to 1 for search.
+    this.currentPage = 1;
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "Code": this.criteriaModel.Code,
@@ -60,9 +62,6 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
       "IsHub": (this.criteriaModel.IsHub == undefined || this.criteriaModel.IsHub == false) ? '' : 'Y',
     }
 
-    let json = JSON.stringify(criteria);
-
-    // debugger
 
     this.serviceProviderService.post('api/Masters/GetShipto', criteria).subscribe(data => {
       this.spinner.hide();

@@ -86,7 +86,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
+                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: currentPage }; let idx = index">
                             <td>
                                 <div class="w60">
                                     {{i.Id}}
@@ -156,7 +156,7 @@
                                 <div class="w100">
                                     <a class="btn-floating blue" style="cursor: pointer;" (click)="readDetail(i)">
                                         <i class="medium material-icons">edit</i>
-                                    </a>
+                                    </a>&nbsp;
                                     <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
                                         <i class="medium material-icons">delete</i>
                                     </a>
@@ -179,7 +179,7 @@
                 </div>
                 <div class="col s6">
                     <div style="text-align: right;">
-                        <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป">
+                        <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป">
                         </pagination-controls>
                     </div>
                 </div>

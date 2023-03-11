@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { ConfirmDialog, GroupUserDialog, RouteDialog, ShipToDialog, VehicleDialog } from '../dialog/dialog';
+import { Logger } from '../shared/logger.service';
 
 @Component({
   selector: 'app-master-user',
@@ -22,6 +23,9 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
   listDetailModel: any = [];
   headerModel: any = {};
   criteriaModel: any = {} //ค้นหา
+  criteria: object = { 
+    "userinformation": this.serviceProviderService.userinformation
+  }; // User information
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
@@ -29,9 +33,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
   dateControl = new FormControl(moment().format('YYYYMMDD'));
   listTransport: any = [];
   mode: any = 'create';
-
-  p = 1;
-
+  currentPage = 1;
   listGroupUser: any = [];
 
   constructor(public dialog: MatDialog,
@@ -49,6 +51,8 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
   read() {
     this.spinner.show();
 
+    // Reset current page to 1 for search.
+    this.currentPage = 1;
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "UserName": this.criteriaModel.UserName,
@@ -57,8 +61,9 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
       "Mobile": this.criteriaModel.Mobile,
       "GroupCode": this.criteriaModel.GroupCode,
     }
-
-    let json = JSON.stringify(criteria);
+    criteria = {...this.criteria, ...criteria};
+    Logger.info('master-user', 'read', this.criteria)
+    Logger.info('master-user', 'read', criteria)
 
     this.serviceProviderService.post('api/Masters/GetUser', criteria).subscribe(data => {
       this.spinner.hide();
@@ -218,8 +223,13 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
     });
   }
 
-  clear() {
-    this.criteriaModel = { apptDate: '' };
+  clearAndReloadData() {
+    // Clear criteriaModel.
+    this.criteriaModel = { apptDate: ''};
+    Logger.info('master-vehicle', 'clear', this.criteria)
+
+    // Reload Table data.
+    this.read();
   }
 
   add() {

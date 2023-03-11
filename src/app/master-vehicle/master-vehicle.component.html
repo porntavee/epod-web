@@ -2,9 +2,11 @@
     <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">
-                <label class="col l8 s12 card-panel-header-label ">
-                    ทะเบียน / ทะเบียนรถ
-                </label>
+                <div class="col l8 s12">
+                    <label class="card-panel-header-label">
+                        ทะเบียน / ทะเบียนรถ
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -50,8 +52,6 @@
                         รายการข้อมูล
                     </label>
                 </div>
-                <div class="col l8 s12">
-                </div>
             </div>
         </div>
         <div class="card-panel reset-margin-top">
@@ -67,8 +67,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: currentPage }; let idx = index">
+                        <tr *ngFor="let i of listModel |
+                            paginate: { itemsPerPage: 10, currentPage: currentPage };
+                            let idx = index">
                             <td class="min-width-100">
                                 {{i.Id}}
                             </td>
