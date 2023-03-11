@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -12,7 +12,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
   templateUrl: './master-route.component.html',
   styleUrls: ['./master-route.component.css']
 })
-export class MasterRouteComponent implements OnInit {
+export class MasterRouteComponent implements OnInit, AfterContentChecked {
 
   isMainPage: boolean = true;
   isFormPage: boolean = false;
@@ -36,7 +36,8 @@ export class MasterRouteComponent implements OnInit {
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.read();
@@ -76,6 +77,21 @@ export class MasterRouteComponent implements OnInit {
     });
   }
 
+  /*--------------------------Start Define Method Ohm -------------------------------*/
+  // Set Header Model By Ohm.
+  setHeaderModel(model) {
+    // Setting header model.
+    for (const key in model) {
+      this.headerModel[key] = model[key];
+    } 
+  }
+
+  // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+  /*-------------------------------------- End Ohm ----------------------------------*/
+  
   readDetail(param) {
     this.spinner.show();
 

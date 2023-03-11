@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -13,7 +13,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
   templateUrl: './master-zoneregion.component.html',
   styleUrls: ['./master-zoneregion.component.css']
 })
-export class MasterZoneregionComponent implements OnInit {
+export class MasterZoneregionComponent implements OnInit, AfterContentChecked {
 
   isDebugMode: boolean = true;
   isMainPage: boolean = true;
@@ -38,7 +38,8 @@ export class MasterZoneregionComponent implements OnInit {
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.read();
@@ -80,13 +81,20 @@ export class MasterZoneregionComponent implements OnInit {
     });
   }
   
-   // Set Header Model By Ohm.
-   setHeaderModel(model) {
+  /*--------------------------Start Define Method Ohm -------------------------------*/
+  // Set Header Model By Ohm.
+  setHeaderModel(model) {
     // Setting header model.
     for (const key in model) {
       this.headerModel[key] = model[key];
-    }
+    } 
   }
+
+  // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+  /*-------------------------------------- End Ohm ----------------------------------*/
 
   readDetail(param) {
     this.spinner.show();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -12,7 +12,7 @@ import { Logger } from '../shared/logger.service';
   templateUrl: './master-transport.component.html',
   styleUrls: ['./master-transport.component.css']
 })
-export class MasterTransportComponent  implements OnInit {
+export class MasterTransportComponent  implements OnInit, AfterContentChecked {
 
   isDebugMode: boolean = true;
   isMainPage: boolean = true;
@@ -40,7 +40,8 @@ export class MasterTransportComponent  implements OnInit {
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.read();
@@ -83,13 +84,20 @@ export class MasterTransportComponent  implements OnInit {
     });
   }
 
-  // Set Header Model By Ohm.
+  /*--------------------------Start Define Method Ohm -------------------------------*/
+  // Set Header Model.
   setHeaderModel(model) {
     // Setting header model.
     for (const key in model) {
       this.headerModel[key] = model[key];
     } 
   }
+
+    // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+  /*-------------------------------------- End Ohm ----------------------------------*/
 
   readDetail(param) {
     this.spinner.show();

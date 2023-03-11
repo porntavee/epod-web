@@ -1,4 +1,4 @@
-import { Component, Inject, KeyValueDiffers, OnInit } from '@angular/core';
+import { Component, Inject, KeyValueDiffers, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -13,7 +13,7 @@ import { ConfirmDialog, GroupUserDialog, RouteDialog, ShipToDialog, VehicleDialo
   templateUrl: './master-user.component.html',
   styleUrls: ['./master-user.component.css']
 })
-export class MasterUserComponent implements OnInit {
+export class MasterUserComponent implements OnInit, AfterContentChecked {
 
   isMainPage: boolean = true;
   isFormPage: boolean = false;
@@ -37,7 +37,8 @@ export class MasterUserComponent implements OnInit {
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.read();
@@ -79,6 +80,21 @@ export class MasterUserComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
   }
+
+  /*--------------------------Start Define Method Ohm -------------------------------*/
+  // Set Header Model By Ohm.
+  setHeaderModel(model) {
+    // Setting header model.
+    for (const key in model) {
+      this.headerModel[key] = model[key];
+    } 
+  }
+
+  // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+  /*-------------------------------------- End Ohm ----------------------------------*/
 
   readTransport() {
     let criteria = {
