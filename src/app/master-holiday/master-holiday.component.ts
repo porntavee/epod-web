@@ -14,6 +14,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 })
 export class MasterHolidayComponent  implements OnInit {
 
+  isDebugMode: boolean = true;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
@@ -29,11 +30,8 @@ export class MasterHolidayComponent  implements OnInit {
   models: any = []; //ข้อมูลในตารางหน้า Form
   timeSheetModel: any = {};
   dateControl = new FormControl(moment().format('YYYYMMDD'));
-
   mode: any = 'create';
-
   currentPage = 1;
-
   listGroupUser: any = [];
 
   constructor(public dialog: MatDialog,
@@ -52,26 +50,22 @@ export class MasterHolidayComponent  implements OnInit {
     this.spinner.show();
 
     this.headerModel.Operation = 'SELECT';
-
     this.serviceProviderService.post('api/Masters/GetHolidayDate', this.criteria)
     .subscribe(data => {
       this.spinner.hide();
-      let model: any = data;
 
+      let model: any = data;
       if (model.Status) {
         model.Data.forEach(element => {
           element.StrDate = moment(element.Date).format('DD-MM-YYYY');
         });
 
-
         this.listModel = model.Data;
-      }
-      else {
+      } else {
         this.listModel = [];
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
-
     }, err => {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -85,13 +79,11 @@ export class MasterHolidayComponent  implements OnInit {
     this.serviceProviderService.post('api/Masters/GetHoliday', this.criteria)
     .subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
- 
+
+      let model: any = data;
       if (model.Status) {
         this.headerModel = model.Data[0];
-      }
-      else {
+      } else {
         this.headerModel = [];
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -172,18 +164,16 @@ export class MasterHolidayComponent  implements OnInit {
     this.serviceProviderService.post('api/Masters/SaveHoliday', criteria)
     .subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+
+      let model: any = data;
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
         this.back();
-      }
-      else {
+      } else {
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
-
     }, err => {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -266,7 +256,9 @@ export class MasterHolidayComponent  implements OnInit {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
-
+      // Clear criteriaModel
+      this.clear();
+      // Reload Table data.
       this.read();
       }
     });
