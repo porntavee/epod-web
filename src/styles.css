@@ -342,6 +342,10 @@ p {
     min-width: 600px !important;
 }
 
+.min-width-800 {
+    min-width: 600px !important;
+}
+
 .custom-button {
     margin-right: 10px !important;
     margin-bottom: 7px !important;  
