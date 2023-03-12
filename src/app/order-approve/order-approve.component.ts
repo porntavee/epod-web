@@ -575,6 +575,8 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
         return '#66A5D9'
       case 'W':
         return '#B6B6B6'
+      case 'M':
+        return '#FF9800'
       default:
         break;
     }

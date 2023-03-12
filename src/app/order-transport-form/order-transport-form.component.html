@@ -457,19 +457,19 @@
                 </div>
                 <div class="col s2">
                     <div class="row margin-top-10">
-                        <cbtn
-                            [label]="'ปิดหน้าจอ'"
-                            [color]="'grey'"
-                            [icon]="''" (click)="close()">
+                        <cbtn *ngIf="GroupCode == 'S'"
+                            [label]="'ปิดงาน'"
+                            [color]="'orange'"
+                            [icon]="''" (click)="closeJob()">
                         </cbtn>
                     </div>
                 </div>
                 <div class="col s2">
                     <div class="row margin-top-10">
-                        <cbtn *ngIf="GroupCode == 'S'"
-                            [label]="'ปิดงาน'"
-                            [color]="'orange'"
-                            [icon]="''" (click)="closeJob()">
+                        <cbtn
+                            [label]="'ปิดหน้าจอ'"
+                            [color]="'grey'"
+                            [icon]="''" (click)="close()">
                         </cbtn>
                     </div>
                 </div>
