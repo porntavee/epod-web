@@ -135,7 +135,7 @@
                                 [label]="'สร้าง'"
                                 [color]="'blue'"
                                 [icon]="'add'"
-                                (click)="add()">
+                                (click)="addForm()">
                             </cbtn>
                         </div>
                     </div>
@@ -175,7 +175,7 @@
                     <citxt
                         (cModel)="headerModel.Id = $event"
                         [label]="'รหัสระบบ'"
-                        [data]="'headerModel.Id'"
+                        [data]="headerModel.Id"
                         [readonly]="true">
                     </citxt>
                 </div>

@@ -117,32 +117,40 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
     this.spinner.hide();
     this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
   }
+  // Set go to form page.
+  private goToFromPage() {
+    this.isMainPage = false;
+    this.isFormPage = true;
+    this.spinner.hide();
+  }
 
   setForm(param) {
     this.spinner.show();
 
-    Logger.info('master-holiday', 'readDetail-param', param, this.isDebugMode)
-    let _headerModel = {
+    let _criteria = {
       "Id": param.Id,
-      "Operation": 'UPDATE',
       "StrDate": moment(param.Date).format('YYYYMMDD')
     }
+    _criteria = {...this.criteria, ..._criteria};
 
-    this.headerModel = param;
+
+    let _headerModel = {
+      Operation: 'UPDATE'
+    }
+    _headerModel = {..._criteria, ..._headerModel};
 
     // Setting header model.
-    this.setModel(_headerModel);
+    this.headerModel = this.setModel(_headerModel);
 
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.spinner.hide();
+     // Set to from page.
+     this.goToFromPage();
   }
 
   clear() {
     this.criteriaModel = {"Date": ''};
   }
 
-  add() {
+  addForm() {
     this.spinner.show();
 
     // Declare setting local header model.
@@ -154,10 +162,9 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
     }
     // Setting header model.
     this.headerModel = this.setModel(_headerModel);
-
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.spinner.hide();
+    Logger.info('master-holiday', 'addForm.this.headerModel', this.headerModel, this.isDebugMode)
+    // Set to from page.
+    this.goToFromPage();
   }
 
   back() {
