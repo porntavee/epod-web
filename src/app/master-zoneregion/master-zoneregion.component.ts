@@ -15,98 +15,119 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 })
 export class MasterZoneregionComponent implements OnInit, AfterContentChecked {
 
-  isDebugMode: boolean = true;
-  isMainPage: boolean = true;
-  isFormPage: boolean = false;
-  isTimeSheetPage: boolean = false;
-  listModel: any = []; //ข้อมูลในตารางหน้า Main
-  listDetailModel: any = [];
-  headerModel: any = {};
-  criteriaModel: any = {} //ค้นหา
-  criteria: object = { 
-    "userinformation": this.serviceProviderService.userinformation
-  }; // User information
-  title: string = 'เพิ่มข้อมูล';
-  model: any = {}; //ข้อมูล Form
-  models: any = []; //ข้อมูลในตารางหน้า Form
-  timeSheetModel: any = {};
-  dateControl = new FormControl(moment().format('YYYYMMDD'));
-  mode: any = 'create';
-  currentPage = 1;
-  listGroupUser: any = [];
+  isDebugMode     : boolean = true;
+  isMainPage      : boolean = true;
+  isFormPage      : boolean = false;
+  isTimeSheetPage : boolean = false;
+  headerModel     : any     = {};
+  criteriaModel   : any     = {}; //ค้นหา
+  criteria        : any     = {}; // User Information.
+  model           : any     = {}; //ข้อมูล Form
+  listModel       : any     = []; //ข้อมูลในตารางหน้า Main
+  viewModel       : any     = {};
+  listVehicleType : any     = [];
+  currentPage     : number  = 1;
 
-  constructor(public dialog: MatDialog,
-    private serviceProviderService: ServiceProviderService,
-    private spinner: NgxSpinnerService,
-    private toastr: ToastrService,
-    private changeDetector: ChangeDetectorRef) { }
-
-  ngOnInit(): void {
-    this.read();
+  constructor(
+    public dialog                  : MatDialog,
+    private spinner                : NgxSpinnerService,
+    private toastr                 : ToastrService,
+    private changeDetector         : ChangeDetectorRef,
+    private serviceProviderService : ServiceProviderService
+  ){ 
+    this.criteria = { 
+      "userinformation": this.serviceProviderService.userinformation
+    }; // User Information.
   }
 
-  viewModel: any;
-  read() {
-    this.spinner.show();
-    // Reset current page to 1 for search.
-    this.currentPage = 1;
-    this.headerModel.Operation = 'SELECT';
-    let criteria = {
-      "Fillter": this.criteriaModel.Fillter,
-    }
-    criteria = {...this.criteria, ...criteria};
-    Logger.info('master-zoneregion', 'read', criteria, this.isDebugMode)
+  ngOnInit(): void {
+    this.render();
+  }
+
+  render(): void {
+     // Show spinner.
+     this.spinner.show();
+     // Reset current page to 1 for search.
+     this.currentPage = 1;
+     // Set Operations in Header Model.
+     this.headerModel.Operation = 'SELECT';
+     let criteria = {
+       "Fillter": this.criteriaModel.Fillter,
+     }
+     criteria = {...this.criteria, ...criteria};
+     Logger.info('zoneregion', 'render-criteria', criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Masters/GetRegion', criteria)
     .subscribe(data => {
+      // Hidden spinner when load data successfuly.
       this.spinner.hide();
+      // Set data to model.
       let model: any = data;
       this.viewModel = model;
-
-      if (model.Status) {
-        this.listModel = model.Data;
-      }
-      else {
-        this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
+      // Check model status if true set model data to list model.
+      this.listModel = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
   
-  /*--------------------------Start Define Method Ohm -------------------------------*/
-  // Set Header Model By Ohm.
-  setHeaderModel(model) {
-    // Setting header model.
+  private setModel(model) {
+    // Set model.
+    let _model: any = model;
     for (const key in model) {
-      this.headerModel[key] = model[key];
-    } 
-  }
-
-  // Fixing "Expression has changed after it was checked"
-  ngAfterContentChecked(): void {
-    this.changeDetector.detectChanges();
-  }
-  /*-------------------------------------- End Ohm ----------------------------------*/
-
-  readDetail(param) {
-    this.spinner.show();
-
-    let criteria = {
-      "Id": param.Id
+      _model[key] = model[key];
     }
-    criteria = {...this.criteria, ...criteria};
 
-    this.headerModel = param;
-    this.headerModel.Operation = 'UPDATE';
+    return _model;
+  }
 
+  // If can't load data to list model.
+  private loadDataFalse(message): any {
+    let _listModel: any = [];
+    this.hideSninnerAndShowError(message);
+
+    return _listModel;
+  }
+
+  // If sucess load data.
+  private hideSninnerAndShowSuccess(message: string) {
+    this.spinner.hide();
+    this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  // If error load data.
+  private hideSninnerAndShowError(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  // Set go to form page.
+  private goToFromPage() {
     this.isMainPage = false;
     this.isFormPage = true;
     this.spinner.hide();
+  }
+
+
+  // Set data to form Page.
+  setFormData(param: any) {
+    this.spinner.show();
+
+    let _criteria = {
+      "Id": param.Id
+    }
+    _criteria = {...this.criteria, ..._criteria};
+
+    let _headerModel = {
+      Operation: 'UPDATE'
+    }
+    _headerModel = {...param, ..._headerModel};
+
+    // Setting header model.
+    this.headerModel = this.setModel(_headerModel);
+
+     // Set to from page.
+     this.goToFromPage();
   }
 
   clearAndReloadData() {
@@ -115,10 +136,10 @@ export class MasterZoneregionComponent implements OnInit, AfterContentChecked {
     Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
 
     // Reload Table data.
-    this.read();
+    this.render();
   }
 
-  add() {
+  addForm() {
     this.spinner.show();
     // Declare setting local header model.
     let _headerModel = {
@@ -129,18 +150,18 @@ export class MasterZoneregionComponent implements OnInit, AfterContentChecked {
       Active : 'Y',
 
     }
-   this.setHeaderModel(_headerModel);
-
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.spinner.hide();
+    // Setting header model.
+    this.headerModel = this.setModel(_headerModel);
+    // Set to from page.
+    this.goToFromPage();
   }
 
-  back() {
+  // Set back to main page.
+  backToMainPage() {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    this.read();
+    this.render();
   }
 
   save() {
@@ -161,18 +182,13 @@ export class MasterZoneregionComponent implements OnInit, AfterContentChecked {
 
       let model: any = data;
       if (model.Status) {
-        this.spinner.hide();
-        this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        this.back();
+        this.hideSninnerAndShowSuccess('บันทึกยกเลิกเสร็จสิ้น');
+        this.backToMainPage();
+      } else {
+        this.hideSninnerAndShowError(model.Message);
       }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
@@ -186,21 +202,17 @@ export class MasterZoneregionComponent implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (this.isDebugMode) {
-        Logger.info('master-zoneregion', 'delete', result, this.isDebugMode)
-      }
-
+      Logger.info('master-zoneregion', 'delete', result, this.isDebugMode)
+      
       if (result) {
          this.spinner.show();
 
-         this.headerModel.Operation = 'DELETE';
+        this.headerModel.Operation = 'DELETE';
         let criteria = {
-          "userinformation": this.serviceProviderService.userinformation,
           "Operation": this.headerModel.Operation,
           "Id": param.Id ,
         }
-
-        let json = JSON.stringify(criteria);
+        criteria = {...this.criteria, ...criteria};
 
         this.serviceProviderService.post('api/Masters/SaveRegion', criteria)
         .subscribe(data => {
@@ -209,22 +221,23 @@ export class MasterZoneregionComponent implements OnInit, AfterContentChecked {
           let model: any = data;
           this.viewModel = model;
           if (model.Status) {
-            this.spinner.hide();
-            this.toastr.success('เสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            // debugger
-            this.back();
+            this.hideSninnerAndShowSuccess('เสร็จสิ้น');
+            this.backToMainPage();
           } else {
-            this.spinner.hide();
-            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.hideSninnerAndShowError(model.message);
           }
-
         }, err => {
-          this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          this.hideSninnerAndShowError(err.message);
         });
 
-      this.read();
+        // Clear criteriaModel and Reload Table Data.
+        this.clearAndReloadData();
       }
     });
+  }
+
+  // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }

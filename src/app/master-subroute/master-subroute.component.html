@@ -43,7 +43,7 @@
                         [label]="'ค้นหา'"
                         [color]="'blue'"
                         [icon]="'search'"
-                        (click)="read()">
+                        (click)="render()">
                     </cbtn>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                             [label]="'สร้าง'"
                             [color]="'blue'"
                             [icon]="'add'"
-                            (click)="add()">
+                            (click)="addForm()">
                         </cbtn>
                         </div>
                     </div>
@@ -162,9 +162,9 @@
             <div class="row">
                 <div class="col l4 s12">
                     <citxt
-                        (cModel)="headerModel.RouteDescription = $event" 
+                        (cModel)="criteriaModel.RouteDescription = $event" 
                         [label]="'เส้นทางหลัก'"
-                        [data]="headerModel.RouteDescription"
+                        [data]="criteriaModel.RouteDescription"
                         [readonly]="true"
                         (click)="chooseRoute2()">
                     </citxt>
@@ -199,7 +199,7 @@
                     [label]="'กลับ'"
                     [color]="'grey'"
                     [icon]="'keyboard_backspace'"
-                    (click)="back()">
+                    (click)="backToMainPage()">
                 </cbtn>
                 </div>
             </div>

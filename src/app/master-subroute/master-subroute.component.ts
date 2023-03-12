@@ -1,12 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, GroupUserDialog, RoutingDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog, RoutingDialog } from '../dialog/dialog';
 import { Logger } from '../shared/logger.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
+
 
 @Component({
   templateUrl: './master-subroute.component.html',
@@ -14,78 +13,95 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 })
 export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
   
-  isDebugMode: boolean = true;
-  isMainPage: boolean = true;
-  isFormPage: boolean = false;
-  isTimeSheetPage: boolean = false;
-  listModel: any = []; //ข้อมูลในตารางหน้า Main
-  listDetailModel: any = [];
-  headerModel: any = {};
-  criteriaModel: any = {} //ค้นหา
-  criteria: object = { 
-    "userinformation": this.serviceProviderService.userinformation
-  }; // User information
-  title: string = 'เพิ่มข้อมูล';
-  model: any = {}; //ข้อมูล Form
-  models: any = []; //ข้อมูลในตารางหน้า Form
-  timeSheetModel: any = {};
-  dateControl = new FormControl(moment().format('YYYYMMDD'));
-  mode: any = 'create';
-  currentPage = 1;
-  listGroupUser: any = [];
+  isDebugMode     : boolean = true;
+  isMainPage      : boolean = true;
+  isFormPage      : boolean = false;
+  isTimeSheetPage : boolean = false;
+  headerModel     : any     = {};
+  criteriaModel   : any     = {}; //ค้นหา
+  criteria        : any     = {}; // User Information.
+  model           : any     = {}; //ข้อมูล Form
+  listModel       : any     = []; //ข้อมูลในตารางหน้า Main
+  viewModel       : any     = {};
+  currentPage     : number  = 1;
 
-
-  constructor(public dialog: MatDialog,
-    private serviceProviderService: ServiceProviderService,
-    private spinner: NgxSpinnerService,
-    private toastr: ToastrService,
-    private changeDetector: ChangeDetectorRef) { }
-
-  ngOnInit(): void {
-    this.read();
+  constructor(
+    public dialog                  : MatDialog,
+    private spinner                : NgxSpinnerService,
+    private toastr                 : ToastrService,
+    private changeDetector         : ChangeDetectorRef,
+    private serviceProviderService : ServiceProviderService
+  ){
+    // Initialize userinformation to criteria object.
+    this.criteria = { 
+      "userinformation": this.serviceProviderService.userinformation
+    };
   }
 
-  viewModel: any;
-  read() {
+  ngOnInit(): void {
+    this.render();
+  }
+
+  // Grid configuration and render.
+  render() {
+    // Show spinner.
     this.spinner.show();
     // Reset current page to 1 for search.
     this.currentPage = 1;
+    // Set Operations in Header Model.
     this.headerModel.Operation = 'SELECT';
     let criteria = {
       "RouteId": this.criteriaModel.RouteId,
       "Fillter": this.criteriaModel.Fillter,
     }
     criteria = {...this.criteria, ...criteria};
-    Logger.info('master-subroute', 'read', criteria, this.isDebugMode)
+    Logger.info('master-subroute', 'render', criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Masters/GetSubRoute', criteria)
     .subscribe(data => {
-      this.spinner.hide();
-
-      let model: any = data;
-      this.viewModel = model;
-      if (model.Status) {
-        this.listModel = model.Data;
-      } else {
-        this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
+       // Hidden spinner when load data successfuly.
+       this.spinner.hide();
+       // Set data to model an view model.
+       let model: any = data;
+       this.viewModel = model;
+       // Check model status if true set model data to list model.
+      this.listModel = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
-  /*--------------------------Start Define Method Ohm -------------------------------*/
-  // Set Header Model.
-  setHeaderModel(model) {
-    // Setting header model.
+  // Set Model.
+  private setModel(model) {
+    // Set model.
+    let _model: any = model;
     for (const key in model) {
-      this.headerModel[key] = model[key];
-    } 
+      _model[key] = model[key];
+    }
+
+    return _model;
   }
 
+  // If can't load data to list model.
+  private loadDataFalse(message): boolean {
+    let _listModel: any = [];
+    this.hideSninnerAndShowError(message);
+
+    return _listModel;
+  }
+
+  // If sucess load data.
+  private hideSninnerAndShowSuccess(message: string) {
+    this.spinner.hide();
+    this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  // If error load data.
+  private hideSninnerAndShowError(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+  
   // Set Header Model.
   setCriteriaModel(model) {
     // Setting header model.
@@ -101,10 +117,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     } 
   }
 
-  // Fixing "Expression has changed after it was checked"
-  ngAfterContentChecked(): void {
-    this.changeDetector.detectChanges();
-  }
+ 
   
   // Set to Form Page.
   setToFromPage() {
@@ -139,13 +152,15 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
   clearAndReloadData() {
     // Clear criteriaModel.
     this.criteriaModel = {};
+    this.headerModel = {};
     Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
 
     // Reload Table data.
-    this.read();
+    this.render();
   }
 
-  add() {
+  addForm() {
+    // Show spinner.
     this.spinner.show();
 
     // Declare setting local header model.
@@ -158,16 +173,17 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
       Active: 'Y'
     }
     // Setting header model.
-    this.setHeaderModel(_headerModel);
+    this.headerModel = this.setModel(_headerModel);
     // Set to from page.
     this.setToFromPage();
   }
 
-  back() {
+  // Set back to main page.
+  backToMainPage() {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    this.read();
+    this.render();
   }
 
   save() {
@@ -176,10 +192,10 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
       this.toastr.error('กรุณาระบุเส้นทางหลัก', 'แจ้งเตือนระบบ', { timeOut: 5000 });
       return;
     }
+    // Set back to main page.
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Operation": this.headerModel.Operation,
       "RouteId": this.headerModel.RouteId,
       "Id": this.headerModel.Id,
@@ -187,24 +203,22 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
       "Description": this.headerModel.Description,
       "Active": this.headerModel.Active,
     }
+    criteria = {...this.criteria, ...criteria};
 
     this.serviceProviderService.post('api/Masters/SaveSubRoute', criteria)
     .subscribe(data => {
       this.spinner.hide();
       let model: any = data;
       if (model.Status) {
-        this.spinner.hide();
-        this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        this.back();
+        this.hideSninnerAndShowSuccess('บันทึกยกเลิกเสร็จสิ้น');
+        this.backToMainPage();
       }
       else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.hideSninnerAndShowError(model.Message);
       }
 
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
@@ -237,17 +251,13 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
           let model: any = data;
           this.viewModel = model;
           if (model.Status) {
-            this.spinner.hide();
-            this.toastr.success('เสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            // debugger
-            this.back();
+            this.hideSninnerAndShowSuccess('เสร็จสิ้น');
+            this.backToMainPage();
           } else {
-            this.spinner.hide();
-            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.hideSninnerAndShowError(model.Message);
           }
         }, err => {
-          this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          this.hideSninnerAndShowError(err.message);
         });
         // Clear criteriaModel and Reload Table Data.
         this.clearAndReloadData();
@@ -260,30 +270,34 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
       disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'เส้นทางหลัก' }
+      data: { title: 'เส้นทางหลัก' } 
     });
+
     dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-subroute', 'chooseRoute', result, this.isDebugMode)
+      Logger.info('master-subroute', 'chooseRoute2', result, this.isDebugMode)
 
       if (result != undefined) {
-        let criterai = {
+        let _criteriaModel = {
           RouteId: result.Id,
           RouteCode: result.Code,
           RouteDescription: result.Description
         }
-        // Set Criteria Model.
-        this.setCriteriaModel(criterai);
+        // Setting header model.
+        _criteriaModel = this.setModel(_criteriaModel);
+        this.criteriaModel = {...this.headerModel, ..._criteriaModel};
       } else {
-        let criterai = {
+        let _criteriaModel = {
           RouteId: '',
           RouteCode: '',
           RouteDescription: ''
         }
-        // Reset Criteria Model.
-        this.resetCriteriaModel(criterai);
+         // Setting header model.
+         _criteriaModel = this.setModel(_criteriaModel);
+         this.criteriaModel = {...this.headerModel, ..._criteriaModel};
       }
     });
   }
+
   chooseRoute2() {
     const dialogRef = this.dialog.open(RoutingDialog, {
       disableClose: false,
@@ -296,22 +310,29 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
       Logger.info('master-subroute', 'chooseRoute2', result, this.isDebugMode)
 
       if (result != undefined) {
-        let criterai = {
+        let _criteriaModel = {
           RouteId: result.Id,
           RouteCode: result.Code,
           RouteDescription: result.Description
         }
-        // Set Criteria Model.
-        this.setCriteriaModel(criterai);
+        // Setting header model.
+        _criteriaModel = this.setModel(_criteriaModel);
+        this.criteriaModel = {...this.headerModel, ..._criteriaModel};
       } else {
-        let criterai = {
+        let _criteriaModel = {
           RouteId: '',
           RouteCode: '',
           RouteDescription: ''
         }
-        // Reset Criteria Model.
-        this.resetCriteriaModel(criterai);
+         // Setting header model.
+         _criteriaModel = this.setModel(_criteriaModel);
+         this.criteriaModel = {...this.headerModel, ..._criteriaModel};
       }
     });
+  }
+
+   // Fixing "Expression has changed after it was checked"
+   ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }

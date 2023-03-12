@@ -1,10 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, GroupUserDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog } from '../dialog/dialog';
 import { Logger } from '../shared/logger.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -14,111 +12,119 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 })
 export class MasterRouteComponent implements OnInit, AfterContentChecked {
 
-  isDebugMode: boolean = true;
-  isMainPage: boolean = true;
-  isFormPage: boolean = false;
-  isTimeSheetPage: boolean = false;
-  listModel: any = []; //ข้อมูลในตารางหน้า Main
-  listDetailModel: any = [];
-  headerModel: any = {};
-  criteriaModel: any = {} //ค้นหา
-  criteria: object = { 
-    "userinformation": this.serviceProviderService.userinformation
-  }; // User information
-  title: string = 'เพิ่มข้อมูล';
-  model: any = {}; //ข้อมูล Form
-  models: any = []; //ข้อมูลในตารางหน้า Form
-  timeSheetModel: any = {};
-  dateControl = new FormControl(moment().format('YYYYMMDD'));
-  mode: any = 'create';
-  currentPage = 1;
-  listGroupUser: any = [];
+  isDebugMode     : boolean = true;
+  isMainPage      : boolean = true;
+  isFormPage      : boolean = false;
+  isTimeSheetPage : boolean = false;
+  headerModel     : any     = {};
+  criteriaModel   : any     = {}; //ค้นหา
+  criteria        : any     = {}; // User Information.
+  model           : any     = {}; //ข้อมูล Form
+  listModel       : any     = []; //ข้อมูลในตารางหน้า Main
+  viewModel       : any     = {};
+  currentPage     : number  = 1;
 
-  constructor(public dialog: MatDialog,
-    private serviceProviderService: ServiceProviderService,
-    private spinner: NgxSpinnerService,
-    private toastr: ToastrService,
-    private changeDetector: ChangeDetectorRef) { }
-
-  ngOnInit(): void {
-    this.read();
+  constructor(
+    public dialog                  : MatDialog,
+    private spinner                : NgxSpinnerService,
+    private toastr                 : ToastrService,
+    private changeDetector         : ChangeDetectorRef,
+    private serviceProviderService : ServiceProviderService
+  ){
+    // Initialize userinformation to criteria object.
+    this.criteria = { 
+      "userinformation": this.serviceProviderService.userinformation
+    };
   }
 
-  viewModel: any;
-  read() {
+  ngOnInit(): void {
+    this.render();
+  }
+
+  // Grid configuration and render.
+  render() {
+    // Show spinner.
     this.spinner.show();
     // Reset current page to 1 for search.
     this.currentPage = 1;
+    // Set Operations in Header Model.
     this.headerModel.Operation = 'SELECT';
     let criteria = {
       "Fillter": this.criteriaModel.Fillter,
     }
     criteria = {...this.criteria, ...criteria};
-    Logger.info('master-subroute', 'read-criteria', criteria, this.isDebugMode)
+    Logger.info('master-subroute', 'render-criteria', criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Masters/GetRoute', criteria)
     .subscribe(data => {
+      // Hidden spinner when load data successfuly.
       this.spinner.hide();
-
+      // Set data to model an view model.
       let model: any = data;
       this.viewModel = model;
-
-      if (model.Status) {
-        this.listModel = model.Data;
-      }
-      else {
-        this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+      // Check model status if true set model data to list model.
+     this.listModel = model.Status ? model.Data : this.loadDataFalse(model.Message);
+   }, err => {
+     this.hideSninnerAndShowError(err.message);
+   });
   }
 
-  /*--------------------------Start Define Method Ohm -------------------------------*/
-  // Set Header Model By Ohm.
-  setHeaderModel(model) {
-    // Setting header model.
+  // Set Model.
+  private setModel(model) {
+    // Set model.
+    let _model: any = model;
     for (const key in model) {
-      this.headerModel[key] = model[key];
-    } 
+      _model[key] = model[key];
+    }
+
+    return _model;
   }
 
-  // Fixing "Expression has changed after it was checked"
-  ngAfterContentChecked(): void {
-    this.changeDetector.detectChanges();
+  // If can't load data to list model.
+  private loadDataFalse(message): boolean {
+    let _listModel: any = [];
+    this.hideSninnerAndShowError(message);
+
+    return _listModel;
   }
 
-  // Set to Form Page.
-  setToFromPage() {
+  // If sucess load data.
+  private hideSninnerAndShowSuccess(message: string) {
+    this.spinner.hide();
+    this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  // If error load data.
+  private hideSninnerAndShowError(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+  // Set go to form page.
+  private goToFromPage() {
     this.isMainPage = false;
     this.isFormPage = true;
     this.spinner.hide();
   }
-
-  // Set to Form Page.
-  setToMainPage() {
-    this.isMainPage = true;
-    this.isFormPage = false;
-    this.spinner.hide();
-  }
-  /*-------------------------------------- End Ohm ----------------------------------*/
   
-  readDetail(param) {
+  // Set data to form Page.
+  setFormData(param: any) {
     this.spinner.show();
 
-    let criteria = {
+    let _criteria = {
       "Id": param.Id
     }
-    criteria = {...this.criteria, ...criteria};
+    _criteria = {...this.criteria, ..._criteria};
 
-    this.headerModel = param;
-    this.headerModel.Operation = 'UPDATE';
+    let _headerModel = {
+      Operation: 'UPDATE'
+    }
+    _headerModel = {...param, ..._headerModel};
 
-    // Set to from page.
-    this.setToFromPage();
+    // Setting header model.
+    this.headerModel = this.setModel(_headerModel);
+
+     // Set to from page.
+     this.goToFromPage();
   }
 
   clearAndReloadData() {
@@ -127,10 +133,10 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
     Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
 
     // Reload Table data.
-    this.read();
+    this.render();
   }
 
-  add() {
+  addForm() {
     this.spinner.show();
 
     // Declare setting local header model.
@@ -143,24 +149,25 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
       OTD: '1',
       OTBR: '3'
     }
-     // Setting header model.
-     this.setHeaderModel(_headerModel);
-     // Set to from page.
-     this.setToFromPage();
+    // Setting header model.
+    this.headerModel = this.setModel(_headerModel);
+    // Set to from page.
+    this.goToFromPage();
   }
 
-  back() {
+  // Set back to main page.
+  backToMainPage() {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    this.read();
+    this.render();
   }
 
   save() {
+    // Show spinner.
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Operation": this.headerModel.Operation,
       "Id": this.headerModel.Id,
       "Code": this.headerModel.Code,
@@ -169,6 +176,7 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
       "OTD": this.headerModel.OTD,
       "OTBR": this.headerModel.OTBR,
     }
+    criteria = {...this.criteria, ...criteria};
 
     this.serviceProviderService.post('api/Masters/SaveRoute', criteria)
     .subscribe(data => {
@@ -176,17 +184,14 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
 
       let model: any = data;
       if (model.Status) {
-        this.spinner.hide();
-        this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        this.back();
+        this.hideSninnerAndShowSuccess('บันทึกยกเลิกเสร็จสิ้น');
+        this.backToMainPage();
       }
       else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.hideSninnerAndShowError(model.Message);
       }
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
@@ -218,21 +223,21 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
           let model: any = data;
           this.viewModel = model;
           if (model.Status) {
-            this.spinner.hide();
-            this.toastr.success('เสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            this.back();
-          }
-          else {
-            this.spinner.hide();
-            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.hideSninnerAndShowSuccess('เสร็จสิ้น');
+            this.backToMainPage();
+          } else {
+            this.hideSninnerAndShowError(model.Message);
           }
         }, err => {
-          this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          this.hideSninnerAndShowError(err.message);
         });
         // Clear criteriaModel and Reload Table Data.
         this.clearAndReloadData();
       }
     });
+  }
+  // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }

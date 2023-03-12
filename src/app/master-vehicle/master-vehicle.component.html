@@ -1,4 +1,6 @@
+<!-- Start Vehicle Main Page. -->
 <div *ngIf="isMainPage">
+    <!-- Start Vehicle Form -->
     <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">
@@ -9,8 +11,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- [hidden]="isAdvanceSearch" -->
         <div class="card-panel hide-on-med-and-down reset-margin-top">
             <div class="row">
                 <div class="col l3 s12 p-0">
@@ -21,7 +21,6 @@
                     </citxt>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col l8 s12 p-0 margin-bottom-5"></div>
                 <div class="col l4 s12 p-0 text-right margin-bottom-5">
@@ -35,7 +34,7 @@
                         [label]="'ค้นหา'"
                         [color]="'blue'"
                         [icon]="'search'" 
-                        (click)="read()">
+                        (click)="render()">
                     </cbtn>
                 </div>
             </div>
@@ -44,6 +43,8 @@
             <div class="row"></div>
         </div>
     </div>
+    <!-- End Vehicle Form -->
+    <!-- Start Vehicle Data Table. -->
     <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">
@@ -82,23 +83,20 @@
                             <td class="min-width-100">
                                 {{i.VehicleTypeDescription}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    <a class="btn-floating blue cursor-pointer" 
-                                        (click)="readDetail(i)">
-                                        <i class="medium material-icons">edit</i>
-                                    </a>&nbsp;
-                                    <a class="btn-floating red cursor-pointer" 
-                                        (click)="delete(i)">
-                                        <i class="medium material-icons">delete</i>
-                                    </a>
-                                </div>
+                            <td class="min-width-100">
+                                <a class="btn-floating blue cursor-pointer" 
+                                    (click)="setFormData(i)">
+                                    <i class="medium material-icons">edit</i>
+                                </a>&nbsp;
+                                <a class="btn-floating red cursor-pointer" 
+                                    (click)="delete(i)">
+                                    <i class="medium material-icons">delete</i>
+                                </a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-
             <div class="row">
                 <div class="col s6">
                     <div class="row">
@@ -107,7 +105,7 @@
                                 [label]="'สร้าง'" 
                                 [color]="'blue'" 
                                 [icon]="'add'" 
-                                (click)="add()">
+                                (click)="addForm()">
                             </cbtn>
                         </div>
                     </div>
@@ -121,13 +119,13 @@
                         </pagination-controls>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
+    <!-- Start Vehicle Data Table. -->
 </div>
-
+<!-- End Vehicle Main Page. -->
+<!-- Start Vehicle Form Page. -->
 <div *ngIf="isFormPage">
     <div class="col s12">
         <div class="card-panel card-panel-header">
@@ -139,7 +137,6 @@
                 </div>
             </div>
         </div>
-
         <div class="card-panel hide-on-med-and-down reset-margin-top">
             <div class="row">
                 <div class="col l4 s12">
@@ -160,7 +157,6 @@
                     </citxt>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col l4 s12 margin-top-mminus-20">
                     <citxt 
@@ -176,7 +172,6 @@
                         [data]="headerModel.Description">
                     </citxt>
                 </div>
-                
             </div>
             <!-- Save and Back Button-->
             <div class="row">
@@ -192,12 +187,12 @@
                         [label]="'กลับ'"
                         [color]="'grey'"
                         [icon]="'keyboard_backspace'" 
-                        (click)="back()">
+                        (click)="backToMainPage()">
                     </cbtn>
                 </div>
             </div>
-            <!-- End Save and Back Button-->
         </div>
-
+        <!-- End Save and Back Button-->
     </div>
 </div>
+<!-- End Vehicle Form Page. -->

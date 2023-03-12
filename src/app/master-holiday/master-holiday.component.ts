@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, GroupUserDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog } from '../dialog/dialog';
+import { Logger } from '../shared/logger.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
 
@@ -14,114 +14,124 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 })
 export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
 
-  isDebugMode: boolean = true;
-  isMainPage: boolean = true;
-  isFormPage: boolean = false;
-  isTimeSheetPage: boolean = false;
-  listModel: any = []; //ข้อมูลในตารางหน้า Main
-  listDetailModel: any = [];
-  headerModel: any = {};
-  criteriaModel: any = {} //ค้นหา
-  criteria: object = { 
-    "userinformation": this.serviceProviderService.userinformation
-  }; // User Information.
-  title: string = 'เพิ่มข้อมูล';
-  model: any = {}; //ข้อมูล Form
-  models: any = []; //ข้อมูลในตารางหน้า Form
-  timeSheetModel: any = {};
-  dateControl = new FormControl(moment().format('YYYYMMDD'));
-  mode: any = 'create';
-  currentPage = 1;
-  listGroupUser: any = [];
+  isDebugMode     : boolean = true;
+  isMainPage      : boolean = true;
+  isFormPage      : boolean = false;
+  isTimeSheetPage : boolean = false;
+  headerModel     : any     = {};
+  criteriaModel   : any     = {}; //ค้นหา
+  criteria        : any     = {}; // User Information.
+  model           : any     = {}; //ข้อมูล Form
+  listModel       : any     = []; //ข้อมูลในตารางหน้า Main
+  listVehicleType : any     = [];
+  currentPage     : number  = 1;
 
-  constructor(public dialog: MatDialog,
-    private serviceProviderService: ServiceProviderService,
-    private spinner: NgxSpinnerService,
-    private toastr: ToastrService,
-    private changeDetector: ChangeDetectorRef) { }
-
-  ngOnInit(): void {
-    this.read();
-    this.read2();
-
+  constructor(
+    public dialog                  : MatDialog,
+    private spinner                : NgxSpinnerService,
+    private toastr                 : ToastrService,
+    private changeDetector         : ChangeDetectorRef,
+    private serviceProviderService : ServiceProviderService
+  ){ 
+    // Initialize userinformation to criteria object.
+    this.criteria = { 
+      "userinformation": this.serviceProviderService.userinformation
+    }; 
   }
 
-  // viewModel: any;
-  read() {
-    this.spinner.show();
+  ngOnInit(): void {
+    this.renderHolidayDate();
+    this.renderHoliday();
+  }
 
+  renderHolidayDate(): void {
+    // Show spinner.
+    this.spinner.show();
+    // Set Operations in Header Model.
     this.headerModel.Operation = 'SELECT';
+    // Request Data From API.
     this.serviceProviderService.post('api/Masters/GetHolidayDate', this.criteria)
     .subscribe(data => {
+      // Hidden spinner when load data successfuly.
       this.spinner.hide();
-
+      // Set data to model.
       let model: any = data;
       if (model.Status) {
         model.Data.forEach(element => {
           element.StrDate = moment(element.Date).format('DD-MM-YYYY');
         });
-
         this.listModel = model.Data;
       } else {
-        this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.listModel = this.loadDataFalse(model.Message);
       }
     }, err => {
       this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
-  read2() {
+  renderHoliday() {
+    // Show spinner.
     this.spinner.show();
-
+    // Set Operations in Header Model.
     this.headerModel.Operation = 'SELECT';
+    // Request Data From API.
     this.serviceProviderService.post('api/Masters/GetHoliday', this.criteria)
     .subscribe(data => {
+      // Hidden spinner when load data successfuly.
       this.spinner.hide();
-
+      // Set data to model.
       let model: any = data;
-      if (model.Status) {
-        this.headerModel = model.Data[0];
-      } else {
-        this.headerModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
+      this.listModel = model.Status ? model.Data[0] : this.loadDataFalse(model.Message);
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
-  /*--------------------------Start Define Method Ohm -------------------------------*/
-  // Set Header Model By Ohm.
-  setHeaderModel(model) {
-    // Setting header model.
+  private setModel(model) {
+    // Set model.
+    let _model: any = model;
     for (const key in model) {
-      this.headerModel[key] = model[key];
-    } 
+      _model[key] = model[key];
+    }
+
+    return _model;
   }
 
-  // Fixing "Expression has changed after it was checked"
-  ngAfterContentChecked(): void {
-    this.changeDetector.detectChanges();
-  }
-  /*-------------------------------------- End Ohm ----------------------------------*/
+  // If can't load data to list model.
+  private loadDataFalse(message): boolean {
+    let _listModel: any = [];
+    this.hideSninnerAndShowError(message);
 
-  readDetail(param) {
+    return _listModel;
+  }
+
+  // If sucess load data.
+  private hideSninnerAndShowSuccess(message: string) {
+    this.spinner.hide();
+    this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  // If error load data.
+  private hideSninnerAndShowError(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  setForm(param) {
     this.spinner.show();
 
-    this.headerModel = {};
+    Logger.info('master-holiday', 'readDetail-param', param, this.isDebugMode)
+    let _headerModel = {
+      "Id": param.Id,
+      "Operation": 'UPDATE',
+      "StrDate": moment(param.Date).format('YYYYMMDD')
+    }
+
     this.headerModel = param;
 
-    let _headerModel = {
-      Operation: 'UPDATE',
-      StrDate: moment(param.Date).format('YYYYMMDD')
-    }
     // Setting header model.
-    this.setHeaderModel(_headerModel);
+    this.setModel(_headerModel);
 
     this.isMainPage = false;
     this.isFormPage = true;
@@ -142,8 +152,8 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
       Date : '',
       Description : '',
     }
-   // Setting header model.
-   this.setHeaderModel(_headerModel);
+    // Setting header model.
+    this.headerModel = this.setModel(_headerModel);
 
     this.isMainPage = false;
     this.isFormPage = true;
@@ -154,13 +164,14 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    this.read();
-    this.read2();
+    this.renderHolidayDate();
+    this.renderHoliday();
   }
 
   save() {
     this.spinner.show();
 
+    Logger.info('master-holiday', 'save-this.headerModel', this.headerModel, this.isDebugMode)
     let criteria = {
       "Operation": this.headerModel.Operation,
       "Id": this.headerModel.Id,
@@ -168,6 +179,7 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
       "Description": this.headerModel.Description,
     }
     criteria = {...this.criteria, ...criteria};
+    Logger.info('master-holiday', 'save', criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Masters/SaveHoliday', criteria)
     .subscribe(data => {
@@ -232,7 +244,7 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      Logger.info('master-holiday', 'delete', result, this.isDebugMode)
 
       if (result) {
          this.spinner.show();
@@ -267,9 +279,13 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
       // Clear criteriaModel
       this.clear();
       // Reload Table data.
-      this.read();
+      this.renderHolidayDate();
       }
     });
   }
-  
+
+  // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
 }

@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { E } from '@angular/cdk/keycodes';
-import { Component, Inject, KeyValueDiffers, OnInit } from '@angular/core';
+import { Component, Inject, KeyValueDiffers, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,7 +19,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
   templateUrl: './order-transport-form.component.html',
   styleUrls: ['./order-transport-form.component.css']
 })
-export class OrderTransportFormComponent implements OnInit {
+export class OrderTransportFormComponent implements OnInit, AfterContentChecked {
 
   isDebugMode: boolean = true;
   isMainPage: boolean = true;
@@ -27,9 +27,7 @@ export class OrderTransportFormComponent implements OnInit {
   isTimeSheetPage: boolean = false;
   listModel: any = []; //ข้อมูลในตารางหน้า Main
   criteriaModel: any = {} //ค้นหา
-  criteria: object = { 
-    "userinformation": this.serviceProviderService.userinformation
-  }; // User Information.
+  criteria: object = {}; // User Information.
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
@@ -56,6 +54,7 @@ export class OrderTransportFormComponent implements OnInit {
 
   itemSelected = false;
   id: any = '';
+  GroupCode: any = '';
 
   permission: any; // <----- Permission ส่งเข้า Read เพื่อให้เห็นเฉพาะ Category ที่ถูกเซตไว้กับ Role สรุปคือ (Category Code List)
   permissionList: any; // <----- PermissionList ไว้สำหรับตรวจสอบว่า Category มีสิทธิ์ในการ Create Read Update Read หรือเปล่า
@@ -68,7 +67,7 @@ export class OrderTransportFormComponent implements OnInit {
     private toastr: ToastrService,
     private differs: KeyValueDiffers,
     private excelService: ExcelService,
-    private permissionService: PermissionService) {
+    public changeDetector: ChangeDetectorRef) {
 
     this.route.queryParams.subscribe(params => {
       let model: any = this.route.snapshot.params;
@@ -76,17 +75,19 @@ export class OrderTransportFormComponent implements OnInit {
       this.id = model.id;
     });
 
+    this.criteria =  {
+      "userinformation": this.serviceProviderService.userinformation 
+    }
+
+    this.GroupCode = this.serviceProviderService.userinformation.GroupCode;
+
+    Logger.info('order-transport-form', 'ngOnInit-permission',this.criteria , this.isDebugMode);
+
     const date = new Date();
     this.criteriaModel.TransportDateString = moment(date.setDate(date.getDate() + 1)).format('YYYYMMDD');
   }
 
   ngOnInit(): void {
-
-    this.permission = this.permissionService.readPermission('newsPage');
-    this.permissionList = this.permissionService.readLocalStorage('newsPage');
-    Logger.info('order-transport-form', 'ngOnInit-permission', this.permission, this.isDebugMode);
-    Logger.info('order-transport-form', 'ngOnInit-permissionList', this.permissionList, this.isDebugMode);
-
     this.readTransport();
     this.readVehicleType();
 
@@ -1441,6 +1442,11 @@ export class OrderTransportFormComponent implements OnInit {
     });
   }
 
+  // Fixing "Expression has changed after it was checked"
+  public ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+
   statusOrderColor(param) {
     switch (param) {
       case 'C':
@@ -1468,31 +1474,31 @@ export class OrderTransportFormComponent implements OnInit {
     }
   }
 
-  statusOrderClassify(param) {
-    switch (param) {
-      case 'C':
-        return '#E16E5B'
-      case 'D':
-        return '#F7E884'
-      case 'L':
-        return '#F7E884'
-      case 'O':
-        return '#B6B6B6'
-      case 'P':
-        return '#79D58B'
-      case 'R':
-        return '#79D58B'
-      case 'S':
-        return '#66A5D9'
-      case 'W':
-        return '#B6B6B6'
-      case 'F':
-        return '#EBB146'
-        case 'H':
-          return '#66A5D9'
-      default:
-        break;
-    }
-  }
+  // statusOrderClassify(param) {
+  //   switch (param) {
+  //     case 'C':
+  //       return '#E16E5B'
+  //     case 'D':
+  //       return '#F7E884'
+  //     case 'L':
+  //       return '#F7E884'
+  //     case 'O':
+  //       return '#B6B6B6'
+  //     case 'P':
+  //       return '#79D58B'
+  //     case 'R':
+  //       return '#79D58B'
+  //     case 'S':
+  //       return '#66A5D9'
+  //     case 'W':
+  //       return '#B6B6B6'
+  //     case 'F':
+  //       return '#EBB146'
+  //       case 'H':
+  //         return '#66A5D9'
+  //     default:
+  //       break;
+  //   }
+  // }
 }
 

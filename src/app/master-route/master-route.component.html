@@ -14,23 +14,23 @@
         <div class="card-panel hide-on-med-and-down reset-margin-top">
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.Fillter = $event" [label]="'กรอง (รหัส/รายละเอียด)'"
-                        [data]="criteriaModel.Fillter"></citxt>
+                    <citxt 
+                        (cModel)="criteriaModel.Fillter = $event"
+                        [label]="'กรอง (รหัส/รายละเอียด)'"
+                        [data]="criteriaModel.Fillter">
+                    </citxt>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col l8 s12 p-0 margin-bottom-5"></div>
                 <div class="col l4 s12 p-0 text-right margin-bottom-5">
                     <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clearAndReloadData()"></cbtn>
-                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtn>
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="render()"></cbtn>
                 </div>
             </div>
         </div>
         <div class="card-panel hide-on-large-only reset-margin-top">
-            <div class="row">
-
-            </div>
+            <div class="row"></div>
         </div>
     </div>
     <div class="col s12">
@@ -75,7 +75,7 @@
                                 +{{i.OTBR}}
                             </td>
                            <td class="min-width-100">
-                                <a class="btn-floating blue" style="cursor: pointer;" (click)="readDetail(i)">
+                                <a class="btn-floating blue" style="cursor: pointer;" (click)="setFormData(i)">
                                     <i class="medium material-icons">edit</i>
                                 </a>&nbsp;
                                 <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
@@ -94,7 +94,7 @@
                                 [label]="'สร้าง'"
                                 [color]="'blue'"
                                 [icon]="'add'"
-                                (click)="add()">
+                                (click)="addForm()">
                             </cbtn>
                         </div>
                     </div>
@@ -184,7 +184,7 @@
                         [label]="'กลับ'"
                         [color]="'grey'"
                         [icon]="'keyboard_backspace'"
-                        (click)="back()">
+                        (click)="backToMainPage()">
                     </cbtn>
                 </div>
             </div>

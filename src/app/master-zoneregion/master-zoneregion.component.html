@@ -33,7 +33,7 @@
                         [label]="'ค้นหา'"
                         [color]="'blue'"
                         [icon]="'search'"
-                        (click)="read()">
+                        (click)="render()">
                     </cbtn>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                             <td>
                                 <div class="w100">
                                     <a class="btn-floating blue cursor-pointer"
-                                        (click)="readDetail(i)">
+                                        (click)="setFormData(i)">
                                         <i class="medium material-icons">edit</i>
                                     </a>&nbsp;
                                     <a class="btn-floating red cursor-pointer"
@@ -99,7 +99,7 @@
                                 [label]="'สร้าง'"
                                 [color]="'blue'"
                                 [icon]="'add'"
-                                (click)="add()">
+                                (click)="addForm()">
                             </cbtn>
                         </div>
                     </div>
@@ -114,7 +114,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -139,17 +138,16 @@
                         [readonly]="true">
                     </citxt>
                 </div>
-                <div class="col l4 s12"></div>
             </div>
             <div class="row">
-                <div class="col s6 margin-top-mminus-20">
+                <div class="col l4 s12 margin-top-mminus-20">
                     <citxt
                         (cModel)="headerModel.Code = $event"
                         [label]="'*รหัส'"
                         [data]="headerModel.Code">
                     </citxt>
                 </div>
-                <div class="col s6 margin-top-mminus-20">
+                <div class="col l4 s12 margin-top-mminus-20">
                     <citxt
                         (cModel)="headerModel.Description = $event"
                         [label]="'*รายละเอียด'"
@@ -171,7 +169,7 @@
                         [label]="'กลับ'"
                         [color]="'grey'"
                         [icon]="'keyboard_backspace'"
-                        (click)="back()">
+                        (click)="backToMainPage()">
                     </cbtn>
                 </div>
             </div>
