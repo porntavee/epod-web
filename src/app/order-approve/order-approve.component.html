@@ -903,6 +903,16 @@
 
                 <div class="col s2">
                     <div class="row" style="margin-top: 10px;">
+                        <cbtn 
+                            [label]="'ปิดงาน'"
+                            [color]="'orange'"
+                            [icon]="''" (click)="closeJob()">
+                        </cbtn>
+                    </div>
+                </div>
+
+                <div class="col s2">
+                    <div class="row" style="margin-top: 10px;">
                         <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="backToMain()"></cbtn>
                     </div>
 

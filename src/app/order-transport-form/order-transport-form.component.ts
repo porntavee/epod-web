@@ -1343,7 +1343,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           "Process": 'ADMINCLOSEJOB' ,
         }
 
-        this.serviceProviderService.post('api/Transport/UpdateTransportStatus', criteria)
+        this.serviceProviderService.post('api/Transport/AdminCloseJob', criteria)
         .subscribe(data => {
           this.spinner.hide();
           let model: any = {};
@@ -1353,7 +1353,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           if (model.Status) {
             this.spinner.hide();
             this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            this.backToMain();
+            this.read();
+            // this.backToMain();
           } else {
             this.spinner.hide();
             this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
