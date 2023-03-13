@@ -358,6 +358,13 @@ p {
     margin-right: 5px !important;
 }
 
+.ml-4.version-label {
+    position: relative !important;
+    margin-left: -10px !important;
+    font-size: 1.4em !important;
+    text-shadow: 1px 1px white, -0.5px -0.5px #333
+}
+
 /* show scrollbar always */
 
 ::-webkit-scrollbar {

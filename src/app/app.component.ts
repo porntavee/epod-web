@@ -14,8 +14,8 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class AppComponent {
+  versionString:string = '';
   title = 'app works!';
-
   isLock: boolean = false;
   menuSummary: any = []; //กลุ่มเมนูสำหรับแสดง
   isLogin = true; //เช็กว่าเข้าสู่ระบบอยู่ไหม
@@ -44,6 +44,8 @@ export class AppComponent {
     //this.userModel.username = 'จารุวรรณ';
     // this.userModel.username = 'TH00640801023';
     // this.userModel.password = '8888';
+    this.versionString= this.serviceProviderService.version;
+    this.versionString = this.versionNumberFormat()
     this.userModel.username = '';
     this.userModel.password = '';
     this.userModel.company = 'SINO';
@@ -331,6 +333,14 @@ export class AppComponent {
     //     this.listCategory.push({ value: element.code, display: element.title });
     //   });
     // }, err => { });
+  }
+  
+  versionNumberFormat(): any {
+    let _versionString =  this.versionString;
+    _versionString = _versionString.substring(0, 4) + '.' + 
+    _versionString.substring(4, 6) + '.' + 
+    _versionString.substring(6, 8)
+    return _versionString;
   }
 }
 
