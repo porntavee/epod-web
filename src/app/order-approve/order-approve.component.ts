@@ -271,7 +271,7 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
       disableClose: false,
       height: '150px',
       width: '300px',
-      data: { title: 'คุณต้องปิดงานใบคุมใช่หรือไม่?' }
+      data: { title: 'คุณต้องการปิดงานใบคุมใช่หรือไม่?' }
     });
 
     dialogRef.afterClosed().subscribe(result => {

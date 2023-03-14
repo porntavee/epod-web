@@ -40,12 +40,8 @@ export class AppComponent {
     public menuService: MenuService,
     private http: HttpClient
   ) {
-    // this.getIPAddress();
-    //this.userModel.username = 'จารุวรรณ';
-    // this.userModel.username = 'TH00640801023';
-    // this.userModel.password = '8888';
     this.versionString= this.serviceProviderService.version;
-    this.versionString = this.versionNumberFormat()
+    this.versionString = this.versionNumberFormat();
     this.userModel.username = '';
     this.userModel.password = '';
     this.userModel.company = 'SINO';
@@ -61,36 +57,20 @@ export class AppComponent {
       this.authDocLogReport = localStorage.getItem('Auth_DocLogReport');
       this.authUserLogReport = localStorage.getItem('Auth_UserLogReport');
 
-      if (expire >= 90)
-      {
+      if (expire >= 90) {
         this.isLogin = true;
         this.isChangePassword = true;
-      }
-      else
-      {
+      } else {
         this.isLogin = false;
         this.isChangePassword = false;
       }
-      
     }
 
     this.isLock = true;
   }
 
   ngOnInit() {
-    // /** spinner starts on init */
-    // this.spinner.show();
 
-    // setTimeout(() => {
-    //   /** spinner ends after 5 seconds */
-    //   this.spinner.hide();
-    // }, 500);
-
-    // this.userModel.username = 'จารุวรรณ';
-    // this.userModel.password = '9999';
-    // this.userModel.company = 'TEST_STAR_FixedAsset_20220105';
-
-    // this.getIPAddress();
   }
 
   ipAddress = '';
@@ -137,7 +117,6 @@ export class AppComponent {
           localStorage.setItem('category', JSON.stringify({ orderApprove: true, }));
 
           // this.getIPAddress('Log in');
-
           window.location.href = "";
         }
         else {
@@ -334,7 +313,7 @@ export class AppComponent {
     //   });
     // }, err => { });
   }
-  
+
   versionNumberFormat(): any {
     let _versionString =  this.versionString;
     _versionString = _versionString.substring(0, 4) + '.' + 

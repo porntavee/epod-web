@@ -32,7 +32,7 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
     private toastr                 : ToastrService,
     private changeDetector         : ChangeDetectorRef,
     private serviceProviderService : ServiceProviderService
-  ){ 
+  ) { 
     // Initialize userinformation to criteria object.
     this.criteria = { 
       "userinformation": this.serviceProviderService.userinformation
@@ -40,11 +40,11 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
   }
 
   ngOnInit(): void {
-    this.renderHolidayDate();
-    this.renderHoliday();
+    this.renderHolidayTable();
+    this.renderHolidayCheck();
   }
 
-  renderHolidayDate(): void {
+  renderHolidayTable(): void {
     // Show spinner.
     this.spinner.show();
     // Set Operations in Header Model.
@@ -65,12 +65,12 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
         this.listModel = this.loadDataFalse(model.Message);
       }
     }, err => {
-      this.spinner.hide();
+        this.spinner.hide();
       this.hideSninnerAndShowError(err.message);
     });
   }
 
-  renderHoliday() {
+  renderHolidayCheck() {
     // Show spinner.
     this.spinner.show();
     // Set Operations in Header Model.
@@ -82,7 +82,8 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
       this.spinner.hide();
       // Set data to model.
       let model: any = data;
-      this.listModel = model.Status ? model.Data[0] : this.loadDataFalse(model.Message);
+      this.headerModel = model.Status ? model.Data[0] : this.loadDataFalse(model.Message);
+      Logger.info('master-holiday', 'renderHolidayCheck:', this.headerModel, this.isDebugMode)
     }, err => {
       this.hideSninnerAndShowError(err.message);
     });
@@ -117,6 +118,7 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
     this.spinner.hide();
     this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
   }
+
   // Set go to form page.
   private goToFromPage() {
     this.isMainPage = false;
@@ -142,8 +144,8 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
     // Setting header model.
     this.headerModel = this.setModel(_headerModel);
 
-     // Set to from page.
-     this.goToFromPage();
+    // Set to from page.
+    this.goToFromPage();
   }
 
   clear() {
@@ -171,8 +173,8 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    this.renderHolidayDate();
-    this.renderHoliday();
+    this.renderHolidayTable();
+    this.renderHolidayCheck();
   }
 
   save() {
@@ -286,7 +288,7 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
       // Clear criteriaModel
       this.clear();
       // Reload Table data.
-      this.renderHolidayDate();
+      this.renderHolidayTable();
       }
     });
   }

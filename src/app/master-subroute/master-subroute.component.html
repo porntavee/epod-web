@@ -19,7 +19,7 @@
                         [label]="'เส้นทางหลัก'"
                         [data]="criteriaModel.RouteDescription"
                         [readonly]="true"
-                        (click)="chooseRoute()">
+                        (click)="chooseRouteFilter()">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0">
@@ -95,7 +95,7 @@
                             <td>
                                 <div class="w100">
                                     <a class="btn-floating blue cursor-pointer"
-                                        (click)="readDetail(i)">
+                                        (click)="setForm(i)">
                                         <i class="medium material-icons">edit</i>
                                     </a>&nbsp;
                                     <a class="btn-floating red cursor-pointer"
@@ -162,11 +162,11 @@
             <div class="row">
                 <div class="col l4 s12">
                     <citxt
-                        (cModel)="criteriaModel.RouteDescription = $event" 
+                        (cModel)="headerModel.RouteDescription = $event" 
                         [label]="'เส้นทางหลัก'"
-                        [data]="criteriaModel.RouteDescription"
+                        [data]="headerModel.RouteDescription"
                         [readonly]="true"
-                        (click)="chooseRoute2()">
+                        (click)="chooseRouteAddForm()">
                     </citxt>
                 </div>
             </div>

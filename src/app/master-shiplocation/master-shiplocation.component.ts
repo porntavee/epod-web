@@ -384,6 +384,8 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
+    // Clear criteriaModel and Reload Table Data.
+    this.clearAndReloadData();
   }
 
   delete(param) {

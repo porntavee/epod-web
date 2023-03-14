@@ -223,7 +223,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
 
      // Declare setting local header model.
      let _headerModel = { 
-      Operation: 'INSERT', Code : 'Auto', FirstName : '', LastName : 'Y',
+      Operation: 'INSERT', Code : 'Auto', FirstName : '', LastName : '',
       UserName: '', Password: '', LicenseNo: '', Mobile: '', Email: '',
       Sex: '', Active: 'Y',
       //Popup

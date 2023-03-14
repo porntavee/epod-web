@@ -1,59 +1,15 @@
-<ngx-spinner></ngx-spinner>
-
 <!-- Header -->
 <header class="page-topbar" id="header" [hidden]="isLogin">
     <div class="navbar navbar-fixed">
-        <!-- <nav class="navbar-main navbar-color nav-collapsible navbar-dark gradient-45deg-purple-deep-orange gradient-shadow" [ngClass]="{'sideNav-lock': isLock, 'nav-collapsed': !isLock}"></nav> -->
         <nav class="navbar-main navbar-color nav-collapsible navbar-dark gradient-shadow background-header" [ngClass]="{ 'sideNav-lock': isLock, 'nav-collapsed': !isLock }">
             <div class="nav-wrapper">
                 <div class="header-search-wrapper hide-on-med-and-down">
-                    <!-- Informative Core CMS -->
-                    <!-- <i class="material-icons">search</i> -->
-                    <!-- <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Explore Materialize" data-search="template-list">
-                    <ul class="search-list collection display-none"></ul> -->
                 </div>
                 <ul class="navbar-list right">
-                    <!-- <li class="dropdown-language"><a class="waves-effect waves-block waves-light translation-button"
-                            href="#" data-target="translation-dropdown"><span class="flag-icon flag-icon-gb"></span></a>
-                    </li> -->
-                    <!-- <li class="hide-on-med-and-down"><a class="waves-effect waves-block waves-light toggle-fullscreen"
-                            href="javascript:void(0);"><i class="material-icons">settings_overscan</i></a></li> -->
-                    <!-- <li class="hide-on-large-only search-input-wrapper"><a
-                            class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i
-                                class="material-icons">search</i></a></li> -->
-                    <!-- <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);"
-                            data-target="notifications-dropdown"><i class="material-icons">notifications_none<small
-                                    class="notification-badge">5</small></i></a></li> -->
                     <li>
                         <a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown">
-                            <!-- <span class="avatar-status avatar-online" style="margin-right: 10px !important;">
-                                <img [src]="this.imageUrl" alt="avatar" />
-                                <i></i>
-                            </span> -->
                             <span style="color: #ffffff !important;">Welcome : {{ username }}</span>
                         </a>
-                    </li>
-                    <!-- src="app-assets/images/avatar/avatar-7.png" -->
-                    <!-- <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#"
-                            data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li> -->
-                </ul>
-                <!-- translation-button-->
-                <ul class="dropdown-content" id="translation-dropdown">
-                    <li class="dropdown-item">
-                        <a class="grey-text text-darken-1" href="#!" data-language="en"><i class="flag-icon flag-icon-gb"></i>
-              English</a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a class="grey-text text-darken-1" href="#!" data-language="fr"><i class="flag-icon flag-icon-fr"></i>
-              French</a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a class="grey-text text-darken-1" href="#!" data-language="pt"><i class="flag-icon flag-icon-pt"></i>
-              Portuguese</a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a class="grey-text text-darken-1" href="#!" data-language="de"><i class="flag-icon flag-icon-de"></i>
-              German</a>
                     </li>
                 </ul>
                 <!-- notifications-dropdown-->
@@ -91,192 +47,15 @@
                 </ul>
                 <!-- profile-dropdown-->
                 <ul class="dropdown-content" id="profile-dropdown">
-                    <!-- <li *ngFor="let i of og; let idx = index">
-                        <a class="grey-text text-darken-1" href="JavaScript:void(0)">ตำแหน่ง {{ i.title }}</a>
-                    </li> -->
-                    <!-- <li>
-                        <a class="grey-text text-darken-1" href="/personal-info"><i class="material-icons">person_outline</i>
-              Profile</a>
-                    </li> -->
-                    <!-- <li><a class="grey-text text-darken-1" href="app-chat.html"><i
-                                class="material-icons">chat_bubble_outline</i> Chat</a></li>
-                    <li><a class="grey-text text-darken-1" href="page-faq.html"><i
-                                class="material-icons">help_outline</i> Help</a></li>
-                    <li class="divider"></li>
-                    <li><a class="grey-text text-darken-1" href="user-lock-screen.html"><i
-                                class="material-icons">lock_outline</i> Lock</a></li> -->
                     <li>
-                        <a class="grey-text text-darken-1" href="JavaScript:void(0)" (click)="logout()"><i
-                class="material-icons">keyboard_tab</i> Logout</a>
+                        <a class="grey-text text-darken-1" href="JavaScript:void(0)" (click)="logout()"><i class="material-icons">keyboard_tab</i> Logout</a>
                     </li>
                 </ul>
             </div>
-            <nav class="display-none search-sm">
-                <div class="nav-wrapper">
-                    <form id="navbarForm">
-                        <div class="input-field search-input-sm">
-                            <input class="search-box-sm mb-0" type="search" required="" id="search" placeholder="Explore Materialize" data-search="template-list" />
-                            <label class="label-icon" for="search"><i class="material-icons search-sm-icon">search</i></label><i class="material-icons search-sm-close">close</i>
-                            <ul class="search-list collection search-list-sm display-none"></ul>
-                        </div>
-                    </form>
-                </div>
-            </nav>
         </nav>
     </div>
 </header>
 <!-- Header -->
-
-<ul class="display-none" id="default-search-main" [hidden]="isLogin">
-    <li class="auto-suggestion-title">
-        <a class="collection-item" href="#">
-            <h6 class="search-title">FILES</h6>
-        </a>
-    </li>
-    <li class="auto-suggestion">
-        <a class="collection-item" href="#">
-            <div class="display-flex">
-                <div class="display-flex align-item-center flex-grow-1">
-                    <div class="avatar">
-                        <img src="app-assets/images/icon/pdf-image.png" width="24" height="30" alt="sample image" />
-                    </div>
-
-                    <div class="member-info display-flex flex-column">
-                        <span class="black-text">Two new item submitted</span><small class="grey-text">Marketing Manager</small>
-                    </div>
-                </div>
-                <div class="status"><small class="grey-text">17kb</small></div>
-            </div>
-        </a>
-    </li>
-    <li class="auto-suggestion">
-        <a class="collection-item" href="#">
-            <div class="display-flex">
-                <div class="display-flex align-item-center flex-grow-1">
-                    <div class="avatar">
-                        <img src="app-assets/images/icon/doc-image.png" width="24" height="30" alt="sample image" />
-                    </div>
-
-                    <div class="member-info display-flex flex-column">
-                        <span class="black-text">52 Doc file Generator</span><small class="grey-text">FontEnd Developer</small>
-                    </div>
-                </div>
-                <div class="status"><small class="grey-text">550kb</small></div>
-            </div>
-        </a>
-    </li>
-    <li class="auto-suggestion">
-        <a class="collection-item" href="#">
-            <div class="display-flex">
-                <div class="display-flex align-item-center flex-grow-1">
-                    <div class="avatar">
-                        <img src="app-assets/images/icon/xls-image.png" width="24" height="30" alt="sample image" />
-                    </div>
-
-                    <div class="member-info display-flex flex-column">
-                        <span class="black-text">25 Xls File Uploaded</span><small class="grey-text">Digital Marketing
-              Manager</small>
-                    </div>
-                </div>
-                <div class="status"><small class="grey-text">20kb</small></div>
-            </div>
-        </a>
-    </li>
-    <li class="auto-suggestion">
-        <a class="collection-item" href="#">
-            <div class="display-flex">
-                <div class="display-flex align-item-center flex-grow-1">
-                    <div class="avatar">
-                        <img src="app-assets/images/icon/jpg-image.png" width="24" height="30" alt="sample image" />
-                    </div>
-
-                    <div class="member-info display-flex flex-column">
-                        <span class="black-text">Anna Strong</span><small class="grey-text">Web Designer</small>
-                    </div>
-                </div>
-                <div class="status"><small class="grey-text">37kb</small></div>
-            </div>
-        </a>
-    </li>
-    <li class="auto-suggestion-title">
-        <a class="collection-item" href="#">
-            <h6 class="search-title">MEMBERS</h6>
-        </a>
-    </li>
-    <li class="auto-suggestion">
-        <a class="collection-item" href="#">
-            <div class="display-flex">
-                <div class="display-flex align-item-center flex-grow-1">
-                    <div class="avatar">
-                        <img class="circle" src="app-assets/images/avatar/avatar-7.png" width="30" alt="sample image" />
-                    </div>
-
-                    <div class="member-info display-flex flex-column">
-                        <span class="black-text">John Doe</span><small class="grey-text">UI designer</small>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </li>
-    <li class="auto-suggestion">
-        <a class="collection-item" href="#">
-            <div class="display-flex">
-                <div class="display-flex align-item-center flex-grow-1">
-                    <div class="avatar">
-                        <img class="circle" src="app-assets/images/avatar/avatar-8.png" width="30" alt="sample image" />
-                    </div>
-
-                    <div class="member-info display-flex flex-column">
-                        <span class="black-text">Michal Clark</span><small class="grey-text">FontEnd Developer</small>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </li>
-    <li class="auto-suggestion">
-        <a class="collection-item" href="#">
-            <div class="display-flex">
-                <div class="display-flex align-item-center flex-grow-1">
-                    <div class="avatar">
-                        <img class="circle" src="app-assets/images/avatar/avatar-10.png" width="30" alt="sample image" />
-                    </div>
-
-                    <div class="member-info display-flex flex-column">
-                        <span class="black-text">Milena Gibson</span><small class="grey-text">Digital Marketing</small>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </li>
-    <li class="auto-suggestion">
-        <a class="collection-item" href="#">
-            <div class="display-flex">
-                <div class="display-flex align-item-center flex-grow-1">
-                    <div class="avatar">
-                        <img class="circle" src="app-assets/images/avatar/avatar-12.png" width="30" alt="sample image" />
-                    </div>
-
-                    <div class="member-info display-flex flex-column">
-                        <span class="black-text">Anna Strong</span><small class="grey-text">Web Designer</small>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </li>
-</ul>
-<ul class="display-none" id="page-search-title" [hidden]="isLogin">
-    <li class="auto-suggestion-title">
-        <a class="collection-item" href="#">
-            <h6 class="search-title">PAGES</h6>
-        </a>
-    </li>
-</ul>
-<ul class="display-none" id="search-not-found" [hidden]="isLogin">
-    <li class="auto-suggestion">
-        <a class="collection-item display-flex align-items-center" href="#"><span
-        class="material-icons">error_outline</span><span class="member-info">No results found.</span></a>
-    </li>
-</ul>
 
 <!-- SideNav -->
 <aside class="sidenav-main nav-expanded nav-collapsible sidenav-light navbar-full sidenav-active-rounded" [ngClass]="{ 'nav-lock': isLock }" [hidden]="isLogin">
@@ -284,13 +63,6 @@
         <h1 class="logo-wrapper">
             <a class="brand-logo darken-1" href="index.html">
                 <img src="./assets/img/logo_w.png" alt="">
-                <!-- <img *ngIf="company == 'TEST_THESTAR'" src="./assets/img/logo_thestar.png" alt="">
-                <img *ngIf="company == 'TEST_HRSOLUTION'" src="./assets/img/logo_hrsolution.jpg" alt="">
-                <img *ngIf="company == 'TEST_QUICKSPEED'" src="./assets/img/logo_quickspeed.jpg" alt="">
-                <img *ngIf="company == 'thestar'" src="./assets/img/logo_thestar.png" alt="">
-                <img *ngIf="company == 'staraccounting'" src="./assets/img/logo_staraccounting.jpg" alt="">
-                <img *ngIf="company == 'hrsolution'" src="./assets/img/logo_hrsolution.jpg" alt="">
-                <img *ngIf="company == 'quickspeed'" src="./assets/img/logo_quickspeed.jpg" alt=""> -->
                 <span class="logo-text hide-on-med-and-down" style="color: #ffffff !important;"> 
                     Truck2Track
                 </span>
@@ -302,40 +74,7 @@
     </div>
 
     <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
-        <a class="brand-logo darken-1" href="index.html">
-            <!-- <img src="./assets/img/logo_w.png" alt="materialize logo" /> -->
-            <!-- <img src="./assets/img/logo_w.png" alt="" width="80"> -->
-            <!-- <span class="logo-text hide-on-med-and-down" style="color: #000000 !important;"> 
-                <b> Time Sheet</b>
-            </span> -->
-        </a>
-        <!-- <li class="bold" [ngClass]="{ active: i.isActive }" *ngFor="let i of menuService.menu; let idx = index">
-            <a *ngIf="i.name != 'รายงาน' && permission(i.items).length > 0" class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)">
-                <b class="menu-title" data-i18n="Image">{{i.name}}</b>
-            </a>
-            <div class="collapsible-body">
-                <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                    <li *ngFor="let j of permission(i.items); let idx = index" class="active">
-                        <a [ngClass]="{ active: j.isActive }" routerLink="/" (click)="goToRouting(j)">
-                            <span class="ct-menu-btn" data-i18n="main">{{ j.name }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li> -->
-
-        <!-- <li class="bold">
-            <a (click)="goToReport()" class="waves-effect waves-cyan" [ngClass]="{ active: reportModel[0].isActive }" href="JavaScript:void(0)">
-                <b class="menu-title" data-i18n="Demo">รายงาน</b>
-            </a>
-        </li> -->
-
-        <!-- <li class="bold">
-            <a (click)="goToHome()" class="waves-effect waves-cyan" [ngClass]="{ active: menuModel.home }" href="JavaScript:void(0)">
-                <i class="material-icons">home</i><b class="menu-title" data-i18n="Demo">Home</b>
-            </a>
-        </li> -->
-
+        <a class="brand-logo darken-1" href="index.html"></a>
         <li class="bold" [ngClass]="{ active: i.isActive }" *ngFor="let i of menuService.menu; let idx = index">
             <a *ngIf="permission(i.items).length > 0" class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)">
                 <b class="menu-title" data-i18n="Image">{{i.name}}</b>
@@ -350,41 +89,9 @@
                 </ul>
             </div>
         </li>
-
-        <!-- <li class="bold">
-            <a (click)="goIssueLog()" class="waves-effect waves-cyan" [ngClass]="{ active: menuModel.issueLog }" href="JavaScript:void(0)">
-                <i class="material-icons">supervisor_account</i><b class="menu-title" data-i18n="Demo">Issue Log</b>
-            </a>
-        </li> -->
-
-        <!-- <li class="bold" *ngIf="authUser == 'true'">
-            <a (click)="goToEmployee()" class="waves-effect waves-cyan" [ngClass]="{ active: employeeModel[0].isActive }" href="JavaScript:void(0)">
-                <i class="material-icons">supervisor_account</i><b class="menu-title" data-i18n="Demo">Employee</b>
-            </a>
-        </li>
-
-        <li class="bold" *ngIf="authTimeSheet == 'true'">
-            <a (click)="goToTimeSheet()" class="waves-effect waves-cyan" [ngClass]="{ active: timesheetModel[0].isActive }" href="JavaScript:void(0)">
-                <i class="material-icons">today</i><b class="menu-title" data-i18n="Demo">Time Sheet</b>
-            </a>
-        </li> -->
-
-        <!-- <li class="bold" *ngIf="authDocLogReport == 'true'">
-            <a (click)="goToDocReport()" class="waves-effect waves-cyan" [ngClass]="{ active: docReportModel[0].isActive }" href="JavaScript:void(0)">
-                <i class="material-icons">report</i><b class="menu-title" data-i18n="Demo">Doc Log Report</b>
-            </a>
-        </li> -->
-
-        <!-- <li class="bold" *ngIf="authUserLogReport == 'true'">
-            <a (click)="goToUserReport()" class="waves-effect waves-cyan" [ngClass]="{ active: userReportModel[0].isActive }" href="JavaScript:void(0)">
-                <i class="material-icons">report</i><b class="menu-title" data-i18n="Demo">User Log Report</b>
-            </a>
-        </li> -->
-
         <!-- Logout -->
         <li class="bold">
             <a (click)="logout()" class="waves-effect waves-cyan" href="JavaScript:void(0)">
-                <!-- <i class="material-icons">exit_to_app</i> -->
                 <b class="menu-title" data-i18n="Demo">Logout</b>
             </a>
         </li>
@@ -403,7 +110,6 @@
                     <div class="col s12 m12 l12 breadcrumbs-left">
                         <!-- {{menuMain | json}} -->
                         <router-outlet></router-outlet>
-                        <!-- <app-dashboard></app-dashboard> -->
                     </div>
                 </div>
             </div>
@@ -414,16 +120,7 @@
 
 <!-- Footer -->
 <footer class="page-footer footer footer-static footer-dark gradient-shadow navbar-border navbar-shadow background-footer" [hidden]="isLogin">
-    <!-- <footer class="page-footer footer footer-static footer-dark gradient-45deg-purple-deep-orange gradient-shadow navbar-border navbar-shadow" [hidden]="isLogin"></footer> -->
-    <div class="footer-copyright">
-        <!-- <div class="container">
-            <span>&copy; 2020
-        <a href="http://themeforest.net/user/pixinvent/portfolio?ref=pixinvent" target="_blank">We Build & Operate
-          Co.,Ltd.</a>
-        All rights reserved.</span><span class="right hide-on-small-only">Design and Developed by
-        <a href="http://www.webuild.co.th/">We Build & Operate Co.,Ltd.</a></span>
-        </div> -->
-    </div>
+    <div class="footer-copyright"></div>
 
     <!-- https://pixinvent.com/ -->
     <!-- PIXINVENT -->
@@ -442,7 +139,6 @@
                                 <img src="./assets/img/logo_w.png" width="80" alt="">
                                 <h1 class="ml-4">Truck2Track</h1>
                                 <label class="ml-4 version-label">{{versionString}}</label>
-                                <!-- <h3 class="ml-4">เข้าสู่ระบบด้วยบัญชีของท่าน</h3> -->
                             </div>
                         </div>
 
@@ -469,9 +165,6 @@
                                 <a href="JavaScript:void(0)" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12 btn-login" (click)="login()">Login</a>
                             </div>
                         </div>
-                        <!-- <div class="row">
-                            {{viewModel | json}}
-                        </div> -->
                     </form>
                 </div>
             </div>
@@ -482,7 +175,6 @@
                     <div class="row" style="text-align: center;">
                         <div class="input-field col s12">
                             <h2 class="ml-4">รหัสผ่านหมดอายุ กรุณากำหนดรหัสผ่านใหม่</h2>
-                            <!-- <img width="250" height="100" src="./assets/img/webuild.png"/> -->
                         </div>
                     </div>
                     <div class="row">
@@ -496,7 +188,6 @@
                     <div class="row">
                         <div class="input-field col s6">
                             <a href="JavaScript:void(0)" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12 btn-login" (click)="changePassword()">ยืนยัน</a>
-                            <!-- <a href="JavaScript:void(0)" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12" (click)="signUp(model)">sing up</a> -->
                         </div>
                         <div class="input-field col s6" style="text-align: center;">
                             <p class="margin medium-small">have an account?</p>

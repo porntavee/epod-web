@@ -31,7 +31,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     private toastr                 : ToastrService,
     private changeDetector         : ChangeDetectorRef,
     private serviceProviderService : ServiceProviderService
-  ){
+  ) {
     // Initialize userinformation to criteria object.
     this.criteria = { 
       "userinformation": this.serviceProviderService.userinformation
@@ -57,6 +57,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     criteria = {...this.criteria, ...criteria};
     Logger.info('master-subroute', 'render', criteria, this.isDebugMode)
 
+    // Call service provider service to get sub route data.
     this.serviceProviderService.post('api/Masters/GetSubRoute', criteria)
     .subscribe(data => {
        // Hidden spinner when load data successfuly.
@@ -102,23 +103,6 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
   }
   
-  // Set Header Model.
-  setCriteriaModel(model) {
-    // Setting header model.
-    for (const key in model) {
-      this.criteriaModel[key] = model[key];
-    } 
-  }
-
-  // Reset Criteria Model.
-  resetCriteriaModel(model) {
-    for (const key in model) {
-      this.criteriaModel[key] = '';
-    } 
-  }
-
- 
-  
   // Set to Form Page.
   setToFromPage() {
     this.isMainPage = false;
@@ -134,21 +118,25 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
   }
   /*-------------------------------------- End Ohm ----------------------------------*/
 
-  readDetail(param) {
+  setForm(param) {
     this.spinner.show();
+    Logger.info('master-vehicle', 'setForm-param', param, this.isDebugMode)
 
     let criteria = {
       "Id": param.Id
     }
-    criteria = {...this.criteria, ...criteria};
+    this.criteria = {...this.criteria, ...criteria};
 
     this.headerModel = param;
     this.headerModel.Operation = 'UPDATE';
+    this.headerModel.RouteDescription = param.Route;
 
+    Logger.info('master-vehicle', 'setForm', this.headerModel, this.isDebugMode)
     // Set to from page.
     this.setToFromPage();
   }
 
+  // Clear Model and Reload Table Data.
   clearAndReloadData() {
     // Clear criteriaModel.
     this.criteriaModel = {};
@@ -220,6 +208,8 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     }, err => {
       this.hideSninnerAndShowError(err.message);
     });
+    // Clear Model and Reload Table Data.
+    this.clearAndReloadData();
   }
 
   delete(param) {
@@ -259,13 +249,13 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
         }, err => {
           this.hideSninnerAndShowError(err.message);
         });
-        // Clear criteriaModel and Reload Table Data.
+        // Clear Model and Reload Table Data.
         this.clearAndReloadData();
       }
     });
   }
 
-  chooseRoute() {
+  chooseRouteFilter() {
     const dialogRef = this.dialog.open(RoutingDialog, {
       disableClose: false,
       height: '400px',
@@ -277,28 +267,18 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
       Logger.info('master-subroute', 'chooseRoute2', result, this.isDebugMode)
 
       if (result != undefined) {
-        let _criteriaModel = {
-          RouteId: result.Id,
-          RouteCode: result.Code,
-          RouteDescription: result.Description
-        }
-        // Setting header model.
-        _criteriaModel = this.setModel(_criteriaModel);
-        this.criteriaModel = {...this.headerModel, ..._criteriaModel};
+        this.criteriaModel.RouteId = result.Id;
+        this.criteriaModel.RouteCode = result.Code;
+        this.criteriaModel.RouteDescription = result.Description;
       } else {
-        let _criteriaModel = {
-          RouteId: '',
-          RouteCode: '',
-          RouteDescription: ''
-        }
-         // Setting header model.
-         _criteriaModel = this.setModel(_criteriaModel);
-         this.criteriaModel = {...this.headerModel, ..._criteriaModel};
+        this.criteriaModel.RouteId = '';
+        this.criteriaModel.RouteCode = '';
+        this.criteriaModel.RouteDescription = '';
       }
     });
   }
 
-  chooseRoute2() {
+  chooseRouteAddForm() {
     const dialogRef = this.dialog.open(RoutingDialog, {
       disableClose: false,
       height: '400px',
@@ -307,32 +287,30 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-subroute', 'chooseRoute2', result, this.isDebugMode)
-
+      Logger.info('master-subroute', 'chooseRouteAddForm', result, this.isDebugMode);
+      let _headerModel: object = {}
       if (result != undefined) {
-        let _criteriaModel = {
+        _headerModel = {
           RouteId: result.Id,
           RouteCode: result.Code,
           RouteDescription: result.Description
         }
-        // Setting header model.
-        _criteriaModel = this.setModel(_criteriaModel);
-        this.criteriaModel = {...this.headerModel, ..._criteriaModel};
       } else {
-        let _criteriaModel = {
+        _headerModel = {
           RouteId: '',
           RouteCode: '',
           RouteDescription: ''
         }
-         // Setting header model.
-         _criteriaModel = this.setModel(_criteriaModel);
-         this.criteriaModel = {...this.headerModel, ..._criteriaModel};
       }
+      // Setting header model.
+      _headerModel = this.setModel(_headerModel);
+      this.headerModel = {...this.headerModel, ..._headerModel};
+      Logger.info('master-subroute', 'chooseRouteAddForm-SetHeaderModel', this.headerModel, this.isDebugMode);
     });
   }
 
    // Fixing "Expression has changed after it was checked"
-   ngAfterContentChecked(): void {
+  ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();
   }
 }
