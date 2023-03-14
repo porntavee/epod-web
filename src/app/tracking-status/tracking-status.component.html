@@ -473,6 +473,10 @@
                         <div class="col l5 s12 p-0">
                             <citxt (cModel)="headerModel.ShipmentNo = $event" [label]="'Shipment No.'" [data]="headerModel.ShipmentNo" [readonly]="true"></citxt>
                         </div>
+
+                        <div class="col l5 s12 p-0">
+                            <citxt (cModel)="headerModel.TransportNo = $event" [label]="'Transport No.'" [data]="headerModel.TransportNo" [readonly]="true"></citxt>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -812,12 +816,12 @@
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            <!-- {{formatDateTime(i.OrderDate)}} -->
+                                            {{formatDate(i.DeliveryCheckInDate)}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.OrderStatusDesc}}
+                                            {{i.OTDelivery}}
                                         </div>
                                     </td>
                                     <td>
@@ -863,25 +867,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let i of listDetailModel2; let idx = index">
+                                <tr>
                                     <td>
                                         <div class="w100">
-                                            {{i.InvoiceNo}}
+                                            {{headerModel.InvoiceNo}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.ApptDate}}
+                                            {{formatDate(headerModel.OrderEstimate)}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.ActualArrive}}
+                                            {{formatDate(headerModel.DeliveryCheckInDate)}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.Status}}
+                                            {{headerModel.OTDelivery}}
                                         </div>
                                     </td>
                                 </tr>
@@ -900,25 +904,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let i of listDetailModel3; let idx = index">
+                                <tr>
                                     <td>
                                         <div class="w100">
-                                            {{i.DriverReturn}}
+                                            {{formatDateTime(headerModel.DriverReturnDate)}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.DueDate}}
+                                            {{formatDate(headerModel.AdminReturnDate)}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.ReturnDate}}
+                                            {{formatDate(headerModel.InvoiceDate)}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w100">
-                                            {{i.Status}}
+                                            {{headerModel.OTBillReturn}}
                                         </div>
                                     </td>
                                 </tr>
