@@ -41,7 +41,6 @@ export class AppComponent {
     private http: HttpClient
   ) {
     this.versionString= this.serviceProviderService.version;
-    // this.versionString = this.versionNumberFormat();
     this.userModel.username = '';
     this.userModel.password = '';
     this.userModel.company = 'SINO';
@@ -312,14 +311,6 @@ export class AppComponent {
     //     this.listCategory.push({ value: element.code, display: element.title });
     //   });
     // }, err => { });
-  }
-
-  versionNumberFormat(): any {
-    let _versionString =  this.versionString;
-    _versionString = _versionString.substring(0, 4) + '.' + 
-    _versionString.substring(4, 6) + '.' + 
-    _versionString.substring(6, 8)
-    return _versionString;
   }
 }
 

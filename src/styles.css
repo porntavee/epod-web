@@ -358,11 +358,17 @@ p {
     margin-right: 5px !important;
 }
 
-.ml-4.version-label {
+.mat-typography h2.login {
+    margin: 0px !important;
+}
+
+.ml-4.version-span {
     position: relative !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
     margin-left: -10px !important;
     font-size: 1.4em !important;
-    text-shadow: 1px 1px white, -0.5px -0.5px #333
+    text-shadow: 2px 2px white, 1px 1px #333
 }
 
 /* show scrollbar always */

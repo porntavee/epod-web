@@ -65,8 +65,7 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
       "ProvinceId": this.criteriaModel.ProvinceId,
       "IsHub": (this.criteriaModel.IsHub == undefined || this.criteriaModel.IsHub == false) ? '' : 'Y',
     }
-
-
+    
     this.serviceProviderService.post('api/Masters/GetShipto', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};

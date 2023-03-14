@@ -137,8 +137,11 @@
                         <div class="row" style="text-align: center;">
                             <div class="input-field col s12">
                                 <img src="./assets/img/logo_w.png" width="80" alt="">
-                                <h1 class="ml-4">Truck2Track</h1>
-                                <label class="ml-4 version-label">{{versionString}}</label>
+                                <h2 class="ml-4 login">Truck2Track</h2>
+                                <h4>
+                                    <span class="version-label">{{versionString}}</span>
+                                </h4>
+                                
                             </div>
                         </div>
 
@@ -156,11 +159,11 @@
                                 <label for="password">Password | รหัสผ่าน</label>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: -5px !important;">
+                        <!-- <div class="row" style="margin-top: -5px !important;">
                             <csop (cModel)="userModel.company = $event" [label]="'Company Name'" [data]="userModel.company" [sources]="listCompany">
                             </csop>
-                        </div>
-                        <div class="row mt-5">
+                        </div> -->
+                        <div class="row">
                             <div class="input-field col s12">
                                 <a href="JavaScript:void(0)" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12 btn-login" (click)="login()">Login</a>
                             </div>
