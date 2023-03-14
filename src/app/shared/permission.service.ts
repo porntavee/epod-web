@@ -22,9 +22,7 @@ export class PermissionService {
       }
 
       return permission;
-    }
-    else
-    {
+    } else {
       return '';
     }
   }
@@ -32,8 +30,7 @@ export class PermissionService {
   readLocalStorage(param) {
     if (localStorage.getItem(param) != null) {
       return JSON.parse(localStorage.getItem(param));
-    }
-    else {
+    } else {
       return '';
     }
   }

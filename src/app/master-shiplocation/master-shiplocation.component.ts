@@ -1,4 +1,4 @@
-import { Component, Inject, KeyValueDiffers, OnInit } from '@angular/core';
+import { Component, Inject, KeyValueDiffers, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -6,14 +6,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { ConfirmDialog ,RoutingDialog, SubRoutingDialog,RegionDialog,ProvinceDialog,DistrictDialog } from '../dialog/dialog';
+import { Logger } from '../shared/logger.service';
 
 @Component({
   selector: 'app-master-shiplocation',
   templateUrl: './master-shiplocation.component.html',
   styleUrls: ['./master-shiplocation.component.css']
 })
-export class MasterShiplocationComponent implements OnInit {
+export class MasterShiplocationComponent implements OnInit, AfterContentChecked {
 
+  isDebugMode: boolean = true;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
@@ -21,6 +23,9 @@ export class MasterShiplocationComponent implements OnInit {
   listDetailModel: any = [];
   headerModel: any = {};
   criteriaModel: any = {} //ค้นหา
+  criteria: object = { 
+    "userinformation": this.serviceProviderService.userinformation
+  }; // User information
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
@@ -29,22 +34,24 @@ export class MasterShiplocationComponent implements OnInit {
 
   mode: any = 'create';
 
-  p = 1;
+  currentPage = 1;
 
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.read();
-
   }
 
   viewModel: any;
   read() {
     this.spinner.show();
 
+    // Reset current page to 1 for search.
+    this.currentPage = 1;
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "Code": this.criteriaModel.Code,
@@ -58,11 +65,7 @@ export class MasterShiplocationComponent implements OnInit {
       "ProvinceId": this.criteriaModel.ProvinceId,
       "IsHub": (this.criteriaModel.IsHub == undefined || this.criteriaModel.IsHub == false) ? '' : 'Y',
     }
-
-    let json = JSON.stringify(criteria);
-
-    // debugger
-
+    
     this.serviceProviderService.post('api/Masters/GetShipto', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
@@ -83,6 +86,21 @@ export class MasterShiplocationComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
   }
+
+    /*--------------------------Start Define Method Ohm -------------------------------*/
+  // Set Header Model By Ohm.
+  setHeaderModel(model) {
+    // Setting header model.
+    for (const key in model) {
+      this.headerModel[key] = model[key];
+    } 
+  }
+
+  // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+  /*-------------------------------------- End Ohm ----------------------------------*/
 
   readDetail(param) {
     this.spinner.show();
@@ -266,13 +284,18 @@ export class MasterShiplocationComponent implements OnInit {
     });
   }
 
+  clearAndReloadData() {
+    // Clear criteriaModel.
+    this.criteriaModel = {};
+    Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
 
-  clear() {
-    this.criteriaModel = { apptDate: '' };
+    // Reload Table data.
+    this.read();
   }
 
   add() {
     this.spinner.show();
+    
     this.headerModel.Operation = 'INSERT';
     this.headerModel.Code = 'Auto';
 
@@ -360,6 +383,8 @@ export class MasterShiplocationComponent implements OnInit {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
+    // Clear criteriaModel and Reload Table Data.
+    this.clearAndReloadData();
   }
 
   delete(param) {
@@ -401,8 +426,8 @@ export class MasterShiplocationComponent implements OnInit {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
-
-      this.read();
+        // Clear criteriaModel and Reload Table Data.
+        this.clearAndReloadData();
       }
     });
   }

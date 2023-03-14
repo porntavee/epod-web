@@ -1,4 +1,4 @@
-import { Component, Inject, KeyValueDiffers, OnInit } from '@angular/core';
+import { Component, Inject, KeyValueDiffers, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -16,7 +16,7 @@ import * as XLSX from 'xlsx-js-style';
   templateUrl: './order-approve.component.html',
   styleUrls: ['./order-approve.component.css']
 })
-export class OrderApproveComponent implements OnInit {
+export class OrderApproveComponent implements OnInit, AfterContentChecked {
 
   isDelivery: boolean = false;
   isMainPage: boolean = true;
@@ -49,7 +49,8 @@ export class OrderApproveComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private differs: KeyValueDiffers,
-    private excelService: ExcelService) { }
+    private excelService: ExcelService,
+    public changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
 
@@ -263,6 +264,53 @@ export class OrderApproveComponent implements OnInit {
     });
   }
 
+  closeJob() {
+    // Logger.info('order-transport', 'closeJob', "Close Job", this.isDebugMode);
+
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      disableClose: false,
+      height: '150px',
+      width: '300px',
+      data: { title: 'คุณต้องการปิดงานใบคุมใช่หรือไม่?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+        this.spinner.show();
+
+        let criteria = {
+          "userinformation": this.serviceProviderService.userinformation,
+          "TransportNo": this.headerModel.TransportNo,
+          "Process": 'ADMINCLOSEJOB' ,
+        }
+
+        this.serviceProviderService.post('api/Transport/AdminCloseJob', criteria)
+        .subscribe(data => {
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
+          this.viewModel = model;
+
+          if (model.Status) {
+            this.spinner.hide();
+            this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.backToMain();
+          } else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+      }
+    });
+    
+  }
+
   setSeq(param, idx) {
     param = idx;
     return param;
@@ -451,6 +499,7 @@ export class OrderApproveComponent implements OnInit {
     });
   }
 
+
   backToMain() {
     this.isMainPage = true;
     this.isFormPage = false;
@@ -574,6 +623,8 @@ export class OrderApproveComponent implements OnInit {
         return '#66A5D9'
       case 'W':
         return '#B6B6B6'
+      case 'M':
+        return '#FF9800'
       default:
         break;
     }
@@ -673,5 +724,10 @@ export class OrderApproveComponent implements OnInit {
       }
     }
     XLSX.writeFile(workbook, rutaArchivo);
+  }
+
+  // Fixing "Expression has changed after it was checked"
+  public ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }

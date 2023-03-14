@@ -255,6 +255,121 @@ p {
     text-align: center;
 }
 
+/* OHM css Clean code. */
+.card-panel-header, .table-panel-header  {
+    padding: 2px !important;
+    margin-bottom: 0px !important;
+    background-color:lavender !important;
+    vertical-align: text-top !important;
+}
+
+.card-panel-header-label, .table-panel-header-lebel {
+    position: relative !important;
+    float: left !important; 
+    font-size: 1em !important;
+    font-weight: 800;
+    color: #6B6F82 !important;
+    padding-left: 20px !important;
+    padding-top: 10px !important;
+    margin-bottom: 5px !important;
+}
+
+.overflow-x {
+    overflow-x: auto !important;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.reset-padding {
+    padding: 0px !important;
+}
+
+.padding-left-20 {
+    padding-left: 20px !important;;
+}
+
+.margin-bottom-5 {
+    margin-bottom: 5px !important;;
+}
+
+.reset-margin-top {
+    margin-top: 0px !important;
+}
+
+.margin-top-10 {
+    margin-top: 10px !important;
+}
+
+.margin-top-mminus-10 {
+    margin-top: -10px !important;
+}
+
+.margin-top-mminus-20 {
+    margin-top: -20px !important;
+}
+
+.min-width-20 {
+    min-width: 20px !important;
+}
+
+.min-width-30 {
+    min-width: 30px !important;
+}
+
+.min-width-100 {
+    min-width: 100px !important;
+}
+
+.min-width-150 {
+    min-width: 150px !important;
+}
+
+.min-width-120 {
+    min-width: 120px !important;
+}
+
+.min-width-200 {
+    min-width: 200px !important;
+}
+
+.min-width-300 {
+    min-width: 300px !important;
+}
+
+.min-width-600 {
+    min-width: 600px !important;
+}
+
+.min-width-800 {
+    min-width: 600px !important;
+}
+
+.custom-button {
+    margin-right: 10px !important;
+    margin-bottom: 7px !important;  
+}
+
+.custom-button-icon {
+    position: relative !important;
+    float:left !important; 
+    font-size: 1.5em !important; 
+    margin-right: 5px !important;
+}
+
+.mat-typography h2.login {
+    margin: 0px !important;
+}
+
+.ml-4.version-span {
+    position: relative !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    margin-left: -10px !important;
+    font-size: 1.4em !important;
+    text-shadow: 2px 2px white, 1px 1px #333
+}
 
 /* show scrollbar always */
 

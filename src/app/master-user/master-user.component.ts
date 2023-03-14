@@ -1,83 +1,116 @@
-import { Component, Inject, KeyValueDiffers, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { ConfirmDialog, GroupUserDialog, RouteDialog, ShipToDialog, VehicleDialog } from '../dialog/dialog';
+import { Logger } from '../shared/logger.service';
 
 @Component({
   selector: 'app-master-user',
   templateUrl: './master-user.component.html',
   styleUrls: ['./master-user.component.css']
 })
-export class MasterUserComponent implements OnInit {
+export class MasterUserComponent implements OnInit, AfterContentChecked {
 
-  isMainPage: boolean = true;
-  isFormPage: boolean = false;
-  isTimeSheetPage: boolean = false;
-  listModel: any = []; //ข้อมูลในตารางหน้า Main
-  listDetailModel: any = [];
-  headerModel: any = {};
-  criteriaModel: any = {} //ค้นหา
-  title: string = 'เพิ่มข้อมูล';
-  model: any = {}; //ข้อมูล Form
-  models: any = []; //ข้อมูลในตารางหน้า Form
-  timeSheetModel: any = {};
-  dateControl = new FormControl(moment().format('YYYYMMDD'));
-  listTransport: any = [];
-  mode: any = 'create';
+  isDebugMode     : boolean = true;
+  isMainPage      : boolean = true;
+  isFormPage      : boolean = false;
+  isTimeSheetPage : boolean = false;
+  headerModel     : any     = {};
+  criteriaModel   : any     = {}; //ค้นหา
+  criteria        : any     = {}; // User Information.
+  model           : any     = {}; //ข้อมูล Form
+  listModel       : any     = []; //ข้อมูลในตารางหน้า Main
+  viewModel       : any     = {};
+  listTransport   : any     = [];
+  currentPage     : number  = 1;
 
-  p = 1;
-
-  listGroupUser: any = [];
-
-  constructor(public dialog: MatDialog,
-    private serviceProviderService: ServiceProviderService,
-    private spinner: NgxSpinnerService,
-    private toastr: ToastrService) { }
+  constructor(
+    public dialog                  : MatDialog,
+    private spinner                : NgxSpinnerService,
+    private toastr                 : ToastrService,
+    private changeDetector         : ChangeDetectorRef,
+    private serviceProviderService : ServiceProviderService
+  ){
+    // Initialize userinformation to criteria object.
+    this.criteria = { 
+      "userinformation": this.serviceProviderService.userinformation
+    };
+  }
 
   ngOnInit(): void {
-    this.read();
+    this.render();
     this.readTransport();
   }
 
-  viewModel: any;
-  read() {
+  // Grid configuration and render.
+	render(): void {
+    // Show spinner.
     this.spinner.show();
+    // Reset current page to 1 for search.
+    this.currentPage = 1;
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "UserName": this.criteriaModel.UserName,
       "FirstName": this.criteriaModel.FirstName,
       "LastName": this.criteriaModel.LastName,
       "Mobile": this.criteriaModel.Mobile,
       "GroupCode": this.criteriaModel.GroupCode,
     }
-
-    let json = JSON.stringify(criteria);
+    criteria = {...this.criteria, ...criteria};
+    Logger.info('master-user', 'read', criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Masters/GetUser', criteria).subscribe(data => {
+      // Hidden spinner when load data successfuly.
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+      // Set data to model.
+      let model: any = data;
       this.viewModel = model;
-
-      if (model.Status) {
-        this.listModel = model.Data;
-      }
-      else {
-        this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
+      // Check model status if true set model data to list model.
+      this.listModel = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
+  }
+  private setModel(model) {
+    // Set model.
+    let _model: any = model;
+    for (const key in model) {
+      _model[key] = model[key];
+    }
+
+    return _model;
+  }
+
+  // If can't load data to list model.
+  private loadDataFalse(message): boolean {
+    let _listModel: any = [];
+    this.hideSninnerAndShowError(message);
+
+    return _listModel;
+  }
+
+  // If sucess load data.
+  private hideSninnerAndShowSuccess(message: string) {
+    this.spinner.hide();
+    this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  // If error load data.
+  private hideSninnerAndShowError(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  // Set go to form page.
+  private goToFromPage() {
+    this.isMainPage = false;
+    this.isFormPage = true;
+    this.spinner.hide();
   }
 
   readTransport() {
@@ -88,78 +121,53 @@ export class MasterUserComponent implements OnInit {
 
     // let json = JSON.stringify(criteria);
     this.serviceProviderService.post('api/Masters/GetTransport', criteria).subscribe(data => {
-      let model: any = {};
-      model = data;
+      // Set data to model.
+      let model: any = data;
       this.viewModel = model;
-
-      if (model.Status) {
-        this.listTransport = model.Data;
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
+      // Check model status if true set model data to list model.
+      this.listTransport = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
-  readDetail(param) {
+  setFormData(param) {
     this.spinner.show();
 
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
+    let _criteria = {
       "Id": param.Id
     }
+    _criteria = {...this.criteria, ..._criteria};
 
-    this.headerModel = param;
-    this.headerModel.Operation = 'UPDATE';
+    let _headerModel = {
+      Operation: 'UPDATE'
+    }
+    _headerModel = {...param, ..._headerModel};
 
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.spinner.hide();
+    // Setting header model.
+    this.headerModel = this.setModel(_headerModel);
 
-    // let json = JSON.stringify(criteria);
-
-    // this.serviceProviderService.post('api/Masters/GetUser', criteria).subscribe(data => {
-    //   this.spinner.hide();
-    //   let model: any = {};
-    //   model = data;
-    //   this.viewModel = model;
-
-    //   if (model.Status) {
-
-    //     this.listDetailModel = model.Data;
-
-    //     this.isMainPage = false;
-    //     this.isFormPage = true;
-    //   }
-    //   else {
-    //     this.spinner.hide();
-    //     this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    //   }
-
-    // }, err => {
-    //   this.spinner.hide();
-    //   this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    // });
+     // Set to from page.
+     this.goToFromPage();
   }
 
   //Group User.
   chooseGroupUser() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(GroupUserDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'กลุ่มผู้ใช้งานระบบ' } });
+    const dialogRef = this.dialog.open(GroupUserDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'กลุ่มผู้ใช้งานระบบ' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      Logger.info('master-user', 'chooseGroupUser', result, this.isDebugMode)
 
       if (result != undefined) {
         this.criteriaModel.GroupCode = result.Code;
         this.criteriaModel.GroupName = result.GroupName;
-      }
-      else {
+      } else {
         this.criteriaModel.GroupCode = '';
         this.criteriaModel.GroupName = '';
       }
@@ -176,8 +184,7 @@ export class MasterUserComponent implements OnInit {
       if (result != undefined) {
         this.headerModel.GroupCode = result.Code;
         this.headerModel.GroupName = result.GroupName;
-      }
-      else {
+      } else {
         this.headerModel.GroupCode = '';
         this.headerModel.GroupName = '';
       }
@@ -194,186 +201,196 @@ export class MasterUserComponent implements OnInit {
       if (result != undefined) {
         this.headerModel.VehicleId = result.Id;
         this.headerModel.VehicleNo = result.Description;
-      }
-      else {
+      } else {
         this.headerModel.VehicleId = '';
         this.headerModel.VehicleNo = '';
       }
     });
   }
 
-  clear() {
-    this.criteriaModel = { apptDate: '' };
+  clearAndReloadData() {
+    // Clear criteriaModel.
+    this.criteriaModel = { apptDate: ''};
+    Logger.info('master-vehicle', 'clear', this.criteria, this.isDebugMode)
+
+    // Reload Table data.
+    this.render();
   }
 
-  add() {
+  addForm() {
+    // Show spinner.
     this.spinner.show();
-    this.headerModel.Operation = 'INSERT';
-    this.headerModel.Code = 'Auto';
-    this.headerModel.FirstName = '';
-    this.headerModel.LastName = '';
-    this.headerModel.UserName = '';
-    this.headerModel.Password = '';
-    this.headerModel.LicenseNo = '';
-  
-    this.headerModel.Mobile = '';
-    this.headerModel.Email = '';
-    this.headerModel.Sex = '';
-    this.headerModel.Active = 'Y';
 
-    //Popup
-    this.headerModel.GroupCode = '';
-    this.headerModel.GroupName = '';
+     // Declare setting local header model.
+     let _headerModel = { 
+      Operation: 'INSERT', Code : 'Auto', FirstName : '', LastName : '',
+      UserName: '', Password: '', LicenseNo: '', Mobile: '', Email: '',
+      Sex: '', Active: 'Y',
+      //Popup
+      GroupCode: '', GroupName: '', VehicleId: '', VehicleNo: '', HubId: '',
+      HubCode : '', HubDescription : '', TransportId : '', TransportCode: '',
+      TransportDescription : ''
+    }
 
-    this.headerModel.VehicleId = '';
-    this.headerModel.VehicleNo = '';
+    // Setting header model.
+    this.headerModel = this.setModel(_headerModel);
 
-    this.headerModel.HubId = '';
-    this.headerModel.HubCode  = '';
-    this.headerModel.HubDescription  = '';
-    
-    this.headerModel.TransportId  = '';
-    this.headerModel.TransportCode = '';
-    this.headerModel.TransportDescription  = '';
-
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.spinner.hide();
+    // Set to from page.
+    this.goToFromPage();
   }
 
-  back() {
+  // Set back to main page.
+  backToMainPage() {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    this.read();
+    this.render();
   }
 
   chooseTransportShipTo() {
-
-    // if (this.criteriaModel.TransportTypeId != 'XD') {
-    //   this.toastr.warning('ระบุ Type of Work เป็น X Dock ก่อน', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    //   return
-    // }
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานที่',IsHub :'Y' } });
+    const dialogRef = this.dialog.open(ShipToDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'สถานที่',IsHub :'Y' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      Logger.info('master-user', 'chooseTransportShipTo', this.criteria, this.isDebugMode)
 
       if (result != undefined) {
-        this.headerModel.HubId = result.Id;
-        this.headerModel.HubCode = result.Code;
-        this.headerModel.HubDescription = result.Code + ' - ' + result.CustomerName;
+
+         // Declare setting local criteria model.
+         let _headerModel = {
+          'HubId'          : result.Id,
+          'HubCode'        : result.Code,
+          'HubDescription' : result.Code + ' - ' + result.CustomerName
+        }
+        // Setting header model.
+        _headerModel = this.setModel(_headerModel);
+        this.headerModel = {...this.headerModel, ..._headerModel};
       }
     });
   }
   chooseTransport() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport', listData: this.listTransport, listDataSearch: this.listTransport } });
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Transport',
+        listData: this.listTransport,
+        listDataSearch: this.listTransport 
+      }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        this.headerModel.TransportId = result.Id;
-        this.headerModel.TransportCode = result.Code;
-        this.headerModel.TransportDescription = result.Code + ' - ' + result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        // Declare setting local criteria model.
+        let _headerModel = {
+          'TransportId'          : result.Id,
+          'TransportCode'        : result.Code,
+          'TransportDescription' : result.Code + ' - ' + result.Description
+        }
+        // Setting header model.
+        _headerModel = this.setModel(_headerModel);
+        this.headerModel = {...this.headerModel, ..._headerModel};
       }
     });
   }
   save() {
+    // Show spinner.
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "Operation": this.headerModel.Operation,
-      "Id": this.headerModel.Id,
-      "Code": this.headerModel.Code,
-      "FirstName": this.headerModel.FirstName,
-      "LastName": this.headerModel.LastName,
-      "UserName": this.headerModel.UserName,
-      "Password": this.headerModel.Password,
-      "GroupCode": this.headerModel.GroupCode,
-      "NationalityID": this.headerModel.NationalityID,
-      "VehicleId": this.headerModel.VehicleId,
-      "LicenseNo": this.headerModel.LicenseNo,
-      "Mobile": this.headerModel.Mobile,
-      "Email": this.headerModel.Email,
-      "Sex": this.headerModel.Sex,
-      "Active": this.headerModel.Active,
-      "HubId": this.headerModel.HubId,
-      "TransportId": this.headerModel.TransportId,
+      'Operation'     : this.headerModel.Operation,
+      'Id'            : this.headerModel.Id,
+      'Code'          : this.headerModel.Code,
+      'FirstName'     : this.headerModel.FirstName,
+      'LastName'      : this.headerModel.LastName,
+      'UserName'      : this.headerModel.UserName,
+      'Password'      : this.headerModel.Password,
+      'GroupCode'     : this.headerModel.GroupCode,
+      'NationalityID' : this.headerModel.NationalityID,
+      'VehicleId'     : this.headerModel.VehicleId,
+      'LicenseNo'     : this.headerModel.LicenseNo,
+      'Mobile'        : this.headerModel.Mobile,
+      'Email'         : this.headerModel.Email,
+      'Sex'           : this.headerModel.Sex,
+      'Active'        : this.headerModel.Active,
+      'HubId'         : this.headerModel.HubId,
+      'TransportId'   : this.headerModel.TransportId,
     }
-
-    let json = JSON.stringify(criteria);
+    criteria = {...this.criteria, ...criteria};
 
     this.serviceProviderService.post('api/Masters/SaveUser', criteria).subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+
+      let model: any = data;
       if (model.Status) {
-        this.spinner.hide();
-        this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        this.back();
+        this.hideSninnerAndShowSuccess('บันทึกยกเลิกเสร็จสิ้น');
+        this.backToMainPage();
       }
       else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.hideSninnerAndShowError(model.Message);
       }
 
     }, err => {
       this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
   delete(param) {
 
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'} });
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      disableClose: false,
+      height: '150px',
+      width: '300px',
+      data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'} 
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      Logger.info('master-user', 'delete', result, this.isDebugMode)
 
       if (result) {
          this.spinner.show();
 
         let criteria = {
-          "userinformation": this.serviceProviderService.userinformation,
-          "Id": param.Id ,
+          'Operation': 'DELETE',
+          'Id': param.Id ,
         }
+        criteria = {...this.criteria, ...criteria};
 
-        let json = JSON.stringify(criteria);
-
-        this.serviceProviderService.post('api/Masters/DeleteUser', criteria).subscribe(data => {
+        this.serviceProviderService.post('api/Masters/DeleteUser', criteria)
+        .subscribe(data => {
           this.spinner.hide();
-          let model: any = {};
-          model = data;
-          this.viewModel = model;
+          let model: any = data;
 
+          this.viewModel = model;
           if (model.Status) {
-            this.spinner.hide();
-            this.toastr.success('เสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            // debugger
-            this.back();
+            this.hideSninnerAndShowSuccess('เสร็จสิ้น');
+            this.backToMainPage();
           }
           else {
             this.spinner.hide();
-            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.hideSninnerAndShowError(model.Message);
           }
-
         }, err => {
-          this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          this.hideSninnerAndShowError(err.message);
         });
 
-      this.read();
+        // Clear criteriaModel and Reload Table Data.
+        this.clearAndReloadData();
       }
     });
+  }
+
+  // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }

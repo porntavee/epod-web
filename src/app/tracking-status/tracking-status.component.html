@@ -549,25 +549,25 @@
 
                     <div class="row">
                         <div class="col l5 s12 p-0" style="margin-top: -20px;">
-                            <citxt (cModel)="headerModel.ShiptoTel = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="headerModel.ShiptoTel" [readonly]="true"></citxt>
+                            <citxt (cModel)="headerModel.ShiptoMobile = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="headerModel.ShiptoMobile" [readonly]="true"></citxt>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col l5 s12 p-0" style="margin-top: -20px;">
-                            <citxt (cModel)="headerModel.ShiptoAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="headerModel.ShiptoAddress" [readonly]="true"></citxt>
+                            <citxt (cModel)="headerModel.ShiptoAdress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="headerModel.ShiptoAdress" [readonly]="true"></citxt>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col l5 s12 p-0" style="margin-top: -20px;">
-                            <citxt (cModel)="headerModel.RouteDescription = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.RouteDescription" [readonly]="true"></citxt>
+                            <citxt (cModel)="headerModel.Route = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.Route" [readonly]="true"></citxt>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col l5 s12 p-0" style="margin-top: -20px;">
-                            <citxt (cModel)="headerModel.SubRouteDescription = $event" [label]="'เส้นทางย่อย'" [data]="headerModel.SubRouteDescription" [readonly]="true"></citxt>
+                            <citxt (cModel)="headerModel.SubRoute = $event" [label]="'เส้นทางย่อย'" [data]="headerModel.SubRoute" [readonly]="true"></citxt>
                         </div>
                     </div>
                 </div>
@@ -745,13 +745,13 @@
                     Driver : {{headerModel.DriverFirstName}}
                 </div>
                 <div class="col l2 s12">
-                    Total Drop : {{headerModel.DropNum}}
+                    Total Drop : {{headerModel.NumDrop}}
                 </div>
                 <div class="col l2 s12">
-                    Total Carton : {{headerModel.Qty}}
+                    Total Carton : {{headerModel.SumQty}}
                 </div>
                 <div class="col l2 s12">
-                    Total Weight : {{headerModel.Weight}}
+                    Total Weight : {{headerModel.SumWeight}}
                 </div>
             </div>
             <br>
@@ -801,7 +801,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="w100">
+                                        <div class="w200">
                                             {{i.ShiptoName}}
                                         </div>
                                     </td>
@@ -821,8 +821,8 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="w100">
-                                            <!-- {{i.OrderStatusDesc}} -->
+                                        <div class="w200">
+                                            {{i.Transport}}
                                         </div>
                                     </td>
                                 </tr>

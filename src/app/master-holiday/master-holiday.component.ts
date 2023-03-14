@@ -1,191 +1,208 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, GroupUserDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog } from '../dialog/dialog';
+import { Logger } from '../shared/logger.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
 
 @Component({
-  selector: 'app-master-holiday',
   templateUrl: './master-holiday.component.html',
   styleUrls: ['./master-holiday.component.css']
 })
-export class MasterHolidayComponent  implements OnInit {
+export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
 
-  isMainPage: boolean = true;
-  isFormPage: boolean = false;
-  isTimeSheetPage: boolean = false;
-  listModel: any = []; //ข้อมูลในตารางหน้า Main
-  listDetailModel: any = [];
-  headerModel: any = {};
-  criteriaModel: any = {} //ค้นหา
-  title: string = 'เพิ่มข้อมูล';
-  model: any = {}; //ข้อมูล Form
-  models: any = []; //ข้อมูลในตารางหน้า Form
-  timeSheetModel: any = {};
-  dateControl = new FormControl(moment().format('YYYYMMDD'));
+  isDebugMode     : boolean = true;
+  isMainPage      : boolean = true;
+  isFormPage      : boolean = false;
+  isTimeSheetPage : boolean = false;
+  headerModel     : any     = {};
+  criteriaModel   : any     = {}; //ค้นหา
+  criteria        : any     = {}; // User Information.
+  model           : any     = {}; //ข้อมูล Form
+  listModel       : any     = []; //ข้อมูลในตารางหน้า Main
+  listVehicleType : any     = [];
+  currentPage     : number  = 1;
 
-  mode: any = 'create';
-
-  p = 1;
-
-  listGroupUser: any = [];
-
-  constructor(public dialog: MatDialog,
-    private serviceProviderService: ServiceProviderService,
-    private spinner: NgxSpinnerService,
-    private toastr: ToastrService) { }
-
-  ngOnInit(): void {
-    this.read();
-    this.read2();
-
+  constructor(
+    public dialog                  : MatDialog,
+    private spinner                : NgxSpinnerService,
+    private toastr                 : ToastrService,
+    private changeDetector         : ChangeDetectorRef,
+    private serviceProviderService : ServiceProviderService
+  ) { 
+    // Initialize userinformation to criteria object.
+    this.criteria = { 
+      "userinformation": this.serviceProviderService.userinformation
+    }; 
   }
 
-  // viewModel: any;
-  read() {
+  ngOnInit(): void {
+    this.renderHolidayTable();
+    this.renderHolidayCheck();
+  }
+
+  renderHolidayTable(): void {
+    // Show spinner.
     this.spinner.show();
-
+    // Set Operations in Header Model.
     this.headerModel.Operation = 'SELECT';
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      // "Fillter": this.criteriaModel.Fillter,
-    }
-
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/GetHolidayDate', criteria).subscribe(data => {
+    // Request Data From API.
+    this.serviceProviderService.post('api/Masters/GetHolidayDate', this.criteria)
+    .subscribe(data => {
+      // Hidden spinner when load data successfuly.
       this.spinner.hide();
-      let model: any = {};
-      model = data;
-      // this.viewModel = model;
-
+      // Set data to model.
+      let model: any = data;
       if (model.Status) {
         model.Data.forEach(element => {
           element.StrDate = moment(element.Date).format('DD-MM-YYYY');
         });
-
-
         this.listModel = model.Data;
+      } else {
+        this.listModel = this.loadDataFalse(model.Message);
       }
-      else {
-        this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.spinner.hide();
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
-  read2() {
+  renderHolidayCheck() {
+    // Show spinner.
     this.spinner.show();
-
+    // Set Operations in Header Model.
     this.headerModel.Operation = 'SELECT';
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      // "Fillter": this.criteriaModel.Fillter,
+    // Request Data From API.
+    this.serviceProviderService.post('api/Masters/GetHoliday', this.criteria)
+    .subscribe(data => {
+      // Hidden spinner when load data successfuly.
+      this.spinner.hide();
+      // Set data to model.
+      let model: any = data;
+      this.headerModel = model.Status ? model.Data[0] : this.loadDataFalse(model.Message);
+      Logger.info('master-holiday', 'renderHolidayCheck:', this.headerModel, this.isDebugMode)
+    }, err => {
+      this.hideSninnerAndShowError(err.message);
+    });
+  }
+
+  private setModel(model) {
+    // Set model.
+    let _model: any = model;
+    for (const key in model) {
+      _model[key] = model[key];
     }
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/GetHoliday', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
- 
-      if (model.Status) {
-        this.headerModel = model.Data[0];
-      }
-      else {
-        this.headerModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-      // debugger
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+    return _model;
   }
 
+  // If can't load data to list model.
+  private loadDataFalse(message): boolean {
+    let _listModel: any = [];
+    this.hideSninnerAndShowError(message);
 
-  readDetail(param) {
-    this.spinner.show();
+    return _listModel;
+  }
 
-    this.headerModel = {};
-    this.headerModel = param;
-    this.headerModel.Operation = 'UPDATE';
+  // If sucess load data.
+  private hideSninnerAndShowSuccess(message: string) {
+    this.spinner.hide();
+    this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
 
-    debugger
-    this.headerModel.StrDate = moment(param.Date).format('YYYYMMDD');
+  // If error load data.
+  private hideSninnerAndShowError(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
 
-    // debugger
-
-
+  // Set go to form page.
+  private goToFromPage() {
     this.isMainPage = false;
     this.isFormPage = true;
     this.spinner.hide();
+  }
+
+  setForm(param) {
+    this.spinner.show();
+
+    let _criteria = {
+      "Id": param.Id,
+      "StrDate": moment(param.Date).format('YYYYMMDD')
+    }
+    _criteria = {...this.criteria, ..._criteria};
+
+
+    let _headerModel = {
+      Operation: 'UPDATE'
+    }
+    _headerModel = {..._criteria, ..._headerModel};
+
+    // Setting header model.
+    this.headerModel = this.setModel(_headerModel);
+
+    // Set to from page.
+    this.goToFromPage();
   }
 
   clear() {
-    this.criteriaModel = {Date: ''};
+    this.criteriaModel = {"Date": ''};
   }
 
-  add() {
+  addForm() {
     this.spinner.show();
-    this.headerModel.Operation = 'INSERT';
-    this.headerModel.Id = 'Auto';
-    this.headerModel.Date = '';
-    this.headerModel.Description = '';
 
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.spinner.hide();
+    // Declare setting local header model.
+    let _headerModel = {
+      Operation: 'INSERT',
+      Id : 'Auto',
+      Date : '',
+      Description : '',
+    }
+    // Setting header model.
+    this.headerModel = this.setModel(_headerModel);
+    Logger.info('master-holiday', 'addForm.this.headerModel', this.headerModel, this.isDebugMode)
+    // Set to from page.
+    this.goToFromPage();
   }
 
   back() {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    this.read();
-    this.read2();
+    this.renderHolidayTable();
+    this.renderHolidayCheck();
   }
 
   save() {
     this.spinner.show();
 
+    Logger.info('master-holiday', 'save-this.headerModel', this.headerModel, this.isDebugMode)
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Operation": this.headerModel.Operation,
       "Id": this.headerModel.Id,
       "Date": moment(this.headerModel.StrDate).format('YYYY-MM-DDT00:00:00'),
       "Description": this.headerModel.Description,
     }
+    criteria = {...this.criteria, ...criteria};
+    Logger.info('master-holiday', 'save', criteria, this.isDebugMode)
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/SaveHoliday', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/SaveHoliday', criteria)
+    .subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+
+      let model: any = data;
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
         this.back();
-      }
-      else {
+      } else {
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
-
     }, err => {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -196,7 +213,6 @@ export class MasterHolidayComponent  implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Monday": this.headerModel.Monday,
       "Tuesday": this.headerModel.Tuesday,
       "Wednesday": this.headerModel.Wednesday,
@@ -205,13 +221,12 @@ export class MasterHolidayComponent  implements OnInit {
       "Saturday": this.headerModel.Saturday,
       "Sunday": this.headerModel.Sunday
     }
+    criteria = {...this.criteria, ...criteria};
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/UpdateHoliday', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/UpdateHoliday', criteria)
+    .subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+      let model: any = data;
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -221,7 +236,6 @@ export class MasterHolidayComponent  implements OnInit {
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
-
     }, err => {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -231,28 +245,30 @@ export class MasterHolidayComponent  implements OnInit {
   delete(param) {
 
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'} });
+    const dialogRef = this.dialog.open(ConfirmDialog,{
+      disableClose: false,
+      height: '150px',
+      width: '300px',
+      data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      Logger.info('master-holiday', 'delete', result, this.isDebugMode)
 
       if (result) {
          this.spinner.show();
 
          this.headerModel.Operation = 'DELETE';
         let criteria = {
-          "userinformation": this.serviceProviderService.userinformation,
           "Operation": this.headerModel.Operation,
           "Id": param.Id ,
         }
+        criteria = {...this.criteria, ...criteria};
 
-        let json = JSON.stringify(criteria);
-
-        this.serviceProviderService.post('api/Masters/SaveHoliday', criteria).subscribe(data => {
+        this.serviceProviderService.post('api/Masters/SaveHoliday', criteria)
+        .subscribe(data => {
           this.spinner.hide();
-          let model: any = {};
-          model = data;
-          // this.viewModel = model;
+          let model: any = data;
 
           if (model.Status) {
             this.spinner.hide();
@@ -269,9 +285,16 @@ export class MasterHolidayComponent  implements OnInit {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
-
-      this.read();
+      // Clear criteriaModel
+      this.clear();
+      // Reload Table data.
+      this.renderHolidayTable();
       }
     });
+  }
+
+  // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }

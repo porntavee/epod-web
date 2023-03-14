@@ -1,4 +1,4 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, ChangeDetectorRef, AfterContentChecked } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
 import { ServiceProviderService } from "../shared/service-provider.service";
@@ -175,8 +175,9 @@ export class GroupUserDialog {
     selector: 'route-dialog',
     templateUrl: 'route-dialog.html',
 })
-export class RouteDialog {
-    constructor(
+export class RouteDialog implements AfterContentChecked{
+
+    constructor(public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -199,6 +200,11 @@ export class RouteDialog {
 
     ok(param) {
         this.dialogRef.close(param);
+    }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
     }
 }
 
@@ -649,12 +655,13 @@ export class DistrictDialog {
     selector: 'routing-dialog',
     templateUrl: 'routing-dialog.html',
 })
-export class RoutingDialog {
+export class RoutingDialog implements AfterContentChecked {
     constructor(
         public dialogRef: MatDialogRef<RoutingDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
-        @Inject(MAT_DIALOG_DATA) public data: any) {
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private changeDetector: ChangeDetectorRef,) {
         this.read();
     }
 
@@ -689,6 +696,12 @@ export class RoutingDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
+    
 }
 
 @Component({

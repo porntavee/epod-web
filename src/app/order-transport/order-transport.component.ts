@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, KeyValueDiffers, OnInit } from '@angular/core';
+import { Component, KeyValueDiffers, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
   templateUrl: './order-transport.component.html',
   styleUrls: ['./order-transport.component.css']
 })
-export class OrderTransportComponent implements OnInit {
+export class OrderTransportComponent implements OnInit, AfterContentChecked {
 
   listModel: any = []; //ข้อมูลในตารางหน้า Main
   criteriaModel: any = {} //ค้นหา
@@ -31,7 +31,8 @@ export class OrderTransportComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private differs: KeyValueDiffers,
-    private excelService: ExcelService) { }
+    private excelService: ExcelService,
+    public changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
 
@@ -380,6 +381,8 @@ export class OrderTransportComponent implements OnInit {
         return '#66A5D9'
       case 'W':
         return '#B6B6B6'
+      case 'M':
+        return '#FF9800'
       default:
         break;
     }
@@ -402,5 +405,10 @@ export class OrderTransportComponent implements OnInit {
     );
 
     window.open(url, '_blank');
+  }
+
+  // Fixing "Expression has changed after it was checked"
+  public ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }

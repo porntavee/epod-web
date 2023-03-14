@@ -1,120 +1,170 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialog } from '../dialog/dialog';
 import { ServiceProviderService } from '../shared/service-provider.service';
+import { Logger } from '../shared/logger.service';
+
 
 @Component({
-  selector: 'app-master-transport',
   templateUrl: './master-transport.component.html',
   styleUrls: ['./master-transport.component.css']
 })
-export class MasterTransportComponent  implements OnInit {
+export class MasterTransportComponent  implements OnInit, AfterContentChecked {
 
-  isMainPage: boolean = true;
-  isFormPage: boolean = false;
-  isTimeSheetPage: boolean = false;
-  listModel: any = []; //ข้อมูลในตารางหน้า Main
-  listDetailModel: any = [];
-  headerModel: any = {};
-  criteriaModel: any = {} //ค้นหา
-  title: string = 'เพิ่มข้อมูล';
-  model: any = {}; //ข้อมูล Form
-  models: any = []; //ข้อมูลในตารางหน้า Form
-  timeSheetModel: any = {};
-  dateControl = new FormControl(moment().format('YYYYMMDD'));
+  isDebugMode     : boolean = true;
+  isMainPage      : boolean = true;
+  isFormPage      : boolean = false;
+  isTimeSheetPage : boolean = false;
+  headerModel     : any     = {};
+  criteriaModel   : any     = {}; //ค้นหา
+  criteria        : any     = {}; // User Information.
+  model           : any     = {}; //ข้อมูล Form
+  models          : any     = []; //ข้อมูลในตารางหน้า Form
+  listModel       : any     = []; //ข้อมูลในตารางหน้า Main
+  viewModel       : any     = {};
+  listVehicleType : any     = [];
+  currentPage     : number  = 1;
+  listDetailModel : any = [];
+  listGroupUser   : any = [];
 
-  mode: any = 'create';
-
-  p = 1;
-
-  listGroupUser: any = [];
-
-  constructor(public dialog: MatDialog,
-    private serviceProviderService: ServiceProviderService,
-    private spinner: NgxSpinnerService,
-    private toastr: ToastrService) { }
-
-  ngOnInit(): void {
-    this.read();
-
+  constructor(
+    public dialog                  : MatDialog,
+    private spinner                : NgxSpinnerService,
+    private toastr                 : ToastrService,
+    private changeDetector         : ChangeDetectorRef,
+    private serviceProviderService : ServiceProviderService
+  ){
+    this.criteria = { 
+      "userinformation": this.serviceProviderService.userinformation
+    }; // User Information.
   }
 
-  viewModel: any;
-  read() {
-    this.spinner.show();
+  ngOnInit(): void {
+    this.render();
+  }
 
+  // Grid configuration and render.
+	render(): void {
+    this.spinner.show();
+    // Reset current page to 1 for search.
+    this.currentPage = 1;
+    // Set Operations in Header Model.
     this.headerModel.Operation = 'SELECT';
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
       "Fillter": this.criteriaModel.Fillter,
     }
-
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/GetTransport', criteria).subscribe(data => {
+    criteria = {...this.criteria, ...criteria};
+    Logger.info('master-transport', 'read', criteria, this.isDebugMode)
+    
+    // Request Data From API.
+    this.serviceProviderService.post('api/Masters/GetTransport', criteria)
+    .subscribe(data => {
+      // Hidden spinner when load data successfuly.
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+      // Set data to model.
+      let model: any = data;
       this.viewModel = model;
 
-      if (model.Status) {
-        this.listModel = model.Data;
-      }
-      else {
-        this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
+      // Check model status if true set model data to list model.
+      this.listModel = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
-  readDetail(param) {
-    this.spinner.show();
-
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "Id": param.Id
+  private setModel(model) {
+    // Set model.
+    let _model: any = model;
+    for (const key in model) {
+      _model[key] = model[key];
     }
 
-    this.headerModel = param;
-    this.headerModel.Operation = 'UPDATE';
+    return _model;
+  }
 
+  // If can't load data to list model.
+  private loadDataFalse(message) {
+    let _listModel: any = [];
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+
+    return _listModel;
+  }
+
+  // If sucess load data.
+  private hideSninnerAndShowSuccess(message: string) {
+    this.spinner.hide();
+    this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  // If error load data.
+  private hideSninnerAndShowError(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  // Set go to form page.
+  private goToFromPage() {
     this.isMainPage = false;
     this.isFormPage = true;
     this.spinner.hide();
   }
 
-  clear() {
-    this.criteriaModel = {};
-  }
-
-  add() {
+  // Set data to form Page.
+  setFormData(param: any) {
     this.spinner.show();
-    this.headerModel.Operation = 'INSERT';
-    this.headerModel.Id = 'Auto';
-    this.headerModel.Code = '';
-    this.headerModel.Description = '';
-    this.headerModel.Active = 'Y';
 
+    let _criteria = {
+      "Id": param.Id
+    }
+    _criteria = {...this.criteria, ..._criteria};
 
-    this.isMainPage = false;
-    this.isFormPage = true;
-    this.spinner.hide();
+    let _headerModel = {
+      Operation: 'UPDATE'
+    }
+    _headerModel = {...param, ..._headerModel};
+
+    // Setting header model.
+    this.headerModel = this.setModel(_headerModel);
+
+     // Set to from page.
+     this.goToFromPage();
   }
 
-  back() {
+  clearAndReloadData() {
+    // Clear criteriaModel.
+    this.criteriaModel = {};
+    Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
+
+    // Reload Table data.
+    this.render();
+  }
+
+  addForm() {
+    this.spinner.show();
+
+    // Declare setting local header model.
+    let _headerModel = {
+      Operation: 'INSERT',
+      Id : 'Auto',
+      Code : '',
+      Description : '',
+      Active: 'Y'
+    }
+   // Setting header model.
+   this.headerModel = this.setModel(_headerModel);
+   // Set to from page.
+   this.goToFromPage();
+  }
+
+  // Set back to main page.
+  backToMainPage() {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    this.read();
+    this.render();
   }
 
   save() {
@@ -128,73 +178,69 @@ export class MasterTransportComponent  implements OnInit {
       "Description": this.headerModel.Description,
       "Active": this.headerModel.Active,
     }
+    criteria = {...this.criteria, ...criteria};
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Masters/SaveTransport', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/SaveTransport', criteria)
+    .subscribe(data => {
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+
+      let model: any = data;
       if (model.Status) {
-        this.spinner.hide();
-        this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        this.back();
+        this.hideSninnerAndShowSuccess('บันทึกยกเลิกเสร็จสิ้น');
+        this.backToMainPage();
+      } else {
+        this.hideSninnerAndShowError(model.Message);
       }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.hideSninnerAndShowError(err.message);
     });
   }
 
   delete(param) {
-
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'} });
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      disableClose: false,
+      height: '150px',
+      width: '300px',
+      data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'}
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      Logger.info('master-transport', 'delete', result, this.isDebugMode)
 
       if (result) {
          this.spinner.show();
 
          this.headerModel.Operation = 'DELETE';
         let criteria = {
-          "userinformation": this.serviceProviderService.userinformation,
           "Operation": this.headerModel.Operation,
           "Id": param.Id ,
         }
+        criteria = {...this.criteria, ...criteria};
 
-        let json = JSON.stringify(criteria);
-
-        this.serviceProviderService.post('api/Masters/SaveTransport', criteria).subscribe(data => {
+        this.serviceProviderService.post('api/Masters/SaveTransport', criteria)
+        .subscribe(data => {
           this.spinner.hide();
-          let model: any = {};
-          model = data;
+  
+          let model: any = data;
           this.viewModel = model;
-
           if (model.Status) {
-            this.spinner.hide();
-            this.toastr.success('เสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            // debugger
-            this.back();
-          }
-          else {
-            this.spinner.hide();
+            this.hideSninnerAndShowSuccess('เสร็จสิ้น');
+            this.backToMainPage();
+          } else {
             this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
           }
-
         }, err => {
-          this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          this.hideSninnerAndShowError(err.message);
         });
-
-      this.read();
+        // Clear criteriaModel and Reload Table Data.
+        this.clearAndReloadData();
       }
     });
+  }
+
+  // Fixing "Expression has changed after it was checked"
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }
