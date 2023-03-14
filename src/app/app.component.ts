@@ -41,7 +41,7 @@ export class AppComponent {
     private http: HttpClient
   ) {
     this.versionString= this.serviceProviderService.version;
-    this.versionString = this.versionNumberFormat();
+    // this.versionString = this.versionNumberFormat();
     this.userModel.username = '';
     this.userModel.password = '';
     this.userModel.company = 'SINO';
