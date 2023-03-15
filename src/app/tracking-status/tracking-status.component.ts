@@ -286,8 +286,8 @@ export class TrackingStatusComponent implements OnInit {
 
         this.headerModel = model.Data[0];
 
-        this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
-        this.headerModel.InvoiceDate = moment(model.Data[0].InvoiceDate).format('DD-MM-YYYY');
+        this.headerModel.OrderEstimateStr = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
+        this.headerModel.InvoiceDateStr = moment(model.Data[0].InvoiceDate).format('DD-MM-YYYY');
         this.headerModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
         this.headerModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;
 
