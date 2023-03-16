@@ -806,6 +806,10 @@ export class TrackingStatusComponent implements OnInit {
     // this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
   }
 
+  public handleMissingImage(event: Event) {
+    (event.target as HTMLImageElement).style.display = 'none';
+  }
+
   statusTransportColor(param) {
     switch (param) {
       case 'C':
