@@ -1,71 +1,98 @@
+<!-- Start Main Page -->
 <div *ngIf="isMainPage">
+    <!-- Start Shiplocation Filter -->
     <div class="col s12">
-        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>ทะเบียน / สถานที่รับ-ส่งสินค้า</b>
+                    <span class="card-panel-header-span">
+                        ทะเบียน / สถานที่รับ-ส่งสินค้า
                     </span>
                 </div>
             </div>
-
         </div>
-        <!-- [hidden]="isAdvanceSearch" -->
-        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
+        <div class="card-panel hide-on-med-and-down reset-margin-top">
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.Code = $event" [label]="'รหัส'" [data]="criteriaModel.Code"></citxt>
+                    <citxt
+                        (cModel)="criteriaModel.Code = $event" 
+                        [label]="'รหัส'"
+                        [data]="criteriaModel.Code">
+                    </citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.Address = $event" [label]="'สถานที่ (Address)'" [data]="criteriaModel.Address"></citxt>
+                    <citxt
+                        (cModel)="criteriaModel.Address = $event" 
+                        [label]="'สถานที่ (Address)'"
+                        [data]="criteriaModel.Address">
+                    </citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="criteriaModel.Mobile"></citxt>
+                    <citxt
+                        (cModel)="criteriaModel.Mobile = $event" 
+                        [label]="'เบอร์โทร'"
+                        [data]="criteriaModel.Mobile">
+                    </citxt>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.ContractName = $event" [label]="'ชื่อผู้ติดต่อ'" [data]="criteriaModel.ContractName"></citxt>
+                    <citxt
+                        (cModel)="criteriaModel.ContractName = $event" 
+                        [label]="'ชื่อผู้ติดต่อ'"
+                        [data]="criteriaModel.ContractName">
+                    </citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'เส้นทางหลัก'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
+                    <citxt
+                        (cModel)="criteriaModel.RouteDescription = $event" 
+                        [label]="'เส้นทางหลัก'"
+                        [data]="criteriaModel.RouteDescription"
+                        [readonly]="true"
+                        (click)="chooseRoute()">
+                    </citxt>
                 </div>
-                <div class="col l3 s12 p-0" style="margin-left: 130px;">
-                    <ccb (cModel)="criteriaModel.IsHub = $event" [label]="'HUB'" [data]="criteriaModel.IsHub"></ccb>
+                <div class="col l3 s12 p-0 margin-left-130">
+                    <ccb
+                        (cModel)="criteriaModel.IsHub = $event" 
+                        [label]="'HUB'"
+                        [data]="criteriaModel.IsHub"></ccb>
                 </div>
             </div>
-
-
             <div class="row">
-                <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
-                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
-                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clearAndReloadData()"></cbtn>
-                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtn>
+                <div class="col l8 s12 p-0 margin-bottom-5"></div>
+                <div class="col l4 s12 p-0 text-right margin-bottom-5">
+                    <cbtn 
+                        [label]="'ล้าง'"
+                        [color]="'red'"
+                        [icon]="'clear'"
+                        (click)="clearAndReloadData()">
+                    </cbtn>
+                    <cbtn 
+                        [label]="'ค้นหา'"
+                        [color]="'blue'"
+                        [icon]="'search'"
+                        (click)="render()">
+                    </cbtn>
                 </div>
-            </div>
-        </div>
-        <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
-            <div class="row">
-
-
             </div>
         </div>
     </div>
+    <!-- End Shiplocation Filter -->
+
+    <!-- Start Shiplocation Table Page -->
     <div class="col s12">
-        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l2 s12">
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
+                    <span class="table-panel-header-lebel">
                         <b>รายการข้อมูล</b>
                     </span>
                 </div>
-                <div class="col l8 s12">
-                </div>
             </div>
         </div>
-        <div class="card-panel" style="margin-top: 0px;">
-            <div style="overflow-x: auto;">
+        <div class="card-panel reset-margin-top">
+            <div class="overflow-x">
                 <table id="users-list-datatable" class="bordered centered striped">
                     <thead>
                         <tr>
@@ -87,210 +114,263 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: currentPage }; let idx = index">
-                            <td>
-                                <div class="w60">
-                                    {{i.Id}}
-                                </div>
+                            <td class="min-width-60">
+                                {{i.Id}}
                             </td>
-                            <td>
-                                <div class="w60">
-                                    {{i.Code}}
-                                </div>
+                            <td class="min-width-60">
+                                {{i.Code}}
                             </td>
-                            <td>
-                                <div class="w150">
-                                    {{i.CustomerName}}
-                                </div>
+                            <td class="min-width-150">
+                                {{i.CustomerName}}
                             </td>
-                            <td>
-                                <div class="w250">
-                                    {{i.Address}}
-                                </div>
+                            <td class="w250">
+                                {{i.Address}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.ContractName}}
-                                </div>
+                            <td class="w100">
+                                {{i.ContractName}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Mobile}}
-                                </div>
+                            <td class="w100">
+                                {{i.Mobile}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Region}}
-                                </div>
+                            <td class="w100">
+                                {{i.Region}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Route}}
-                                </div>
+                            <td class="w100">
+                                {{i.Route}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.SubRoute}}
-                                </div>
+                            <td class="w100">
+                                {{i.SubRoute}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Province}}
-                                </div>
+                            <td class="w100">
+                                {{i.Province}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.District}}
-                                </div>
+                            <td class="w100">
+                                {{i.District}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.PostCode}}
-                                </div>
+                            <td class="w100">
+                                {{i.PostCode}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Latitude}}, {{i.Longtitude}}
-                                </div>
+                            <td class="w100">
+                                {{i.Latitude}}, {{i.Longtitude}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    <a class="btn-floating blue" style="cursor: pointer;" (click)="readDetail(i)">
-                                        <i class="medium material-icons">edit</i>
-                                    </a>&nbsp;
-                                    <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
-                                        <i class="medium material-icons">delete</i>
-                                    </a>
-
-                                </div>
-
+                            <td class="min-width-100">
+                                <a class="btn-floating blue cursor-pointer"
+                                    (click)="setForm(i)">
+                                    <i class="medium material-icons">edit</i>
+                                </a>&nbsp;
+                                <a class="btn-floating red cursor-pointer"
+                                    (click)="delete(i)">
+                                    <i class="medium material-icons">delete</i>
+                                </a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-
             <div class="row">
                 <div class="col s6">
                     <div class="row">
-                        <div class="col s6" style="margin-top: 10px;">
-                            <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="add()"></cbtn>
+                        <div class="col s6 margin-top-10">
+                            <cbtn 
+                                [label]="'สร้าง'" 
+                                [color]="'blue'"
+                                [icon]="'add'"
+                                (click)="addForm()">
+                            </cbtn>
                         </div>
                     </div>
                 </div>
                 <div class="col s6">
-                    <div style="text-align: right;">
-                        <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป">
+                    <div class="text-right">
+                        <pagination-controls
+                            (pageChange)="currentPage = $event"
+                            previousLabel="ก่อนหน้า"
+                            nextLabel="ถัดไป">
                         </pagination-controls>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
+    <!-- Start Shiplocation Table Page -->
 </div>
+<!-- End Main Page -->
 
+<!-- Start Add Shiplocation Page -->
 <div *ngIf="isFormPage">
     <div class="col s12">
-        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>ทะเบียน / ผู้ใช้งาน / รายละเอียด</b>
+                    <span class="col l8 s12 card-panel-header-span">
+                        ทะเบียน / ผู้ใช้งาน / รายละเอียด
                     </span>
                 </div>
             </div>
-
         </div>
-        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
-
+        <!-- Start Add Shiplocation Form -->
+        <div class="card-panel hide-on-med-and-down reset-margin-top">
             <div class="row">
                 <div class="col l4 s12">
-                    <citxt (cModel)="headerModel.Code = $event" [label]="'รหัส'" [data]="headerModel.Code" [readonly]="true"></citxt>
+                    <citxt
+                        (cModel)="headerModel.Code = $event"
+                        [label]="'รหัส'"
+                        [data]="headerModel.Code">
+                    </citxt>
                 </div>
                 <div class="col l4 s12">
                     <!-- <citxt (cModel)="headerModel.Active = $event" [label]="'สถานะ'" [data]="headerModel.Active"
                         [readonly]="true"></citxt> -->
                 </div>
             </div>
-
             <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.CustomerName = $event" [label]="'ชื่อ'" [data]="headerModel.CustomerName">
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.CustomerName = $event"
+                        [label]="'ชื่อ'"
+                        [data]="headerModel.CustomerName">
                     </citxt>
                 </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <ctxta (cModel)="headerModel.Address = $event" [label]="'ที่อยู่'" [data]="headerModel.Address">
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <ctxta
+                        (cModel)="headerModel.Address = $event"
+                        [label]="'ที่อยู่'"
+                        [data]="headerModel.Address">
                     </ctxta>
                 </div>
             </div>
-
             <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.ContractName = $event" [label]="'ชื่อผู้ติดต่อ'" [data]="headerModel.ContractName">
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.ContractName = $event"
+                        [label]="'ชื่อผู้ติดต่อ'"
+                        [data]="headerModel.ContractName">
                     </citxt>
                 </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="headerModel.Mobile"></citxt>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Province = $event" [label]="'จังหวัด'" [data]="headerModel.Province" [readonly]="true" (click)="chooseProvince2()"></citxt>
-                </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.District = $event" [label]="'อำเภอ'" [data]="headerModel.District" [readonly]="true" (click)="chooseDistrict2()"></citxt>
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.Mobile = $event"
+                        [label]="'เบอร์โทร'"
+                        [data]="headerModel.Mobile">
+                    </citxt>
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.PostCode = $event" [label]="'รหัสไปรษณีย์'" [data]="headerModel.PostCode"></citxt>
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.Province = $event"
+                        [label]="'จังหวัด'"
+                        [data]="headerModel.Province"
+                        [readonly]="true"
+                        (click)="chooseProvince2()">
+                    </citxt>
                 </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Region = $event" [label]="'โซน'" [data]="headerModel.Region" [readonly]="true" (click)="chooseRegion2()"></citxt>
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.District = $event"
+                        [label]="'อำเภอ'"
+                        [data]="headerModel.District"
+                        [readonly]="true"
+                        (click)="chooseDistrict2()">
+                    </citxt>
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Route = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.Route" [readonly]="true" (click)="chooseRoute2()"></citxt>
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.PostCode = $event"
+                        [label]="'รหัสไปรษณีย์'"
+                        [data]="headerModel.PostCode">
+                    </citxt>
                 </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.SubRoute = $event" [label]="'เส้นทางย่อย'" [data]="headerModel.SubRoute" [readonly]="true" (click)="chooseSubRoute2()"></citxt>
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.Region = $event"
+                        [label]="'โซน'"
+                        [data]="headerModel.Region"
+                        [readonly]="true"
+                        (click)="chooseRegion2()">
+                    </citxt>
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Latitude = $event" [label]="'ละติจูด'" [data]="headerModel.Latitude"></citxt>
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.Route = $event"
+                        [label]="'เส้นทางหลัก'"
+                        [data]="headerModel.Route"
+                        [readonly]="true"
+                        (click)="chooseRoute2()">
+                    </citxt>
                 </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Longtitude = $event" [label]="'ลองติจูด'" [data]="headerModel.Longtitude"></citxt>
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.SubRoute = $event"
+                        [label]="'เส้นทางย่อย'"
+                        [data]="headerModel.SubRoute"
+                        [readonly]="true"
+                        (click)="chooseSubRoute2()">
+                    </citxt>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.Latitude = $event"
+                        [label]="'ละติจูด'"
+                        [data]="headerModel.Latitude">
+                    </citxt>
+                </div>
+                <div class="col l4 s12 margin-top-mminus-20">
+                    <citxt
+                        (cModel)="headerModel.Longtitude = $event"
+                        [label]="'ลองติจูด'"
+                        [data]="headerModel.Longtitude">
+                    </citxt>
+                </div>
+            </div>
             <div>
-                <div class="col l4 s12" style="margin-left: 225px; margin-top: -20px;">
-                    <ccb (cModel)="headerModel.Hub = $event" [label]="'HUB'" [data]="headerModel.Hub"></ccb>
+                <div class="col l4 s12 margin-top-mminus-20 margin-left-225">
+                    <ccb
+                        (cModel)="headerModel.Hub = $event"
+                        [label]="'HUB'"
+                        [data]="headerModel.Hub"></ccb>
                 </div>
             </div>
-
             <div class="row">
                 <!-- Hidden -->
                 <div class="row" hidden="true">
                     <div class="col l4 s12">
-                        <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id" [readonly]="true"></citxt>
+                        <citxt
+                            (cModel)="headerModel.Id = $event"
+                            [label]="'รหัสระบบ'"
+                            [data]="headerModel.Id"
+                            [readonly]="true">
+                        </citxt>
                     </div>
                 </div>
             </div>
-
+            <!-- Save and Back Button-->
             <div class="row">
-                <div class="col l4 s12 p-0" style="margin-bottom: 5px;"></div>
-                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
-                    <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'" (click)="save()"></cbtn>
-                    <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="'keyboard_backspace'" (click)="back()"></cbtn>
+                <div class="col l4 s12 p-0 margin-bottom-5"></div>
+                <div class="col l4 s12 p-0 text-right margin-bottom-5">
+                    <cbtn
+                        [label]="'บันทึก'"
+                        [color]="'blue'"
+                        [icon]="'save'"
+                        (click)="save()">
+                    </cbtn>
+                    <cbtn
+                        [label]="'กลับ'"
+                        [color]="'grey'"
+                        [icon]="'keyboard_backspace'"
+                        (click)="backToMainPage()">
+                    </cbtn>
                 </div>
             </div>
+            <!-- End Save and Back Button-->
         </div>
-
+        <!-- End Add Shiplocation Form -->
     </div>
 </div>
+<!-- Start Add Shiplocation Page -->

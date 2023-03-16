@@ -153,11 +153,10 @@
                                 {{i.ShipmentNo}}
                             </div>
                         </td>
-                        <td style="padding: 0 0 0 0 !important;">
-                            <div class="w100" style="background-color: {{statusTransportColor(i.TransportStatus)}}; height: 42px; padding-top: 10px;">
+                        <td class="min-width-100 reset-padding">
+                            <div class="status-box {{statusTransportClassify(i.TransportStatus)}}">
                                 {{i.TransportStatusDesc}}
                             </div>
-
                         </td>
                         <td>
                             <div class="w100">

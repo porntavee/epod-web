@@ -239,6 +239,42 @@ p {
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
 
+/* ------------Start Tracking Status--------- */
+.wait-driver-license {
+    height: 120px !important;
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+    background-color: #B6B6B6 !important;
+}
+
+.pending-approval, .wait-driver-receiving {
+    height: 120px !important;
+    margin-right: 10px !important;
+    background-color: #B6B6B6 !important;
+}
+
+.during-receiving {
+    height: 120px !important;
+    margin-right: 10px !important;
+    background-color: #E7E884 !important;
+}
+
+.fs-20-w-700 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+}
+
+.p-10 img {
+    margin: 5px;
+    padding: 10px!important;
+    box-shadow:0 5px 5px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+}
+
+.padding-right-20 {
+    padding-right: 20px !important;
+}
+
+/* -------------End Tracking Status---------- */
 .material-icons {
     font-family: 'Material Icons';
 }
@@ -263,7 +299,7 @@ p {
     vertical-align: text-top !important;
 }
 
-.card-panel-header-label, .table-panel-header-lebel {
+.card-panel-header-span, .table-panel-header-span {
     position: relative !important;
     float: left !important; 
     font-size: 1em !important;
@@ -310,6 +346,14 @@ p {
     margin-top: -20px !important;
 }
 
+.margin-left-130 {
+    margin-left: 130px !important;
+}
+
+.margin-left-225 {
+    margin-left: 225px !important;
+}
+
 .min-width-20 {
     min-width: 20px !important;
 }
@@ -318,20 +362,29 @@ p {
     min-width: 30px !important;
 }
 
+.min-width-60 {
+    min-width: 30px !important;
+}
+
 .min-width-100 {
     min-width: 100px !important;
+}
+
+
+.min-width-120 {
+    min-width: 120px !important;
 }
 
 .min-width-150 {
     min-width: 150px !important;
 }
 
-.min-width-120 {
-    min-width: 120px !important;
-}
-
 .min-width-200 {
     min-width: 200px !important;
+}
+
+.min-width-250 {
+    min-width: 250px !important;
 }
 
 .min-width-300 {
@@ -369,6 +422,42 @@ p {
     margin-left: -10px !important;
     font-size: 1.4em !important;
     text-shadow: 2px 2px white, 1px 1px #333
+}
+
+.status-color-C {
+    background-color: #E16E5B;
+}
+
+.status-color-D, .status-color-L {
+    background-color: #F7E884;
+}
+
+.status-color-O {
+    background-color: #B6B6B6;
+}
+
+.status-color-P, .status-color-R {
+    background-color: #79D58B;
+}
+
+.status-color-S, .status-color-H {
+    background-color: #66A5D9;
+}
+
+.status-color-W {
+    background-color: #B6B6B6;
+}
+
+.status-color-F {
+    background-color: #EBB146;
+}
+.status-color-M {
+    background-color: #FF9800;
+}
+
+.status-box {
+    height: 42px !important; 
+    padding-top: 10px !important;
 }
 
 /* show scrollbar always */

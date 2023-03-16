@@ -5,9 +5,9 @@
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <label class="card-panel-header-label">
+                    <span class="card-panel-header-span">
                         ทะเบียน / เส้นทาง
-                    </label>
+                    </span>
                 </div>
             </div>
         </div>
@@ -75,10 +75,10 @@
                                 +{{i.OTBR}}
                             </td>
                            <td class="min-width-100">
-                                <a class="btn-floating blue" style="cursor: pointer;" (click)="setFormData(i)">
+                                <a class="btn-floating blue cursor-pointer" (click)="setFormData(i)">
                                     <i class="medium material-icons">edit</i>
                                 </a>&nbsp;
-                                <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i)">
+                                <a class="btn-floating red cursor-pointer" (click)="delete(i)">
                                     <i class="medium material-icons">delete</i>
                                 </a>
                             </td>
@@ -113,6 +113,7 @@
     </div>
 </div>
 <!-- End Route Main Page -->
+
 <!-- Start Add Route Page -->
 <div *ngIf="isFormPage">
 
@@ -120,9 +121,9 @@
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <label class="card-panel-header-label">
+                    <span class="card-panel-header-span">
                         ทะเบียน / เส้นทางหลัก / รายละเอียด
-                    </label>
+                    </span>
                 </div>
             </div>
         </div>
@@ -140,14 +141,14 @@
                 <div class="col l4 s12"></div>
             </div>
             <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
+                <div class="col l4 s12 margin-top-mminus-20">
                     <citxt
                         (cModel)="headerModel.Code = $event"
                         [label]="'*รหัส'"
                         [data]="headerModel.Code">
                     </citxt>
                 </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
+                <div class="col l4 s12 margin-top-mminus-20">
                     <citxt
                         (cModel)="headerModel.Description = $event" 
                         [label]="'*รายละเอียด'" 
@@ -156,14 +157,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
+                <div class="col l4 s12 margin-top-mminus-20">
                     <citxt
                         (cModel)="headerModel.OTD = $event"
                         [label]="'*On Time Delivery +'"
                         [data]="headerModel.OTD">
                     </citxt>
                 </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
+                <div class="col l4 s12 margin-top-mminus-20">
                     <citxt
                         (cModel)="headerModel.OTBR = $event"
                         [label]="'*On Time Bill Return +'"

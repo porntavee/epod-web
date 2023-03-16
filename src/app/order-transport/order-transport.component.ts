@@ -35,19 +35,6 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
     public changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-
-    // this.listEmployeeCode = [{ value: '', display: '----- เลือก -----' },
-    // { value: 'TH00641001026', display: 'TH00641001026' },
-    // { value: 'TH00641001027', display: 'TH00641001027' },
-    // { value: 'TH00641001028', display: 'TH00641001028' }];
-    // this.listFirstName = [{ value: '', display: '----- เลือก -----' },
-    // { value: '1', display: 'First Name' },
-    // { value: '2', display: 'First Name' },
-    // { value: '3', display: 'First Name' }];
-
-    // this.criteriaModel.statusCode = 'A';
-    // this.criteriaModel.statusDescription = 'A - รอยืนยันใบคุม';
-
     const date = new Date();
     this.criteriaModel.TransportDate = moment(date.setDate(date.getDate())).format('YYYYMMDD');
 
@@ -83,8 +70,6 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
 
         model.Data.forEach(element => {
           element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
-          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
         });
 
         this.listModel = model.Data;
@@ -112,13 +97,7 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
         // this.criteriaModel.transportTypeId = result.Id;
         this.criteriaModel.statusCode = result.Code;
         this.criteriaModel.statusDescription = result.Code + ' - ' + result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
-      }
-      else{
+      } else{
         this.criteriaModel.statusCode = '';
         this.criteriaModel.statusDescription = '';
       }
@@ -137,12 +116,7 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
         // this.criteriaModel.transportTypeId = result.Id;
         this.criteriaModel.shipToCode = result.Code;
         this.criteriaModel.shipToAddress = result.Address;
-        this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName
       }
     });
   }
@@ -159,11 +133,6 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
         // this.criteriaModel.transportTypeId = result.Id;
         this.criteriaModel.typeOfWorkCode = result.Code;
         this.criteriaModel.typeOfWorkDescription = result.Code + ' - ' + result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
       }
     });
   }
@@ -179,14 +148,7 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
       if (result != undefined) {
         // this.criteriaModel.transportTypeId = result.Id;
         this.criteriaModel.transportNo = result.TransportNo;
-        // this.criteriaModel.shipToCode = result.Code;
-        // this.criteriaModel.shipToAddress = result.Address;
-        // this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+
       }
     });
   }
@@ -203,11 +165,6 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
         this.criteriaModel.driverId = result.Id;
         this.criteriaModel.driverCode = result.Code;
         this.criteriaModel.driverDescription = result.Code + ' - ' + result.FirstName + ' ' + result.LastName;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
       }
     });
   }
@@ -224,11 +181,6 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
         this.criteriaModel.vehicleId = result.Id;
         this.criteriaModel.vehicleCode = result.Code;
         this.criteriaModel.vehicleDescription = result.Code + ' - ' + result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
       }
     });
   }
@@ -236,7 +188,6 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
   clear() {
     this.criteriaModel = { approveDateString: '' ,TransportDate:''};
   }
-
 
   reportModel: any = [];
   exportAsXLSX(param): void {
@@ -260,19 +211,7 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
         // this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
         this.reportModel = model.Data
 
-
-        // const dialogRef = this.dialog.open(DocLogDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Doc Log Report', listData: this.reportModel, listDataSearch: this.reportModel } });
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //   console.log(`Dialog result: ${result}`);
-
-        //   if (result != undefined) {
-        //      this.excelService.exportAsExcelFile(result, 'doc-log-report');
-        //   }
-        // });
-
-      }
-      else {
+      } else {
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
@@ -331,15 +270,6 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
         this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
         this.criteriaModel.Process = 'DELETE';
         this.criteriaModel.TransportNo = param;
-        // this.criteriaModel.TransportStatus = "O";
-        // this.criteriaModel.TransportTypeId = "OT";
-        // this.criteriaModel.RegionId = "0010000000000";
-        // this.criteriaModel.CreateBy = "0010000000000";
-        // this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
-        // this.criteriaModel.UoM = "N/A";
-
-        let json = JSON.stringify(this.criteriaModel);
-
 
         this.serviceProviderService.post('api/Transport/CancelTransport', this.criteriaModel).subscribe(data => {
           this.spinner.hide();
@@ -363,30 +293,29 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
 
   }
 
-  statusTransportColor(param) {
+  // Classify status color.
+  statusTransportClassify(param) {
+    console.log(param);
     switch (param) {
       case 'C':
-        return '#E16E5B'
+        return 'status-color-C'
       case 'D':
-        return '#F7E884'
+        return 'status-color-D'
       case 'L':
-        return '#F7E884'
+        return 'status-color-L'
       case 'O':
-        return '#B6B6B6'
+        return 'status-color-O'
       case 'P':
-        return '#79D58B'
+        return 'status-color-P'
       case 'R':
-        return '#79D58B'
+        return 'status-color-R'
       case 'S':
-        return '#66A5D9'
+        return 'status-color-S'
       case 'W':
-        return '#B6B6B6'
-      case 'M':
-        return '#FF9800'
+        return 'status-color-W'
       default:
         break;
     }
-
   }
 
   create() {

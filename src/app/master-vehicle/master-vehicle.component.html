@@ -1,13 +1,13 @@
 <!-- Start Vehicle Main Page. -->
 <div *ngIf="isMainPage">
-    <!-- Start Vehicle Form -->
+    <!-- Start Vehicle Filter Form Page. -->
     <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <label class="card-panel-header-label">
+                    <span class="card-panel-header-span">
                         ทะเบียน / ทะเบียนรถ
-                    </label>
+                    </span>
                 </div>
             </div>
         </div>
@@ -43,7 +43,8 @@
             <div class="row"></div>
         </div>
     </div>
-    <!-- End Vehicle Form -->
+    <!-- End Vehicle Filter Form -->
+
     <!-- Start Vehicle Data Table. -->
     <div class="col s12">
         <div class="card-panel card-panel-header">
@@ -68,7 +69,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let i of listModel |
+                        <tr 
+                            *ngFor="let i of listModel |
                             paginate: { itemsPerPage: 10, currentPage: currentPage };
                             let idx = index">
                             <td class="min-width-100">
@@ -125,15 +127,16 @@
     <!-- Start Vehicle Data Table. -->
 </div>
 <!-- End Vehicle Main Page. -->
+
 <!-- Start Vehicle Form Page. -->
 <div *ngIf="isFormPage">
     <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <label class="col l8 s12 card-panel-header-label">
+                    <span class="col l8 s12 card-panel-header-span">
                         ทะเบียน / ทะเบียนรถ / รายละเอียด
-                    </label>
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,7 +176,6 @@
                     </citxt>
                 </div>
             </div>
-            <!-- Save and Back Button-->
             <div class="row">
                 <div class="col l4 s12 p-0 margin-bottom-5"></div>
                 <div class="col l4 s12 p-0 text-right margin-bottom-5">
@@ -192,7 +194,6 @@
                 </div>
             </div>
         </div>
-        <!-- End Save and Back Button-->
     </div>
 </div>
 <!-- End Vehicle Form Page. -->

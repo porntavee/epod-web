@@ -42,7 +42,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     this.render();
   }
 
-  // Grid configuration and render.
+  // Table configuration and render.
   render() {
     // Show spinner.
     this.spinner.show();
@@ -60,12 +60,12 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     // Call service provider service to get sub route data.
     this.serviceProviderService.post('api/Masters/GetSubRoute', criteria)
     .subscribe(data => {
-       // Hidden spinner when load data successfuly.
-       this.spinner.hide();
-       // Set data to model an view model.
-       let model: any = data;
-       this.viewModel = model;
-       // Check model status if true set model data to list model.
+      // Hidden spinner when load data successfuly.
+      this.spinner.hide();
+      // Set data to model an view model.
+      let model: any = data;
+      this.viewModel = model;
+      // Check model status if true set model data to list model.
       this.listModel = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
       this.hideSninnerAndShowError(err.message);
@@ -116,7 +116,6 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     this.isFormPage = false;
     this.spinner.hide();
   }
-  /*-------------------------------------- End Ohm ----------------------------------*/
 
   setForm(param) {
     this.spinner.show();

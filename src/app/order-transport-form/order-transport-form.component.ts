@@ -1489,59 +1489,32 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   public ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();
   }
-
-  statusOrderColor(param) {
+  // Classify status color.
+  statusOrderClassify(param) {
     switch (param) {
       case 'C':
-        return '#E16E5B'
+        return 'status-color-C'
       case 'D':
-        return '#F7E884'
-      case 'L':
-        return '#F7E884'
+        return 'status-color-D'
+      case 'L': 
+        return 'status-color-L'
       case 'O':
-        return '#B6B6B6'
+        return 'status-color-O'
       case 'P':
-        return '#79D58B'
+        return 'status-color-P'
       case 'R':
-        return '#79D58B'
+        return 'status-color-R'
       case 'S':
-        return '#66A5D9'
+        return 'status-color-S'
       case 'W':
-        return '#B6B6B6'
+        return 'status-color-W'
       case 'F':
-        return '#EBB146'
-      case 'H':
-        return '#66A5D9'
+        return 'status-color-F'
+        case 'H':
+          return 'status-color-H'
       default:
         break;
     }
   }
-
-  // statusOrderClassify(param) {
-  //   switch (param) {
-  //     case 'C':
-  //       return '#E16E5B'
-  //     case 'D':
-  //       return '#F7E884'
-  //     case 'L':
-  //       return '#F7E884'
-  //     case 'O':
-  //       return '#B6B6B6'
-  //     case 'P':
-  //       return '#79D58B'
-  //     case 'R':
-  //       return '#79D58B'
-  //     case 'S':
-  //       return '#66A5D9'
-  //     case 'W':
-  //       return '#B6B6B6'
-  //     case 'F':
-  //       return '#EBB146'
-  //       case 'H':
-  //         return '#66A5D9'
-  //     default:
-  //       break;
-  //   }
-  // }
 }
 
