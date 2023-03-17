@@ -49,7 +49,7 @@
                         [label]="'เส้นทางหลัก'"
                         [data]="criteriaModel.RouteDescription"
                         [readonly]="true"
-                        (click)="chooseRoute()">
+                        (click)="chooseMainRouteFilter()">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0 margin-left-130">
@@ -262,7 +262,7 @@
                         [label]="'จังหวัด'"
                         [data]="headerModel.Province"
                         [readonly]="true"
-                        (click)="chooseProvince2()">
+                        (click)="chooseProvince()">
                     </citxt>
                 </div>
                 <div class="col l4 s12 margin-top-mminus-20">
@@ -271,7 +271,7 @@
                         [label]="'อำเภอ'"
                         [data]="headerModel.District"
                         [readonly]="true"
-                        (click)="chooseDistrict2()">
+                        (click)="chooseDistrict()">
                     </citxt>
                 </div>
             </div>
@@ -289,7 +289,7 @@
                         [label]="'โซน'"
                         [data]="headerModel.Region"
                         [readonly]="true"
-                        (click)="chooseRegion2()">
+                        (click)="chooseRegion()">
                     </citxt>
                 </div>
             </div>
@@ -300,7 +300,7 @@
                         [label]="'เส้นทางหลัก'"
                         [data]="headerModel.Route"
                         [readonly]="true"
-                        (click)="chooseRoute2()">
+                        (click)="chooseMainRoute()">
                     </citxt>
                 </div>
                 <div class="col l4 s12 margin-top-mminus-20">
@@ -309,7 +309,7 @@
                         [label]="'เส้นทางย่อย'"
                         [data]="headerModel.SubRoute"
                         [readonly]="true"
-                        (click)="chooseSubRoute2()">
+                        (click)="chooseSubRoute()">
                     </citxt>
                 </div>
             </div>
