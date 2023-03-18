@@ -3,7 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceProviderService } from '../shared/service-provider.service';
-import { ConfirmDialog ,RoutingDialog, SubRoutingDialog,RegionDialog,ProvinceDialog,DistrictDialog } from '../dialog/dialog';
+import { ConfirmDialog ,RoutingDialog, SubRoutingDialog,
+  RegionDialog, ProvinceDialog, DistrictDialog } from '../dialog/dialog';
 import { Logger } from '../shared/logger.service';
 
 @Component({
@@ -67,10 +68,9 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     _criteria = {...this.criteria, ..._criteria};
     Logger.info('master-shiplocation', 'render', _criteria, this.isDebugMode)
     
+    // Call service provider service to get shiplocation data.
     this.serviceProviderService.post('api/Masters/GetShipto', _criteria)
     .subscribe(data => {
-      // Logger.info('master-shiplocation', 'render', data, this.isDebugMode)
-
       // Hidden spinner when load data successfuly.
       this.spinner.hide();
       // Set data to model an view model.
@@ -79,25 +79,30 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
       // Check model status if true set model data to list model.
       this.listModel = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
   }
 
-  // Set Model.
-  private setHeaderModelForAddForm(model): any {
+  // Set Model Fo.
+  private setChooseModel(model) {
     // Set model.
-    let _model: any = {};
-    let _keys = Object.keys(model);
-
-    _keys.forEach((key) => { 
+    let _model: any = model;
+    for (const key in model) {
       _model[key] = model[key];
-    })
+    }
 
     return _model;
   }
 
+  // If sucess load data.
+  private showSuccessMessage(message: string): void {
+    this.spinner.hide();
+    this.toastr.success(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    this.backToMainPage();
+  }
+
   // Set Header Model.
-  private  setHeaderOrCriteriaModel(model, type): any {
+  private setHeaderOrCriteriaModel(model, type): any {
     // Set model.
     let _model: any = {};
     let _keys = Object.keys(model);
@@ -110,39 +115,36 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
   }
 
   // If can't load data to list model.
-  private loadDataFalse(message): boolean {
+  private loadDataFalse(message): any {
     let _listModel: any = [];
-    this.hideSninnerAndShowError(message);
+    this.showErrorMessage(message);
 
     return _listModel;
   }
 
-  // If sucess load data.
-  private hideSninnerAndShowSuccess(message: string) {
-    this.spinner.hide();
-    this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-  }
-
-  // If error load data.
-  private hideSninnerAndShowError(message: string) {
+  // Show Error message.
+  private showErrorMessage(message: string) {
     this.spinner.hide();
     this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
   }
   
   // Set to Form Page.
-  setToFromPage() {
+  goToFromPage() {
     this.isMainPage = false;
     this.isFormPage = true;
     this.spinner.hide();
   }
 
-  // Set to Form Page.
-  setToMainPage() {
+  // Set back to main page.
+  backToMainPage() {
     this.isMainPage = true;
     this.isFormPage = false;
-    this.spinner.hide();
+    this.isTimeSheetPage = false;
+    this.render();
   }
+    
 
+  // Set form for update.
   setForm(param) {
     // Show spinner.
     this.spinner.show();
@@ -154,20 +156,21 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     this.headerModel.Operation = 'UPDATE';
 
     // Set to from page.
-    this.setToFromPage();
+    this.goToFromPage();
   }
 
   // Clear Model and Reload Table Data.
   clearAndReloadData() {
     // Clear criteriaModel.
     this.criteriaModel = {};
+    // Clear headerModel.
     this.headerModel = {};
-    Logger.info('master-vehicle', 'clearAndReloadData', this.criteria, this.isDebugMode)
 
     // Reload Table data.
     this.render();
   }
 
+  // Set form for add.
   addForm() {
     // Show spinner.
     this.spinner.show();
@@ -198,18 +201,15 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     }
 
     // Setting header model.
-    this.headerModel = this.setHeaderModelForAddForm(_headerModel);
+    Object.keys(_headerModel).forEach((key) => { 
+      this.headerModel[key] = _headerModel[key];
+    })
+
     // Set to from page.
-    this.setToFromPage();
+    this.goToFromPage();
   }
 
-  backToMainPage() {
-    this.isMainPage = true;
-    this.isFormPage = false;
-    this.isTimeSheetPage = false;
-    this.render();
-  }
-
+  // Save data.
   save() {
     this.spinner.show();
 
@@ -241,18 +241,18 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     _criteria = {...this.criteria, ..._criteria};
     Logger.info('master-shiplocation', 'save', _criteria, this.isDebugMode)
 
-    this.serviceProviderService.post('api/Masters/CreateCustomerLocation', _criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Masters/CreateCustomerLocation', _criteria)
+    .subscribe(data => {
       this.spinner.hide();
       let model: any = data;
       if (model.Status) {
-        this.hideSninnerAndShowSuccess('บันทึกยกเลิกเสร็จสิ้น');
-        this.backToMainPage();
+        this.showSuccessMessage('บันทึกยกเลิกเสร็จสิ้น');
       } else {
-        this.hideSninnerAndShowError(model.Message);
+        this.showErrorMessage(model.Message);
       }
 
     }, err => {
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
     // Clear criteriaModel and Reload Table Data.
     this.clearAndReloadData();
@@ -284,14 +284,9 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
 
           let model: any = data;
           this.viewModel = model;
-          if (model.Status) {
-            this.hideSninnerAndShowSuccess('เสร็จสิ้น');
-            this.backToMainPage();
-          } else {
-            this.hideSninnerAndShowError(model.Message);
-          }
+          (model.Status) ? this.showSuccessMessage('เสร็จสิ้น') : this.showErrorMessage(model.Message);
         }, err => {
-          this.hideSninnerAndShowError(err.message);
+          this.showErrorMessage(err.message);
         });
         // Clear criteriaModel and Reload Table Data.
         this.clearAndReloadData();
@@ -299,6 +294,7 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     });
   }
 
+  // Choose main route for filter.
   chooseMainRouteFilter() {
     const dialogRef = this.dialog.open(RoutingDialog, {
       disableClose: false,
@@ -308,18 +304,24 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      let _headerModel: object = {};
       if (result != undefined) {
-        this.criteriaModel.RouteId = result.Id;
-        this.criteriaModel.RouteCode = result.Code;
-        this.criteriaModel.RouteDescription = result.Code + ' - ' + result.Description;
+        _headerModel = {
+          RouteId: result.Id,
+          RouteCode: result.Code,
+          RouteDescription: result.Code + ' - ' + result.Description
+        }
       } else {
-        this.criteriaModel.RouteId = '';
-        this.criteriaModel.RouteCode = '';
-        this.criteriaModel.RouteDescription = '';
+        _headerModel = {
+          RouteId: '',
+          RouteCode: '',
+          Route: ''
+        }
       }
     });
   }
 
+  // Choose main route for add form.
   chooseMainRoute() {
     const dialogRef = this.dialog.open(RoutingDialog, {
       disableClose: false,
@@ -329,22 +331,37 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.headerModel.SubRouteId = '';
-      this.headerModel.SubRouteCode = '';
-      this.headerModel.SubRoute = '';
-
-      if (result != undefined) {
-        this.headerModel.RouteId = result.Id;
-        this.headerModel.RouteCode = result.Code;
-        this.headerModel.Route = result.Description;
-      } else {
-        this.headerModel.RouteId = '';
-        this.headerModel.RouteCode = '';
-        this.headerModel.Route = '';
+      let _subroutetHeaderModel: object = {
+        SubRouteId: '',
+        SubRouteCode: '',
+        SubRoute: ''
       }
+      // Setting header model.
+      _subroutetHeaderModel = this.setChooseModel(_subroutetHeaderModel);
+      this.headerModel = {...this.headerModel, ..._subroutetHeaderModel};
+
+      let _headerModel: object = {};
+      if (result != undefined) {
+        _headerModel = {
+          RouteId: result.Id,
+          RouteCode: result.Code,
+          Route: result.Description
+        }
+      } else {
+        _headerModel = {
+          RouteId: '',
+          RouteCode: '',
+          Route: ''
+        }
+      }
+
+      // Setting header model.
+      _headerModel = this.setChooseModel(_headerModel);
+      this.headerModel = {...this.headerModel, ..._headerModel};
     });
   }
 
+  // Choose sub route for add form.
   chooseSubRoute() {
     if(this.headerModel.RouteId == ''){
       this.toastr.error('กรุณาระบุเส้นทางหลัก', 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -359,18 +376,28 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      let _headerModel: object = {};
       if (result != undefined) {
-        this.headerModel.SubRouteId = result.Id;
-        this.headerModel.SubRouteCode = result.Code;
-        this.headerModel.SubRoute = result.Description;
+        _headerModel = {
+          SubRouteId: result.Id,
+          SubRouteCode: result.Code,
+          SubRoute: result.Description
+        }
       } else {
-        this.headerModel.SubRouteId = '';
-        this.headerModel.SubRouteCode = '';
-        this.headerModel.SubRoute = '';
+        _headerModel = {
+          SubRouteId: '',
+          SubRouteCode: '',
+          SubRoute: ''
+        }
       }
+
+      // Setting header model.
+      _headerModel = this.setChooseModel(_headerModel);
+      this.headerModel = {...this.headerModel, ..._headerModel};
     });
   }
 
+  // Choose region for add form.
   chooseRegion() {
     const dialogRef = this.dialog.open(RegionDialog, {
       disableClose: false,
@@ -380,18 +407,28 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      let _headerModel: object = {};
       if (result != undefined) {
-        this.headerModel.RegionId = result.Id;
-        this.headerModel.RegionCode = result.Code;
-        this.headerModel.Region = result.Description;
+        _headerModel = {
+          RegionId: result.Id,
+          RegionCode: result.Code,
+          Region: result.Description
+        }
       } else {
-        this.headerModel.RegionId = '';
-        this.headerModel.RegionCode = '';
-        this.headerModel.Region = '';
+        _headerModel = {
+          RegionId: '',
+          RegionCode: '',
+          Region: ''
+        }
       }
+
+      // Setting header model.
+      _headerModel = this.setChooseModel(_headerModel);
+      this.headerModel = {...this.headerModel, ..._headerModel};
     });
   }
 
+  // Choose province for add form.
   chooseProvince() {
     const dialogRef = this.dialog.open(ProvinceDialog, {
       disableClose: false,
@@ -401,25 +438,41 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.headerModel.DistrictId = '';
-      this.headerModel.DistrictCode = '';
-      this.headerModel.District = '';
-
-      if (result != undefined) {
-        this.headerModel.ProvinceId = result.Id;
-        this.headerModel.ProvinceCode = result.Code;
-        this.headerModel.Province = result.Description;
-      } else {
-        this.headerModel.ProvinceId = '';
-        this.headerModel.ProvinceCode = '';
-        this.headerModel.Province = '';
+      let _districtHeaderModel: object = {
+        DistrictId: '',
+        DistrictCode: '',
+        District: ''
       }
+      // Setting header model.
+      _districtHeaderModel = this.setChooseModel(_districtHeaderModel);
+      this.headerModel = {...this.headerModel, ..._districtHeaderModel};
+
+      let _headerModel: object = {};
+      if (result != undefined) {
+        _headerModel = {
+          ProvinceId: result.Id,
+          ProvinceCode: result.Code,
+          Province: result.Description
+        }
+      } else {
+        _headerModel = {
+          ProvinceId: '',
+          ProvinceCode: '',
+          Province: ''
+        }
+      }
+
+      // Setting header model.
+      _headerModel = this.setChooseModel(_headerModel);
+      this.headerModel = {...this.headerModel, ..._headerModel};
+      Logger.info('master-subroute', 'chooseRouteAddForm-SetHeaderModel', this.headerModel, this.isDebugMode);
     });
   }
 
+  // Choose district for add form.
   chooseDistrict() {
     if(this.headerModel.ProvinceId == ''){
-      this.toastr.error('กรุณาระบุเส้นทางหลัก', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.toastr.error('กรุณาระบุจังหวัด', 'แจ้งเตือนระบบ', { timeOut: 5000 });
       return;
     }
     
@@ -431,15 +484,25 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      let _headerModel: object = {};
       if (result != undefined) {
-        this.headerModel.DistrictId = result.Id;
-        this.headerModel.DistrictCode = result.Code;
-        this.headerModel.District = result.Description;
+        _headerModel = {
+          DistrictId: result.Id,
+          DistrictCode: result.Code,
+          District: result.Description
+        }
       } else {
-        this.headerModel.DistrictId = '';
-        this.headerModel.DistrictCode = '';
-        this.headerModel.District = '';
+        _headerModel = {
+          DistrictId: '',
+          DistrictCode: '',
+          District: ''
+        }
       }
+
+      // Setting header model.
+      _headerModel = this.setChooseModel(_headerModel);
+      this.headerModel = {...this.headerModel, ..._headerModel};
+      Logger.info('master-subroute', 'chooseRouteAddForm-SetHeaderModel', this.headerModel, this.isDebugMode);
     });
   }
 

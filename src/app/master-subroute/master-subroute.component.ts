@@ -8,6 +8,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 
 
 @Component({
+  selector: 'app-master-subroute',
   templateUrl: './master-subroute.component.html',
   styleUrls: ['./master-subroute.component.css']
 })
@@ -42,7 +43,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     this.render();
   }
 
-  // Table configuration and render.
+  // Render SubRoute Table.
   render() {
     // Show spinner.
     this.spinner.show();
@@ -50,15 +51,17 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     this.currentPage = 1;
     // Set Operations in Header Model.
     this.headerModel.Operation = 'SELECT';
-    let criteria = {
-      "RouteId": this.criteriaModel.RouteId,
-      "Fillter": this.criteriaModel.Fillter,
+    // Set criteriaModel to criteria For Filter.
+    let _criteria = {
+      RouteId : '',
+      Fillter : ''
     }
-    criteria = {...this.criteria, ...criteria};
-    Logger.info('master-subroute', 'render', criteria, this.isDebugMode)
+    _criteria = this.setHeaderOrCriteriaModel(_criteria, 'criteria');
+    _criteria = {...this.criteria, ..._criteria};
+    Logger.info('master-subroute', 'render', _criteria, this.isDebugMode)
 
     // Call service provider service to get sub route data.
-    this.serviceProviderService.post('api/Masters/GetSubRoute', criteria)
+    this.serviceProviderService.post('api/Masters/GetSubRoute', _criteria)
     .subscribe(data => {
       // Hidden spinner when load data successfuly.
       this.spinner.hide();
@@ -68,13 +71,12 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
       // Check model status if true set model data to list model.
       this.listModel = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
   }
 
   // Set Model.
-  private setModel(model) {
-    // Set model.
+  private setChooseModel(model): any {
     let _model: any = model;
     for (const key in model) {
       _model[key] = model[key];
@@ -83,40 +85,55 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     return _model;
   }
 
+  // Set Header or Criteria Model.
+  private  setHeaderOrCriteriaModel(model, type): any {
+    let _model: any = {};
+    let _keys = Object.keys(model);
+
+    _keys.forEach((key) => { 
+      _model[key] = type == 'header' ? this.headerModel[key] : this.criteriaModel[key];
+    });
+
+    return _model;
+  }
+
   // If can't load data to list model.
   private loadDataFalse(message): boolean {
     let _listModel: any = [];
-    this.hideSninnerAndShowError(message);
+    this.showErrorMessage(message);
 
     return _listModel;
   }
 
-  // If sucess load data.
-  private hideSninnerAndShowSuccess(message: string) {
+  // Show success message when data is loaded.
+  private showSuccessMessage(message: string): void {
     this.spinner.hide();
-    this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    this.toastr.success(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    this.backToMainPage();
   }
 
-  // If error load data.
-  private hideSninnerAndShowError(message: string) {
+  // Show error message when can't load data .
+  private showErrorMessage(message: string): void {
     this.spinner.hide();
     this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
   }
   
-  // Set to Form Page.
-  setToFromPage() {
+  // Go to Form Page.
+  goToFromPage() {
     this.isMainPage = false;
     this.isFormPage = true;
     this.spinner.hide();
   }
 
-  // Set to Form Page.
-  setToMainPage() {
+  // Back to main page.
+  backToMainPage() {
     this.isMainPage = true;
     this.isFormPage = false;
-    this.spinner.hide();
+    this.isTimeSheetPage = false;
+    this.render();
   }
 
+  // Set form for update.
   setForm(param) {
     this.spinner.show();
     Logger.info('master-vehicle', 'setForm-param', param, this.isDebugMode)
@@ -130,9 +147,8 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     this.headerModel.Operation = 'UPDATE';
     this.headerModel.RouteDescription = param.Route;
 
-    Logger.info('master-vehicle', 'setForm', this.headerModel, this.isDebugMode)
-    // Set to from page.
-    this.setToFromPage();
+    // go to from page.
+    this.goToFromPage();
   }
 
   // Clear Model and Reload Table Data.
@@ -146,6 +162,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     this.render();
   }
 
+  // Set form for add.
   addForm() {
     // Show spinner.
     this.spinner.show();
@@ -159,22 +176,18 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
       Description : '',
       Active: 'Y'
     }
+
     // Setting header model.
-    this.headerModel = this.setModel(_headerModel);
+    Object.keys(_headerModel).forEach((key) => { 
+      this.headerModel[key] = _headerModel[key];
+    })
+
     // Set to from page.
-    this.setToFromPage();
+    this.goToFromPage();
   }
 
-  // Set back to main page.
-  backToMainPage() {
-    this.isMainPage = true;
-    this.isFormPage = false;
-    this.isTimeSheetPage = false;
-    this.render();
-  }
-
+  // Save data.
   save() {
-
     if(this.headerModel.RouteId == '' || this.headerModel.RouteId == undefined) {
       this.toastr.error('กรุณาระบุเส้นทางหลัก', 'แจ้งเตือนระบบ', { timeOut: 5000 });
       return;
@@ -182,35 +195,32 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     // Set back to main page.
     this.spinner.show();
 
-    let criteria = {
-      "Operation": this.headerModel.Operation,
-      "RouteId": this.headerModel.RouteId,
-      "Id": this.headerModel.Id,
-      "Code": this.headerModel.Code,
-      "Description": this.headerModel.Description,
-      "Active": this.headerModel.Active,
+    let _criteria = {
+       Operation : '',
+       RouteId : '',
+       Id : '',
+       Code : '',
+       Description : '',
+       Active : '',
     }
-    criteria = {...this.criteria, ...criteria};
+    _criteria = this.setHeaderOrCriteriaModel(_criteria, 'header');
+    _criteria = {...this.criteria, ..._criteria};
+    Logger.info('master-shiplocation', 'save', _criteria, this.isDebugMode)
 
-    this.serviceProviderService.post('api/Masters/SaveSubRoute', criteria)
+    this.serviceProviderService.post('api/Masters/SaveSubRoute', _criteria)
     .subscribe(data => {
       this.spinner.hide();
-      let model: any = data;
-      if (model.Status) {
-        this.hideSninnerAndShowSuccess('บันทึกยกเลิกเสร็จสิ้น');
-        this.backToMainPage();
-      }
-      else {
-        this.hideSninnerAndShowError(model.Message);
-      }
 
+      let model: any = data;
+      (model.Status) ? this.showSuccessMessage('บันทึกยกเลิกเสร็จสิ้น') : this.showErrorMessage(model.Message);
     }, err => {
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
     // Clear Model and Reload Table Data.
     this.clearAndReloadData();
   }
 
+  // Delete data.
   delete(param) {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(ConfirmDialog, {
@@ -239,14 +249,9 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
 
           let model: any = data;
           this.viewModel = model;
-          if (model.Status) {
-            this.hideSninnerAndShowSuccess('เสร็จสิ้น');
-            this.backToMainPage();
-          } else {
-            this.hideSninnerAndShowError(model.Message);
-          }
+          (model.Status) ? this.showSuccessMessage('เสร็จสิ้น') : this.showErrorMessage(model.Message);
         }, err => {
-          this.hideSninnerAndShowError(err.message);
+          this.showErrorMessage(err.message);
         });
         // Clear Model and Reload Table Data.
         this.clearAndReloadData();
@@ -254,6 +259,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     });
   }
 
+  // Choose Route for Filter.
   chooseRouteFilter() {
     const dialogRef = this.dialog.open(RoutingDialog, {
       disableClose: false,
@@ -263,20 +269,31 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-subroute', 'chooseRoute2', result, this.isDebugMode)
-
+      Logger.info('master-shiplocation', 'chooseRouteFilter', result, this.isDebugMode)
+      let _headerModel: object = {};
       if (result != undefined) {
-        this.criteriaModel.RouteId = result.Id;
-        this.criteriaModel.RouteCode = result.Code;
-        this.criteriaModel.RouteDescription = result.Description;
+        _headerModel =  {
+          RouteId : result.Id,
+          RouteCode : result.Code,
+          RouteDescription : result.Description
+        }
       } else {
-        this.criteriaModel.RouteId = '';
-        this.criteriaModel.RouteCode = '';
-        this.criteriaModel.RouteDescription = '';
+        _headerModel =  {
+          RouteId : '',
+          RouteCode : '',
+          RouteDescription : ''
+        }
       }
+
+      // Setting header model.
+      _headerModel = this.setChooseModel(_headerModel);
+      this.criteriaModel = {...this.criteriaModel, ..._headerModel};
+      
+      Logger.info('master-shiplocation', 'chooseRouteFilter', this.criteriaModel, this.isDebugMode)
     });
   }
 
+  // Choose Route for Add Form.
   chooseRouteAddForm() {
     const dialogRef = this.dialog.open(RoutingDialog, {
       disableClose: false,
@@ -286,8 +303,7 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-subroute', 'chooseRouteAddForm', result, this.isDebugMode);
-      let _headerModel: object = {}
+      let _headerModel: object = {};
       if (result != undefined) {
         _headerModel = {
           RouteId: result.Id,
@@ -301,8 +317,9 @@ export class MasterSubrouteComponent implements OnInit, AfterContentChecked {
           RouteDescription: ''
         }
       }
+
       // Setting header model.
-      _headerModel = this.setModel(_headerModel);
+      _headerModel = this.setChooseModel(_headerModel);
       this.headerModel = {...this.headerModel, ..._headerModel};
       Logger.info('master-subroute', 'chooseRouteAddForm-SetHeaderModel', this.headerModel, this.isDebugMode);
     });
