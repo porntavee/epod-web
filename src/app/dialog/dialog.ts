@@ -5,6 +5,7 @@ import { ServiceProviderService } from "../shared/service-provider.service";
 import * as XLSX from 'xlsx-js-style';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+
 @Component({
     selector: 'confirm-dialog',
     templateUrl: 'confirm-dialog.html',
@@ -27,8 +28,9 @@ export class ConfirmDialog {
     selector: 'masterdata-dialog',
     templateUrl: 'masterdata-dialog.html',
 })
-export class MasterDataDialog {
+export class MasterDataDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<MasterDataDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -67,14 +69,20 @@ export class MasterDataDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 @Component({
     selector: 'location-address-dialog',
     templateUrl: 'location-address-dialog.html',
 })
-export class LocationAddressDataDialog {
+export class LocationAddressDataDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<LocationAddressDataDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -113,6 +121,11 @@ export class LocationAddressDataDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 
@@ -121,8 +134,9 @@ export class LocationAddressDataDialog {
     selector: 'group-user-dialog',
     templateUrl: 'group-user-dialog.html',
 })
-export class GroupUserDialog {
+export class GroupUserDialog implements AfterContentChecked  {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<GroupUserDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -168,6 +182,11 @@ export class GroupUserDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 
@@ -175,7 +194,7 @@ export class GroupUserDialog {
     selector: 'route-dialog',
     templateUrl: 'route-dialog.html',
 })
-export class RouteDialog implements AfterContentChecked{
+export class RouteDialog implements AfterContentChecked {
 
     constructor(public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
@@ -212,8 +231,9 @@ export class RouteDialog implements AfterContentChecked{
     selector: 'type-of-work-dialog',
     templateUrl: 'type-of-work-dialog.html',
 })
-export class TypeOfWorkDialog {
+export class TypeOfWorkDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -263,14 +283,20 @@ export class TypeOfWorkDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 @Component({
     selector: 'type-of-work-dialog',
     templateUrl: 'type-of-work-dialog.html',
 })
-export class StatusDialog {
+export class StatusDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -321,14 +347,20 @@ export class StatusDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 @Component({
     selector: 'ship-to-dialog',
     templateUrl: 'ship-to-dialog.html',
 })
-export class ShipToDialog {
+export class ShipToDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -380,14 +412,20 @@ export class ShipToDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 @Component({
     selector: 'transport-no-dialog',
     templateUrl: 'transport-no-dialog.html',
 })
-export class TransportNoDialog {
+export class TransportNoDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -439,14 +477,20 @@ export class TransportNoDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 @Component({
     selector: 'vehicle-dialog',
     templateUrl: 'vehicle-dialog.html',
 })
-export class VehicleDialog {
+export class VehicleDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -496,6 +540,11 @@ export class VehicleDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 
@@ -503,8 +552,9 @@ export class VehicleDialog {
     selector: 'driver-dialog',
     templateUrl: 'driver-dialog.html',
 })
-export class DriverDialog {
+export class DriverDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -554,14 +604,20 @@ export class DriverDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 @Component({
     selector: 'province-dialog',
     templateUrl: 'province-dialog.html',
 })
-export class ProvinceDialog {
+export class ProvinceDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<ProvinceDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -600,14 +656,20 @@ export class ProvinceDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 @Component({
     selector: 'district-dialog',
     templateUrl: 'district-dialog.html',
 })
-export class DistrictDialog {
+export class DistrictDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<DistrictDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -646,6 +708,11 @@ export class DistrictDialog {
 
     ok(param) {
         this.dialogRef.close(param);
+    }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
     }
 }
 
@@ -708,8 +775,9 @@ export class RoutingDialog implements AfterContentChecked {
     selector: 'subrouting-dialog',
     templateUrl: 'subrouting-dialog.html',
 })
-export class SubRoutingDialog {
+export class SubRoutingDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<SubRoutingDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -748,14 +816,20 @@ export class SubRoutingDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 @Component({
     selector: 'region-dialog',
     templateUrl: 'region-dialog.html',
 })
-export class RegionDialog {
+export class RegionDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RegionDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -794,14 +868,20 @@ export class RegionDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 @Component({
     selector: 'routing-dialog',
     templateUrl: 'routing-dialog.html',
 })
-export class JobStatusDialog {
+export class JobStatusDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RoutingDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -840,14 +920,20 @@ export class JobStatusDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 @Component({
     selector: 'docreturn-dialog',
     templateUrl: 'docreturn-dialog.html',
 })
-export class DocReturnDialog {
+export class DocReturnDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<RoutingDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -886,6 +972,11 @@ export class DocReturnDialog {
     ok(param) {
         this.dialogRef.close(param);
     }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 }
 
 
@@ -893,8 +984,9 @@ export class DocReturnDialog {
     selector: 'upload-order-dialog',
     templateUrl: 'upload-order-dialog.html',
 })
-export class UploadOrderDialog {
+export class UploadOrderDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<ConfirmDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -905,6 +997,11 @@ export class UploadOrderDialog {
 
     ok() {
         this.dialogRef.close(this.listData);
+    }
+    
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
     }
 
     // excel
@@ -947,8 +1044,9 @@ export class UploadOrderDialog {
     selector: 'joborder-status-dialog',
     templateUrl: 'joborder-status-dialog.html',
 })
-export class JobOrderStatusDialog {
+export class JobOrderStatusDialog implements AfterContentChecked {
     constructor(
+        public changeDetector : ChangeDetectorRef,
         public dialogRef: MatDialogRef<JobOrderStatusDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -986,6 +1084,11 @@ export class JobOrderStatusDialog {
 
     ok(param) {
         this.dialogRef.close(param);
+    }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
     }
 }
 
