@@ -121,6 +121,7 @@ import { ReportTransportManifestComponent } from './report-transport-manifest/re
 import { ReportSummaryComponent } from './report-summary/report-summary.component';
 import { ReportCustomerComponent } from './report-customer/report-customer.component';
 import { MasterVehicleComponent } from './master-vehicle/master-vehicle.component';
+import { NgxPrintModule } from "ngx-print";
 
 @NgModule({
   declarations: [
@@ -228,7 +229,7 @@ import { MasterVehicleComponent } from './master-vehicle/master-vehicle.componen
     ReportCustomerComponent,
     MasterVehicleComponent,
     UploadOrderDialog,
-    JobOrderStatusDialog,
+    JobOrderStatusDialog
   ],
   imports: [
     BrowserModule,
@@ -260,6 +261,7 @@ import { MasterVehicleComponent } from './master-vehicle/master-vehicle.componen
     MatChipsModule,
     MatAutocompleteModule,
     DragDropModule,
+    NgxPrintModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],

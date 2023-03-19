@@ -41,6 +41,14 @@ export class ReturnDocumentComponent implements OnInit {
 
   listRoute: any = [];
 
+  exModel: any = [{
+    title: 'hello world'
+  }, {
+    title: 'hello world'
+  }, {
+    title: 'hello world'
+  }];
+
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
@@ -127,16 +135,15 @@ export class ReturnDocumentComponent implements OnInit {
 
           let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
 
-          if (dup.length == 0)
-          {
+          if (dup.length == 0) {
             element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
             element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
             this.listModel.push(element);
           }
-      
+
         });
 
-      
+
         this.criteriaModel.InvoiceNo = '';
         this.criteriaModel.TransportNo = '';
       }
@@ -153,24 +160,24 @@ export class ReturnDocumentComponent implements OnInit {
 
   }
 
-    //use
-    chooseTransportNo() {
-      //ต้องเอาไปใส่ใน app.module ที่ declarations
-      const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.', Process:'ADMIN_RETRURN' } });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-  
-        if (result != undefined) {
-          this.criteriaModel.PopupTransportNo= result.TransportNo; 
-          this.criteriaModel.TransportNo = result.TransportNo;
-          this.readTransport(this.criteriaModel);
-        }
-        else{
-          this.criteriaModel.TransportNo='';
-        }
-      });
-    }
+  //use
+  chooseTransportNo() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.', Process: 'ADMIN_RETRURN' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.PopupTransportNo = result.TransportNo;
+        this.criteriaModel.TransportNo = result.TransportNo;
+        this.readTransport(this.criteriaModel);
+      }
+      else {
+        this.criteriaModel.TransportNo = '';
+      }
+    });
+  }
 
   readDetail(param) {
 
@@ -639,5 +646,9 @@ export class ReturnDocumentComponent implements OnInit {
         break;
     }
 
+  }
+
+  print() {
+    window.print();
   }
 }
