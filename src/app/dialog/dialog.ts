@@ -1092,6 +1092,22 @@ export class JobOrderStatusDialog implements AfterContentChecked {
     }
 }
 
+@Component({
+    selector: 'print-dialog',
+    templateUrl: 'print-dialog.html',
+})
+export class PrintDialog {
+    constructor(
+        public dialogRef: MatDialogRef<PrintDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+    cancel() {
+        this.dialogRef.close(false);
+    }
+
+    ok() {
+        this.dialogRef.close(true);
+    }
+}
 
 

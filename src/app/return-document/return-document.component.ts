@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, DocReturnDialog } from '../dialog/dialog';
+import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, DocReturnDialog, PrintDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -239,6 +239,24 @@ export class ReturnDocumentComponent implements OnInit {
     }
   }
 
+  printAlert(param) {
+    if (this.criteriaModel.ReturnNo == '') {
+      const dialogRef = this.dialog.open(PrintDialog, { disableClose: false, height: '160px', width: '300px', data: param });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+        if (result) {
+          // this.confirm();
+        }
+        else {
+          return;
+        }
+      });
+    }
+    else {
+      // this.confirm();
+    }
+  }
+
 
   confirm() {
 
@@ -264,16 +282,21 @@ export class ReturnDocumentComponent implements OnInit {
     // debugger
     this.serviceProviderService.post('api/Transport/ReturnOrders', criteria).subscribe(data => {
 
-      // debugger
+      debugger
       this.spinner.hide();
       let model: any = {};
       model = data;
       this.viewModel = model;
 
+      let printModel: any = {ReturnNo: model.Data, List: this.listModel};
+
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        this.backToMain();
+
+        this.printAlert(printModel);
+
+        // this.backToMain();
       }
       else {
         this.spinner.hide();

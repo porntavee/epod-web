@@ -240,4 +240,61 @@ export class ReturnTransactionComponent implements OnInit {
     }
 
   }
+
+  exModel: any = [{
+    title: 'hello world'
+  }, {
+    title: 'hello world'
+  }, {
+    title: 'hello world'
+  }];
+
+  readTransport(param) {
+
+    if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '') {
+      this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return;
+    }
+
+    this.spinner.show();
+
+    this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
+    this.criteriaModel.Process = 'ADMIN_RETRURN';
+
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', this.criteriaModel).subscribe(data => {
+      this.spinner.hide();
+      let model: any = {};
+      model = data;
+      this.viewModel = model;
+
+      if (model.Status) {
+
+        model.Data.forEach(element => {
+
+          let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
+
+          if (dup.length == 0) {
+            element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
+            element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
+            this.listModel.push(element);
+          }
+
+        });
+
+
+        this.criteriaModel.InvoiceNo = '';
+        this.criteriaModel.TransportNo = '';
+      }
+      else {
+        // this.listModel = [];
+        this.spinner.hide();
+        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+
+  }
 }
