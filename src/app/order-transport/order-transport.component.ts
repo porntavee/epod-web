@@ -295,7 +295,6 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
 
   // Classify status color.
   statusTransportClassify(param) {
-    console.log(param);
     switch (param) {
       case 'C':
         return 'status-color-C'

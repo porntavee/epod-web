@@ -12,7 +12,6 @@ import { ConfirmDialog, DriverDialog, JobStatusDialog, RegionDialog, RouteDialog
   VehicleDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { Logger } from '../shared/logger.service';
-import { PermissionService } from '../shared/permission.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
 @Component({
@@ -81,7 +80,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
     this.GroupCode = this.serviceProviderService.userinformation.GroupCode;
 
-    Logger.info('order-transport-form', 'ngOnInit-permission',this.criteria , this.isDebugMode);
+  
 
     const date = new Date();
     this.criteriaModel.TransportDateString = moment(date.setDate(date.getDate() + 1)).format('YYYYMMDD');
@@ -121,6 +120,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       let model: any = data;
       this.viewModel = model;
       if (model.Status) {
+        
         this.criteriaModel = model.Data[0];
         let criteria = {
           TransportDescription: model.Data[0].Transport,
@@ -136,8 +136,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           VehicleTypeDescription: model.Data[0].VehicleType,
           TransportDateString: moment(model.Data[0].TransportDate).format('YYYYMMDD')
         }
-        criteria = {...this.criteria, ...criteria};
-        Logger.info('order-transport-form', 'read', criteria, this.isDebugMode);
+        this.criteriaModel = {...this.criteriaModel, ...criteria};
       } else {
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -252,12 +251,9 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           console.log(`Dialog result: ${result}`);
 
           if (result != undefined) {
-            let criteria = {
-              'SubRouteId': "",
-              'SubRouteCode': this.criteriaModel.routeId,
-              'SubRouteDescription': result.Code + "-" + result.Description
-            }
-            this.setCriteriaModel(criteria);
+            this.criteriaModel.SubRouteId = result.Id;
+            this.criteriaModel.SubRouteCode = result.Code;
+            this.criteriaModel.SubRouteDescription = result.Code + ' - ' + result.Description;
           }
         });
 
@@ -683,7 +679,6 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       data: { title: 'Transport', listData: this.listTransport, listDataSearch: this.listTransport } });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
         this.criteriaModel.TransportId = result.Id;
@@ -1328,7 +1323,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       disableClose: false,
       height: '150px',
       width: '300px',
-      data: { title: 'คุณต้องการปิดงานใบคุมใช่หรือไม่?' }
+      data: { title: 'คุณต้องปิดงานใบคุมใช่หรือไม่?' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1489,32 +1484,58 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   public ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();
   }
-  // Classify status color.
+
+  // statusOrderColor(param) {
+  //   switch (param) {
+  //     case 'C':
+  //       return '#E16E5B'
+  //     case 'D':
+  //       return '#F7E884'
+  //     case 'L':
+  //       return '#F7E884'
+  //     case 'O':
+  //       return '#B6B6B6'
+  //     case 'P':
+  //       return '#79D58B'
+  //     case 'R':
+  //       return '#79D58B'
+  //     case 'S':
+  //       return '#66A5D9'
+  //     case 'W':
+  //       return '#B6B6B6'
+  //     case 'F':
+  //       return '#EBB146'
+  //     case 'H':
+  //       return '#66A5D9'
+  //     default:
+  //       break;
+  //   }
+  // }
+
   statusOrderClassify(param) {
     switch (param) {
       case 'C':
-        return 'status-color-C'
+        return '#E16E5B'
       case 'D':
-        return 'status-color-D'
-      case 'L': 
-        return 'status-color-L'
+        return '#F7E884'
+      case 'L':
+        return '#F7E884'
       case 'O':
-        return 'status-color-O'
+        return '#B6B6B6'
       case 'P':
-        return 'status-color-P'
+        return '#79D58B'
       case 'R':
-        return 'status-color-R'
+        return '#79D58B'
       case 'S':
-        return 'status-color-S'
+        return '#66A5D9'
       case 'W':
-        return 'status-color-W'
+        return '#B6B6B6'
       case 'F':
-        return 'status-color-F'
+        return '#EBB146'
         case 'H':
-          return 'status-color-H'
+          return '#66A5D9'
       default:
         break;
     }
   }
 }
-
