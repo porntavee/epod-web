@@ -33,17 +33,18 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   listRoute       : any     = [];
   id              : any     = '';
 
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     public changeDetector: ChangeDetectorRef
-    ) {
-      // Initialize userinformation to criteria object.
-      this.criteria = { 
-        "userinformation": this.serviceProviderService.userinformation
-      };
-    }
+  ) {
+    // Initialize userinformation to criteria object.
+    this.criteria = { 
+      "userinformation": this.serviceProviderService.userinformation
+    };
+  }
 
   ngOnInit(): void {
     this.criteriaModel.StatusCode = 'O';
@@ -62,7 +63,6 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     this.headerModel.Operation = 'SELECT';
     // Set criteriaModel to criteria For Filter.
     let _criteria = {
-      // StatusCode: this.criteriaModel.StatusCode,
       OrderStatus: this.criteriaModel.StatusCode,
       StatusDescription: this.criteriaModel.StatusDescription,
       OrderNo: this.criteriaModel.OrderNo,
@@ -76,7 +76,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     // Logger.info('master-order', 'render-_criteria', _criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Transport/GetOrder', _criteria).subscribe(data => {
-      Logger.info('master-order', 'render', _criteria, this.isDebugMode)
+      // Logger.info('master-order', 'render', _criteria, this.isDebugMode)
       this.spinner.hide();
 
       let model: any = data;
@@ -91,7 +91,6 @@ export class OrderComponent implements OnInit, AfterContentChecked {
             }
           });
         });
-        // Logger.info('master-order', 'render-model.Data', model.Data, this.isDebugMode)
 
         // Check model status if true set model data to list model.
         this.listModel = model.Data
@@ -158,7 +157,6 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     this.isFormPage = false;
     this.isTimeSheetPage = false;
     this.render();
-
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -179,14 +177,6 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
   // Set form for update.
   setForm(param) {
-    // console.log(param);
-    // for (let key in param) {
-    //   if (key.includes('Date') || key.includes('OrderDateEnd')) {
-    //     console.log(key, '->', param, '->', param[key]);
-    //     param[key] =this.revertDate(param[key]);
-    //     console.log("AFter RevertDate", key, '->', param, '->', param[key]);
-    //   }
-    // }
     // Show spinner.
     this.spinner.show();
 
@@ -210,8 +200,6 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     this.headerModel.OrderDate = this.headerModel.OrderDate == "Invalid date" || this.headerModel.OrderDate == undefined ? undefined : moment(this.headerModel.OrderDate).format('YYYY-MM-DD 00:00:00.000'),
     this.headerModel.OrderEstimate = this.headerModel.OrderEstimate == "Invalid date" || this.headerModel.OrderEstimate == undefined ? undefined : moment(this.headerModel.OrderEstimate).format('YYYY-MM-DD 00:00:00.000'),
     this.headerModel.InvoiceDate = this.headerModel.InvoiceDate == "Invalid date" || this.headerModel.InvoiceDate == undefined ? undefined : moment(this.headerModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000')
-
-    console.log('setForm-headerModel', this.headerModel);
 
 
     // Set to from page.
@@ -247,7 +235,8 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       SubRouteDescription: '',
       OrderDate: moment(date).format('YYYY-MM-DD 00:00:00'),
       InvoiceDate: moment(date).format('YYYY-MM-DD 00:00:00'),
-      OrderEstimate: moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DD 00:00:00')
+      OrderEstimate: moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DD 00:00:00'),
+      Task: 'new'
     }
 
     // Setting header model.
@@ -420,6 +409,10 @@ export class OrderComponent implements OnInit, AfterContentChecked {
         this.headerModel.VehicleId = result.Id;
         this.headerModel.VehicleCode = result.Code;
         this.headerModel.VehicleDescription = result.Code + ' - ' + result.Description;
+      } else {
+        this.headerModel.VehicleId = '';
+        this.headerModel.VehicleCode = '';
+        this.headerModel.VehicleDescription = '';
       }
     });
   }
@@ -525,25 +518,25 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     this.headerModel.OrderDate = this.headerModel.OrderDate == "Invalid date" || this.headerModel.OrderDate == undefined ? undefined : moment(this.headerModel.OrderDate).format('YYYY-MM-DD 00:00:00.000'),
     this.headerModel.OrderEstimate = this.headerModel.OrderEstimate == "Invalid date" || this.headerModel.OrderEstimate == undefined ? undefined : moment(this.headerModel.OrderEstimate).format('YYYY-MM-DD 00:00:00.000'),
     this.headerModel.InvoiceDate = this.headerModel.InvoiceDate == "Invalid date" || this.headerModel.InvoiceDate == undefined ? undefined : moment(this.headerModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000')
-
-    // this.headerModel.OrderDate = moment(this.headerModel.OrderDate).format('YYYY-MM-DDT00:00:00');
-    // this.headerModel.OrderEstimate = moment(this.headerModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
-    // this.headerModel.InvoiceDate = (this.headerModel.InvoiceDate != undefined && this.headerModel.InvoiceDate != "Invalid date") ? moment(this.headerModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000') : undefined;
     this.headerModel.UoM = this.headerModel.UoM;
-
     this.headerModel = {...this.criteria, ...this.headerModel};
-    Logger.info('master-shiplocation', 'save', this.headerModel, this.isDebugMode)
+
 
     this.serviceProviderService.post('api/Transport/CreateOrder', this.headerModel)
     .subscribe(data => {
       this.spinner.hide();
       let model: any = data;
       if (model.Status) {
+        this.criteriaModel.OrderNo = this.headerModel.Task == 'new' ? model.Data : this.headerModel.OrderNo;
+        Logger.info('master-shiplocation', 'save-this.criteriaModel', this.criteriaModel, this.isDebugMode)
+        // Clear criteriaModel.
+        this.criteriaModel.OrderDateStart = undefined;
+        this.criteriaModel.OrderDateEnd = undefined;
+
         this.showSuccessMessage('บันทึกยกเลิกเสร็จสิ้น');
       } else {
         this.showErrorMessage(model.Message);
       }
-
     }, err => {
       this.showErrorMessage(err.message);
     });
