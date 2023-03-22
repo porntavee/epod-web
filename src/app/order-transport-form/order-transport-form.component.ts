@@ -1131,7 +1131,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           model = data;
           if (model.Status) {
             this.toastr.success("ลบรายการเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            this.read();
+            // this.read();
           }
 
         }, err => {
