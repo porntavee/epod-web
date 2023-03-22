@@ -53,19 +53,16 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     this.headerModel.Operation = 'SELECT';
     // Set criteriaModel to criteria For Filter.
     let _criteria = {
-      Code         : '',
-      CustomerName : '',
-      Address      : '',
-      Mobile       : '',
-      ContractName : '',
-      RouteId      : '',
-      SubRouteId   : '',
-      DistrictId   : '',
-      ProvinceId   : '',
-      IsHub: (this.criteriaModel.IsHub == undefined || this.criteriaModel.IsHub == false) ? '' : 'Y',
+      "userinformation": this.serviceProviderService.userinformation,
+      "Code": this.criteriaModel.Code,
+      "CustomerName": this.criteriaModel.CustomerName,
+      "Address": this.criteriaModel.Address,
+      "Mobile": this.criteriaModel.Mobile,
+      "ContractName": this.criteriaModel.ContractName,
+      "RouteId": this.criteriaModel.RouteId,
+      "IsHub": (this.criteriaModel.IsHub == undefined || this.criteriaModel.IsHub == false) ? '' : 'Y',
     }
-    _criteria = this.setHeaderOrCriteriaModel(_criteria, 'criteria');
-    _criteria = {...this.criteria, ..._criteria};
+    // _criteria = {...this.criteria, ..._criteria};
     Logger.info('master-shiplocation', 'render', _criteria, this.isDebugMode)
     
     // Call service provider service to get shiplocation data.
@@ -165,9 +162,6 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     this.criteriaModel = {};
     // Clear headerModel.
     this.headerModel = {};
-
-    // Reload Table data.
-    this.render();
   }
 
   // Set form for add.
@@ -315,9 +309,11 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
         _headerModel = {
           RouteId: '',
           RouteCode: '',
-          Route: ''
+          Route: '',RouteDescription:''
         }
       }
+      this.criteriaModel = {...this.criteriaModel, ..._headerModel};
+      
     });
   }
 

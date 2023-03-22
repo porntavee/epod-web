@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, ConfirmDialog, MasterDataDialog, LocationAddressDataDialog } from '../dialog/dialog';
+import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, SubRoutingDialog, VehicleDialog, DriverDialog, ConfirmDialog, MasterDataDialog, LocationAddressDataDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -406,7 +406,7 @@ export class OrderFormComponent implements OnInit {
   //use
   chooseRoute() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Route', listData: this.listRoute, listDataSearch: this.listRoute } });
+    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'เส้นทางหลัก', listData: this.listRoute, listDataSearch: this.listRoute } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -425,6 +425,33 @@ export class OrderFormComponent implements OnInit {
         // param.LastName = result.lastName;
         // param.UserID = result.empID;
         // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
+  chooseSubRoute() {
+    // if(this.criteriaModel.RouteId == '' || this.criteriaModel.RouteId == undefined){
+    //   this.toastr.error('กรุณาระบุเส้นทางหลัก', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    //   return;
+    // }
+
+    const dialogRef = this.dialog.open(SubRoutingDialog, { 
+      disableClose: false, 
+      height: '400px',
+      width: '800px',
+      data: { title: 'เส้นทางย่อย' ,RouteId : this.criteriaModel.RouteId} });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.SubRouteId = result.Id;
+        this.criteriaModel.SubRouteCode = result.Code;
+        this.criteriaModel.SubRouteDescription = result.Description;
+      } else {
+        this.criteriaModel.SubRouteId = '';
+        this.criteriaModel.SubRouteCode = '';
+        this.criteriaModel.SubRouteDescription = '';
       }
     });
   }
