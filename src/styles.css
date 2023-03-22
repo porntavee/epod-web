@@ -334,6 +334,10 @@ p {
     margin-top: 0px !important;
 }
 
+.padding-left-5 {
+    padding-left: 5px !important;
+}
+
 .margin-top-10 {
     margin-top: 10px !important;
 }
@@ -360,6 +364,11 @@ p {
 
 .min-width-30 {
     min-width: 30px !important;
+}
+
+
+.min-width-40 {
+    min-width: 40px !important;
 }
 
 .min-width-60 {

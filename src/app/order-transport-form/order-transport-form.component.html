@@ -660,13 +660,15 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let i of listFormModel | paginate: { itemsPerPage: 50, currentPage: currentPage }; let idx = index">
-                            <td class="min-width-20">
-                                <label>
-                                    <input type="checkbox"
-                                    [(ngModel)]="i.isSelected" />
-                                </label>
+                            <td>
+                                <div class="w30 padding-left-5">
+                                    <label>
+                                        <input type="checkbox" [(ngModel)]="i.isSelected" />
+                                        <span></span>
+                                    </label>
+                                </div>
                             </td>
-                            <td class="min-width-30">
+                            <td class="min-width-40">
                                 {{idx+1}}
                             </td>
                             <td class="min-width-100 cursor-pointer">
