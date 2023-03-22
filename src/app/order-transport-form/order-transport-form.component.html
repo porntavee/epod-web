@@ -1,4 +1,4 @@
-<!-- Start Main Page -->
+<!-- Start Order Transport Main Page -->
 <div *ngIf="isMainPage">
     <!-- Start Order Transport Form -->
     <div class="col s12">
@@ -41,14 +41,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.Plant = $event"
                         [label]="'Plant'"
                         [data]="criteriaModel.Plant">
                     </citxt>
                 </div>
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.ShipmentNo = $event"
                         [label]="'Shipment No.'"
@@ -56,7 +56,7 @@
                         [readonly]="true">
                     </citxt>
                 </div>
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.Remark = $event"
                         [label]="'หมายเหตุ'"
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.RouteDescription = $event"
                         [label]="'Route'"
@@ -74,7 +74,7 @@
                         (click)="chooseRoute()">
                     </citxt>
                 </div>
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.SubRouteDescription = $event"
                         [label]="'SubRoute'"
@@ -83,7 +83,7 @@
                         (click)="chooseSubRoute()">
                     </citxt>
                 </div>
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.Region = $event"
                         [label]="'โซน'"
@@ -94,7 +94,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.TransportDescription = $event"
                         [label]="'บริษัทขนส่ง'"
@@ -103,7 +103,7 @@
                         (click)="chooseTransport()">
                     </citxt>
                 </div>
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.DriverDescription = $event"
                         [label]="'ชื่อคนขับ'"
@@ -112,7 +112,7 @@
                         (click)="chooseDriver()">
                     </citxt>
                 </div>
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.DriverMobile = $event"
                         [label]="'เบอร์โทรศัพท์คนขับ'"
@@ -123,7 +123,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.VehicleTypeDescription = $event"
                         [label]="'Truck Type'"
@@ -132,7 +132,7 @@
                         (click)="chooseVehicleType()">
                     </citxt>
                 </div>
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.VehicleDescription = $event"
                         [label]="'ทะเบียนรถ'"
@@ -143,7 +143,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.ReceiveFromDescription = $event"
                         [label]="'สถานที่รับสินค้า'"
@@ -152,7 +152,7 @@
                         (click)="chooseReceiveFrom()">
                     </citxt>
                 </div>
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.TransportShiptoDescription = $event"
                         [label]="'สถานที่ส่งสินค้า HUB'"
@@ -163,14 +163,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <ctxta
                         (cModel)="criteriaModel.ReceiveFromAddress = $event"
                         [label]="''"
                         [data]="criteriaModel.ReceiveFromAddress">
                     </ctxta>
                 </div>
-                <div class="col l4 s12 p-0 margin-top-mminus-20">
+                <div class="col l4 s12 p-0 margin-top-minus-20">
                     <ctxta
                         (cModel)="criteriaModel.TransportShiptoAddress = $event"
                         [label]="''"
@@ -518,19 +518,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 margin-top-minus-20">
                     <citxt (cModel)="formModel.InvoiceNo = $event"
                     [label]="'เลขที่อินวอยน์'"
                     [data]="formModel.InvoiceNo"  (keydown)="readOrder($event)">
                 </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 margin-top-minus-20">
                     <cdp (cModel)="formModel.OrderDateString = $event"
                     [label]="'วันที่เอกสาร'"
                     [data]="formModel.OrderDateString">
                 </cdp>
                 </div>
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 margin-top-minus-20">
                     <citxt (cModel)="formModel.StatusDescription = $event"
                     [label]="'สถานะ'"
                     [data]="formModel.StatusDescription"
@@ -751,3 +751,4 @@
         </div>
     </div>
 </div>
+<!-- Start Order Transport Main Page -->

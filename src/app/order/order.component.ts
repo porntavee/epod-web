@@ -1,14 +1,14 @@
+import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, KeyValueDiffers, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { TransportNoDialog, ShipToDialog, JobStatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, ConfirmDialog, UploadOrderDialog } from '../dialog/dialog';
-import { ExcelService } from '../shared/excel.service';
+import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog,
+  RouteDialog, SubRoutingDialog, VehicleDialog, DriverDialog, ConfirmDialog, UploadOrderDialog,
+  LocationAddressDataDialog, MasterDataDialog } from '../dialog/dialog';
 import { ServiceProviderService } from '../shared/service-provider.service';
+import { Logger } from '../shared/logger.service';
 
 @Component({
   selector: 'app-order',
@@ -17,258 +17,258 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 })
 export class OrderComponent implements OnInit, AfterContentChecked {
 
-  isMainPage: boolean = true;
-  isFormPage: boolean = false;
-  isTimeSheetPage: boolean = false;
-  listModel: any = []; //ข้อมูลในตารางหน้า Main
-  listDetailModel: any = [];
-  headerModel: any = {};
-  criteriaModel: any = {} //ค้นหา
-  title: string = 'เพิ่มข้อมูล';
-  model: any = {}; //ข้อมูล Form
-  models: any = []; //ข้อมูลในตารางหน้า Form
-  timeSheetModel: any = {};
-  dateControl = new FormControl(moment().format('YYYYMMDD'));
-
-  mode: any = 'create';
-  listEmployee: any = [];
-  listEmployeeCode: any = [];
-  listFirstName: any = [];
-  listActivityType: any = [];
-  listFinancialProject: any = [];
-  listStage: any = [];
-  costCenter: any = '';
-  p = 1;
-
-  listRoute: any = [];
+  isDebugMode     : boolean = true;
+  isMainPage      : boolean = true;
+  isFormPage      : boolean = false;
+  isTimeSheetPage : boolean = false;
+  headerModel     : any     = {};
+  criteriaModel   : any     = {}; //ค้นหา
+  criteria        : any     = {}; // User Information.
+  model           : any     = {}; //ข้อมูล Form
+  models          : any     = []; //ข้อมูลในตารางหน้า Form
+  listModel       : any     = []; //ข้อมูลในตารางหน้า Main
+  listDetailModel : any     = [];
+  viewModel       : any     = {};
+  currentPage     : number  = 1;
+  listRoute       : any     = [];
+  id              : any     = '';
 
   constructor(public dialog: MatDialog,
-    private router: Router,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
-    private differs: KeyValueDiffers,
-    private excelService: ExcelService,
-    public changeDetector: ChangeDetectorRef) { }
+    public changeDetector: ChangeDetectorRef
+    ) {
+      // Initialize userinformation to criteria object.
+      this.criteria = { 
+        "userinformation": this.serviceProviderService.userinformation
+      };
+    }
 
   ngOnInit(): void {
+    this.criteriaModel.StatusCode = 'O';
+    this.criteriaModel.StatusDescription = 'O - รอจัดใบคุมรถ';
 
-    // this.listEmployeeCode = [{ value: '', display: '----- เลือก -----' },
-    // { value: 'TH00641001026', display: 'TH00641001026' },
-    // { value: 'TH00641001027', display: 'TH00641001027' },
-    // { value: 'TH00641001028', display: 'TH00641001028' }];
-    // this.listFirstName = [{ value: '', display: '----- เลือก -----' },
-    // { value: '1', display: 'First Name' },
-    // { value: '2', display: 'First Name' },
-    // { value: '3', display: 'First Name' }];
-
-    this.criteriaModel.statusCode = 'O';
-    this.criteriaModel.statusDescription = 'O - รอจัดใบคุมรถ';
-
-    this.read();
+    this.render();
     this.readRoute();
   }
 
-  viewModel: any;
-  formatDate(date) {
-    return (date != undefined && date != "Invalid date") ? moment(date).format('YYYY-MM-DD 00:00:00.000') : undefined
-  }
-  read() {
+  render() {
+    // Show spinner.
     this.spinner.show();
-
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "OrderNo": this.criteriaModel.orderNo,
-      "InvoiceNo": this.criteriaModel.invoiceNo,
-      "InvoiceDate": this.formatDate(this.criteriaModel.InvoiceDate),
-      "ShiptoId": this.criteriaModel.shipToId,
-      "OrderDateStart": this.formatDate(this.criteriaModel.orderDateStart),
-      "OrderDateEnd": this.formatDate(this.criteriaModel.orderDateEnd),
-      "OrderStatus": this.criteriaModel.statusCode,
+    
+    this.currentPage = 1;
+    // Set Operations in Header Model.
+    this.headerModel.Operation = 'SELECT';
+    // Set criteriaModel to criteria For Filter.
+    let _criteria = {
+      // StatusCode: this.criteriaModel.StatusCode,
+      OrderStatus: this.criteriaModel.StatusCode,
+      StatusDescription: this.criteriaModel.StatusDescription,
+      OrderNo: this.criteriaModel.OrderNo,
+      InvoiceNo: this.criteriaModel.InvoiceNo,
+      ShiptoId: this.criteriaModel.ShiptoId,
+      OrderDateStart: this.criteriaModel.OrderDateStart == "Invalid date" || this.criteriaModel.OrderDateStart == undefined ? undefined : moment(this.criteriaModel.OrderDateStart).format('YYYY-MM-DD 00:00:00.000'),
+      OrderDateEnd: this.criteriaModel.OrderDateEnd == "Invalid date" || this.criteriaModel.OrderDateEnd == undefined ? undefined : moment(this.criteriaModel.OrderDateEnd).format('YYYY-MM-DD 00:00:00.000'),
+      InvoiceDate: this.criteriaModel.InvoiceDate == "Invalid date" || this.criteriaModel.InvoiceDate == undefined ? undefined : moment(this.criteriaModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000')
     }
+    _criteria = {...this.criteria, ..._criteria};
+    // Logger.info('master-order', 'render-_criteria', _criteria, this.isDebugMode)
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Transport/GetOrder', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Transport/GetOrder', _criteria).subscribe(data => {
+      Logger.info('master-order', 'render', _criteria, this.isDebugMode)
       this.spinner.hide();
-      let model: any = {};
-      model = data;
+
+      let model: any = data;
       this.viewModel = model;
-
       if (model.Status) {
-
+        
         model.Data.forEach(element => {
-          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
-          element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          element.OrderDate = moment(element.OrderDate).format('DD-MM-YYYY');
-          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+          let _keys = Object.keys(element);
+          _keys.forEach((key) => {
+            if (key.includes('InvoiceDate') || key.includes('OrderDate') || key.includes('OrderEstimate')) {
+              element[key + 'Str'] = moment(element[key]).format('DD-MM-YYYY');
+            }
+          });
         });
+        // Logger.info('master-order', 'render-model.Data', model.Data, this.isDebugMode)
 
-        this.listModel = model.Data;
+        // Check model status if true set model data to list model.
+        this.listModel = model.Data
+      } else {
+        this.listModel = this.loadDataFalse(model.Message);
       }
-      else {
-        this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+      this.showErrorMessage(err.message);
+    }); 
   }
 
-  readDetail(param) {
-    this.spinner.show();
+  private verifyDateTime(date) {
+    return date == "Invalid date" || date == undefined ?
+      undefined : moment(date).format('YYYY-MM-DD 00:00:00.000')
+  }
 
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": param.TransportNo
-    }
+  // If sucess load data.
+  private showSuccessMessage(message: string): void {
+    this.spinner.hide();
+    this.toastr.success(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    this.backToMainPage();
+  }
+
+   // Set Header Model.
+   private setHeaderOrCriteriaModel(model, type): any {
+    // Set model.
+    let _model: any = {};
+    let _keys = Object.keys(model);
+
+    _keys.forEach((key) => {
+        _model[key] = type == 'header' ? this.headerModel[key] : this.criteriaModel[key];
+    });
+
+    return _model;
+  }
+
+  // If can't load data to list model.
+  private loadDataFalse(message): any {
+    let _listModel: any = [];
+    this.showErrorMessage(message);
+
+    return _listModel;
+  }
+
+  // Show Error message.
+  private showErrorMessage(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+  
+  // Set to Form Page.
+  goToFromPage() {
+    this.isMainPage = false;
+    this.isFormPage = true;
+    this.spinner.hide();
+  }
+
+  // Set back to main page.
+  backToMainPage() {
+    this.criteriaModel.StatusCode = 'O';
+    this.criteriaModel.StatusDescription = 'O - รอจัดใบคุมรถ';
+    
+    this.isMainPage = true;
+    this.isFormPage = false;
+    this.isTimeSheetPage = false;
+    this.render();
+
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.listDetailModel, event.previousIndex, event.currentIndex);
+  }
+
+  // Clear Model.
+  clearModel() {
+    const date = new Date();
+
+    // Clear criteriaModel.
+    this.criteriaModel = {
+      OrderDateStart: moment(date).format('YYYY-MM-DD 00:00:00'),
+      OrderDateEnd: moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DD 00:00:00'),
+      InvoiceDate: this.verifyDateTime('')
+    };
+  }
+
+  // Set form for update.
+  setForm(param) {
+    // console.log(param);
+    // for (let key in param) {
+    //   if (key.includes('Date') || key.includes('OrderDateEnd')) {
+    //     console.log(key, '->', param, '->', param[key]);
+    //     param[key] =this.revertDate(param[key]);
+    //     console.log("AFter RevertDate", key, '->', param, '->', param[key]);
+    //   }
+    // }
+    // Show spinner.
+    this.spinner.show();
 
     this.headerModel = param;
-    this.headerModel.DriverFirstName = this.headerModel.DriverFirstName + ' ' + this.headerModel.DriverLastName;
+    // Set Operation to UPDATE
+    this.headerModel.Process = "UPDATE";
+    this.headerModel.OrderNo = param.OrderNo;
+    this.headerModel.OrderTypeId = param.OrderTypeId;
+    this.headerModel.OrderTypeDescription =  param.OrderTypeCode + ' - ' + param.OrderType;
+    this.headerModel.OwnerId = param.OwnerId;
+    this.headerModel.OwnerDescription = param.OwnerCode + ' - ' + param.OwnerName;
+    this.headerModel.ShiptoId = param.ShiptoId;
+    this.headerModel.ShiptoCode = param.ShiptoCode;
+    this.headerModel.ShiptoAddress = param.Address;
+    this.headerModel.ShiptoDescription = param.ShiptoCode + ' - ' + param.ShiptoName;;
+    this.headerModel.ShiptoMobile = param.Mobile;
+    this.headerModel.RouteId = param.RouteId;
+    this.headerModel.SubRouteId = param.SubRouteId;
+    this.headerModel.RouteDescription =  param.Route;
+    this.headerModel.SubRouteDescription = param.SubRoute;
+    this.headerModel.OrderDate = this.headerModel.OrderDate == "Invalid date" || this.headerModel.OrderDate == undefined ? undefined : moment(this.headerModel.OrderDate).format('YYYY-MM-DD 00:00:00.000'),
+    this.headerModel.OrderEstimate = this.headerModel.OrderEstimate == "Invalid date" || this.headerModel.OrderEstimate == undefined ? undefined : moment(this.headerModel.OrderEstimate).format('YYYY-MM-DD 00:00:00.000'),
+    this.headerModel.InvoiceDate = this.headerModel.InvoiceDate == "Invalid date" || this.headerModel.InvoiceDate == undefined ? undefined : moment(this.headerModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000')
 
-    let json = JSON.stringify(criteria);
+    console.log('setForm-headerModel', this.headerModel);
 
-    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
 
-      if (model.Status) {
-
-        model.Data.forEach(element => {
-          element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
-          // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
-          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
-        });
-
-        this.listDetailModel = model.Data;
-
-        this.isMainPage = false;
-        this.isFormPage = true;
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+    // Set to from page.
+    this.goToFromPage();
   }
 
-  confirm() {
+  // Set form for add.
+  addForm() {
+    // Show spinner.
     this.spinner.show();
 
-    for (let index = 0; index < this.listDetailModel.length; index++) {
-      this.listDetailModel[index].Seq = index + 1;
-    }
-    // this.listDetailModel.forEach(element => {
-    //   element.Seq = 
-    // });
+    const date = new Date();
 
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.headerModel.TransportNo,
-      "TTRANSPORTDS": this.listDetailModel
-    }
-
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Transport/ApproveTransport', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.spinner.hide();
-        this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-
-        this.backToMain();
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
-  }
-
-  cancel() {
-    this.spinner.show();
-
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.headerModel.TransportNo,
-      // "TTRANSPORTDS": this.listDetailModel
+    // Declare setting local header model.
+    let _headerModel = {
+      Process    : 'CREATE',
+      Id           : 'Auto',
+      OrderNo:'',
+      InvoiceNo:'',
+      Comment:'',
+      ReferenceNo:'',
+      OrderTypeDescription: '',
+      PurchaseNo:'',
+      Qty:'',
+      OwnerDescription: '',
+      UoM:'N/A',
+      CBM:'',
+      ShiptoMobile: '',
+      Weight:'',
+      ShiptoAddress: '',
+      ShiptoDescription: '',
+      RouteDescription: '',
+      SubRouteDescription: '',
+      OrderDate: moment(date).format('YYYY-MM-DD 00:00:00'),
+      InvoiceDate: moment(date).format('YYYY-MM-DD 00:00:00'),
+      OrderEstimate: moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DD 00:00:00')
     }
 
-  
+    // Setting header model.
+    Object.keys(_headerModel).forEach((key) => { 
+      this.headerModel[key] = _headerModel[key];
+    })
 
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('api/Transport/CancelTransport', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.spinner.hide();
-        this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        this.backToMain();
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
-  }
-
-  setSeq(param, idx) {
-    param = idx;
-    return param;
+    // Set to from page.
+    this.goToFromPage();
   }
 
   //use
   chooseTransportNo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TransportNoDialog, { 
-      disableClose: false, 
-      height: '400px', 
-      width: '800px', 
-      data: { title: 'Transport No.' } 
-    });
+    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.transportNo = result.TransportNo;
-        // this.criteriaModel.shipToCode = result.Code;
-        // this.criteriaModel.shipToAddress = result.Address;
-        // this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        this.headerModel.transportNo = result.TransportNo;
       }
     });
   }
@@ -276,27 +276,45 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   //use
   chooseShipTo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { 
-      disableClose: false, 
-      height: '400px', 
-      width: '800px', 
-      data: { title: 'Ship to' } 
-    });
+    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.shipToId = result.Id;
-        this.criteriaModel.shipToCode = result.Code;
-        this.criteriaModel.shipToAddress = result.Address;
-        this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        this.headerModel.ShiptoId = result.Id;
+        this.headerModel.ShiptoCode = result.Code;
+        this.headerModel.ShiptoAddress = result.Address;
+        this.headerModel.ShiptoDescription = result.Code + ' - ' + result.CustomerName;
+        this.headerModel.ShiptoMobile = result.Mobile;
+        this.headerModel.RouteDescription = result.Route;
+        this.headerModel.SubRouteDescription = result.SubRoute;
+      } else { 
+        this.headerModel.ShiptoId = '';
+        this.headerModel.ShiptoCode = '';
+        this.headerModel.ShiptoAddress = '';
+        this.headerModel.ShiptoDescription = '';
+        this.headerModel.ShiptoMobile = '';
+        this.headerModel.RouteDescription = '';
+        this.headerModel.SubRouteDescription = '';
+      }
+    });
+  }
+
+  //use
+  chooseOwner() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(LocationAddressDataDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'เจ้าของงาน' ,  urlapi:'api/Masters/GetOwner'} });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.headerModel.OwnerId = result.Id;
+        this.headerModel.OwnerDescription = result.Code + ' - ' + result.Description;
+      } else {
+        this.headerModel.OwnerId = '';
+        this.headerModel.OwnerDescription = '';
       }
     });
   }
@@ -304,24 +322,36 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   //use
   chooseStatus() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(JobStatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะ' } });
+    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Status' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.statusCode = result.Code;
-        this.criteriaModel.statusDescription = result.Code + ' - ' + result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        // this.headerModel.transportTypeId = result.Id;
+        this.headerModel.StatusCode = result.Code;
+        this.headerModel.StatusDescription = result.Code + ' - ' + result.Description;
+      } else {
+        this.headerModel.StatusCode = '';
+        this.headerModel.StatusDescription = '';
       }
     });
   }
 
+  chooseJobType() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(MasterDataDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'ประเภทเอกสาร' , urlapi:'api/Masters/GetJobType' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.headerModel.OrderTypeId = result.Code;
+        this.headerModel.OrderTypeDescription = result.Code + ' - ' + result.Description;
+      }
+    });
+  }
+  
   //use
   chooseTypeOfWork() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
@@ -331,14 +361,11 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.typeOfWorkCode = result.Code;
-        this.criteriaModel.typeOfWorkDescription = result.Code + ' - ' + result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        this.headerModel.OrderTypeId = result.Code;
+        this.headerModel.OrderTypeDescription = result.Code + ' - ' + result.Description;
+      } else {
+        this.headerModel.OrderTypeId = '';
+        this.headerModel.OrderTypeDescription = '';
       }
     });
   }
@@ -346,25 +373,37 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   //use
   chooseRoute() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Route', listData: this.listRoute, listDataSearch: this.listRoute } });
+    const dialogRef = this.dialog.open(SubRoutingDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Route', listData: this.listRoute, listDataSearch: this.listRoute } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
+        this.headerModel.RouteId = result.Id;
+        this.headerModel.RouteCode = result.Code;
+        this.headerModel.RouteDescription = result.Code + ' - ' + result.Description;
+      } else {
+        this.headerModel.RouteId = '';
+        this.headerModel.RouteCode = '';
+        this.headerModel.RouteDescription = '';
+      }
+    });
+  }
 
-        this.criteriaModel.subRouteId = '';
-        this.criteriaModel.subRouteCode = '';
-        this.criteriaModel.subRouteDescription = '';
+  //use
+  chooseSubRoute() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Sub Route', listData: this.listRoute, listDataSearch: this.listRoute } });
 
-        this.criteriaModel.routeId = result.Id;
-        this.criteriaModel.routeCode = result.Code;
-        this.criteriaModel.routeDescription = result.Code + ' - ' + result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.headerModel.SubRouteId = result.Id;
+        this.headerModel.SubRouteCode = result.Code;
+        this.headerModel.SubRouteDescription = result.Code + ' - ' + result.Description;
+      } else {
+        this.headerModel.SubRouteId = '';
+        this.headerModel.SubRouteCode = '';
+        this.headerModel.SubRouteDescription = '';
       }
     });
   }
@@ -378,14 +417,9 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        this.criteriaModel.vehicleId = result.Id;
-        this.criteriaModel.vehicleCode = result.Code;
-        this.criteriaModel.vehicleDescription = result.Code + ' - ' + result.Description;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        this.headerModel.VehicleId = result.Id;
+        this.headerModel.VehicleCode = result.Code;
+        this.headerModel.VehicleDescription = result.Code + ' - ' + result.Description;
       }
     });
   }
@@ -399,14 +433,13 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        this.criteriaModel.driverId = result.Id;
-        this.criteriaModel.driverCode = result.Code;
-        this.criteriaModel.driverDescription = result.Code + ' - ' + result.FirstName + ' ' + result.LastName;
-        // param.Code = result.Code;
-        // param.FirstName = result.firstName;
-        // param.LastName = result.lastName;
-        // param.UserID = result.empID;
-        // this.costCenter = result.CostCenter;
+        this.headerModel.DriverId = result.Id;
+        this.headerModel.DriverCode = result.Code;
+        this.headerModel.DriverDescription = result.Code + ' - ' + result.FirstName + ' ' + result.LastName;
+      } else {
+        this.headerModel.DriverId = '';
+        this.headerModel.DriverCode = '';
+        this.headerModel.DriverDescription = '';
       }
     });
   }
@@ -438,103 +471,94 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     });
   }
 
+  //use
+  chooseStatusFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Status' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('chooseStatusFilter', result);
+      if (result != undefined) {
+        this.criteriaModel.StatusCode = result.Code;
+        this.criteriaModel.StatusDescription = result.Code + ' - ' + result.Description;
+      } else {
+        this.criteriaModel.StatusCode = '';
+        this.criteriaModel.StatusDescription = '';
+      }
+    });
+  }
+
+  //use
+  chooseShipToFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('chooseShipToFilter', result);
+      if (result != undefined) {
+        
+        this.criteriaModel.ShiptoId = result.Id;
+        this.criteriaModel.ShiptoCode = result.Code;
+        this.criteriaModel.ShiptoName = result.CustomerName;
+        this.criteriaModel.ShiptoAddress = result.Address;
+        this.criteriaModel.ShiptoDescription = result.Code + ' - ' + result.CustomerName;
+        this.criteriaModel.ShiptoMobile = result.Mobile;
+        this.criteriaModel.RouteDescription = result.Route;
+        this.criteriaModel.SubRouteDescription = result.SubRoute;
+      } else {
+        this.criteriaModel.ShiptoId = '';
+        this.criteriaModel.ShiptoCode = '';
+        this.criteriaModel.ShiptoName = '';
+        this.criteriaModel.ShiptoAddress = '';
+        this.criteriaModel.ShipToDescription = '';
+        this.criteriaModel.ShiptoMobile = '';
+        this.criteriaModel.RouteDescription = '';
+        this.criteriaModel.SubRouteDescription = '';
+      }
+    });
+  }
+
+  // Save data.
+  save() {
+    this.spinner.show();
+    
+    this.headerModel.OrderDate = this.headerModel.OrderDate == "Invalid date" || this.headerModel.OrderDate == undefined ? undefined : moment(this.headerModel.OrderDate).format('YYYY-MM-DD 00:00:00.000'),
+    this.headerModel.OrderEstimate = this.headerModel.OrderEstimate == "Invalid date" || this.headerModel.OrderEstimate == undefined ? undefined : moment(this.headerModel.OrderEstimate).format('YYYY-MM-DD 00:00:00.000'),
+    this.headerModel.InvoiceDate = this.headerModel.InvoiceDate == "Invalid date" || this.headerModel.InvoiceDate == undefined ? undefined : moment(this.headerModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000')
+
+    // this.headerModel.OrderDate = moment(this.headerModel.OrderDate).format('YYYY-MM-DDT00:00:00');
+    // this.headerModel.OrderEstimate = moment(this.headerModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
+    // this.headerModel.InvoiceDate = (this.headerModel.InvoiceDate != undefined && this.headerModel.InvoiceDate != "Invalid date") ? moment(this.headerModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000') : undefined;
+    this.headerModel.UoM = this.headerModel.UoM;
+
+    this.headerModel = {...this.criteria, ...this.headerModel};
+    Logger.info('master-shiplocation', 'save', this.headerModel, this.isDebugMode)
+
+    this.serviceProviderService.post('api/Transport/CreateOrder', this.headerModel)
+    .subscribe(data => {
+      this.spinner.hide();
+      let model: any = data;
+      if (model.Status) {
+        this.showSuccessMessage('บันทึกยกเลิกเสร็จสิ้น');
+      } else {
+        this.showErrorMessage(model.Message);
+      }
+
+    }, err => {
+      this.showErrorMessage(err.message);
+    });
+    // Clear criteriaModel and Reload Table Data.
+    this.clearModel();
+  }
+
   backToMain() {
     this.isMainPage = true;
     this.isFormPage = false;
     this.isTimeSheetPage = false;
-    this.read();
-    // this.model = {};
-    // this.models = [];
-    // this.listModel = [];
-  }
-
-  reportModel: any = [];
-  exportAsXLSX(param): void {
-
-    this.spinner.show();
-
-    let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "DocNum": param.DocNum
-    }
-
-    let json = JSON.stringify(criteria);
-
-    this.serviceProviderService.post('/api/B1/getTimeSheetLog', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      // this.viewModel = model;
-
-      if (model.Status) {
-        // this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        // this.read();
-        this.reportModel = model.Data
-
-
-        // const dialogRef = this.dialog.open(DocLogDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Doc Log Report', listData: this.reportModel, listDataSearch: this.reportModel } });
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //   console.log(`Dialog result: ${result}`);
-
-        //   if (result != undefined) {
-        //      this.excelService.exportAsExcelFile(result, 'doc-log-report');
-        //   }
-        // });
-
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
-
-
-  }
-
-  exportAsXLSX2(): void {
-    this.spinner.show();
-
-    let code = 'AC001';
-    let zdocNum = 'AC002';
-    let firstName = 'ลลิตา';
-    let dateFrom = '01/06/2022';
-    let lastName = 'ลลิตา';
-    let dateTo = '01/06/2022';
-
-
-    let excelModel = [];
-    excelModel.push(
-      { 'Code': 'First Name', [this.model.Code]: this.model.FirstName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date From', [' ' + this.model.DocNum]: moment(this.model.DateFrom).format('DD-MM-YYYY'), '        ': '', '         ': '' },
-      { 'Code': 'Last Name', [this.model.Code]: this.model.LastName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date To', [' ' + this.model.DocNum]: moment(this.model.DateTo).format('DD-MM-YYYY'), '        ': '', '         ': '' },
-      { 'Code': '', [this.model.Code]: '', ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': '', [' ' + this.model.DocNum]: '', '        ': '', '         ': '' },
-      { 'Code': 'Date', [this.model.Code]: 'Start Time', ' ': 'Hour', '  ': 'End Time', '   ': 'Activity Type', '    ': 'Financial Project', '     ': 'Cost Center', '      ': 'Stage', '       ': 'Break', 'Doc Num': 'Nonbillable Time', [' ' + this.model.DocNum]: 'Effective Time', '        ': 'Billable Time', '         ': 'Detail' });
-
-
-    this.models.forEach(element => {
-      excelModel.push(
-        { 'Code': element.Date, [this.model.Code]: element.StartTimeText, ' ': element.U_HMC_Hour, '  ': element.EndTimeText, '   ': element.ActType, '    ': element.FiProject, '     ': element.CostCenter, '      ': element.U_HMC_Stage, '       ': element.BreakText, 'Doc Num': element.NonBillTmText, [' ' + this.model.DocNum]: element.EffectTmText, '        ': element.BillableTmText, '         ': element.U_HMC_Detail }
-      );
-    });
-    this.excelService.exportAsExcelFile(excelModel, 'timesheet-report');
-    // this.excelService.exportAsExcelFile(this.listModel, 'user-log-report');
-    this.spinner.hide();
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.listDetailModel, event.previousIndex, event.currentIndex);
-  }
-
-  clear() {
-    this.criteriaModel = { orderDate: '' };
+    this.render();
   }
 
   delete(param) {
-
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องลบรายการใช่หรือไม่?' } });
 
@@ -546,83 +570,51 @@ export class OrderComponent implements OnInit, AfterContentChecked {
         let criteria: any = {};
         criteria.userinformation = this.serviceProviderService.userinformation;
         criteria.Process = 'DELETE';
-        criteria.OrderNo = param;
-        // this.criteriaModel.TransportStatus = "O";
-        // this.criteriaModel.TransportTypeId = "OT";
-        // this.criteriaModel.RegionId = "0010000000000";
-        // this.criteriaModel.CreateBy = "0010000000000";
-        // this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
-        // this.criteriaModel.UoM = "N/A";
-
-        // let json = JSON.stringify(this.criteriaModel);
-
+        criteria.OrderNo = param.OrderNo;
 
         this.serviceProviderService.post('api/Transport/CreateOrder', criteria).subscribe(data => {
           this.spinner.hide();
-          let model: any = {};
-          model = data;
+
+          let model: any = data;
           this.viewModel = model;
-
-
           if (model.Status) {
             this.criteriaModel.TransportNo = model.Data;
             this.toastr.success("ลบรายการเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            this.read();
+            this.render();
           }
-
         }, err => {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
       }
     });
-
   }
 
-  statusOrderColor(param) {
+  statusOrderClassify(param) {
     switch (param) {
       case 'C':
-        return '#E16E5B'
+        return 'status-color-C'
       case 'D':
-        return '#F7E884'
-      case 'L':
-        return '#F7E884'
+        return 'status-color-D'
+      case 'L': 
+        return 'status-color-L'
       case 'O':
-        return '#B6B6B6'
+        return 'status-color-O'
       case 'P':
-        return '#79D58B'
+        return 'status-color-P'
       case 'R':
-        return '#79D58B'
+        return 'status-color-R'
       case 'S':
-        return '#66A5D9'
+        return 'status-color-S'
       case 'W':
-        return '#B6B6B6'
+        return 'status-color-W'
       case 'F':
-        return '#EBB146'
-      case 'H':
-        return '#66A5D9'
+        return 'status-color-F'
+        case 'H':
+          return 'status-color-H'
       default:
         break;
     }
-
-  }
-
-  create() {
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`order-form/new`])
-      // this.router.createUrlTree([`order-form/new`])
-    );
-
-    window.open(url, '_blank');
-  }
-
-  edit(param) {
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`order-form/` + param])
-      // this.router.createUrlTree([`order-form/` + param])
-    );
-
-    window.open(url, '_blank');
   }
 
   upload() {
@@ -639,29 +631,16 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
         this.spinner.show();
 
-
         this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
-        // this.criteriaModel.OrderDate = moment(this.criteriaModel.OrderDate).format('YYYY-MM-DDT00:00:00');
-        // this.criteriaModel.OrderEstimate = moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DDT00:00:00');
-        // this.criteriaModel.UoM = this.criteriaModel.UoM;
-        // this.criteriaModel.Process = "CREATE";
-
-        // const [day, month, year] = result[0].IssueDate.split('/');
-        // const date = new Date(+year, +month - 1, +day);
-        // console.log(moment(date).format('YYYY-MM-DDT00:00:00'));
-        // console.log(moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DDT00:00:00'));
 
         let model: any = [];
         result.forEach(element => {
-
           const [day, month, year] = element.IssueDate.split('/');
           const date = new Date(+year, +month - 1, +day);
-          // console.log(moment(date).format('YYYY-MM-DDT00:00:00'));
-          // console.log(moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DDT00:00:00'));
 
           model.push({
-            "OrderDate": moment(date).format('YYYY-MM-DDT00:00:00'),
-            "OrderEstimate": moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DDT00:00:00'),
+            "OrderDateStart": moment(date).format('YYYY-MM-DDT00:00:00'),
+            "OrderDateEnd": moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DDT00:00:00'),
             "InvoiceNo": element.InvoiceNo,
             "Comment": element.Remark,
             "ReferenceNo": element.ReferenceNo,
@@ -684,41 +663,6 @@ export class OrderComponent implements OnInit, AfterContentChecked {
         });
 
         this.criteriaModel.TTRANSPORTDLIST = model;
-        // this.criteriaModel = {
-        //   "OrderDate": moment(result.IssueDate).format('YYYY-MM-DDT00:00:00'),
-        //   "OrderEstimate": moment(this.criteriaModel.IssueDate.setDate(this.criteriaModel.IssueDate.getDate() + 1)).format('YYYY-MM-DDT00:00:00'),
-        //   "InvoiceNo": "1",
-        //   "Comment": "1",
-        //   "ReferenceNo": "1",
-        //   "OrderTypeDescription": "NM - Normal",
-        //   "PurchaseNo": "1",
-        //   "CBM": "1",
-        //   "OwnerDescription": "81430 - บริษัท ปตท.บริหารธุรกิจค้าปลีก จำกัด(ปทุมธานี-ลาดหลุมแก้ว กม.26)",
-        //   "Qty": "1",
-        //   "ShiptoDescription": "81971 - หจก.พัชรัตน์เกียรติ",
-        //   "Weight": "1",
-        //   "ShiptoAddress": "154/89 ม.7 ถ.ศรีพรหมโสภิต ต.บางมัญ อ.เมืองสิงห์บุรี จ.สิงห์บุรี 16000 โทร.093-94",
-        //   "RouteDescription": "0010000000067",
-        //   "SubRouteDescription": "0010000001374",
-        //   "OrderTypeId": "NM",
-        //   "OwnerId": "0010000000033",
-        //   "ShiptoId": "0010000000233",
-        //   "ShiptoCode": "81971",
-        //   "ShiptoMobile": "",
-        //   "userinformation": {
-        //     "UserId": "0010000000000",
-        //     "UserName": "demow",
-        //     "GroupCode": "S",
-        //     "dbName": "WTX-EPOD",
-        //     "Version": "22.11.01.01"
-        //   },
-        //   "Version": "20221102"
-        // }
-
-
-        let json = JSON.stringify(this.criteriaModel);
-
-        debugger;
 
         this.serviceProviderService.post('api/Transport/CreateOrders', this.criteriaModel).subscribe(data => {
           debugger
@@ -730,17 +674,11 @@ export class OrderComponent implements OnInit, AfterContentChecked {
           if (model.Status) {
             this.criteriaModel.OrderNo = model.Data;
             this.toastr.success("บันทึกข้อมูลเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            // this.id = this.criteriaModel.OrderNo;
-            // this.ngOnInit();
-            // window.self.close(); 
-            // this.listModel = model.Data;
-          }
-          else {
+          } else {
             // this.listModel = [];
             this.spinner.hide();
             this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
           }
-
         }, err => {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });

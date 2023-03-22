@@ -1,146 +1,119 @@
+<!-- Start Order Main Page -->
 <div *ngIf="isMainPage">
-    <div class="col s12">
-        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+   <!-- Start Order Filter -->
+   <div class="col s12">
+        <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <!-- <i class="material-icons header-icon">
-                        filter_list
-                    </i> -->
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>งานขนส่ง / สร้างงานขนส่ง</b>
+                    <span class="card-panel-header-span">
+                            งานขนส่ง / สร้างงานขนส่ง
                     </span>
                 </div>
-                <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;"> -->
-                <!-- (click)="reset()" -->
-                <!-- <cbtnl [label]="'Reset'" [color]="'gray'" [icon]="'cached'"></cbtnl> -->
-                <!-- </div> -->
-                <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
-                    <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
-                </div> -->
             </div>
-
-        </div>
-        <!-- [hidden]="isAdvanceSearch" -->
-        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
-            <div class="row">
-                <div class="col l4 s12 p-0">
-                    <citxt (cModel)="criteriaModel.orderNo = $event" [label]="'Doc No.'" [data]="criteriaModel.orderNo"></citxt>
-                    <!-- <citxt (cModel)="criteriaModel.orderNo = $event" [label]="'Doc No.'" [data]="criteriaModel.orderNo" [readonly]="true" (click)="chooseTransportNo()"></citxt> -->
+            <div class="card-panel hide-on-med-and-down reset-margin-top">
+                <div class="row">
+                    <div class="col l4 s12 p-0">
+                        <citxt
+                            (cModel)="criteriaModel.OrderNo = $event"
+                            [label]="'Doc No.'"
+                            [data]="criteriaModel.OrderNo">
+                        </citxt>
+                    </div>
+                    <div class="col l4 s12 p-0">
+                        <citxt
+                            (cModel)="criteriaModel.ShiptoDescription = $event" 
+                            [label]="'ชื่อผู้รับ'" 
+                            [data]="criteriaModel.ShiptoDescription"
+                            [readonly]="true"
+                            (click)="chooseShipToFilter()">
+                        </citxt>
+                    </div>
+                    <div class="col l4 s12 pl-0">
+                        <citxt 
+                            (cModel)="criteriaModel.ShiptoAddress = $event" 
+                            [label]="'ที่อยู่ผู้รับ'" 
+                            [data]="criteriaModel.ShiptoAddress"
+                            [readonly]="true"
+                            (click)="chooseShipToFilter()">
+                        </citxt>
+                    </div>
                 </div>
-                <div class="col l4 s12 p-0">
-                    <citxt (cModel)="criteriaModel.shipToDescription = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.shipToDescription" [readonly]="true" (click)="chooseShipTo()"></citxt>
+                <div class="row">
+                    <div class="col l4 s12 p-0 margin-top-minus-20">
+                        <citxt 
+                            (cModel)="criteriaModel.InvoiceNo = $event" 
+                            [label]="'Invoice No.'" 
+                            [data]="criteriaModel.InvoiceNo">
+                        </citxt>
+                    </div>
+                    <div class="col l4 s12 p-0 margin-top-minus-20">
+                        <cdp 
+                            (cModel)="criteriaModel.OrderDateStart = $event" 
+                            [label]="'วันที่เอกสาร'" 
+                            [data]="criteriaModel.OrderDateStart">
+                        </cdp>
+                    </div>
+                    <div class="col l4 s12 pl-0 margin-top-minus-20">
+                        <cdp 
+                            (cModel)="criteriaModel.OrderDateEnd = $event" 
+                            [label]="'ถึงวันที่เอกสาร'" 
+                            [data]="criteriaModel.OrderDateEnd">
+                        </cdp>
+                    </div>
                 </div>
-                <div class="col l4 s12 pl-0">
-                    <citxt (cModel)="criteriaModel.shipToAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="criteriaModel.shipToAddress" [readonly]="true" (click)="chooseShipTo()"></citxt>
+                <div class="row">
+                    <div class="col l4 s12 p-0 margin-top-minus-20">
+                        <citxt 
+                            (cModel)="criteriaModel.StatusDescription = $event" 
+                            [label]="'สถานะ'" 
+                            [data]="criteriaModel.StatusDescription"
+                            [readonly]="true"
+                            (click)="chooseStatusFilter()">
+                        </citxt>
+                    </div>
+                    <div class="col l4 s12 p-0 margin-top-minus-20">
+                        <cdp 
+                            (cModel)="criteriaModel.InvoiceDate = $event" 
+                            [label]="'Invoice Date'" 
+                            [data]="criteriaModel.InvoiceDate">
+                        </cdp>
+                    </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.invoiceNo = $event" [label]="'Invoice No.'" [data]="criteriaModel.invoiceNo"></citxt>
-                    <!-- <citxt (cModel)="criteriaModel.invoiceNo = $event" [label]="'Invoice No.'" [data]="criteriaModel.invoiceNo" [readonly]="true" (click)="chooseVehicle()"></citxt> -->
-                </div>
-                <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <cdp (cModel)="criteriaModel.orderDate = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.orderDate"></cdp>
-                </div>
-                <div class="col l4 s12 pl-0" style="margin-top: -20px;">
-                    <cdp (cModel)="criteriaModel.orderDateEnd = $event" [label]="'ถึงวันที่เอกสาร'" [data]="criteriaModel.orderDateEnd"></cdp>
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.transportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.transportNo" [readonly]="true" (click)="chooseTransportNo()"></citxt>
-                </div> -->
-                <div class="col l4 s12 p-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.statusDescription = $event" [label]="'สถานะ'" [data]="criteriaModel.statusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
-                </div>
-                <div class="col l4 s12 pl-0" style="margin-top: -20px;">
-                    <cdp (cModel)="criteriaModel.InvoiceDate = $event" [label]="'Invoice Date'" [data]="criteriaModel.InvoiceDate"></cdp>
-                </div>
-                <!-- <div class="col l4 s12 pl-0" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
-                </div> -->
-            </div>
-
-            <div class="row">
-                <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
-                <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
-                   
-                </div> -->
-                <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
-                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
-                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtn>
-                </div>
-            </div>
-        </div>
-        <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
-            <div class="row">
-                <div class="col s12">
-                    <citxt (cModel)="criteriaModel.orderNo = $event" [label]="'Doc No.'" [data]="criteriaModel.orderNo" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.shipToDescription = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.shipToDescription" [readonly]="true" (click)="chooseShipTo()"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.shipToAddressDescription = $event" [label]="'ที่อยู่ผู้รับ'" [data]="criteriaModel.shipToAddressDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.invoiceNo = $event" [label]="'Invoice No.'" [data]="criteriaModel.invoiceNo" [readonly]="true" (click)="chooseRoute()"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="criteriaModel.orderDate = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.orderDate"></cdp>
-                </div>
-                <!-- <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.toDescription = $event" [label]="'ถึง'" [data]="criteriaModel.toDescription" [readonly]="true" (click)="chooseVehicle()"></citxt>
-                </div> -->
-                <div class="col s12" style="margin-top: 10px;">
-                    <citxt (cModel)="criteriaModel.transportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.transportNo" [readonly]="true" (click)="chooseDriver()"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.statusDescription = $event" [label]="'สถานะ'" [data]="criteriaModel.statusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
-                </div>
-                <div class="col s12 p-0" style="margin-bottom: 5px;">
-                    <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
-                </div>
-                <div class="col s12 p-0" style="margin-bottom: 5px;">
-                    <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+                <div class="row">
+                    <div class="col l8 s12 p-0 margin-bottom-5"></div>
+                    <div class="col l4 s12 p-0 text-right margin-bottom-5">
+                        <cbtn 
+                            [label]="'ล้าง'"
+                            [color]="'red'"
+                            [icon]="'clear'"
+                            (click)="clearModel()">
+                        </cbtn>
+                        <cbtn 
+                            [label]="'ค้นหา'"
+                            [color]="'blue'"
+                            [icon]="'search'"
+                            (click)="render()">
+                        </cbtn>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- {{this.viewModel|json}} -->
     <div class="col s12">
-        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel table-panel-header">
             <div class="row">
-                <div class="col l2 s12">
-                    <!-- <i class="material-icons header-icon">
-                        featured_play_list
-                    </i> -->
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>รายการข้อมูล</b>
-                    </span>
-                </div>
                 <div class="col l8 s12">
-                    <!-- <cbtn [label]="'New+'" [color]="'blue'" [icon]="'add_circle_outline'" (click)="newTimeSheet()"></cbtn> -->
+                    <span class="card-panel-header-span">
+                        รายการข้อมูล
+                    </span>
                 </div>
             </div>
         </div>
-        <div class="card-panel" style="margin-top: 0px;">
-            <div style="overflow-x: auto;">
-                <!-- min-height: 200px; max-height: 200px; -->
+        <div class="card-panel reset-margin-top">
+            <div class="overflow-x">
                 <table id="users-list-datatable" class="bordered centered striped">
                     <thead>
                         <tr>
-                            <!-- <th>
-                                <span class="header-checkbox">
-                                    <label>
-                                        <input type="checkbox" [(ngModel)]="itemSelected"
-                                            (change)="checkUncheckAll()" />
-                                        <span style="padding-left: 20px;"></span>
-                                </label>
-                                </span>
-                            </th> -->
                             <th>Doc. No.</th>
                             <th>เลขที่ Inv.</th>
                             <th>สถานะ</th>
@@ -160,104 +133,70 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
-                            <td>
-                                <div class="w100">
-                                    <a style="cursor: pointer;" (click)="edit(i.OrderNo)">{{i.OrderNo}}</a>
-                                </div>
+                        <tr 
+                            *ngFor="let i of listModel | paginate: 
+                                { itemsPerPage: 10, currentPage: currentPage }; 
+                                let idx = index">
+                            <td class="min-width-100">
+                                <a  class="cursor-pointer"
+                                    (click)="setForm(i)">{{i.OrderNo}}
+                                </a>
                             </td>
-                            <td>
-                                <div class="w100">
-                                    <a style="cursor: pointer;" (click)="edit(i.OrderNo)">{{i.InvoiceNo}}</a>
-                                </div>
+                            <td class="min-width-100">
+                                <a  class="cursor-pointer"
+                                    (click)="setForm(i)">{{i.InvoiceNo}}
+                                </a>
                             </td>
-                            <td style="padding: 0 0 0 0 !important;">
-                                <div class="w100" style="background-color: {{statusOrderColor(i.OrderStatus)}}; height: 42px; padding-top: 10px;">
+                            <td class="min-width-100">
+                                <div class="status-box {{statusOrderClassify(i.OrderStatus)}}">
                                     {{i.OrderStatusDesc}}
                                 </div>
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.OrderType}}
-                                    <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
-                                </div>
+                            <td class="min-width-100">
+                                {{i.OrderType}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.OrderDate}}
-                                    <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
-                                </div>
+                            <td class="min-width-100">
+                                {{i.OrderDateStr}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.PurchaseNo}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
-                                </div>
+                            <td class="min-width-100">
+                                {{i.PurchaseNo}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.ShiptoCode}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
+                            <td class="min-width-100">
+                                {{i.ShiptoCode}}
                             </td>
-                            <td>
-                                <div class="w300">
-                                    {{i.ShiptoName}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
+                            <td class="min-width-300">
+                                {{i.ShiptoName}}
                             </td>
-                            <td>
-                                <div class="w400">
-                                    {{i.Address}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
-                                </div>
+                            <td class="min-width-300">
+                                {{i.Address}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.InvoiceDateStr}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
-                                </div>
+                            <td class="min-width-100">
+                                {{i.InvoiceDateStr}}
                             </td>
-                            <td>
-                                <div class="w150">
-                                    {{i.OrderEstimate}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.U_HMC_Hour" name="i.U_HMC_Hour" id="i.U_HMC_Hour" type="text" class="input-text-1"> -->
-                                </div>
+                            <td class="min-width-150">
+                                {{i.OrderEstimateStr}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.CBM}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.EndTime" name="i.EndTime" id="i.EndTime" type="text" class="input-text-1"> -->
-                                </div>
+                            <td class="min-width-100">
+                                {{i.CBM}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Qty}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
+                            <td class="min-width-100">
+                                {{i.Qty}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Weight}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
+                            <td class="min-width-100">
+                                {{i.Weight}}
                             </td>
-                            <td>
-                                <div class="w250">
-                                    {{i.Comment}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
+                            <td class="min-width-250">
+                                {{i.Comment}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    <a class="btn-floating blue" style="cursor: pointer;" (click)="edit(i.OrderNo)">
-                                        <i class="medium material-icons">edit</i>
-                                    </a> &nbsp; 
-                                    <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i.OrderNo)">
-                                        <i class="medium material-icons">delete</i>
-                                    </a>
-
-                                </div>
+                            <td class="min-width-150">
+                                <a class="btn-floating blue cursor-pointer"
+                                    (click)="setForm(i)">
+                                    <i class="medium material-icons">edit</i>
+                                </a> &nbsp; 
+                                <a class="btn-floating red cursor-pointer"
+                                    (click)="delete(i)">
+                                    <i class="medium material-icons">delete</i>
+                                </a>
                             </td>
                         </tr>
                     </tbody>
@@ -265,491 +204,266 @@
             </div>
 
             <div class="row">
-                <div class="col s2" style="margin-top: 10px;">
-                    <!-- <div class="row">
-                        <div class="col s6" style="margin-top: 10px;">
-                            <cbtn [label]="'ดำเนินการต่อ'" [color]="'blue'" [icon]="''" (click)="next()"></cbtn>
-                        </div>
-                    </div> -->
-                    <!-- <div class="row">
-                        <div class="col s6" style="margin-top: 10px;">
-                        </div>
-                    </div> -->
-
-                    <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="create()"></cbtn>
-
-                    <!-- <ul>
-                        <li>paginationModel.textPage</li>
-                    </ul> -->
+                <div class="col s2 margin-top-10">
+                    <cbtn 
+                        [label]="'สร้าง'"
+                        [color]="'blue'"
+                        [icon]="'add'"
+                        (click)="addForm()">
+                    </cbtn>
                 </div>
-                <div class="col s2" style="margin-top: 10px;">
-                    <cbtn [label]="'อัพโหลดไฟล์'" [color]="'green'" [icon]="'file_upload'" (click)="upload()"></cbtn>
+                <div class="col s2 margin-top-10">
+                    <cbtn 
+                        [label]="'อัพโหลดไฟล์'"
+                        [color]="'green'"
+                        [icon]="'file_upload'"
+                        (click)="upload()">
+                    </cbtn>
                 </div>
-
                 <div class="col s8">
-                    <div style="text-align: right;">
-                        <!-- <ul>
-                            <li *ngFor="let item of listModel | paginate: { itemsPerPage: 10, currentPage: p }">{{item}}</li>
-                        </ul> -->
-                        <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                    <div class="text-right">
+                        <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
 
 <div *ngIf="isFormPage">
     <div class="col s12">
-        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
+        <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <!-- <i class="material-icons header-icon">
-                        filter_list
-                    </i> -->
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>งานขนส่ง / อนุมัติงาน</b>
+                    <span class="col l8 s12 card-panel-header-span">
+                        งานขนส่ง / สร้างงานขนส่ง
                     </span>
                 </div>
-                <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;"> -->
-                <!-- (click)="reset()" -->
-                <!-- <cbtnl [label]="'Reset'" [color]="'gray'" [icon]="'cached'"></cbtnl> -->
-                <!-- </div> -->
-                <!-- <div class="col l2 s12 p-0" style="margin-bottom: 5px;">
-                    <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
-                </div> -->
+            </div>
+        </div>
+    <div class="card-panel hide-on-med-and-down reset-margin-top">
+        <div class="row">
+            <div class="col l4 s12 p-0">
+                <citxt
+                    (cModel)="headerModel.OrderNo = $event"
+                    [label]="'** Doc No.'"
+                    [data]="headerModel.OrderNo"
+                    [readonly]="true">
+                </citxt>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.InvoiceNo = $event"
+                    [label]="'** Invoice No.'"
+                    [data]="headerModel.InvoiceNo">
+                </citxt>
+            </div>
+            <div class="col l2 s12 p-0 margin-top-minus-20">
+                <h1>&nbsp;</h1>
+            </div>
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.Comment = $event"
+                    [label]="'หมายเหตุ'"
+                    [data]="headerModel.Comment">
+                </citxt>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <cdp
+                    (cModel)="headerModel.OrderDate = $event"
+                    [label]="'** วันที่เอกสาร'"
+                    [data]="headerModel.OrderDate"></cdp>
+            </div>
+            <div class="col l2 s12 p-0 margin-top-minus-20">
+                <h1>&nbsp;</h1>
+            </div>
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.ReferenceNo = $event"
+                    [label]="'Reference No.'"
+                    [data]="headerModel.ReferenceNo">
+                </citxt>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.OrderTypeDescription = $event"
+                    [label]="'** ประเภทเอกสาร'"
+                    [data]="headerModel.OrderTypeDescription"
+                    [readonly]="true"
+                    (click)="chooseJobType()">
+                </citxt>
+            </div>
+            <div class="col l2 s12 p-0 margin-top-minus-20">
+                <h1>&nbsp;</h1>
+            </div>
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.PurchaseNo = $event"
+                    [label]="'PO No.'"
+                    [data]="headerModel.PurchaseNo">
+                </citxt>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <cdp
+                    (cModel)="headerModel.OrderEstimate = $event"
+                    [label]="'** Appt. Date'"
+                    [data]="headerModel.OrderEstimate"></cdp>
+            </div>
+            <div class="col l2 s12 p-0 margin-top-minus-20">
+                <h1>&nbsp;</h1>
+            </div>
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.Qty = $event"
+                    [label]="'** Carton'"
+                    [data]="headerModel.Qty">
+                </citxt>
             </div>
 
         </div>
-        <!-- [hidden]="isAdvanceSearch" -->
-        <div class="card-panel hide-on-med-and-down" style="margin-top: 0px;">
-            <div class="row">
-                <!-- <div class="col s12 l4">
-                    <cinum (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence || 0"></cinum>
-                </div> -->
-                <!-- <div class="col l4 s12">
-                    <cdp (cModel)="criteriaModel.startDate = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.startDate">
-                    </cdp>
-                </div>
-                <div class="col l4 s12">
-                    <cdp (cModel)="criteriaModel.endDate = $event" [label]="'ถึงวันที่'" [data]="criteriaModel.endDate">
-                    </cdp>
-                </div> -->
-                <!-- <div class="col l5 s12" style="margin-bottom: 15px;">
-                    <csop (cModel)="criteriaModel.employeeCode = $event" [label]="'Employee Code'" [data]="criteriaModel.employeeCode" [sources]="listEmployeeCode">
-                    </csop>
-                </div> -->
-                <div class="col l4 s12">
-                    <citxt (cModel)="headerModel.TransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="headerModel.TransportNo" [readonly]="true"></citxt>
-                </div>
-                <div class="col l4 s12">
-                    <citxt (cModel)="headerModel.Transport = $event" [label]="'บริษัทขนส่ง'" [data]="headerModel.Transport" [readonly]="true"></citxt>
-                </div>
-                <div class="col l4 s12">
-                    <citxt (cModel)="headerModel.Vehicle = $event" [label]="'Truck License'" [data]="headerModel.Vehicle" [readonly]="true"></citxt>
-                </div>
+
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.OwnerDescription = $event"
+                    [label]="'** เจ้าของงาน'"
+                    [data]="headerModel.OwnerDescription"
+                    [readonly]="true"
+                    (click)="chooseOwner()">
+                </citxt>
+            </div>
+            <div class="col l2 s12 p-0 margin-top-minus-20">
+                <h1>&nbsp;</h1>
             </div>
 
-            <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.TransportDate = $event" [label]="'วันที่เอกสาร'" [data]="headerModel.TransportDate" [readonly]="true"></citxt>
-                </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Route = $event" [label]="'Route'" [data]="headerModel.Route" [readonly]="true"></citxt>
-                </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Remark = $event" [label]="'Picking For'" [data]="headerModel.Remark" [readonly]="true"></citxt>
-                </div>
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.UoM = $event"
+                    [label]="'** UoM'"
+                    [data]="headerModel.UoM">
+                </citxt>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.xxx = $event" [label]="'Shipment No.'" [data]="'ขอ Field'" [readonly]="true"></citxt>
-                </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.SubRoute = $event" [label]="'SubRoute'" [data]="headerModel.SubRoute" [readonly]="true"></citxt>
-                </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.DriverFirstName = $event" [label]="'ชื่อคนขับ'" [data]="headerModel.DriverFirstName" [readonly]="true"></citxt>
-                </div>
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.ShiptoDescription = $event"
+                    [label]="'** ผู้รับ'"
+                    [data]="headerModel.ShiptoDescription"
+                    [readonly]="true"
+                    (click)="chooseShipTo()">
+                </citxt>
             </div>
-
-            <div class="row">
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.Region = $event" [label]="'Plant'" [data]="headerModel.Region" [readonly]="true"></citxt>
-                </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.VehicleType = $event" [label]="'Truck Type'" [data]="headerModel.VehicleType" [readonly]="true"></citxt>
-                </div>
-                <div class="col l4 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="headerModel.DriverMobile = $event" [label]="'เบอร์โทรศัพท์คนขับ'" [data]="headerModel.DriverMobile" [readonly]="true"></citxt>
-                </div>
+            <div class="col l2 s12 p-0 margin-top-minus-20">
+                <h1>&nbsp;</h1>
             </div>
-
-            <div class="row">
-                <!-- <div class="col l5 s12" style="margin-bottom: 15px;">
-                    <csop (cModel)="criteriaModel.FirstName = $event" [label]="'First Name'" [data]="criteriaModel.FirstName" [sources]="listFirstName">
-                    </csop>
-                </div> -->
-                <!-- <div class="col l5 s12" style="margin-top: -20px;">
-                    <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'First Name'" [data]="criteriaModel.FirstName"></citxt>
-                </div>
-                <div class="col l1 s12"></div>
-                <div class="col l5 s12" style="margin-top: -20px;">
-                    <cdp (cModel)="criteriaModel.DateFrom = $event" [label]="'Date From'" [data]="criteriaModel.DateFrom"></cdp>
-                </div> -->
-
-                <!-- <div class="col l4 s12">
-                    <csop (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence" [sources]="listSequence">
-                    </csop>
-                </div> -->
-                <!-- <div class="col l5 s12">
-                    <cdp (cModel)="criteriaModel.DateFrom = $event" [label]="'DateFrom'" [data]="criteriaModel.DateFrom"></cdp>
-                </div> -->
-            </div>
-
-            <div class="row">
-                <!-- <div class="col l5 s12" style="margin-bottom: 15px;">
-                    <csop (cModel)="criteriaModel.FirstName = $event" [label]="'First Name'" [data]="criteriaModel.FirstName" [sources]="listFirstName">
-                    </csop>
-                </div> -->
-                <!-- <div class="col l5 s12" style="margin-top: -20px;">
-                    <cdp (cModel)="criteriaModel.LastDateFrom = $event" [label]="'Last Date From'" [data]="criteriaModel.LastDateFrom"></cdp>
-                </div>
-                <div class="col l1 s12"></div>
-                <div class="col l5 s12" style="margin-top: -20px;">
-                    <cdp (cModel)="criteriaModel.LastDateTo = $event" [label]="'Last Date To'" [data]="criteriaModel.LastDateTo"></cdp>
-                </div> -->
-
-                <!-- <div class="col l4 s12">
-                    <csop (cModel)="criteriaModel.sequence = $event" [label]="'ลำดับข้อมูล'" [data]="criteriaModel.sequence" [sources]="listSequence">
-                    </csop>
-                </div> -->
-                <!-- <div class="col l5 s12">
-                    <cdp (cModel)="criteriaModel.DateFrom = $event" [label]="'DateFrom'" [data]="criteriaModel.DateFrom"></cdp>
-                </div> -->
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.CBM = $event"
+                    [label]="'CBM'"
+                    [data]="headerModel.CBM">
+                </citxt>
             </div>
 
         </div>
-        <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
-            <div class="row">
-                <div class="col s12">
-                    <citxt (cModel)="headerModel.TransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="headerModel.TransportNo" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.Transport = $event" [label]="'บริษัทขนส่ง'" [data]="headerModel.Transport" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.Vehicle = $event" [label]="'Truck License'" [data]="headerModel.Vehicle" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.TransportDate = $event" [label]="'วันที่เอกสาร'" [data]="headerModel.TransportDate" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.Route = $event" [label]="'Route'" [data]="headerModel.Route" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.xxx = $event" [label]="'Picking For'" [data]="'ขอ Field'" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.xxx = $event" [label]="'Shipment No.'" [data]="'ขอ Field'" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.SubRoute = $event" [label]="'SubRoute'" [data]="headerModel.SubRoute" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.DriverFirstName = $event" [label]="'ชื่อคนขับ'" [data]="headerModel.DriverFirstName" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="headerModel.Region = $event" [label]="'Plant'" [data]="headerModel.Region" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.VehicleType = $event" [label]="'Truck Type'" [data]="criteriaModel.VehicleType" [readonly]="true"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.DriverMobile = $event" [label]="'เบอร์โทรศัพท์คนขับ'" [data]="criteriaModel.DriverMobile" [readonly]="true"></citxt>
-                </div>
-                <!-- <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="criteriaModel.LastDateFrom = $event" [label]="'Last Date From'" [data]="criteriaModel.LastDateFrom"></cdp>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="criteriaModel.LastDateTo = $event" [label]="'Last Date To'" [data]="criteriaModel.LastDateTo"></cdp>
-                </div> -->
+
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.ShiptoMobile = $event"
+                    [label]="'** โทรศัพท์ผู้รับ'"
+                    [data]="headerModel.ShiptoMobile"
+                    [readonly]="true"
+                    (click)="chooseShipTo()">
+                </citxt>
+            </div>
+            <div class="col l2 s12 p-0 margin-top-minus-20">
+                <h1>&nbsp;</h1>
+            </div>
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.Weight = $event"
+                    [label]="'** Weight'"
+                    [data]="headerModel.Weight">
+                </citxt>
             </div>
         </div>
-    </div>
-    <!-- {{this.viewModel|json}} -->
-    <div class="col s12">
-        <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
-            <div class="row">
-                <div class="col l2 s12">
-                    <!-- <i class="material-icons header-icon">
-                        featured_play_list
-                    </i> -->
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        รายการข้อมูล
-                    </span>
-                </div>
-                <div class="col l8 s12">
-                    <!-- <cbtn [label]="'New+'" [color]="'blue'" [icon]="'add_circle_outline'" (click)="newTimeSheet()"></cbtn> -->
-                </div>
+
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <cdp
+                    (cModel)="headerModel.InvoiceDate = $event"
+                    [label]="'** Invoice Date'"
+                    [data]="headerModel.InvoiceDate"></cdp>
             </div>
         </div>
-        <div class="card-panel" style="margin-top: 0px;">
-            <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let i of listModel" cdkDrag>{{i.demo}}</div>
-            </div> -->
-            <div cdkDropList (cdkDropListDropped)="drop($event)" style="overflow-x: auto;">
-                <!-- min-height: 200px; max-height: 200px; -->
-                <!-- div:hover {
-                    overflow-y: scroll;
-                } -->
-                <table id="users-list-datatable" class="bordered centered striped">
-                    <thead>
-                        <tr>
-                            <!-- <th>
-                                <span class="header-checkbox">
-                                    <label>
-                                        <input type="checkbox" [(ngModel)]="itemSelected"
-                                            (change)="checkUncheckAll()" />
-                                        <span style="padding-left: 20px;"></span>
-                                </label>
-                                </span>
-                            </th> -->
-                            <th>ลำดับ</th>
-                            <!-- <th>เลขที่ใบคุม</th> -->
-                            <th>เลขที่ Inv.</th>
-                            <th>สถานะ</th>
-                            <th>Doc. Type</th>
-                            <th>Doc. No.</th>
-                            <th>PO</th>
-                            <th>Cus Code</th>
-                            <th>Ship To</th>
-                            <th>ที่อยู่ผู้รับ</th>
-                            <th>Invoice Date</th>
-                            <th>Appt. Date</th>
-                            <th>CBM</th>
-                            <th>Carton</th>
-                            <th>Weight (kg.)</th>
 
-                            <th>หมายเหตุ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let i of listDetailModel; let idx = index">
-                            <!-- [hidden]="!checkPermission(i.category, 'deleteAction')" -->
-                            <!-- <td>
-                                <div class="w20">
-                                    <label>
-                                            (change)="isAllSelected(i.category, 'deleteAction')"
-                                            <input type="checkbox" [(ngModel)]="i.isSelected" />
-                                            <span></span>
-                                        </label>
-                                </div>
-                            </td> -->
-                            <!-- <td>
-                                    <div class="w150"> -->
-                            <!-- <a href="javascript:void(0)">
-                                            <p class="cut-text">{{i.FirstName}}</p>
-                                        </a> -->
-                            <!-- <cdp (cModel)="i.DateFrom = $event" [label]="'-'" [data]="i.DateFrom"></cdp> -->
-                            <!-- <div class="col s9 p-0">
-                                            <input style="height: 20px; margin-top: 10px !important;" [(ngModel)]="i.DateFrom" matInput [matDatepicker]="picker" [formControl]="dateControl">
-                                        </div>
-                                        <div class="col s2 p-0">
-                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker></mat-datepicker>
-                                        </div> -->
-                            <!-- </div>
-                                </td> -->
-                            <!-- <td>
-                                    <div class="w30">
-                                        <a href="javascript:void(0)" (click)="exportAsXLSX(i)">
-                                            <i class="material-icons">
-                                                print
-                                            </i>
-                                        </a>
-                                    </div>
-                                </td> -->
-                            <td>
-                                <div class="w30">
-                                    {{setSeq(i.Seq, idx + 1)}}
-                                </div>
-                            </td>
-                            <!-- <td> -->
-                            <!-- <div class="w100"> -->
-                            <!-- <a href="javascript:void(0)">
-                                            <p class="cut-text">{{i.FirstName}}</p>
-                                        </a> -->
-                            <!-- <cdp (cModel)="i.DateTo = $event" [label]="'-'" [data]="i.DateTo"></cdp> -->
-                            <!-- <a href="javascript:void(0)" style="cursor: pointer !important;">
-                                            {{i.Code}}
-                                        </a> -->
-                            <!-- <cbtne [label]="i.Code" (click)="editTimeSheet(i)"></cbtne> -->
-                            <!-- {{i.TransportNo}} -->
-                            <!-- </div> -->
-                            <!-- </td> -->
-                            <td cdkDrag style="cursor: pointer !important;">
-                                <div class="w100">
-                                    {{i.InvoiceNo}}
-                                    <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
-                                </div>
-                            </td>
-                            <td style="padding: 0 0 0 0 !important;">
-                                <div class="w100" style="background-color: {{statusOrderColor(i.OrderStatus)}}; height: 42px; padding-top: 10px;">
-                                    {{i.OrderStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.OrderType}}
-                                    <!-- <cdp (cModel)="i.Date = $event" [label]="'-'" [data]="i.Date"></cdp> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.OrderNo}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.StartTime" name="i.StartTime" id="i.StartTime" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.PurchaseNo}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.U_HMC_Hour" name="i.U_HMC_Hour" id="i.U_HMC_Hour" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.ShiptoCode}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.EndTime" name="i.EndTime" id="i.EndTime" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w200">
-                                    {{i.ShiptoName}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w600">
-                                    {{i.ShiptoAdress}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.InvoiceDateStr}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.OrderEstimateStr}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.CBM}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Qty}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Weight}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="w300">
-                                    {{i.Comment}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
-                                </div>
-                            </td>
-                            <!-- <td>
-                                <div class="w150">
-
-                                    <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1">
-                                </div>
-                            </td> -->
-                            <!-- <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.FinancialProject" name="i.FinancialProject" id="i.FinancialProject" type="text" class="input-text-1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.CostCenter" name="i.CostCenter" id="i.CostCenter" type="text" class="input-text-1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.U_HMC_Stage" name="i.U_HMC_Stage" id="i.U_HMC_Stage" type="text" class="input-text-1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.Break" name="i.Break" id="i.Break" type="text" class="input-text-1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.NonBillableTime" name="i.NonBillableTime" id="i.NonBillableTime" type="text" class="input-text-1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        N/A
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        N/A
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w100">
-                                        <input style="height: 20px;" [(ngModel)]="i.U_HMC_Detail" name="i.U_HMC_Detail" id="i.U_HMC_Detail" type="text" class="input-text-1">
-                                    </div>
-                                </td> -->
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <ctxta
+                    (cModel)="headerModel.ShiptoAddress = $event"
+                    [label]="'** ที่อยู่ผู้รับ'"
+                    [data]="headerModel.ShiptoAddress"
+                    (click)="chooseShipTo()">
+                </ctxta>
             </div>
+        </div>
+        
+        
 
-            <div class="row">
-                <div class="col s6">
-                    <div class="row" style="margin-top: 10px;">
-                        <cbtn [label]="'ยืนยันการจัดส่งแผนงาน'" [color]="'blue'" [icon]="''" (click)="confirm()"></cbtn>
-                        <cbtn [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn>
-                        <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="backToMain()"></cbtn>
-                    </div>
-
-                    <!-- <ul>
-                        <li>paginationModel.textPage</li>
-                    </ul> -->
-                </div>
-                <div class="col s6">
-                    <div style="text-align: right;">
-                        <!-- <ul>
-                            <li *ngFor="let item of listModel | paginate: { itemsPerPage: 10, currentPage: p }">{{item}}</li>
-                        </ul> -->
-                        <!-- <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls> -->
-                    </div>
-                </div>
-
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.RouteDescription = $event"
+                    [label]="'** เส้นทางหลัก'"
+                    [data]="headerModel.RouteDescription"
+                    [readonly]="true"
+                    (click)="chooseRoute()">
+                </citxt>
             </div>
+        </div>
 
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt
+                    (cModel)="headerModel.SubRouteDescription = $event"
+                    [label]="'** เส้นทางย่อย'"
+                    [data]="headerModel.SubRouteDescription"
+                    [readonly]="true"
+                    (click)="chooseSubRoute()">
+                </citxt>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col l4 s12 p-0 margin-bottom-5"></div>
+                <div class="col l4 s12 p-0 text-right margin-bottom-5">
+                    <cbtn
+                    
+                    [label]="'บันทึก'"
+                        [color]="'blue'"
+                        [icon]="'save'"
+                        (click)="save()">
+                    </cbtn>
+                    <cbtn
+                        [label]="'กลับ'"
+                        [color]="'grey'"
+                        [icon]="'keyboard_backspace'"
+                        (click)="backToMainPage()">
+                    </cbtn>
+                </div>
         </div>
     </div>
 </div>
