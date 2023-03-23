@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog,
-  RouteDialog, SubRoutingDialog, VehicleDialog, DriverDialog, ConfirmDialog, UploadOrderDialog,
+  RoutingDialog, SubRoutingDialog, VehicleDialog, DriverDialog, ConfirmDialog, UploadOrderDialog,
   LocationAddressDataDialog, MasterDataDialog } from '../dialog/dialog';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { Logger } from '../shared/logger.service';
@@ -359,18 +359,43 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     });
   }
 
-  //use
-  chooseRoute() {
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(SubRoutingDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Route', listData: this.listRoute, listDataSearch: this.listRoute } });
+  // //use
+  // chooseRoute() {
+  //   //ต้องเอาไปใส่ใน app.module ที่ declarations
+  //   const dialogRef = this.dialog.open(SubRoutingDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Route', listData: this.listRoute, listDataSearch: this.listRoute } });
 
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(`Dialog result: ${result}`);
+
+  //     if (result != undefined) {
+  //       this.headerModel.RouteId = result.Id;
+  //       this.headerModel.RouteCode = result.Code;
+  //       this.headerModel.RouteDescription = result.Code + ' - ' + result.Description;
+  //     } else {
+  //       this.headerModel.RouteId = '';
+  //       this.headerModel.RouteCode = '';
+  //       this.headerModel.RouteDescription = '';
+  //     }
+  //   });
+  // }
+
+  chooseRoute() {
+    const dialogRef = this.dialog.open(RoutingDialog, { 
+      disableClose: false, 
+      height: '400px',
+      width: '800px',
+      data: { title: 'เส้นทางหลัก' } });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+
+      this.headerModel.SubRouteId = '';
+      this.headerModel.SubRouteCode = '';
+      this.headerModel.SubRouteDescription = '';
 
       if (result != undefined) {
         this.headerModel.RouteId = result.Id;
         this.headerModel.RouteCode = result.Code;
-        this.headerModel.RouteDescription = result.Code + ' - ' + result.Description;
+        this.headerModel.RouteDescription = result.Description;
       } else {
         this.headerModel.RouteId = '';
         this.headerModel.RouteCode = '';
@@ -379,16 +404,25 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     });
   }
 
-  //use
   chooseSubRoute() {
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Sub Route', listData: this.listRoute, listDataSearch: this.listRoute } });
+    if(this.headerModel.RouteId == '' || this.headerModel.RouteId == undefined){
+      this.toastr.error('กรุณาระบุเส้นทางหลัก', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      return;
+    }
+
+    const dialogRef = this.dialog.open(SubRoutingDialog, { 
+      disableClose: false, 
+      height: '400px',
+      width: '800px',
+      data: { title: 'เส้นทางย่อย' ,RouteId : this.headerModel.RouteId} });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
       if (result != undefined) {
         this.headerModel.SubRouteId = result.Id;
         this.headerModel.SubRouteCode = result.Code;
-        this.headerModel.SubRouteDescription = result.Code + ' - ' + result.Description;
+        this.headerModel.SubRouteDescription = result.Description;
       } else {
         this.headerModel.SubRouteId = '';
         this.headerModel.SubRouteCode = '';
@@ -396,6 +430,24 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       }
     });
   }
+
+  // //use
+  // chooseSubRoute() {
+  //   //ต้องเอาไปใส่ใน app.module ที่ declarations
+  //   const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Sub Route', listData: this.listRoute, listDataSearch: this.listRoute } });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result != undefined) {
+  //       this.headerModel.SubRouteId = result.Id;
+  //       this.headerModel.SubRouteCode = result.Code;
+  //       this.headerModel.SubRouteDescription = result.Code + ' - ' + result.Description;
+  //     } else {
+  //       this.headerModel.SubRouteId = '';
+  //       this.headerModel.SubRouteCode = '';
+  //       this.headerModel.SubRouteDescription = '';
+  //     }
+  //   });
+  // }
 
   //use
   chooseVehicle() {
