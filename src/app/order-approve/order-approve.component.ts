@@ -8,7 +8,7 @@ import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ThrowStmt } from '@angular/compiler';
-import { ConfirmDialog, DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
+import { CloseJobDialog, ConfirmDialog, DriverDialog, RouteDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 import * as XLSX from 'xlsx-js-style';
 
 @Component({
@@ -267,9 +267,9 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
   closeJob() {
     // Logger.info('order-transport', 'closeJob', "Close Job", this.isDebugMode);
 
-    const dialogRef = this.dialog.open(ConfirmDialog, {
+    const dialogRef = this.dialog.open(CloseJobDialog, {
       disableClose: false,
-      height: '150px',
+      height: '250px',
       width: '300px',
       data: { title: 'คุณต้องการปิดงานใบคุมใช่หรือไม่?' }
     });
@@ -277,13 +277,14 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
-      if (result) {
+      if (result != false) {
         this.spinner.show();
 
         let criteria = {
           "userinformation": this.serviceProviderService.userinformation,
           "TransportNo": this.headerModel.TransportNo,
           "Process": 'ADMINCLOSEJOB' ,
+          "Reason": result
         }
 
         this.serviceProviderService.post('api/Transport/AdminCloseJob', criteria)

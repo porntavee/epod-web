@@ -1110,4 +1110,22 @@ export class PrintDialog {
     }
 }
 
+@Component({
+    selector: 'close-job-dialog',
+    templateUrl: 'close-job-dialog.html',
+})
+export class CloseJobDialog {
+    constructor(
+        public dialogRef: MatDialogRef<ConfirmDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+    reason: any = '';
+
+    cancel() {
+        this.dialogRef.close(false);
+    }
+
+    ok() {
+        this.dialogRef.close(this.reason);
+    }
+}

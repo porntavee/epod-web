@@ -67,6 +67,9 @@ export class ReturnDocumentComponent implements OnInit {
 
     if (param.key === "Enter") {
 
+      console.log('length ' + this.criteriaModel.InvoiceNo.length);
+      console.log('substring ' + this.criteriaModel.InvoiceNo.substring(2, this.criteriaModel.InvoiceNo.length - 1));
+
       if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '') {
         this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
         return;
@@ -120,6 +123,7 @@ export class ReturnDocumentComponent implements OnInit {
 
     this.spinner.show();
 
+    this.criteriaModel.InvoiceNo = this.criteriaModel.InvoiceNo.substring(2, this.criteriaModel.InvoiceNo.length - 1);
     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
     this.criteriaModel.Process = 'ADMIN_RETRURN';
 
