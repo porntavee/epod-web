@@ -16,6 +16,7 @@
 <div mat-dialog-content>
     <!-- {{data.title}} <br> -->
     <!-- {{data.ReturnNo}} -->
+    <!-- {{calPage}} -->
     <button style="background-color: transparent; border-width: 0px !important;" printSectionId="print-section" ngxPrint>
         <a class="btn waves-effect waves-light light-blue custom-button">Original</a>
     </button>
@@ -31,97 +32,101 @@
 </div> -->
 
 <div class="display-none" id="print-section">
-    <div style="text-align: right;">
-        <p>Original</p>
-    </div>
-    <div style="text-align: right;">
-        <p>Doc No. {{data.ReturnNo}}</p>
-    </div>
-    <div style="text-align: center;">
-        <b>ใบกำกับการคืนเอกสาร (POD Return)</b>
-    </div>
-    <br>
-    <div style="min-height: 750px;">
-        <table style="width: 100%; border: 1px solid black;">
-            <tr style="border: 1px solid black;">
-                <th style="border: 1px solid black;">Seq</th>
-                <th style="border: 1px solid black;">Manifest No.</th>
-                <th style="border: 1px solid black;">SO No.</th>
-                <th style="border: 1px solid black;">Invoice No.</th>
-                <th style="border: 1px solid black;">Invoice Date</th>
-                <th style="border: 1px solid black;">Customer Name/ShipTo</th>
-                <th style="border: 1px solid black;">POD Return Date</th>
-            </tr>
-            <tr *ngFor="let i of data.List; let idx = index" style="border: 1px solid black;">
-                <td style="border: 1px solid black; width: 50px;">{{idx + 1}}</td>
-                <td style="border: 1px solid black; width: 150px;">{{i.TransportNo}}</td>
-                <td style="border: 1px solid black; width: 150px;">{{i.OrderNo}}</td>
-                <td style="border: 1px solid black; width: 150px;">{{i.InvoiceNo}}</td>
-                <td style="border: 1px solid black; width: 150px;">{{i.InvoiceDateStr}}</td>
-                <td style="border: 1px solid black; width: 250px;">{{i.ShiptoName}}</td>
-                <td style="border: 1px solid black; width: 150px;">{{i.OrderEstimate}}</td>
-            </tr>
-        </table>
-    </div>
-    <div>
-        <p>Special Instruction / Remark : ..........................................................................................................................</p>
-        <p>...........................................................................................................................................................................</p>
-    </div>
-    <div>
-        <table style="width: 100%; border: 1px solid black;">
-            <tr style="border: 1px solid black;">
-                <td style="border: 1px solid black;">Googs Issue / Record by : <br><br><br> เจ้าหน้าที่ออกเอกสาร และผู้บันทึก</td>
-                <td style="border: 1px solid black;">Checker / Controller by : <br><br><br> เจ้าหน้าที่ตรวจสอบ/ควบคุม</td>
-                <td style="border: 1px solid black;">Proof of Delivery by : <br><br><br> เจ้าหน้าที่ธุรการ</td>
-            </tr>
-        </table>
+    <div *ngFor="let page of dataPage; let idx = index">
+        <div style="text-align: right;">
+            <p>Original ({{idx+1}}/{{calPage}})</p>
+        </div>
+        <div style="text-align: right;">
+            <p>Doc No. {{data.ReturnNo}}</p>
+        </div>
+        <div style="text-align: center;">
+            <b>ใบกำกับการคืนเอกสาร (POD Return)</b>
+        </div>
+        <br>
+        <div style="min-height: 750px;">
+            <table style="width: 100%;">
+                <tr style="border: 1px solid black;">
+                    <th style="border: 1px solid black;">Seq</th>
+                    <th style="border: 1px solid black;">Manifest No.</th>
+                    <th style="border: 1px solid black;">SO No.</th>
+                    <th style="border: 1px solid black;">Invoice No.</th>
+                    <th style="border: 1px solid black;">Invoice Date</th>
+                    <th style="border: 1px solid black;">Customer Name/ShipTo</th>
+                    <th style="border: 1px solid black;">POD Return Date</th>
+                </tr>
+                <tr *ngFor="let i of page; let idx = index" style="border: 1px solid black;">
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 50px;">{{idx + 1}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.TransportNo}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.OrderNo}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.InvoiceNo}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.InvoiceDateStr}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 250px;">{{i.ShiptoName}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.OrderEstimate}}</td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <p>Special Instruction / Remark : ..........................................................................................................................</p>
+            <p>...........................................................................................................................................................................</p>
+        </div>
+        <div>
+            <table style="width: 100%; border: 1px solid black;">
+                <tr style="border: 1px solid black;">
+                    <td style="border: 1px solid black;">Googs Issue / Record by : <br><br><br> เจ้าหน้าที่ออกเอกสาร และผู้บันทึก</td>
+                    <td style="border: 1px solid black;">Checker / Controller by : <br><br><br> เจ้าหน้าที่ตรวจสอบ/ควบคุม</td>
+                    <td style="border: 1px solid black;">Proof of Delivery by : <br><br><br> เจ้าหน้าที่ธุรการ</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 
 <div class="display-none" id="print-section2">
-    <div style="text-align: right;">
-        <p>Copy</p>
-    </div>
-    <div style="text-align: right;">
-        <p>Doc No. {{data.ReturnNo}}</p>
-    </div>
-    <div style="text-align: center;">
-        <b>ใบกำกับการคืนเอกสาร (POD Return)</b>
-    </div>
-    <br>
-    <div style="min-height: 750px;">
-        <table style="width: 100%; border: 1px solid black;">
-            <tr style="border: 1px solid black;">
-                <th style="border: 1px solid black;">Seq</th>
-                <th style="border: 1px solid black;">Manifest No.</th>
-                <th style="border: 1px solid black;">SO No.</th>
-                <th style="border: 1px solid black;">Invoice No.</th>
-                <th style="border: 1px solid black;">Invoice Date</th>
-                <th style="border: 1px solid black;">Customer Name/ShipTo</th>
-                <th style="border: 1px solid black;">POD Return Date</th>
-            </tr>
-            <tr *ngFor="let i of data.List; let idx = index" style="border: 1px solid black;">
-                <td style="border: 1px solid black; width: 50px;">{{idx + 1}}</td>
-                <td style="border: 1px solid black; width: 150px;">{{i.TransportNo}}</td>
-                <td style="border: 1px solid black; width: 150px;">{{i.OrderNo}}</td>
-                <td style="border: 1px solid black; width: 150px;">{{i.InvoiceNo}}</td>
-                <td style="border: 1px solid black; width: 150px;">{{i.InvoiceDateStr}}</td>
-                <td style="border: 1px solid black; width: 250px;">{{i.ShiptoName}}</td>
-                <td style="border: 1px solid black; width: 150px;">{{i.OrderEstimate}}</td>
-            </tr>
-        </table>
-    </div>
-    <div>
-        <p>Special Instruction / Remark : ..........................................................................................................................</p>
-        <p>...........................................................................................................................................................................</p>
-    </div>
-    <div>
-        <table style="width: 100%; border: 1px solid black;">
-            <tr style="border: 1px solid black;">
-                <td style="border: 1px solid black;">Googs Issue / Record by : <br><br><br> เจ้าหน้าที่ออกเอกสาร และผู้บันทึก</td>
-                <td style="border: 1px solid black;">Checker / Controller by : <br><br><br> เจ้าหน้าที่ตรวจสอบ/ควบคุม</td>
-                <td style="border: 1px solid black;">Proof of Delivery by : <br><br><br> เจ้าหน้าที่ธุรการ</td>
-            </tr>
-        </table>
+    <div *ngFor="let page of dataPage; let idx = index">
+        <div style="text-align: right;">
+            <p>Copy ({{idx+1}}/{{calPage}})</p>
+        </div>
+        <div style="text-align: right;">
+            <p>Doc No. {{data.ReturnNo}}</p>
+        </div>
+        <div style="text-align: center;">
+            <b>ใบกำกับการคืนเอกสาร (POD Return)</b>
+        </div>
+        <br>
+        <div style="min-height: 750px;">
+            <table style="width: 100%;">
+                <tr style="border: 1px solid black;">
+                    <th style="border: 1px solid black;">Seq</th>
+                    <th style="border: 1px solid black;">Manifest No.</th>
+                    <th style="border: 1px solid black;">SO No.</th>
+                    <th style="border: 1px solid black;">Invoice No.</th>
+                    <th style="border: 1px solid black;">Invoice Date</th>
+                    <th style="border: 1px solid black;">Customer Name/ShipTo</th>
+                    <th style="border: 1px solid black;">POD Return Date</th>
+                </tr>
+                <tr *ngFor="let i of page; let idx = index" style="border: 1px solid black;">
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 50px;">{{idx + 1}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.TransportNo}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.OrderNo}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.InvoiceNo}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.InvoiceDateStr}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 250px;">{{i.ShiptoName}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.OrderEstimate}}</td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <p>Special Instruction / Remark : ..........................................................................................................................</p>
+            <p>...........................................................................................................................................................................</p>
+        </div>
+        <div>
+            <table style="width: 100%; border: 1px solid black;">
+                <tr style="border: 1px solid black;">
+                    <td style="border: 1px solid black;">Googs Issue / Record by : <br><br><br> เจ้าหน้าที่ออกเอกสาร และผู้บันทึก</td>
+                    <td style="border: 1px solid black;">Checker / Controller by : <br><br><br> เจ้าหน้าที่ตรวจสอบ/ควบคุม</td>
+                    <td style="border: 1px solid black;">Proof of Delivery by : <br><br><br> เจ้าหน้าที่ธุรการ</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

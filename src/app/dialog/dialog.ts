@@ -30,7 +30,7 @@ export class ConfirmDialog {
 })
 export class MasterDataDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<MasterDataDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -82,7 +82,7 @@ export class MasterDataDialog implements AfterContentChecked {
 })
 export class LocationAddressDataDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<LocationAddressDataDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -134,9 +134,9 @@ export class LocationAddressDataDialog implements AfterContentChecked {
     selector: 'group-user-dialog',
     templateUrl: 'group-user-dialog.html',
 })
-export class GroupUserDialog implements AfterContentChecked  {
+export class GroupUserDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<GroupUserDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -196,7 +196,7 @@ export class GroupUserDialog implements AfterContentChecked  {
 })
 export class RouteDialog implements AfterContentChecked {
 
-    constructor(public changeDetector : ChangeDetectorRef,
+    constructor(public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -233,7 +233,7 @@ export class RouteDialog implements AfterContentChecked {
 })
 export class TypeOfWorkDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -296,7 +296,7 @@ export class TypeOfWorkDialog implements AfterContentChecked {
 })
 export class StatusDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -360,7 +360,7 @@ export class StatusDialog implements AfterContentChecked {
 })
 export class ShipToDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -425,7 +425,7 @@ export class ShipToDialog implements AfterContentChecked {
 })
 export class TransportNoDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -439,7 +439,7 @@ export class TransportNoDialog implements AfterContentChecked {
         let criteria = {
             "userinformation": this.serviceProviderService.userinformation,
             "TransportNo": this.criteriaModel.TransportNo,
-            "Process":this.data.Process
+            "Process": this.data.Process
         }
 
         // let json = JSON.stringify(criteria);
@@ -490,7 +490,7 @@ export class TransportNoDialog implements AfterContentChecked {
 })
 export class VehicleDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -554,7 +554,7 @@ export class VehicleDialog implements AfterContentChecked {
 })
 export class DriverDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<RouteDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -617,7 +617,7 @@ export class DriverDialog implements AfterContentChecked {
 })
 export class ProvinceDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<ProvinceDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -669,7 +669,7 @@ export class ProvinceDialog implements AfterContentChecked {
 })
 export class DistrictDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<DistrictDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -768,7 +768,7 @@ export class RoutingDialog implements AfterContentChecked {
     ngAfterContentChecked(): void {
         this.changeDetector.detectChanges();
     }
-    
+
 }
 
 @Component({
@@ -777,7 +777,7 @@ export class RoutingDialog implements AfterContentChecked {
 })
 export class SubRoutingDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<SubRoutingDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -829,7 +829,7 @@ export class SubRoutingDialog implements AfterContentChecked {
 })
 export class RegionDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<RegionDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -881,7 +881,7 @@ export class RegionDialog implements AfterContentChecked {
 })
 export class JobStatusDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<RoutingDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -933,7 +933,7 @@ export class JobStatusDialog implements AfterContentChecked {
 })
 export class DocReturnDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<RoutingDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -986,7 +986,7 @@ export class DocReturnDialog implements AfterContentChecked {
 })
 export class UploadOrderDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<ConfirmDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -998,7 +998,7 @@ export class UploadOrderDialog implements AfterContentChecked {
     ok() {
         this.dialogRef.close(this.listData);
     }
-    
+
     // Fixing "Expression has changed after it was checked"
     public ngAfterContentChecked(): void {
         this.changeDetector.detectChanges();
@@ -1046,7 +1046,7 @@ export class UploadOrderDialog implements AfterContentChecked {
 })
 export class JobOrderStatusDialog implements AfterContentChecked {
     constructor(
-        public changeDetector : ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<JobOrderStatusDialog>,
         private serviceProviderService: ServiceProviderService,
         private toastr: ToastrService,
@@ -1097,9 +1097,42 @@ export class JobOrderStatusDialog implements AfterContentChecked {
     templateUrl: 'print-dialog.html',
 })
 export class PrintDialog {
+
+    calPage = 1;
+    dataPage:any = [];
+    
+
     constructor(
         public dialogRef: MatDialogRef<PrintDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: any) { }
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+
+        this.calPage = Math.ceil(data.List.length / 10);
+
+        let x: any = [];
+        for (let index = 0; index < this.calPage; index++) {
+            x.push(data.List[0+(index*10)]); // 0+(0*10)= 0     0+(1*10)= 10
+            x.push(data.List[1+(index*10)]); // 1+(0*10)= 1     1+(1*10)= 11
+            x.push(data.List[2+(index*10)]); // 2+(0*10)= 2
+            x.push(data.List[3+(index*10)]);
+            x.push(data.List[4+(index*10)]);
+            x.push(data.List[5+(index*10)]);
+            x.push(data.List[6+(index*10)]);
+            x.push(data.List[7+(index*10)]);
+            x.push(data.List[8+(index*10)]);
+            x.push(data.List[9+(index*10)]);
+
+            this.dataPage.push(x);
+            x = [];
+        }
+
+        debugger
+
+        // data.List.array.forEach(element => {
+
+        // });
+
+
+    }
 
     cancel() {
         this.dialogRef.close(false);
