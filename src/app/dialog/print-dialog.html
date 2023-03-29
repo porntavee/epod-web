@@ -32,7 +32,7 @@
 </div> -->
 
 <div class="display-none" id="print-section">
-    <div *ngFor="let page of dataPage; let idx = index">
+    <div *ngFor="let page of dataPage; let idx = index; let last = last">
         <div style="text-align: right;">
             <p>Original ({{idx+1}}/{{calPage}})</p>
         </div>
@@ -65,11 +65,12 @@
                 </tr>
             </table>
         </div>
-        <div>
+        <div *ngIf="!last" style="min-height: 150px;"></div>
+        <div *ngIf="last">
             <p>Special Instruction / Remark : ..........................................................................................................................</p>
             <p>...........................................................................................................................................................................</p>
         </div>
-        <div>
+        <div *ngIf="last">
             <table style="width: 100%; border: 1px solid black;">
                 <tr style="border: 1px solid black;">
                     <td style="border: 1px solid black;">Googs Issue / Record by : <br><br><br> เจ้าหน้าที่ออกเอกสาร และผู้บันทึก</td>
@@ -82,7 +83,7 @@
 </div>
 
 <div class="display-none" id="print-section2">
-    <div *ngFor="let page of dataPage; let idx = index">
+    <div *ngFor="let page of dataPage; let idx = index; let last = last">
         <div style="text-align: right;">
             <p>Copy ({{idx+1}}/{{calPage}})</p>
         </div>
@@ -115,11 +116,12 @@
                 </tr>
             </table>
         </div>
-        <div>
+        <div *ngIf="!last" style="min-height: 150px;"></div>
+        <div *ngIf="last">
             <p>Special Instruction / Remark : ..........................................................................................................................</p>
             <p>...........................................................................................................................................................................</p>
         </div>
-        <div>
+        <div *ngIf="last">
             <table style="width: 100%; border: 1px solid black;">
                 <tr style="border: 1px solid black;">
                     <td style="border: 1px solid black;">Googs Issue / Record by : <br><br><br> เจ้าหน้าที่ออกเอกสาร และผู้บันทึก</td>

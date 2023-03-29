@@ -75,6 +75,11 @@ export class ReturnDocumentComponent implements OnInit {
         return;
       }
 
+      debugger
+
+      if (this.criteriaModel.DocNo != '' && this.criteriaModel.DocNo != undefined)
+      this.criteriaModel.InvoiceNo = this.criteriaModel.DocNo;
+
       this.readTransport(param);
 
       // this.spinner.show();
@@ -149,6 +154,7 @@ export class ReturnDocumentComponent implements OnInit {
 
 
         this.criteriaModel.InvoiceNo = '';
+        this.criteriaModel.DocNo = '';
         this.criteriaModel.TransportNo = '';
       }
       else {

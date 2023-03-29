@@ -1100,6 +1100,7 @@ export class PrintDialog {
 
     calPage = 1;
     dataPage:any = [];
+    gIndex = 0;
     
 
     constructor(
@@ -1132,6 +1133,10 @@ export class PrintDialog {
         // });
 
 
+    }
+
+    checkLastPage() {
+        return false;
     }
 
     cancel() {
