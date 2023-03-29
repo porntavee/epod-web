@@ -32,9 +32,9 @@
 </div> -->
 
 <div class="display-none" id="print-section">
-    <div *ngFor="let page of dataPage; let idx = index; let last = last">
+    <div *ngFor="let page of dataPage; let idxx = index; let last = last">
         <div style="text-align: right;">
-            <p>Original ({{idx+1}}/{{calPage}})</p>
+            <p>Original ({{idxx+1}}/{{calPage}})</p>
         </div>
         <div style="text-align: right;">
             <p>Doc No. {{data.ReturnNo}}</p>
@@ -55,7 +55,7 @@
                     <th style="border: 1px solid black;">POD Return Date</th>
                 </tr>
                 <tr *ngFor="let i of page; let idx = index" style="border: 1px solid black;">
-                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 50px;">{{idx + 1}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 50px;">{{(idx + 1) + (idxx*10)}}</td>
                     <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.TransportNo}}</td>
                     <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.OrderNo}}</td>
                     <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.InvoiceNo}}</td>
@@ -83,9 +83,9 @@
 </div>
 
 <div class="display-none" id="print-section2">
-    <div *ngFor="let page of dataPage; let idx = index; let last = last">
+    <div *ngFor="let page of dataPage; let idxx = index; let last = last">
         <div style="text-align: right;">
-            <p>Copy ({{idx+1}}/{{calPage}})</p>
+            <p>Copy ({{idxx+1}}/{{calPage}})</p>
         </div>
         <div style="text-align: right;">
             <p>Doc No. {{data.ReturnNo}}</p>
@@ -106,7 +106,7 @@
                     <th style="border: 1px solid black;">POD Return Date</th>
                 </tr>
                 <tr *ngFor="let i of page; let idx = index" style="border: 1px solid black;">
-                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 50px;">{{idx + 1}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 50px;">{{(idx + 1) + (idxx*10)}}</td>
                     <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.TransportNo}}</td>
                     <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.OrderNo}}</td>
                     <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.InvoiceNo}}</td>

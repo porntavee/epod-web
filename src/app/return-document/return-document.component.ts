@@ -70,12 +70,15 @@ export class ReturnDocumentComponent implements OnInit {
       console.log('length ' + this.criteriaModel.InvoiceNo.length);
       console.log('substring ' + this.criteriaModel.InvoiceNo.substring(2, this.criteriaModel.InvoiceNo.length - 1));
 
-      if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '') {
+      if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '' && this.criteriaModel.DocNo == '') {
         this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
         return;
       }
 
       debugger
+
+      if (this.criteriaModel.InvoiceNo != '' && this.criteriaModel.InvoiceNo != undefined)
+      this.criteriaModel.InvoiceNo = this.criteriaModel.InvoiceNo.substring(2, this.criteriaModel.InvoiceNo.length - 1);
 
       if (this.criteriaModel.DocNo != '' && this.criteriaModel.DocNo != undefined)
       this.criteriaModel.InvoiceNo = this.criteriaModel.DocNo;
@@ -121,14 +124,13 @@ export class ReturnDocumentComponent implements OnInit {
 
   readTransport(param) {
 
-    if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '') {
+    if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '' && this.criteriaModel.DocNo == '') {
       this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
       return;
     }
 
     this.spinner.show();
 
-    this.criteriaModel.InvoiceNo = this.criteriaModel.InvoiceNo.substring(2, this.criteriaModel.InvoiceNo.length - 1);
     this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
     this.criteriaModel.Process = 'ADMIN_RETRURN';
 
