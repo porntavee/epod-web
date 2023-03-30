@@ -277,19 +277,14 @@ export class ReturnTransactionComponent implements OnInit {
       debugger
       if (model.Status) {
 
-        // model.Data.forEach(element => {
+        model.Data.forEach(element => {
 
-        //   let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
+          element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
 
-        //   if (dup.length == 0) {
-        //     element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
-        //     element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
-        //     this.listModel.push(element);
-        //   }
+        });
 
-        // });
-
-        let printModel: any = {ReturnNo: param.ReturnNo, List: model.Data};
+        let printModel: any = { ReturnNo: param.ReturnNo, List: model.Data };
 
         this.printAlert(printModel);
 
