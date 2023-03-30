@@ -8,7 +8,7 @@ import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ThrowStmt } from '@angular/compiler';
-import { ConfirmDialog, DocReturnDialog, DriverDialog, RouteDialog, RoutingDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog, DocReturnDialog, DriverDialog, PrintDialog, RouteDialog, RoutingDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 
 @Component({
   selector: 'app-return-transaction',
@@ -241,49 +241,58 @@ export class ReturnTransactionComponent implements OnInit {
 
   }
 
-  exModel: any = [{
-    title: 'hello world'
-  }, {
-    title: 'hello world'
-  }, {
-    title: 'hello world'
-  }];
+  // exModel: any = [{
+  //   title: 'hello world'
+  // }, {
+  //   title: 'hello world'
+  // }, {
+  //   title: 'hello world'
+  // }];
+
+
+  print(param) {
+    this.readTransport(param);
+  }
 
   readTransport(param) {
 
-    if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '') {
-      this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      return;
-    }
+    // if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '') {
+    //   this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    //   return;
+    // }
 
-    this.spinner.show();
+    let criteria: any = {};
+    // this.spinner.show();
 
-    this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
-    this.criteriaModel.Process = 'ADMIN_RETRURN';
+    criteria.userinformation = this.serviceProviderService.userinformation;
+    // criteria.Process = 'ADMIN_RETRURN';
+    criteria.ReturnNo = param.ReturnNo;
 
-    this.serviceProviderService.post('api/Transport/GetTransportDetail', this.criteriaModel).subscribe(data => {
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
       this.viewModel = model;
 
+      debugger
       if (model.Status) {
 
-        model.Data.forEach(element => {
+        // model.Data.forEach(element => {
 
-          let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
+        //   let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
 
-          if (dup.length == 0) {
-            element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
-            element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
-            this.listModel.push(element);
-          }
+        //   if (dup.length == 0) {
+        //     element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
+        //     element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
+        //     this.listModel.push(element);
+        //   }
 
-        });
+        // });
 
+        let printModel: any = {ReturnNo: param.ReturnNo, List: model.Data};
 
-        this.criteriaModel.InvoiceNo = '';
-        this.criteriaModel.TransportNo = '';
+        this.printAlert(printModel);
+
       }
       else {
         // this.listModel = [];
@@ -296,5 +305,18 @@ export class ReturnTransactionComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
 
+  }
+
+  printAlert(param) {
+    const dialogRef = this.dialog.open(PrintDialog, { disableClose: false, height: '160px', width: '300px', data: param });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result) {
+        // this.confirm();
+      }
+      else {
+        return;
+      }
+    });
   }
 }
