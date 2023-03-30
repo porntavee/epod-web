@@ -206,19 +206,15 @@ export class ReportSummaryComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.criteriaModel.transportNo,
-      "ShiptoId": this.criteriaModel.shipToId,
-      "RouteId": this.criteriaModel.routeDescription,
-      "OrderEstimate":  this.criteriaModel.apptDate != undefined &&  this.criteriaModel.apptDate != "Invalid date" ? moment( this.criteriaModel.apptDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "VehicleNo": this.criteriaModel.vehicleId,
-      "DriverId": this.criteriaModel.driverId,
-      "OrderStatus": this.criteriaModel.statusCode,
-      "OrderTypeId": this.criteriaModel.typeOfWorkCode,
+      "InvoiceDateStart":  this.criteriaModel.startDate != undefined &&  this.criteriaModel.startDate != "Invalid date" ? moment( this.criteriaModel.startDate).format('YYYY-MM-DD') : undefined,
+      "InvoiceDateEnd":  this.criteriaModel.endDate != undefined &&  this.criteriaModel.endDate != "Invalid date" ? moment( this.criteriaModel.endDate).format('YYYY-MM-DD') : undefined,
     }
 
     let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+    debugger
+    this.serviceProviderService.post('api/Report/ReportTransportOrders', criteria).subscribe(data => {
+      debugger
       this.spinner.hide();
       let model: any = {};
       model = data;
@@ -226,10 +222,37 @@ export class ReportSummaryComponent implements OnInit {
       if (model.Status) {
 
         model.Data.forEach(element => {
+          element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
+          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
           element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+
+          element.ShipmentNo = element.ShipmentNo ?? '';
+          element.TransportNo = element.TransportNo ?? '';
+          element.OrderNo = element.OrderNo ?? '';
+          element.InvoiceNo = element.InvoiceNo ?? '';
+          element.CustomerCode = element.CustomerCode ?? '';
+          element.CustomerName = element.CustomerName ?? '';
+
+          element.ShiptoCode = element.ShiptoCode ?? '';
+          element.ShiptoName = element.ShiptoName ?? '';
+          element.Vehicle = element.Vehicle ?? '';
+          element.VehicleType = element.VehicleType ?? '';
+          element.Route = element.Route ?? '';
+          element.SubRoute = element.SubRoute ?? '';
+          element.Transport = element.Transport ?? '';
+          element.DriverName = element.DriverName ?? '';
+          element.HelperName = element.HelperName ?? '';
+          element.DatIn = element.DatIn ?? '';
+          element.TimeIn = element.TimeIn ?? '';
+          element.DateOut = element.DateOut ?? '';
+          element.TimeOut = element.TimeOut ?? '';
+          element.LatitudeLongitudeIn = element.LatitudeLongitudeIn ?? '';
+          element.OTDelivery = element.OTDelivery ?? '';
+          element.OTBillReturn = element.OTBillReturn ?? '';
+          element.AdminReturnDate = element.AdminReturnDate ?? '';
 
 
           //D P R S 
@@ -637,22 +660,38 @@ export class ReportSummaryComponent implements OnInit {
     // this.spinner.show();
 
     let model = [];
-    this.listModel.forEach(element => {
+    this.viewModel2.forEach(element => {
       model.push({
-        'Order No.': '22TMS24050023', 
-        'Manifest': '22TM341580',
-        'Manifest Date': '23/05/2022', 
-        'License Plate': '3ฒท-5373',
-        'Truck Type': '4W Ambient',
-        'Route': 'BKKR14',
-        'SubRoute': 'BKK014 - สายพระราม 3',
-        'Transport By': 'บริษัท ภักดีบดินทร์ ขนส่ง จำกัด',
-        'Driver Name': 'นรพันธ์',
-        'Helper Name': '',
-        'Total Drop': '1.00',
-        'Total Carton': '363.17',
-        'Weight (kg)': '933.62',
-        'Cubic meter': '4.22',
+        'Order No.': element.ShipmentNo,
+        'Manifest Date': element.TransportDate,
+        'Manifest': element.TransportNo,
+        'Sale Order (SO)': element.OrderNo,
+        'INV NO': element.InvoiceNo,
+        'INV_DATE': element.InvoiceDate,
+        'Appointment Date': element.OrderEstimate,
+        'Customer Code': element.CustomerCode,
+        'Customer Name': element.CustomerName,
+        'Ship to': element.ShiptoCode,
+        'Address': element.ShiptoName,
+        'License Plate': element.Vehicle,
+        'Truck Type': element.VehicleType,
+        'Route': element.Route,
+        'SubRoute': element.SubRoute,
+        'Transport By': element.Transport,
+        'Driver Name': element.DriverName,
+        'Helper Name': element.HelperName,
+        'Total Drop': element.NumDrop,
+        'Total Carton': element.Qty.toFixed(2),
+        'Weight (kg)': element.Weight.toFixed(2),
+        'Cubic meter': element.CBM.toFixed(2),
+        'Date (In)': element.DatIn,
+        'Time (In)': element.TimeIn,
+        'Date (Out)': element.DateOut,
+        'Time (Out)': element.TimeOut,
+        'Latitude & Longitude In': element.LatitudeLongitudeIn,
+        'Delivery Status': element.OTDelivery,
+        'POD  Status': element.OTBillReturn,
+        'POD Return to Bang Na DC': element.AdminReturnDate,
       });
     });
 

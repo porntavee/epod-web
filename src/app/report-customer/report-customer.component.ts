@@ -207,19 +207,13 @@ export class ReportCustomerComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.criteriaModel.transportNo,
-      "ShiptoId": this.criteriaModel.shipToId,
-      "RouteId": this.criteriaModel.routeDescription,
-      "OrderEstimate":  this.criteriaModel.apptDate != undefined &&  this.criteriaModel.apptDate != "Invalid date" ? moment( this.criteriaModel.apptDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "VehicleNo": this.criteriaModel.vehicleId,
-      "DriverId": this.criteriaModel.driverId,
-      "OrderStatus": this.criteriaModel.statusCode,
-      "OrderTypeId": this.criteriaModel.typeOfWorkCode,
+      "InvoiceDateStart":  this.criteriaModel.startDate != undefined &&  this.criteriaModel.startDate != "Invalid date" ? moment( this.criteriaModel.startDate).format('YYYY-MM-DD') : undefined,
+      "InvoiceDateEnd":  this.criteriaModel.endDate != undefined &&  this.criteriaModel.endDate != "Invalid date" ? moment( this.criteriaModel.endDate).format('YYYY-MM-DD') : undefined,
     }
 
     let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+    this.serviceProviderService.post('api/Report/ReportCustomer', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
@@ -227,7 +221,18 @@ export class ReportCustomerComponent implements OnInit {
       if (model.Status) {
 
         model.Data.forEach(element => {
-          element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
+
+          element.CustomerCode = element.CustomerCode ?? '';
+          element.CustomerName = element.CustomerName ?? '';
+          element.ShiptoCode = element.ShiptoCode ?? '';
+          element.ShiptoName = element.ShiptoName ?? '';
+          element.Route = element.Route ?? '';
+          element.SubRoute = element.SubRoute ?? '';
+          element.Total_Time = element.Total_Time ?? '';
+          element.Total_Invoice = element.Total_Invoice ?? '';
+
+
+          // element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
           // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
           // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
           // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
@@ -638,22 +643,20 @@ export class ReportCustomerComponent implements OnInit {
     // this.spinner.show();
 
     let model = [];
-    this.listModel.forEach(element => {
+    this.viewModel2.forEach((element, idx) => {
       model.push({
-        'Order No.': '22TMS24050023', 
-        'Manifest': '22TM341580',
-        'Manifest Date': '23/05/2022', 
-        'License Plate': '3ฒท-5373',
-        'Truck Type': '4W Ambient',
-        'Route': 'BKKR14',
-        'SubRoute': 'BKK014 - สายพระราม 3',
-        'Transport By': 'บริษัท ภักดีบดินทร์ ขนส่ง จำกัด',
-        'Driver Name': 'นรพันธ์',
-        'Helper Name': '',
-        'Total Drop': '1.00',
-        'Total Carton': '363.17',
-        'Weight (kg)': '933.62',
-        'Cubic meter': '4.22',
+        'No.': idx, 
+        'Customer Code': element.CustomerCode,
+        'Customer Name': element.CustomerName,
+        'Ship to Code': element.ShiptoCode,
+        'Ship to Name': element.ShiptoName,
+        'Route': element.Route,
+        'SubRoute': element.SubRoute,
+        'Total Times to Visit': element.Total_Time,
+        'Total Invoice (Unit)': element.Total_Invoice,
+        'Total Carton': element.Qty.toFixed(2),
+        'Total Weight (kg)': element.Weight.toFixed(2),
+        'Total Cubic meter': element.CBM.toFixed(2),
       });
     });
 

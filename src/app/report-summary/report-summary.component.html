@@ -29,42 +29,16 @@
         <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
             <div class="row">
                 <div class="col s12">
-                    <citxt (cModel)="criteriaModel.transportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.transportNo" [readonly]="true" (click)="chooseTransportNo()"></citxt>
+                    <cdp (cModel)="criteriaModel.startDate = $event" [label]="'เลือกช่วงเวลา'" [data]="criteriaModel.startDate"></cdp>
                 </div>
                 <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.shipToDescription = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.shipToDescription" [readonly]="true" (click)="chooseShipTo()"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.routeDescription = $event" [label]="'Route'" [data]="criteriaModel.routeDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="criteriaModel.apptDate = $event" [label]="'Appt. Date'" [data]="criteriaModel.apptDate"></cdp>
-                </div>
-                <div class="col s12" style="margin-top: 10px;">
-                    <citxt (cModel)="criteriaModel.vehicleDescription = $event" [label]="'ทะเบียนรถ'" [data]="criteriaModel.vehicleDescription" [readonly]="true" (click)="chooseVehicle()"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.driverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.driverDescription" [readonly]="true" (click)="chooseDriver()"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.statusDescription = $event" [label]="'สถานะ'" [data]="criteriaModel.statusDescription" [readonly]="true" (click)="chooseStatus()"></citxt>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()"></citxt>
-                </div>
-                <!-- <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="criteriaModel.LastDateFrom = $event" [label]="'Last Date From'" [data]="criteriaModel.LastDateFrom"></cdp>
-                </div>
-                <div class="col s12" style="margin-top: -10px;">
-                    <cdp (cModel)="criteriaModel.LastDateTo = $event" [label]="'Last Date To'" [data]="criteriaModel.LastDateTo"></cdp>
-                </div> -->
-
-
-                <div class="col s12 p-0" style="margin-bottom: 5px;">
-                    <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
+                    <cdp (cModel)="criteriaModel.endDate = $event" [label]="'จนถึง'" [data]="criteriaModel.endDate"></cdp>
                 </div>
                 <div class="col s12 p-0" style="margin-bottom: 5px;">
-                    <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+                    <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="read()"></cbtn>
+                </div>
+                <div class="col s12 p-0" style="margin-bottom: 5px;">
+                    <cbtn [label]="'Export Excel'" [color]="'green'" [icon]="''" (click)="exportAsXLSX()"></cbtn>
                 </div>
             </div>
         </div>
@@ -99,19 +73,36 @@
                                 </span>
                             </th> -->
                             <!-- <th></th> -->
-                            <th>Shipment No.</th>
-                            <th>เลขที่อินวอยน์</th>
-                            <th>Doc Type</th>
-                            <th>Doc No.</th>
-                            <th>PO</th>
-                            <th>Cus Code</th>
-                            <th>ShipTp</th>
-                            <th>ที่อยู่ผู้รับ</th>
-                            <th>Appt. Date</th>
-                            <th>CBM</th>
-                            <th>Carton</th>
-                            <th>Weight(kg.)</th>
-                            <th>สถานะ</th>
+                            <th>Order No.</th>
+                            <th>Manifest Date</th>
+                            <th>Manifest</th>
+                            <th>Sale Order (SO)</th>
+                            <th>INV NO</th>
+                            <th>INV_DATE</th>
+                            <th>OrderEstimate</th>
+                            <th>Customer Code</th>
+                            <th>Customer Name</th>
+                            <th>Ship to</th>
+                            <th>Address</th>
+                            <th>License Plate</th>
+                            <th>Truck Type</th>
+                            <th>Route</th>
+                            <th>SubRoute</th>
+                            <th>Transport By</th>
+                            <th>Driver Name</th>
+                            <th>Helper Name</th>
+                            <th>Total Drop</th>
+                            <th>Total Carton</th>
+                            <th>Weight (kg)</th>
+                            <th>Cubic meter</th>
+                            <th>Date (In)</th>
+                            <th>Time (In)</th>
+                            <th>Date (Out)</th>
+                            <th>Time (Out)</th>
+                            <th>Latitude & Longitude In</th>
+                            <th>Delivery Status</th>
+                            <th>POD Status</th>
+                            <th>POD Return to Bang Na DC</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -152,17 +143,17 @@
                                 </td> -->
                             <td>
                                 <div class="w100">
-                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.ShipmentNo}}</a>
+                                    <a style="cursor: pointer;">{{i.ShipmentNo}}</a>
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.InvoiceNo}}
+                                    {{i.TransportDate}}
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.OrderType}}
+                                    {{i.TransportNo}}
                                 </div>
                             </td>
                             <td>
@@ -172,7 +163,27 @@
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.PurchaseNo}}
+                                    {{i.InvoiceNo}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.InvoiceDate}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.OrderEstimate}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.CustomerCode}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w300">
+                                    {{i.CustomerName}}
                                 </div>
                             </td>
                             <td>
@@ -186,34 +197,98 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="w1000">
-                                    {{i.ShiptoAdress}}
+                                <div class="w100">
+                                    {{i.Vehicle}}
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.OrderEstimate}}
+                                    {{i.VehicleType}}
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.CBM}}
+                                    {{i.Route}}
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.Qty}}
+                                    {{i.SubRoute}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w300">
+                                    {{i.Transport}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w300">
+                                    {{i.DriverName}}
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    {{i.Weight}}
+                                    {{i.HelperName}}
                                 </div>
                             </td>
-                            <td style="padding: 0 0 0 0 !important;">
-                                <div class="w100" style="background-color: {{statusTransportColor(i.TransportStatus)}}; height: 42px; padding-top: 10px;">
-                                    {{i.TransportStatusDesc}}
-                                    <!-- <input style="height: 20px;" [(ngModel)]="i.ActivityType" name="i.ActivityType" id="i.ActivityType" type="text" class="input-text-1"> -->
+                            <td>
+                                <div class="w100">
+                                    {{i.NumDrop}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Qty.toFixed(2)}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.Weight.toFixed(2)}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.CBM.toFixed(2)}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.DatIn}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.TimeIn}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.DateOut}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.TimeOut}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.LatitudeLongitudeIn}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.OTDelivery}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.OTBillReturn}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.AdminReturnDate}}
                                 </div>
                             </td>
                         </tr>
