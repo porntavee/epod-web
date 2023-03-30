@@ -213,7 +213,9 @@ export class ReportCustomerComponent implements OnInit {
 
     let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/Report/ReportCustomer', criteria).subscribe(data => {
+    debugger
+
+    this.serviceProviderService.post('api/Report/ReportCustomers', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
