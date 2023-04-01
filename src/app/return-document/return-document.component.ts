@@ -308,7 +308,7 @@ export class ReturnDocumentComponent implements OnInit {
 
         this.printAlert(printModel);
 
-        // this.backToMain();
+        this.backToMain();
       }
       else {
         this.spinner.hide();
