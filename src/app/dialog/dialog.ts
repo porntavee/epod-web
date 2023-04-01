@@ -567,7 +567,8 @@ export class DriverDialog implements AfterContentChecked {
     read() {
         let criteria = {
             "userinformation": this.serviceProviderService.userinformation,
-            "GroupCode": "D"
+            "GroupCode": "D",
+            "Fillter": this.criteriaModel.Fillter,
         }
 
         // let json = JSON.stringify(criteria);
@@ -586,16 +587,16 @@ export class DriverDialog implements AfterContentChecked {
         });
     }
 
-    filter() {
-        //   if ((this.criteriaModel.Code != undefined && this.criteriaModel.Code != '') && (this.criteriaModel.FirstName != undefined && this.criteriaModel.FirstName != ''))
-        // this.data.listData = this.data.listDataSearch.filter(c => c.Code.includes(this.criteriaModel.Code) && c.firstName.includes(this.criteriaModel.FirstName));
-        if (this.criteriaModel.Code != undefined && this.criteriaModel.Code != '')
-            this.data.listData = this.data.listDataSearch.filter(c => c.Code.includes(this.criteriaModel.Code));
-        //   else if (this.criteriaModel.FirstName != undefined && this.criteriaModel.FirstName != '')
-        // this.data.listData = this.data.listDataSearch.filter(c => c.firstName.includes(this.criteriaModel.FirstName));
-        else
-            this.data.listData = this.data.listDataSearch
-    }
+    // filter() {
+    //     //   if ((this.criteriaModel.Code != undefined && this.criteriaModel.Code != '') && (this.criteriaModel.FirstName != undefined && this.criteriaModel.FirstName != ''))
+    //     // this.data.listData = this.data.listDataSearch.filter(c => c.Code.includes(this.criteriaModel.Code) && c.firstName.includes(this.criteriaModel.FirstName));
+    //     if (this.criteriaModel.Code != undefined && this.criteriaModel.Code != '')
+    //         this.data.listData = this.data.listDataSearch.filter(c => c.Code.includes(this.criteriaModel.Code));
+    //     //   else if (this.criteriaModel.FirstName != undefined && this.criteriaModel.FirstName != '')
+    //     // this.data.listData = this.data.listDataSearch.filter(c => c.firstName.includes(this.criteriaModel.FirstName));
+    //     else
+    //         this.data.listData = this.data.listDataSearch
+    // }
 
     cancel() {
         this.dialogRef.close(undefined);

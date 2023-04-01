@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, JobStatusDialog, JobOrderStatusDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
+import { Logger } from '../shared/logger.service';
 
 @Component({
   selector: 'app-tracking-status',
@@ -16,6 +17,7 @@ import { ServiceProviderService } from '../shared/service-provider.service';
 })
 export class TrackingStatusComponent implements OnInit {
 
+  isDebugMode: boolean = true;
   isDelivery: boolean = false;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
@@ -102,7 +104,7 @@ export class TrackingStatusComponent implements OnInit {
   listDetailModel2: any = [
     {
       InvoiceNo: "2032022225",
-      ApptDate: "25/9/2022",
+      OrderEstimate: "25/9/2022",
       ActualArrive: "25/9/2022",
       Status: "On time"
     }
@@ -157,6 +159,7 @@ export class TrackingStatusComponent implements OnInit {
     this.criteriaModelStatus.endDate = moment(endDate).format('YYYYMMDD');
 
     this.readAll();
+    this.readRoute();
     // this.readSumStatus();
     // this.read();
   }
@@ -168,9 +171,8 @@ export class TrackingStatusComponent implements OnInit {
 
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
-      "InvoiceDateStart": this.criteriaModelStatus.startDate != undefined && this.criteriaModelStatus.startDate != "Invalid date" ? moment(this.criteriaModelStatus.startDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "InvoiceDateEnd": this.criteriaModelStatus.endDate != undefined && this.criteriaModelStatus.endDate != "Invalid date" ? moment(this.criteriaModelStatus.endDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-
+      "InvoiceDateStart": this.verifyDateTime(this.criteriaModelStatus.startDate),
+      "InvoiceDateEnd": this.verifyDateTime(this.criteriaModelStatus.endDate),
     }
 
     let json = JSON.stringify(criteria);
@@ -207,19 +209,24 @@ export class TrackingStatusComponent implements OnInit {
   read() {
     this.spinner.show();
 
+    this.p = 1;
+
     let criteria = {
+      // Summary Status.
+      "InvoiceDateStart": this.verifyDateTime(this.criteriaModelStatus.startDate, 'InvoiceDateStart'),
+      "InvoiceDateEnd":this.verifyDateTime(this.criteriaModelStatus.endDate, 'InvoiceDateEnd'),
+      // Filter.
       "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.criteriaModel.transportNo != undefined ? this.criteriaModel.transportNo : '',
-      "TransportStatus": this.criteriaModel.transportstatusCode != undefined ?this.criteriaModel.transportstatusCode : '',
-      "OrderStatus": this.criteriaModel.joborderstatusCode != undefined ? this.criteriaModel.joborderstatusCode : '',
-      "OrderTypeId": this.criteriaModel.typeOfWorkCode != undefined ? this.criteriaModel.typeOfWorkCode : '',
-      "InvoiceDateStart": this.criteriaModelStatus.startDate != undefined && this.criteriaModelStatus.startDate != "Invalid date" ? moment(this.criteriaModelStatus.startDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "InvoiceDateEnd": this.criteriaModelStatus.endDate != undefined && this.criteriaModelStatus.endDate != "Invalid date" ? moment(this.criteriaModelStatus.endDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "TransportNo": this.verifySring(this.criteriaModel.TransportNo),
+      "TransportStatus": this.verifySring(this.criteriaModel.transportstatusCode),
+      "OrderStatusId": this.verifySring(this.criteriaModel.OrderStatusId),
+      "TransportTypeId": this.verifySring(this.criteriaModel.TransportTypeId),
+      "OrderEstimate": this.verifyDateTime(this.criteriaModel.OrderEstimate, 'OrderEstimate'),
+      "InvoiceNo": this.verifySring(this.criteriaModel.InvoiceNo),
     }
+    criteria = {...this.criteriaModel, ...criteria};
 
     let json = JSON.stringify(criteria);
-
-    console.log(json);
 
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
       this.spinner.hide();
@@ -255,6 +262,16 @@ export class TrackingStatusComponent implements OnInit {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
+  }
+
+  verifySring(str): string {
+    return str != undefined ? str : '';
+  }
+
+  verifyDateTime(date: string, from: string = ''): any {
+    let dateObj: any = date == "Invalid date" || date == undefined ? undefined : moment(date).format('YYYY-MM-DD 00:00:00.000');
+
+    return dateObj;
   }
 
   readAll(){
@@ -511,7 +528,7 @@ export class TrackingStatusComponent implements OnInit {
 
       if (result != undefined) {
         // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.transportNo = result.TransportNo;
+        this.criteriaModel.TransportNo = result.TransportNo;
         // this.criteriaModel.shipToCode = result.Code;
         // this.criteriaModel.shipToAddress = result.Address;
         // this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
@@ -534,10 +551,10 @@ export class TrackingStatusComponent implements OnInit {
 
       if (result != undefined) {
         // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.shipToId = result.Id;
-        this.criteriaModel.shipToCode = result.Code;
-        this.criteriaModel.shipToAddress = result.Address;
-        this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
+        this.criteriaModel.ShiptoId = result.Id;
+        this.criteriaModel.ShiptoCode = result.Code;
+        this.criteriaModel.ShiptoAddress = result.Address;
+        this.criteriaModel.ShiptoDescription = result.Code + ' - ' + result.CustomerName;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -576,9 +593,9 @@ export class TrackingStatusComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.joborderstatusCode = result.Code;
-        this.criteriaModel.joborderstatusDescription = result.Code + ' - ' + result.Description;
+        // this.criteriaModel.OrderStatus = result.Id;
+        this.criteriaModel.OrderStatus = result.Code;
+        this.criteriaModel.JobOrderStatusDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -594,12 +611,12 @@ export class TrackingStatusComponent implements OnInit {
     const dialogRef = this.dialog.open(TypeOfWorkDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'ประเภทงาน' } });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      console.log('TypeOfWorkDialog result: ', result)
 
       if (result != undefined) {
-        // this.criteriaModel.transportTypeId = result.Id;
-        this.criteriaModel.typeOfWorkCode = result.Code;
-        this.criteriaModel.typeOfWorkDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.TransportTypeId = result.Id;
+        this.criteriaModel.TransportTypeCode = result.Code;
+        this.criteriaModel.TransportTypeDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -612,26 +629,26 @@ export class TrackingStatusComponent implements OnInit {
   //use
   chooseRoute() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'เส้นทางหลัก', listData: this.listRoute, listDataSearch: this.listRoute } });
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false,
+      height: '400px', 
+      width: '800px', 
+      data: { title: 'เส้นทางหลัก', listData: this.listRoute, listDataSearch: this.listRoute }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-
+      
       if (result != undefined) {
-
-        this.criteriaModel.subRouteId = '';
-        this.criteriaModel.subRouteCode = '';
-        this.criteriaModel.subRouteDescription = '';
-
-        this.criteriaModel.routeId = result.Id;
-        this.criteriaModel.routeCode = result.Code;
-        this.criteriaModel.routeDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.RouteId = result.Id;
+        this.criteriaModel.RouteCode = result.Code;
+        this.criteriaModel.RouteDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
         // param.UserID = result.empID;
         // this.costCenter = result.CostCenter;
       }
+
     });
   }
 
@@ -644,9 +661,9 @@ export class TrackingStatusComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        this.criteriaModel.vehicleId = result.Id;
-        this.criteriaModel.vehicleCode = result.Code;
-        this.criteriaModel.vehicleDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.VehicleId = result.Id;
+        this.criteriaModel.VehicleCode = result.Code;
+        this.criteriaModel.VehicleDescription = result.Code + ' - ' + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -665,9 +682,9 @@ export class TrackingStatusComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        this.criteriaModel.driverId = result.Id;
-        this.criteriaModel.driverCode = result.Code;
-        this.criteriaModel.driverDescription = result.Code + ' - ' + result.FirstName + ' ' + result.LastName;
+        this.criteriaModel.DriverId = result.Id;
+        this.criteriaModel.DriverCode = result.Code;
+        this.criteriaModel.DriverDescription = result.Code + ' - ' + result.FirstName + ' ' + result.LastName;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -686,6 +703,7 @@ export class TrackingStatusComponent implements OnInit {
 
     // let json = JSON.stringify(criteria);
     this.serviceProviderService.post('api/Masters/GetRoute', criteria).subscribe(data => {
+    
       let model: any = {};
       model = data;
       this.viewModel = model;
@@ -798,7 +816,9 @@ export class TrackingStatusComponent implements OnInit {
   }
 
   clear() {
-    this.criteriaModel = { apptDate: '' };
+    this.criteriaModel = {
+      OrderEstimate: this.verifyDateTime('')
+    };
 
     // const startDate = new Date();
     // const endDate = new Date();

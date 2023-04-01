@@ -24,6 +24,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
+  showChooseHub: boolean = true;
   listModel: any = []; //ข้อมูลในตารางหน้า Main
   criteriaModel: any = {} //ค้นหา
   criteria: object = {}; // User Information.
@@ -70,7 +71,6 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
     this.route.queryParams.subscribe(params => {
       let model: any = this.route.snapshot.params;
-      Logger.info('order-transport-form', 'ngOnInit', typeof(this.id), this.isDebugMode);
       this.id = model.id;
     });
 
@@ -834,12 +834,13 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       data: { title: 'สถานะเอกสาร' } });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      Logger.info('order-transport', 'chooseTypeOfWork-result.Code', result.Code, this.isDebugMode);
 
       if (result != undefined) {
         this.criteriaModel.TransportTypeId = result.Code;
         this.criteriaModel.TransportTypeDescription = result.Code + ' - ' + result.Description;
 
+        this.showChooseHub = result.Code == 'NM' ? false : true;
       }
     });
   }
@@ -1317,7 +1318,6 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   }
 
   closeJob() {
-    // Logger.info('order-transport', 'closeJob', "Close Job", this.isDebugMode);
 
     const dialogRef = this.dialog.open(ConfirmDialog, {
       disableClose: false,
