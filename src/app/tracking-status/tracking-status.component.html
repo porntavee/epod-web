@@ -536,261 +536,264 @@
 </div>
 
 <div *ngIf="isFormPage">
+    
     <div class="col s12">
-        <div class="card-panel card-panel-header">
-            <div class="row">
-                <div class="col l8 s12">
-                    <span class="card-panel-header-span">
-                        งานขนส่ง / ติดตามสถานะ / รายละเอียด
-                    </span>
+        <div class="filter-fixed">
+            <div class="card-panel card-panel-header">
+                <div class="row">
+                    <div class="col l8 s12">
+                        <span class="card-panel-header-span">
+                            งานขนส่ง / ติดตามสถานะ / รายละเอียด
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- [hidden]="isAdvanceSearch" -->
+            <!-- {{headerModel|json}} -->
+
+            <div class="card-panel hide-on-med-and-down reset-margin-top">
+                <div class="row">
+                    <div class="col l8">
+                        <div class="row">
+                            <div class="col l5 s12 p-0">
+                                <citxt
+                                    (cModel)="headerModel.ShipmentNo = $event" 
+                                    [label]="'Shipment No.'"
+                                    [data]="headerModel.ShipmentNo" [readonly]="true">
+                                </citxt>
+                            </div>
+
+                            <div class="col l5 s12 p-0">
+                                <citxt
+                                    (cModel)="headerModel.TransportNo = $event" 
+                                    [label]="'Transport No.'"
+                                    [data]="headerModel.TransportNo" [readonly]="true">
+                                </citxt>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.InvoiceNo = $event" 
+                                    [label]="'Invoice No.'"
+                                    [data]="headerModel.InvoiceNo">
+                                </citxt>
+                            </div>
+                            <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
+                                <h1>&nbsp;</h1>
+                            </div> -->
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.Comment = $event" 
+                                    [label]="'หมายเหตุ'"
+                                    [data]="headerModel.Comment">
+                                </citxt>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <cdp
+                                    (cModel)="headerModel.OrderDate = $event" 
+                                    [label]="'วันที่เอกสาร'"
+                                    [data]="headerModel.OrderDate">
+                                </cdp>
+                            </div>
+                            <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
+                                <h1>&nbsp;</h1>
+                            </div> -->
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.OrderNo = $event" 
+                                    [label]="'Doc No.'"
+                                    [data]="headerModel.OrderNo">
+                                </citxt>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.OrderType = $event" 
+                                    [label]="'ประเภทเอกสาร'"
+                                    [data]="headerModel.OrderType" [readonly]="true">
+                                </citxt>
+                            </div>
+                            <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
+                                <h1>&nbsp;</h1>
+                            </div> -->
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.PurchaseNo = $event" 
+                                    [label]="'PO No.'"
+                                    [data]="headerModel.PurchaseNo">
+                                </citxt>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <cdp
+                                    (cModel)="headerModel.OrderEstimate = $event" 
+                                    [label]="'Appt. Date'"
+                                    [data]="headerModel.OrderEstimate">
+                                </cdp>
+                            </div>
+                            <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
+                                <h1>&nbsp;</h1>
+                            </div> -->
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.CBM = $event" 
+                                    [label]="'CBM'"
+                                    [data]="headerModel.CBM">
+                                </citxt>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.OwnerDescription = $event" 
+                                    [label]="'ผู้ส่ง'"
+                                    [data]="headerModel.OwnerDescription" [readonly]="true">
+                                </citxt>
+                            </div>
+                            <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
+                                <h1>&nbsp;</h1>
+                            </div> -->
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.Qty = $event" 
+                                    [label]="'Carton'"
+                                    [data]="headerModel.Qty">
+                                </citxt>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.ShiptoDescription = $event" 
+                                    [label]="'ผู้รับ'"
+                                    [data]="headerModel.ShiptoDescription" [readonly]="true">
+                                </citxt>
+                            </div>
+                            <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
+                                <h1>&nbsp;</h1>
+                            </div> -->
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.Weight = $event" 
+                                    [label]="'Weight'"
+                                    [data]="headerModel.Weight">
+                                </citxt>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.ShiptoMobile = $event" 
+                                    [label]="'โทรศัพท์ผู้รับ'"
+                                    [data]="headerModel.ShiptoMobile" [readonly]="true">
+                                </citxt>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.ShiptoAdress = $event" 
+                                    [label]="'ที่อยู่ผู้รับ'"
+                                    [data]="headerModel.ShiptoAdress" [readonly]="true">
+                                </citxt>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.Route = $event" 
+                                    [label]="'เส้นทางหลัก'"
+                                    [data]="headerModel.Route" [readonly]="true">
+                                </citxt>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                                <citxt
+                                    (cModel)="headerModel.SubRoute = $event" 
+                                    [label]="'เส้นทางย่อย'"
+                                    [data]="headerModel.SubRoute" [readonly]="true">
+                                </citxt>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l4">
+                        <div class="timeline-wrapper">
+                            <ul class="StepProgress">
+                                <!-- {{timelineModel|json}} -->
+
+                                <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ApproveDate != null}">
+                                    <div class="bold time">รอยืนยันรับ</div>
+                                    <div *ngIf="timelineModel.ApproveDate != null" class="bold">{{formatDateTime(timelineModel.ApproveDate)}}</div>
+                                    <div *ngIf="timelineModel.ApproveDate == null" class="bold">-</div>
+                                    <!-- <div>ApproveProcess</div> -->
+                                </li>
+                                <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ReceiveCheckInDate != null}">
+                                    <div class="bold time">ระหว่างรับสินค้า</div>
+                                    <div *ngIf="timelineModel.ReceiveCheckInDate != null" class="bold">{{formatDateTime(timelineModel.ReceiveCheckInDate)}}</div>
+                                    <div *ngIf="timelineModel.ReceiveCheckInDate == null" class="bold">-</div>
+                                    <!-- <div>RecieveProcess</div> -->
+                                </li>
+                                <!-- current -->
+                                <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ReceiveCheckOutDate != null}">
+                                    <div class="bold time">ระหว่างจัดส่งสินค้า</div>
+                                    <div *ngIf="timelineModel.ReceiveCheckOutDate != null" class="bold">{{formatDateTime(timelineModel.ReceiveCheckOutDate)}}</div>
+                                    <div *ngIf="timelineModel.ReceiveCheckOutDate == null" class="bold">-</div>
+                                    <!-- <div>DeliveryProcess</div> -->
+                                </li>
+                                <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.AdminReturnHubDate != null}">
+                                    <div class="bold time">รับสินค้าเข้า Hub</div>
+                                    <div *ngIf="timelineModel.AdminReturnHubDate != null" class="bold">{{formatDateTime(timelineModel.AdminReturnHubDate)}}</div>
+                                    <div *ngIf="timelineModel.AdminReturnHubDate == null" class="bold">-</div>
+                                    <!-- <div>DocReturnProcess</div> -->
+                                </li>
+                                <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DeliveryCheckInDate != null}">
+                                    <div class="bold time">ระหว่างลงสินค้า</div>
+                                    <div *ngIf="timelineModel.DeliveryCheckInDate != null" class="bold">{{formatDateTime(timelineModel.DeliveryCheckInDate)}}</div>
+                                    <div *ngIf="timelineModel.DeliveryCheckInDate == null" class="bold">-</div>
+                                    <!-- <div>DocReturnProcess</div> -->
+                                </li>
+                                <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DeliveryCheckOutDate != null}">
+                                    <div class="bold time">จัดส่งสินค้าสำเร็จ</div>
+                                    <div *ngIf="timelineModel.DeliveryCheckOutDate != null" class="bold">{{formatDateTime(timelineModel.DeliveryCheckOutDate)}}</div>
+                                    <div *ngIf="timelineModel.DeliveryCheckOutDate == null" class="bold">-</div>
+                                    <!-- <div>DocReturnProcess</div> -->
+                                </li>
+                                <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DriverReturnDate != null}">
+                                    <div class="bold time">คืนเอกสารโดยพนักงานขับรถ</div>
+                                    <div *ngIf="timelineModel.DriverReturnDate != null" class="bold">{{formatDateTime(timelineModel.DriverReturnDate)}}</div>
+                                    <div *ngIf="timelineModel.DriverReturnDate == null" class="bold">-</div>
+                                    <!-- <div>DocReturnProcess</div> -->
+                                </li>
+                                <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.AdminReturnDate != null}">
+                                    <div class="bold time">คืนเอกสารโดยพนักงานธุระการ</div>
+                                    <div *ngIf="timelineModel.AdminReturnDate != null" class="bold">{{formatDateTime(timelineModel.AdminReturnDate)}}</div>
+                                    <div *ngIf="timelineModel.AdminReturnDate == null" class="bold">-</div>
+                                    <!-- <div>DocReturnProcess</div> -->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
-        <!-- [hidden]="isAdvanceSearch" -->
-        <!-- {{headerModel|json}} -->
-
-        <div class="card-panel hide-on-med-and-down reset-margin-top">
-            <div class="row">
-                <div class="col l8">
-                    <div class="row">
-                        <div class="col l5 s12 p-0">
-                            <citxt
-                                (cModel)="headerModel.ShipmentNo = $event" 
-                                [label]="'Shipment No.'"
-                                [data]="headerModel.ShipmentNo" [readonly]="true">
-                            </citxt>
-                        </div>
-
-                        <div class="col l5 s12 p-0">
-                            <citxt
-                                (cModel)="headerModel.TransportNo = $event" 
-                                [label]="'Transport No.'"
-                                [data]="headerModel.TransportNo" [readonly]="true">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.InvoiceNo = $event" 
-                                [label]="'Invoice No.'"
-                                [data]="headerModel.InvoiceNo">
-                            </citxt>
-                        </div>
-                        <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
-                            <h1>&nbsp;</h1>
-                        </div> -->
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.Comment = $event" 
-                                [label]="'หมายเหตุ'"
-                                [data]="headerModel.Comment">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <cdp
-                                (cModel)="headerModel.OrderDate = $event" 
-                                [label]="'วันที่เอกสาร'"
-                                [data]="headerModel.OrderDate">
-                            </cdp>
-                        </div>
-                        <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
-                            <h1>&nbsp;</h1>
-                        </div> -->
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.OrderNo = $event" 
-                                [label]="'Doc No.'"
-                                [data]="headerModel.OrderNo">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.OrderType = $event" 
-                                [label]="'ประเภทเอกสาร'"
-                                [data]="headerModel.OrderType" [readonly]="true">
-                            </citxt>
-                        </div>
-                        <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
-                            <h1>&nbsp;</h1>
-                        </div> -->
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.PurchaseNo = $event" 
-                                [label]="'PO No.'"
-                                [data]="headerModel.PurchaseNo">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <cdp
-                                (cModel)="headerModel.OrderEstimate = $event" 
-                                [label]="'Appt. Date'"
-                                [data]="headerModel.OrderEstimate">
-                            </cdp>
-                        </div>
-                        <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
-                            <h1>&nbsp;</h1>
-                        </div> -->
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.CBM = $event" 
-                                [label]="'CBM'"
-                                [data]="headerModel.CBM">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.OwnerDescription = $event" 
-                                [label]="'ผู้ส่ง'"
-                                [data]="headerModel.OwnerDescription" [readonly]="true">
-                            </citxt>
-                        </div>
-                        <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
-                            <h1>&nbsp;</h1>
-                        </div> -->
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.Qty = $event" 
-                                [label]="'Carton'"
-                                [data]="headerModel.Qty">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.ShiptoDescription = $event" 
-                                [label]="'ผู้รับ'"
-                                [data]="headerModel.ShiptoDescription" [readonly]="true">
-                            </citxt>
-                        </div>
-                        <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
-                            <h1>&nbsp;</h1>
-                        </div> -->
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.Weight = $event" 
-                                [label]="'Weight'"
-                                [data]="headerModel.Weight">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.ShiptoMobile = $event" 
-                                [label]="'โทรศัพท์ผู้รับ'"
-                                [data]="headerModel.ShiptoMobile" [readonly]="true">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.ShiptoAdress = $event" 
-                                [label]="'ที่อยู่ผู้รับ'"
-                                [data]="headerModel.ShiptoAdress" [readonly]="true">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.Route = $event" 
-                                [label]="'เส้นทางหลัก'"
-                                [data]="headerModel.Route" [readonly]="true">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 margin-top-minus-20">
-                            <citxt
-                                (cModel)="headerModel.SubRoute = $event" 
-                                [label]="'เส้นทางย่อย'"
-                                [data]="headerModel.SubRoute" [readonly]="true">
-                            </citxt>
-                        </div>
-                    </div>
-                </div>
-                <div class="col l4">
-                    <div class="timeline-wrapper">
-                        <ul class="StepProgress">
-                            <!-- {{timelineModel|json}} -->
-
-                            <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ApproveDate != null}">
-                                <div class="bold time">รอยืนยันรับ</div>
-                                <div *ngIf="timelineModel.ApproveDate != null" class="bold">{{formatDateTime(timelineModel.ApproveDate)}}</div>
-                                <div *ngIf="timelineModel.ApproveDate == null" class="bold">-</div>
-                                <!-- <div>ApproveProcess</div> -->
-                            </li>
-                            <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ReceiveCheckInDate != null}">
-                                <div class="bold time">ระหว่างรับสินค้า</div>
-                                <div *ngIf="timelineModel.ReceiveCheckInDate != null" class="bold">{{formatDateTime(timelineModel.ReceiveCheckInDate)}}</div>
-                                <div *ngIf="timelineModel.ReceiveCheckInDate == null" class="bold">-</div>
-                                <!-- <div>RecieveProcess</div> -->
-                            </li>
-                            <!-- current -->
-                            <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ReceiveCheckOutDate != null}">
-                                <div class="bold time">ระหว่างจัดส่งสินค้า</div>
-                                <div *ngIf="timelineModel.ReceiveCheckOutDate != null" class="bold">{{formatDateTime(timelineModel.ReceiveCheckOutDate)}}</div>
-                                <div *ngIf="timelineModel.ReceiveCheckOutDate == null" class="bold">-</div>
-                                <!-- <div>DeliveryProcess</div> -->
-                            </li>
-                            <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.AdminReturnHubDate != null}">
-                                <div class="bold time">รับสินค้าเข้า Hub</div>
-                                <div *ngIf="timelineModel.AdminReturnHubDate != null" class="bold">{{formatDateTime(timelineModel.AdminReturnHubDate)}}</div>
-                                <div *ngIf="timelineModel.AdminReturnHubDate == null" class="bold">-</div>
-                                <!-- <div>DocReturnProcess</div> -->
-                            </li>
-                            <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DeliveryCheckInDate != null}">
-                                <div class="bold time">ระหว่างลงสินค้า</div>
-                                <div *ngIf="timelineModel.DeliveryCheckInDate != null" class="bold">{{formatDateTime(timelineModel.DeliveryCheckInDate)}}</div>
-                                <div *ngIf="timelineModel.DeliveryCheckInDate == null" class="bold">-</div>
-                                <!-- <div>DocReturnProcess</div> -->
-                            </li>
-                            <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DeliveryCheckOutDate != null}">
-                                <div class="bold time">จัดส่งสินค้าสำเร็จ</div>
-                                <div *ngIf="timelineModel.DeliveryCheckOutDate != null" class="bold">{{formatDateTime(timelineModel.DeliveryCheckOutDate)}}</div>
-                                <div *ngIf="timelineModel.DeliveryCheckOutDate == null" class="bold">-</div>
-                                <!-- <div>DocReturnProcess</div> -->
-                            </li>
-                            <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DriverReturnDate != null}">
-                                <div class="bold time">คืนเอกสารโดยพนักงานขับรถ</div>
-                                <div *ngIf="timelineModel.DriverReturnDate != null" class="bold">{{formatDateTime(timelineModel.DriverReturnDate)}}</div>
-                                <div *ngIf="timelineModel.DriverReturnDate == null" class="bold">-</div>
-                                <!-- <div>DocReturnProcess</div> -->
-                            </li>
-                            <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.AdminReturnDate != null}">
-                                <div class="bold time">คืนเอกสารโดยพนักงานธุระการ</div>
-                                <div *ngIf="timelineModel.AdminReturnDate != null" class="bold">{{formatDateTime(timelineModel.AdminReturnDate)}}</div>
-                                <div *ngIf="timelineModel.AdminReturnDate == null" class="bold">-</div>
-                                <!-- <div>DocReturnProcess</div> -->
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-panel hide-on-large-only reset-margin-top">
+        <div class="card-panel hide-on-large-only">
             <div class="row">
                 <div class="col s12">
                     <citxt
@@ -916,306 +919,308 @@
     </div>
     <!-- {{this.viewModel|json}} -->
     <div class="col s12">
-        <div class="card-panel table-panel-header">
-            <div class="row">
-                <div class="col l8 s12">
-                    <span class="card-panel-header-span">
-                        รายการข้อมูล
-                    </span>
+        <div class="top-515">
+            <div class="card-panel table-panel-header">
+                <div class="row">
+                    <div class="col l8 s12">
+                        <span class="card-panel-header-span">
+                            รายการข้อมูล
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card-panel reset-margin-top">
-            <div class="row">
-                <div class="col l3 s12">
-                    Manifest Number : {{headerModel.TransportNo}}
+            <div class="card-panel reset-margin-top">
+                <div class="row">
+                    <div class="col l3 s12">
+                        Manifest Number : {{headerModel.TransportNo}}
+                    </div>
+                    <div class="col l2 s12">
+                        Route : {{headerModel.Route}}
+                    </div>
+                    <div class="col l2 s12">
+                        Sub Route : {{headerModel.SubRoute}}
+                    </div>
                 </div>
-                <div class="col l2 s12">
-                    Route : {{headerModel.Route}}
+                <div class="row">
+                    <div class="col l3 s12">
+                        License : {{headerModel.VehicleNo}}
+                    </div>
+                    <div class="col l2 s12">
+                        Driver : {{headerModel.DriverFirstName}}
+                    </div>
+                    <div class="col l2 s12">
+                        Total Drop : {{headerModel.NumDrop}}
+                    </div>
+                    <div class="col l2 s12">
+                        Total Carton : {{headerModel.SumQty}}
+                    </div>
+                    <div class="col l2 s12">
+                        Total Weight : {{headerModel.SumWeight}}
+                    </div>
                 </div>
-                <div class="col l2 s12">
-                    Sub Route : {{headerModel.SubRoute}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col l3 s12">
-                    License : {{headerModel.VehicleNo}}
-                </div>
-                <div class="col l2 s12">
-                    Driver : {{headerModel.DriverFirstName}}
-                </div>
-                <div class="col l2 s12">
-                    Total Drop : {{headerModel.NumDrop}}
-                </div>
-                <div class="col l2 s12">
-                    Total Carton : {{headerModel.SumQty}}
-                </div>
-                <div class="col l2 s12">
-                    Total Weight : {{headerModel.SumWeight}}
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col l12 s12">
-                    <div class="overflow-x">
-                        <table id="users-list-datatable" class="bordered centered striped">
-                            <thead>
-                                <tr>
-                                    <th>ลำดับ</th>
-                                    <th>SO No.</th>
-                                    <th>Doc. Type</th>
-                                    <th>Invoice No.</th>
-                                    <th>Invoice Date</th>
-                                    <th>Customer Name/ShipTo</th>
-                                    <th>Appointment Date</th>
-                                    <th>Actual Arrive</th>
-                                    <th>Status</th>
-                                    <th>Transport By</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let i of listDetailModel; let idx = index">
-                                    <td>
-                                        <div class="w30">
-                                            {{idx + 1}}
-                                        </div>
-                                    </td>
-                                    <td class="cursor-pointer">
-                                        <div class="w100">
-                                            {{i.OrderNo}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{i.OrderType}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{i.InvoiceNo}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{formatDate(i.InvoiceDate)}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w200">
-                                            {{i.ShiptoName}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{formatDate(i.OrderEstimate)}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{formatDate(i.DeliveryCheckInDate)}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{i.OTDelivery}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w200">
-                                            {{i.Transport}}
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <br>
+                <div class="row">
+                    <div class="col l12 s12">
+                        <div class="overflow-x">
+                            <table id="users-list-datatable" class="bordered centered striped">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>SO No.</th>
+                                        <th>Doc. Type</th>
+                                        <th>Invoice No.</th>
+                                        <th>Invoice Date</th>
+                                        <th>Customer Name/ShipTo</th>
+                                        <th>Appointment Date</th>
+                                        <th>Actual Arrive</th>
+                                        <th>Status</th>
+                                        <th>Transport By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let i of listDetailModel; let idx = index">
+                                        <td>
+                                            <div class="w30">
+                                                {{idx + 1}}
+                                            </div>
+                                        </td>
+                                        <td class="cursor-pointer">
+                                            <div class="w100">
+                                                {{i.OrderNo}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{i.OrderType}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{i.InvoiceNo}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{formatDate(i.InvoiceDate)}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w200">
+                                                {{i.ShiptoName}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{formatDate(i.OrderEstimate)}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{formatDate(i.DeliveryCheckInDate)}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{i.OTDelivery}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w200">
+                                                {{i.Transport}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col s12">
-        <div class="card-panel table-panel-header">
-            <div class="row">
-                <div class="col l8 s12">
-                    <span class="card-panel-header-span">
-                        รายการข้อมูล
-                    </span>
+        <div class="col s12">
+            <div class="card-panel table-panel-header">
+                <div class="row">
+                    <div class="col l8 s12">
+                        <span class="card-panel-header-span">
+                            รายการข้อมูล
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card-panel reset-margin-top">
-            <div class="row">
-                <div class="col l8 s12">
-                    <div style="overflow-x: auto;">
-                        <table id="users-list-datatable" class="bordered centered striped">
-                            <thead>
-                                <tr>
-                                    <th>Invoice/Doc No.</th>
-                                    <th>Appointment Date</th>
-                                    <th>Actual Arrive</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="w100">
-                                            {{headerModel.InvoiceNo}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{formatDate(headerModel.OrderEstimate)}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{formatDate(headerModel.DeliveryCheckInDate)}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{headerModel.OTDelivery}}
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <div class="card-panel reset-margin-top">
+                <div class="row">
+                    <div class="col l8 s12">
+                        <div style="overflow-x: auto;">
+                            <table id="users-list-datatable" class="bordered centered striped">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice/Doc No.</th>
+                                        <th>Appointment Date</th>
+                                        <th>Actual Arrive</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="w100">
+                                                {{headerModel.InvoiceNo}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{formatDate(headerModel.OrderEstimate)}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{formatDate(headerModel.DeliveryCheckInDate)}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{headerModel.OTDelivery}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
+                        <div style="overflow-x: auto;">
+                            <table id="users-list-datatable" class="bordered centered striped">
+                                <thead>
+                                    <tr>
+                                        <th>Driver Return</th>
+                                        <th>Due Date POD Return</th>
+                                        <th>POD Return Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="w100">
+                                                {{formatDateTime(headerModel.DriverReturnDate)}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{formatDate(headerModel.OTBillReturnDate)}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{formatDate(headerModel.AdminReturnDate)}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="w100">
+                                                {{headerModel.OTBillReturn}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
+                        <!-- <h1>ลายเซ็นต์ - รับสินค้า</h1>
+                        <div class="col l4 s12">
+                            <img alt="" [src]="headerModel.ReceiveSignature" width="100%" />
+                        </div>
+                        <br> -->
+
+                        <div class="col s12">
+                            <div class="card-panel card-panel-header">
+                                <div class="row">
+                                    <div class="col l8 s12">
+                                        <span class="card-panel-header-span">
+                                            รูปถ่าย - รับสินค้า
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-panel hide-on-med-and-down reset-margin-top">
+                                <div class="row">
+                                    <div class="col l4 s4 p-10">
+                                        <img alt="" [src]="headerModel.ReceiveCheckInImage1" (error)="handleMissingImage($event)" width="96%" />
+                                    </div>
+                                    <div class="col l4 s4 p-10">
+                                        <img alt="" [src]="headerModel.ReceiveCheckInImage2" (error)="handleMissingImage($event)" width="96%" />
+                                    </div>
+                                    <div class="col l4 s4 p-10">
+                                        <img alt="" [src]="headerModel.ReceiveCheckInImage3" (error)="handleMissingImage($event)" width="96%" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s12">
+                            <div class="card-panel table-panel-header">
+                                <div class="row">
+                                    <div class="col l8 s12">
+                                        <span class="card-panel-header-span">
+                                            ลายเซ็นต์ - ส่งสินค้า
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-panel hide-on-med-and-down reset-margin-top">
+                                <div class="row">
+                                    <div class="col l3 s12 p-20">
+                                        <img alt="" [src]="headerModel.DeliverySignature" (error)="handleMissingImage($event)" width="100%" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s12">
+                            <div class="card-panel card-panel-header">
+                                <div class="row">
+                                    <div class="col l8 s12">
+                                        <span class="card-panel-header-span">
+                                            รูปถ่าย - ส่งสินค้า
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-panel hide-on-med-and-down reset-margin-top">
+                                <div class="row">
+                                    <div class="col l4 s4 p-10">
+                                        <img alt="" [src]="headerModel.DeliveryCheckInImage1" (error)="handleMissingImage($event)" width="96%" />
+                                    </div>
+                                    <div class="col l4 s4 p-10">
+                                        <img alt="" [src]="headerModel.DeliveryCheckInImage2" (error)="handleMissingImage($event)" width="96%" />
+                                    </div>
+                                    <div class="col l4 s4 p-10">
+                                        <img alt="" [src]="headerModel.DeliveryCheckInImage3" (error)="handleMissingImage($event)" width="96%" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <br>
-                    <div style="overflow-x: auto;">
-                        <table id="users-list-datatable" class="bordered centered striped">
-                            <thead>
-                                <tr>
-                                    <th>Driver Return</th>
-                                    <th>Due Date POD Return</th>
-                                    <th>POD Return Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="w100">
-                                            {{formatDateTime(headerModel.DriverReturnDate)}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{formatDate(headerModel.OTBillReturnDate)}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{formatDate(headerModel.AdminReturnDate)}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w100">
-                                            {{headerModel.OTBillReturn}}
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <br>
-                    <!-- <h1>ลายเซ็นต์ - รับสินค้า</h1>
                     <div class="col l4 s12">
-                        <img alt="" [src]="headerModel.ReceiveSignature" width="100%" />
+                        <div style="height: 500px; overflow-x: auto;">
+                            <!-- <agm-map [latitude]="lat" [longitude]="lng">
+                                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                            </agm-map> -->
+                            <img alt="" src="./assets/img/googlemap.png">
+                        </div>
                     </div>
-                    <br> -->
+                </div>
+                <div class="row">
 
-                    <div class="col s12">
-                        <div class="card-panel card-panel-header">
-                            <div class="row">
-                                <div class="col l8 s12">
-                                    <span class="card-panel-header-span">
-                                        รูปถ่าย - รับสินค้า
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-panel hide-on-med-and-down reset-margin-top">
-                            <div class="row">
-                                <div class="col l4 s4 p-10">
-                                    <img alt="" [src]="headerModel.ReceiveCheckInImage1" (error)="handleMissingImage($event)" width="96%" />
-                                </div>
-                                <div class="col l4 s4 p-10">
-                                    <img alt="" [src]="headerModel.ReceiveCheckInImage2" (error)="handleMissingImage($event)" width="96%" />
-                                </div>
-                                <div class="col l4 s4 p-10">
-                                    <img alt="" [src]="headerModel.ReceiveCheckInImage3" (error)="handleMissingImage($event)" width="96%" />
-                                </div>
-                            </div>
+                    <div class="col s12 text-center">
+                        <div class="row margin-bottom-10">
+                            <cbtn 
+                            [label]="'กลับ'"
+                            [color]="'grey'"
+                            [icon]="''" 
+                            (click)="backToMain()">
+                        </cbtn>
                         </div>
                     </div>
-                    <div class="col s12">
-                        <div class="card-panel table-panel-header">
-                            <div class="row">
-                                <div class="col l8 s12">
-                                    <span class="card-panel-header-span">
-                                        ลายเซ็นต์ - ส่งสินค้า
-                                    </span>
-                                </div>
-                            </div>
+                    <div class="col s5">
+                        <div class="text-right">
                         </div>
-                        <div class="card-panel hide-on-med-and-down reset-margin-top">
-                            <div class="row">
-                                <div class="col l3 s12 p-20">
-                                    <img alt="" [src]="headerModel.DeliverySignature" (error)="handleMissingImage($event)" width="100%" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12">
-                        <div class="card-panel card-panel-header">
-                            <div class="row">
-                                <div class="col l8 s12">
-                                    <span class="card-panel-header-span">
-                                        รูปถ่าย - ส่งสินค้า
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-panel hide-on-med-and-down reset-margin-top">
-                            <div class="row">
-                                <div class="col l4 s4 p-10">
-                                    <img alt="" [src]="headerModel.DeliveryCheckInImage1" (error)="handleMissingImage($event)" width="96%" />
-                                </div>
-                                <div class="col l4 s4 p-10">
-                                    <img alt="" [src]="headerModel.DeliveryCheckInImage2" (error)="handleMissingImage($event)" width="96%" />
-                                </div>
-                                <div class="col l4 s4 p-10">
-                                    <img alt="" [src]="headerModel.DeliveryCheckInImage3" (error)="handleMissingImage($event)" width="96%" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col l4 s12">
-                    <div style="height: 500px; overflow-x: auto;">
-                        <!-- <agm-map [latitude]="lat" [longitude]="lng">
-                            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                        </agm-map> -->
-                        <img alt="" src="./assets/img/googlemap.png">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-
-                <div class="col s12 text-center">
-                    <div class="row margin-bottom-10">
-                        <cbtn 
-                        [label]="'กลับ'"
-                        [color]="'grey'"
-                        [icon]="''" 
-                        (click)="backToMain()">
-                    </cbtn>
-                    </div>
-                </div>
-                <div class="col s5">
-                    <div class="text-right">
                     </div>
                 </div>
             </div>
