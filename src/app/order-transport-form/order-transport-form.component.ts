@@ -120,7 +120,6 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       let model: any = data;
       this.viewModel = model;
       if (model.Status) {
-        
         this.criteriaModel = model.Data[0];
         let criteria = {
           TransportDescription: model.Data[0].Transport,
@@ -137,6 +136,9 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           TransportDateString: moment(model.Data[0].TransportDate).format('YYYYMMDD')
         }
         this.criteriaModel = {...this.criteriaModel, ...criteria};
+
+        this.showChooseHub = model.Data[0].TransportTypeId == 'NM' ? false : true;
+
       } else {
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -844,6 +846,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       }
     });
   }
+
+
 
   //use
   chooseStatus() {
