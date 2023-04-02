@@ -49,13 +49,12 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
       "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": this.criteriaModel.transportNo,
       "ReceiveFromCode": this.criteriaModel.shipToCode,
-      "ApproveDate": moment(this.criteriaModel.approveDateString).format('YYYY-MM-DDT00:00:00'),
+      "ApproveDate": this.verifyDateTime(this.criteriaModel.approveDateString),
       "DriverId": this.criteriaModel.driverId,
       "TransportStatus": this.criteriaModel.statusCode,
       "TransportTypeId": this.criteriaModel.typeOfWorkCode,
       "VehicleId": this.criteriaModel.vehicleId,
-      "TransportDate": this.criteriaModel.TransportDate != undefined && this.criteriaModel.TransportDate != "Invalid date" ? moment(this.criteriaModel.TransportDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-    
+      "TransportDate": this.verifyDateTime(this.criteriaModel.TransportDate)
     }
 
     let json = JSON.stringify(criteria);
@@ -83,6 +82,16 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
+  }
+
+  verifySring(str): string {
+    return str != undefined ? str : '';
+  }
+
+  verifyDateTime(date: string, from: string = ''): any {
+    let dateObj: any = date == "Invalid date" || date == undefined ? undefined : moment(date).format('YYYY-MM-DD 00:00:00.000');
+
+    return dateObj;
   }
 
   //use
@@ -186,7 +195,10 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
   }
 
   clear() {
-    this.criteriaModel = { approveDateString: '' ,TransportDate:''};
+    this.criteriaModel = { 
+      approveDateString: this.verifyDateTime('') ,
+      TransportDate: this.verifyDateTime('') 
+    };
   }
 
   reportModel: any = [];

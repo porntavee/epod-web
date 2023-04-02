@@ -216,7 +216,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     // Declare setting local header model.
     let _headerModel = {
       Process    : 'CREATE',
-      Id           : 'Auto',
+      Id         : 'Auto',
       OrderNo:'',
       InvoiceNo:'',
       Comment:'',

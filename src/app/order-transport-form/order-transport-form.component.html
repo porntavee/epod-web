@@ -26,7 +26,7 @@
                 <div class="col l4 s12 p-0">
                     <citxt
                         (cModel)="criteriaModel.TransportTypeDescription = $event"
-                            [label]="'Type of Work'"
+                            [label]="'** Type of Work'"
                             [data]="criteriaModel.TransportTypeDescription"
                             [readonly]="true"
                             (click)="chooseTypeOfWork()">
@@ -68,7 +68,7 @@
                 <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.RouteDescription = $event"
-                        [label]="'Route'"
+                        [label]="'** Route'"
                         [data]="criteriaModel.RouteDescription"
                         [readonly]="true"
                         (click)="chooseRoute()">
@@ -77,7 +77,7 @@
                 <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.SubRouteDescription = $event"
-                        [label]="'SubRoute'"
+                        [label]="'** SubRoute'"
                         [data]="criteriaModel.SubRouteDescription"
                         [readonly]="true"
                         (click)="chooseSubRoute()">
@@ -86,7 +86,7 @@
                 <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.Region = $event"
-                        [label]="'โซน'"
+                        [label]="'** โซน'"
                         [data]="criteriaModel.Region"
                         [readonly]="true"
                         (click)="chooseRegion()">
@@ -97,7 +97,7 @@
                 <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.TransportDescription = $event"
-                        [label]="'บริษัทขนส่ง'"
+                        [label]="'** บริษัทขนส่ง'"
                         [data]="criteriaModel.TransportDescription"
                         [readonly]="true"
                         (click)="chooseTransport()">
@@ -106,7 +106,7 @@
                 <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.DriverDescription = $event"
-                        [label]="'ชื่อคนขับ'"
+                        [label]="'** ชื่อคนขับ'"
                         [data]="criteriaModel.DriverDescription"
                         [readonly]="true"
                         (click)="chooseDriver()">
@@ -115,7 +115,7 @@
                 <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.DriverMobile = $event"
-                        [label]="'เบอร์โทรศัพท์คนขับ'"
+                        [label]="'** เบอร์โทรศัพท์คนขับ'"
                         [data]="criteriaModel.DriverMobile"
                         [readonly]="true"
                         (click)="chooseDriver()">
@@ -126,7 +126,7 @@
                 <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.VehicleTypeDescription = $event"
-                        [label]="'Truck Type'"
+                        [label]="'** Truck Type'"
                         [data]="criteriaModel.VehicleTypeDescription"
                         [readonly]="true"
                         (click)="chooseVehicleType()">
@@ -135,7 +135,7 @@
                 <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.VehicleDescription = $event"
-                        [label]="'ทะเบียนรถ'"
+                        [label]="'** ทะเบียนรถ'"
                         [data]="criteriaModel.VehicleDescription"
                         [readonly]="true"
                         (click)="chooseVehicle()">
@@ -146,7 +146,7 @@
                 <div class="col l4 s12 p-0 margin-top-minus-20">
                     <citxt
                         (cModel)="criteriaModel.ReceiveFromDescription = $event"
-                        [label]="'สถานที่รับสินค้า'"
+                        [label]="'** สถานที่รับสินค้า'"
                         [data]="criteriaModel.ReceiveFromDescription"
                         [readonly]="true"
                         (click)="chooseReceiveFrom()">
@@ -155,7 +155,7 @@
                 <div class="col l4 s12 p-0 margin-top-minus-20" *ngIf="showChooseHub">
                     <citxt
                         (cModel)="criteriaModel.TransportShiptoDescription = $event"
-                        [label]="'สถานที่ส่งสินค้า HUB'"
+                        [label]="'** สถานที่ส่งสินค้า HUB'"
                         [data]="criteriaModel.TransportShiptoDescription"
                         [readonly]="true"
                         (click)="chooseTransportShipTo()">

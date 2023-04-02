@@ -246,7 +246,7 @@
             <div class="col l4 s12 p-0">
                 <citxt
                     (cModel)="headerModel.OrderNo = $event"
-                    [label]="'** Doc No.'"
+                    [label]="'Doc No.'"
                     [data]="headerModel.OrderNo"
                     [readonly]="true">
                 </citxt>
@@ -372,7 +372,7 @@
             <div class="col l4 s12 p-0 margin-top-minus-20">
                 <citxt
                     (cModel)="headerModel.CBM = $event"
-                    [label]="'CBM'"
+                    [label]="'** CBM'"
                     [data]="headerModel.CBM">
                 </citxt>
             </div>
@@ -383,7 +383,7 @@
             <div class="col l4 s12 p-0 margin-top-minus-20">
                 <citxt
                     (cModel)="headerModel.ShiptoMobile = $event"
-                    [label]="'** โทรศัพท์ผู้รับ'"
+                    [label]="'โทรศัพท์ผู้รับ'"
                     [data]="headerModel.ShiptoMobile"
                     [readonly]="true"
                     (click)="chooseShipTo()">
