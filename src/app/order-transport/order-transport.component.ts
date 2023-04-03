@@ -324,6 +324,8 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
         return 'status-color-S'
       case 'W':
         return 'status-color-W'
+      case 'M':
+        return 'status-color-M'
       default:
         break;
     }

@@ -78,6 +78,15 @@
                             [data]="criteriaModel.InvoiceDate">
                         </cdp>
                     </div>
+                    <div class="col l4 s12 margin-top-minus-20">
+                        <citxt 
+                            (cModel)="criteriaModel.TransportDescription = $event" 
+                            [label]="'บริษัทขนส่ง'" 
+                            [data]="criteriaModel.TransportDescription"
+                            [readonly]="true"
+                            (click)="chooseTransportFilter()">
+                        </citxt>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col l8 s12 p-0 margin-bottom-5"></div>
@@ -92,7 +101,7 @@
                             [label]="'ค้นหา'"
                             [color]="'blue'"
                             [icon]="'search'"
-                            (click)="render()">
+                            (click)="render('search')">
                         </cbtn>
                     </div>
                 </div>
@@ -120,6 +129,7 @@
                             <th>Doc. Type</th>
                             <th>Doc. Date</th>
                             <th>PO</th>
+                            <th>บริษัทขนส่ง</th>
                             <th>Cus Code</th>
                             <th>Ship To</th>
                             <th>ที่อยู่ผู้รับ</th>
@@ -160,6 +170,9 @@
                             </td>
                             <td class="min-width-100">
                                 {{i.PurchaseNo}}
+                            </td>
+                            <td class="min-width-300">
+                                {{i.Transport}}
                             </td>
                             <td class="min-width-100">
                                 {{i.ShiptoCode}}
@@ -407,6 +420,18 @@
                     (cModel)="headerModel.InvoiceDate = $event"
                     [label]="'** Invoice Date'"
                     [data]="headerModel.InvoiceDate"></cdp>
+            </div>
+            <div class="col l2 s12 p-0 margin-top-minus-20">
+                <h1>&nbsp;</h1>
+            </div>
+            <div class="col l4 s12 p-0 margin-top-minus-20">
+                <citxt 
+                    (cModel)="headerModel.TransportDescription = $event"
+                    [label]="'** บริษัทขนส่ง'"
+                    [data]="headerModel.TransportDescription"
+                    [readonly]="true"
+                    (click)="chooseTransport()">
+                </citxt>
             </div>
         </div>
 

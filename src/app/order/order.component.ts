@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog,
-  RoutingDialog, SubRoutingDialog, VehicleDialog, DriverDialog, ConfirmDialog, UploadOrderDialog,
+import { TransportNoDialog, ShipToDialog, StatusDialog, JobStatusDialog, TypeOfWorkDialog,
+  RoutingDialog, RouteDialog, SubRoutingDialog, VehicleDialog, DriverDialog, ConfirmDialog, UploadOrderDialog,
   LocationAddressDataDialog, MasterDataDialog } from '../dialog/dialog';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { Logger } from '../shared/logger.service';
@@ -31,6 +31,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   viewModel       : any     = {};
   currentPage     : number  = 1;
   listRoute       : any     = [];
+  listTransport   : any     = [];
   id              : any     = '';
 
   constructor(
@@ -52,9 +53,10 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
     this.render();
     this.readRoute();
+    this.readTransport();
   }
 
-  render() {
+  render(task='') {
     // Show spinner.
     this.spinner.show();
     
@@ -68,11 +70,28 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       OrderNo: this.criteriaModel.OrderNo,
       InvoiceNo: this.criteriaModel.InvoiceNo,
       ShiptoId: this.criteriaModel.ShiptoId,
-      OrderDateStart: this.criteriaModel.OrderDateStart == "Invalid date" || this.criteriaModel.OrderDateStart == undefined ? undefined : moment(this.criteriaModel.OrderDateStart).format('YYYY-MM-DD 00:00:00.000'),
-      OrderDateEnd: this.criteriaModel.OrderDateEnd == "Invalid date" || this.criteriaModel.OrderDateEnd == undefined ? undefined : moment(this.criteriaModel.OrderDateEnd).format('YYYY-MM-DD 00:00:00.000'),
-      InvoiceDate: this.criteriaModel.InvoiceDate == "Invalid date" || this.criteriaModel.InvoiceDate == undefined ? undefined : moment(this.criteriaModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000')
+      TransportId: this.criteriaModel.TransportId,
+      OrderDateStart: this.verifyDateTime(this.criteriaModel.OrderDateStart),
+      OrderDateEnd: this.verifyDateTime(this.criteriaModel.OrderDateEnd),
+      InvoiceDate: this.verifyDateTime(this.criteriaModel.InvoiceDate)
     }
     _criteria = {...this.criteria, ..._criteria};
+
+    // Check empty search.
+    if (task == 'search') {
+      let filterNone: any = []
+      for (const [key, value] of Object.entries(_criteria)) {
+        if (key != 'userinformation') {
+          filterNone.push(value == undefined || value == '');
+        }
+      }
+
+      if (!filterNone.includes(false)) {
+        this.showErrorMessage('กรุณาระบุเงื่อนไขค้นหา');
+        return;
+      }
+
+    }
     // Logger.info('master-order', 'render-_criteria', _criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Transport/GetOrder', _criteria).subscribe(data => {
@@ -87,7 +106,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
           let _keys = Object.keys(element);
           _keys.forEach((key) => {
             if (key.includes('InvoiceDate') || key.includes('OrderDate') || key.includes('OrderEstimate')) {
-              element[key + 'Str'] = moment(element[key]).format('DD-MM-YYYY');
+              element[key + 'Str'] = element[key] == "Invalid date" || element[key] == undefined ? undefined : moment(element[key]).format('DD-MM-YYYY');
             }
           });
         });
@@ -103,7 +122,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   }
 
   private verifyDateTime(date) {
-    return date == "Invalid date" || date == undefined ?
+    return date == null || date == "Invalid date" || date == undefined ?
       undefined : moment(date).format('YYYY-MM-DD 00:00:00.000')
   }
 
@@ -169,8 +188,8 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
     // Clear criteriaModel.
     this.criteriaModel = {
-      OrderDateStart: moment(date).format('YYYY-MM-DD 00:00:00'),
-      OrderDateEnd: moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DD 00:00:00'),
+      OrderDateStart: this.verifyDateTime(''),
+      OrderDateEnd: this.verifyDateTime(''),
       InvoiceDate: this.verifyDateTime('')
     };
   }
@@ -179,7 +198,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   setForm(param) {
     // Show spinner.
     this.spinner.show();
-
+    console.log(param);
     this.headerModel = param;
     // Set Operation to UPDATE
     this.headerModel.Process = "UPDATE";
@@ -197,11 +216,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     this.headerModel.SubRouteId = param.SubRouteId;
     this.headerModel.RouteDescription =  param.Route;
     this.headerModel.SubRouteDescription = param.SubRoute;
-    this.headerModel.OrderDate = this.headerModel.OrderDate == "Invalid date" || this.headerModel.OrderDate == undefined ? undefined : moment(this.headerModel.OrderDate).format('YYYY-MM-DD 00:00:00.000'),
-    this.headerModel.OrderEstimate = this.headerModel.OrderEstimate == "Invalid date" || this.headerModel.OrderEstimate == undefined ? undefined : moment(this.headerModel.OrderEstimate).format('YYYY-MM-DD 00:00:00.000'),
-    this.headerModel.InvoiceDate = this.headerModel.InvoiceDate == "Invalid date" || this.headerModel.InvoiceDate == undefined ? undefined : moment(this.headerModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000')
+    this.headerModel.TransportDescription = param.TransportCode    + ' - ' + param.Transport;
+    this.headerModel.OrderDate = this.verifyDateTime(this.headerModel.OrderDate),
+    this.headerModel.OrderEstimate = this.verifyDateTime(this.headerModel.OrderEstimate),
+    this.headerModel.InvoiceDate = this.verifyDateTime(this.headerModel.InvoiceDate)
 
-
+    console.log(this.headerModel);
     // Set to from page.
     this.goToFromPage();
   }
@@ -233,6 +253,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       ShiptoDescription: '',
       RouteDescription: '',
       SubRouteDescription: '',
+      TransportId: '',
       OrderDate: moment(date).format('YYYY-MM-DD 00:00:00'),
       InvoiceDate: moment(date).format('YYYY-MM-DD 00:00:00'),
       OrderEstimate: moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DD 00:00:00'),
@@ -248,10 +269,107 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     this.goToFromPage();
   }
 
+  private setModel(model) {
+    // Set model.
+    let _model: any = model;
+    for (const key in model) {
+      _model[key] = model[key];
+    }
+
+    return _model;
+  }
+
+  // If error load data.
+  private ShowError(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  readTransport() {
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+      "Code": ""
+    }
+
+    // let json = JSON.stringify(criteria);
+    this.serviceProviderService.post('api/Masters/GetTransport', criteria).subscribe(data => {
+      // Set data to model.
+      let model: any = data;
+      this.viewModel = model;
+      // Check model status if true set model data to list model.
+      this.listTransport = model.Status ? model.Data : this.loadDataFalse(model.Message);
+    }, err => {
+      this.showErrorMessage(err.message);
+    });
+  }
+
+  chooseTransport() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Transport',
+        listData: this.listTransport,
+        listDataSearch: this.listTransport 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // Declare setting local criteria model.
+        let _headerModel = {
+          'TransportId'          : result.Id,
+          'TransportCode'        : result.Code,
+          'TransportDescription' : result.Code + ' - ' + result.Description
+        }
+        // Setting header model.
+        _headerModel = this.setModel(_headerModel);
+        this.headerModel = {...this.headerModel, ..._headerModel};
+      }
+    });
+  }
+
+  chooseTransportFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Transport',
+        listData: this.listTransport,
+        listDataSearch: this.listTransport 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // Declare setting local criteria model.
+        let _criteriaModel = {
+          'TransportId'          : result.Id,
+          'TransportCode'        : result.Code,
+          'TransportDescription' : result.Code + ' - ' + result.Description
+        }
+        // Setting header model.
+        _criteriaModel = this.setModel(_criteriaModel);
+        this.criteriaModel = {...this.criteriaModel, ..._criteriaModel};
+      }
+    });
+  }
+
   //use
   chooseTransportNo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.' } });
+    const dialogRef = this.dialog.open(TransportNoDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px', 
+      data: { title: 'Transport No.' } 
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -265,7 +383,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   //use
   chooseShipTo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
+    const dialogRef = this.dialog.open(ShipToDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Ship to' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -293,7 +416,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   //use
   chooseOwner() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(LocationAddressDataDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'เจ้าของงาน' ,  urlapi:'api/Masters/GetOwner'} });
+    const dialogRef = this.dialog.open(LocationAddressDataDialog, { 
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'เจ้าของงาน' ,  urlapi:'api/Masters/GetOwner'} 
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -311,7 +439,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   //use
   chooseStatus() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Status' } });
+    const dialogRef = this.dialog.open(StatusDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px', 
+      data: { title: 'Status' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -329,7 +462,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
   chooseJobType() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(MasterDataDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'ประเภทเอกสาร' , urlapi:'api/Masters/GetJobType' } });
+    const dialogRef = this.dialog.open(MasterDataDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px', 
+      data: { title: 'ประเภทเอกสาร' , urlapi:'api/Masters/GetJobType' } 
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -344,7 +482,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   //use
   chooseTypeOfWork() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TypeOfWorkDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Type of Work' } });
+    const dialogRef = this.dialog.open(TypeOfWorkDialog, { 
+      disableClose: false, 
+      height: '400px', 
+      width: '800px', 
+      data: { title: 'Type of Work' } 
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -358,26 +501,6 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       }
     });
   }
-
-  // //use
-  // chooseRoute() {
-  //   //ต้องเอาไปใส่ใน app.module ที่ declarations
-  //   const dialogRef = this.dialog.open(SubRoutingDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Route', listData: this.listRoute, listDataSearch: this.listRoute } });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log(`Dialog result: ${result}`);
-
-  //     if (result != undefined) {
-  //       this.headerModel.RouteId = result.Id;
-  //       this.headerModel.RouteCode = result.Code;
-  //       this.headerModel.RouteDescription = result.Code + ' - ' + result.Description;
-  //     } else {
-  //       this.headerModel.RouteId = '';
-  //       this.headerModel.RouteCode = '';
-  //       this.headerModel.RouteDescription = '';
-  //     }
-  //   });
-  // }
 
   chooseRoute() {
     const dialogRef = this.dialog.open(RoutingDialog, { 
@@ -431,28 +554,15 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     });
   }
 
-  // //use
-  // chooseSubRoute() {
-  //   //ต้องเอาไปใส่ใน app.module ที่ declarations
-  //   const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Sub Route', listData: this.listRoute, listDataSearch: this.listRoute } });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result != undefined) {
-  //       this.headerModel.SubRouteId = result.Id;
-  //       this.headerModel.SubRouteCode = result.Code;
-  //       this.headerModel.SubRouteDescription = result.Code + ' - ' + result.Description;
-  //     } else {
-  //       this.headerModel.SubRouteId = '';
-  //       this.headerModel.SubRouteCode = '';
-  //       this.headerModel.SubRouteDescription = '';
-  //     }
-  //   });
-  // }
-
   //use
   chooseVehicle() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(VehicleDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Vehicle' } });
+    const dialogRef = this.dialog.open(VehicleDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Vehicle' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -472,7 +582,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   //use
   chooseDriver() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(DriverDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Driver' } });
+    const dialogRef = this.dialog.open(DriverDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Driver' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -519,7 +634,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   //use
   chooseStatusFilter() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Status' } });
+    const dialogRef = this.dialog.open(JobStatusDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Status' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('chooseStatusFilter', result);
@@ -536,7 +656,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   //use
   chooseShipToFilter() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Ship to' } });
+    const dialogRef = this.dialog.open(ShipToDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Ship to' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('chooseShipToFilter', result);
@@ -567,9 +692,9 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   save() {
     this.spinner.show();
     
-    this.headerModel.OrderDate = this.headerModel.OrderDate == "Invalid date" || this.headerModel.OrderDate == undefined ? undefined : moment(this.headerModel.OrderDate).format('YYYY-MM-DD 00:00:00.000'),
-    this.headerModel.OrderEstimate = this.headerModel.OrderEstimate == "Invalid date" || this.headerModel.OrderEstimate == undefined ? undefined : moment(this.headerModel.OrderEstimate).format('YYYY-MM-DD 00:00:00.000'),
-    this.headerModel.InvoiceDate = this.headerModel.InvoiceDate == "Invalid date" || this.headerModel.InvoiceDate == undefined ? undefined : moment(this.headerModel.InvoiceDate).format('YYYY-MM-DD 00:00:00.000')
+    this.headerModel.OrderDate = this.verifyDateTime(this.headerModel.OrderDate),
+    this.headerModel.OrderEstimate = this.verifyDateTime(this.headerModel.OrderEstimate),
+    this.headerModel.InvoiceDate = this.verifyDateTime(this.headerModel.InvoiceDate),
     this.headerModel.UoM = this.headerModel.UoM;
     this.headerModel = {...this.criteria, ...this.headerModel};
 
@@ -605,7 +730,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
   delete(param) {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องลบรายการใช่หรือไม่?' } });
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      disableClose: false, 
+      height: '150px', 
+      width: '300px', 
+      data: { title: 'คุณต้องลบรายการใช่หรือไม่?' } 
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -664,15 +794,19 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
   upload() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(UploadOrderDialog, { disableClose: false, height: '600px', width: '1000px', data: { title: 'คุณต้องลบรายการใช่หรือไม่?' } });
+    const dialogRef = this.dialog.open(UploadOrderDialog, { 
+      disableClose: false, 
+      height: '600px', 
+      width: '1000px', 
+      data: { title: 'คุณต้องลบรายการใช่หรือไม่?' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
       if (!result) {
         return;
-      }
-      else {
+      } else {
 
         this.spinner.show();
 

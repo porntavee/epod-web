@@ -73,7 +73,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
       // Check model status if true set model data to list model.
       this.listModel = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
   }
   private setModel(model) {
@@ -89,7 +89,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
   // If can't load data to list model.
   private loadDataFalse(message): boolean {
     let _listModel: any = [];
-    this.hideSninnerAndShowError(message);
+    this.showErrorMessage(message);
 
     return _listModel;
   }
@@ -101,7 +101,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
   }
 
   // If error load data.
-  private hideSninnerAndShowError(message: string) {
+  private showErrorMessage(message: string) {
     this.spinner.hide();
     this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
   }
@@ -127,7 +127,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
       // Check model status if true set model data to list model.
       this.listTransport = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
   }
 
@@ -334,12 +334,12 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
         this.backToMainPage();
       }
       else {
-        this.hideSninnerAndShowError(model.Message);
+        this.showErrorMessage(model.Message);
       }
 
     }, err => {
       this.spinner.hide();
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
   }
 
@@ -377,10 +377,10 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
           }
           else {
             this.spinner.hide();
-            this.hideSninnerAndShowError(model.Message);
+            this.showErrorMessage(model.Message);
           }
         }, err => {
-          this.hideSninnerAndShowError(err.message);
+          this.showErrorMessage(err.message);
         });
 
         // Clear criteriaModel and Reload Table Data.
