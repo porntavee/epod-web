@@ -83,7 +83,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   
 
     const date = new Date();
-    this.criteriaModel.TransportDateString = moment(date.setDate(date.getDate() + 1)).format('YYYYMMDD');
+    this.criteriaModel.TransportDateString = moment(date.setDate(date.getDate())).format('YYYYMMDD');
   }
 
   ngOnInit(): void {
