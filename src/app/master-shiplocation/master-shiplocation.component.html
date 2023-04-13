@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-panel hide-on-med-and-down reset-margin-top">
+        <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l3 s12 p-0">
                     <citxt
@@ -36,14 +36,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l3 s12 p-0">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.ContractName = $event" 
                         [label]="'ชื่อผู้ติดต่อ'"
                         [data]="criteriaModel.ContractName">
                     </citxt>
                 </div>
-                <div class="col l3 s12 p-0">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.RouteDescription = $event" 
                         [label]="'เส้นทางหลัก'"
@@ -52,7 +52,7 @@
                         (click)="chooseMainRouteFilter()">
                     </citxt>
                 </div>
-                <div class="col l3 s12 p-0 margin-left-130">
+                <div class="col l3 s12 p-0 ml-130 mtm-30">
                     <ccb
                         (cModel)="criteriaModel.IsHub = $event" 
                         [label]="'HUB'"
@@ -60,8 +60,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l8 s12 p-0 margin-bottom-5"></div>
-                <div class="col l4 s12 p-0 text-right margin-bottom-5">
+                <div class="col l8 s12 p-0 mb-5px"></div>
+                <div class="col l4 s12 p-0 text-right mb-5px">
                     <cbtn 
                         [label]="'ล้าง'"
                         [color]="'red'"
@@ -84,14 +84,14 @@
     <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">
-                <div class="col l2 s12">
-                    <span class="table-panel-header-lebel">
+                <div class="col l8 s12">
+                    <span class="card-panel-header-span">
                         รายการข้อมูล
                     </span>
                 </div>
             </div>
         </div>
-        <div class="card-panel reset-margin-top">
+        <div class="card-panel mt-0">
             <div class="overflow-x">
                 <table id="users-list-datatable" class="bordered centered striped">
                     <thead>
@@ -170,7 +170,7 @@
             <div class="row">
                 <div class="col s6">
                     <div class="row">
-                        <div class="col s6 margin-top-10">
+                        <div class="col s6 mt-10px">
                             <cbtn 
                                 [label]="'สร้าง'" 
                                 [color]="'blue'"
@@ -209,7 +209,7 @@
             </div>
         </div>
         <!-- Start Add Shiplocation Form -->
-        <div class="card-panel hide-on-med-and-down reset-margin-top">
+        <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l4 s12">
                     <citxt
@@ -224,14 +224,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.CustomerName = $event"
                         [label]="'ชื่อ'"
                         [data]="headerModel.CustomerName">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <ctxta
                         (cModel)="headerModel.Address = $event"
                         [label]="'ที่อยู่'"
@@ -240,14 +240,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.ContractName = $event"
                         [label]="'ชื่อผู้ติดต่อ'"
                         [data]="headerModel.ContractName">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.Mobile = $event"
                         [label]="'เบอร์โทร'"
@@ -256,7 +256,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.Province = $event"
                         [label]="'จังหวัด'"
@@ -265,7 +265,7 @@
                         (click)="chooseProvince()">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.District = $event"
                         [label]="'อำเภอ'"
@@ -276,14 +276,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.PostCode = $event"
                         [label]="'รหัสไปรษณีย์'"
                         [data]="headerModel.PostCode">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.Region = $event"
                         [label]="'โซน'"
@@ -294,7 +294,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.Route = $event"
                         [label]="'เส้นทางหลัก'"
@@ -303,7 +303,7 @@
                         (click)="chooseMainRoute()">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.SubRoute = $event"
                         [label]="'เส้นทางย่อย'"
@@ -314,14 +314,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.Latitude = $event"
                         [label]="'ละติจูด'"
                         [data]="headerModel.Latitude">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-minus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.Longtitude = $event"
                         [label]="'ลองติจูด'"
@@ -330,7 +330,7 @@
                 </div>
             </div>
             <div>
-                <div class="col l4 s12 margin-top-minus-20 margin-left-225">
+                <div class="col l4 s12 mtm-20 ml-225">
                     <ccb
                         (cModel)="headerModel.Hub = $event"
                         [label]="'HUB'"
@@ -352,8 +352,8 @@
             </div>
             <!-- Save and Back Button-->
             <div class="row">
-                <div class="col l4 s12 p-0 margin-bottom-5"></div>
-                <div class="col l4 s12 p-0 text-right margin-bottom-5">
+                <div class="col l4 s12 p-0 mb-5px"></div>
+                <div class="col l4 s12 p-0 text-right mb-5px">
                     <cbtn
                         [label]="'บันทึก'"
                         [color]="'blue'"

@@ -65,15 +65,15 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     this.headerModel.Operation = 'SELECT';
     // Set criteriaModel to criteria For Filter.
     let _criteria = {
-      OrderStatus: this.criteriaModel.StatusCode,
-      StatusDescription: this.criteriaModel.StatusDescription,
       OrderNo: this.criteriaModel.OrderNo,
-      InvoiceNo: this.criteriaModel.InvoiceNo,
       ShiptoId: this.criteriaModel.ShiptoId,
-      TransportId: this.criteriaModel.TransportId,
+      InvoiceNo: this.criteriaModel.InvoiceNo,
       OrderDateStart: this.verifyDateTime(this.criteriaModel.OrderDateStart),
       OrderDateEnd: this.verifyDateTime(this.criteriaModel.OrderDateEnd),
-      InvoiceDate: this.verifyDateTime(this.criteriaModel.InvoiceDate)
+      OrderStatus: this.criteriaModel.StatusCode,
+      InvoiceDate: this.verifyDateTime(this.criteriaModel.InvoiceDate),
+      TransportId: this.criteriaModel.TransportId,
+      TransportOrderStatus: this.criteriaModel.TransportOrderStatus,
     }
     _criteria = {...this.criteria, ..._criteria};
 
@@ -103,8 +103,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       if (model.Status) {
         
         model.Data.forEach(element => {
-          let _keys = Object.keys(element);
-          _keys.forEach((key) => {
+          Object.keys(element).forEach((key) => {
             if (key.includes('InvoiceDate') || key.includes('OrderDate') || key.includes('OrderEstimate')) {
               element[key + 'Str'] = element[key] == "Invalid date" || element[key] == undefined ? undefined : moment(element[key]).format('DD-MM-YYYY');
             }
@@ -121,9 +120,10 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     }); 
   }
 
-  private verifyDateTime(date) {
-    return date == null || date == "Invalid date" || date == undefined ?
-      undefined : moment(date).format('YYYY-MM-DD 00:00:00.000')
+  verifyDateTime(date: any): any {
+    let dateObj: any = date == "Invalid date" || date == undefined ? undefined : moment(date).format('YYYY-MM-DD 00:00:00.000');
+
+    return dateObj;
   }
 
   // If sucess load data.
@@ -136,14 +136,13 @@ export class OrderComponent implements OnInit, AfterContentChecked {
    // Set Header Model.
    private setHeaderOrCriteriaModel(model, type): any {
     // Set model.
-    let _model: any = {};
-    let _keys = Object.keys(model);
-
-    _keys.forEach((key) => {
-        _model[key] = type == 'header' ? this.headerModel[key] : this.criteriaModel[key];
+    Object.keys(model).forEach((key) => {
+        if (type == 'header') {
+          this.headerModel[key] = model[key];;
+        } else {
+          this.criteriaModel[key] = model[key];
+        }
     });
-
-    return _model;
   }
 
   // If can't load data to list model.
@@ -198,30 +197,35 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   setForm(param) {
     // Show spinner.
     this.spinner.show();
-    console.log(param);
+    // Set to Form Page.
     this.headerModel = param;
     // Set Operation to UPDATE
-    this.headerModel.Process = "UPDATE";
-    this.headerModel.OrderNo = param.OrderNo;
-    this.headerModel.OrderTypeId = param.OrderTypeId;
-    this.headerModel.OrderTypeDescription =  param.OrderTypeCode + ' - ' + param.OrderType;
-    this.headerModel.OwnerId = param.OwnerId;
-    this.headerModel.OwnerDescription = param.OwnerCode + ' - ' + param.OwnerName;
-    this.headerModel.ShiptoId = param.ShiptoId;
-    this.headerModel.ShiptoCode = param.ShiptoCode;
-    this.headerModel.ShiptoAddress = param.Address;
-    this.headerModel.ShiptoDescription = param.ShiptoCode + ' - ' + param.ShiptoName;;
-    this.headerModel.ShiptoMobile = param.Mobile;
-    this.headerModel.RouteId = param.RouteId;
-    this.headerModel.SubRouteId = param.SubRouteId;
-    this.headerModel.RouteDescription =  param.Route;
-    this.headerModel.SubRouteDescription = param.SubRoute;
-    this.headerModel.TransportDescription = param.TransportCode    + ' - ' + param.Transport;
-    this.headerModel.OrderDate = this.verifyDateTime(this.headerModel.OrderDate),
-    this.headerModel.OrderEstimate = this.verifyDateTime(this.headerModel.OrderEstimate),
-    this.headerModel.InvoiceDate = this.verifyDateTime(this.headerModel.InvoiceDate)
+    let _headerModel = {
+      Process:"UPDATE",
+      OrderNo:param.OrderNo,
+      OrderTypeId:param.OrderTypeId,
+      OrderTypeDescription: param.OrderTypeCode + ' - ' + param.OrderType,
+      OwnerId:param.OwnerId,
+      OwnerDescription:param.OwnerCode + ' - ' + param.OwnerName,
+      ShiptoId:param.ShiptoId,
+      ShiptoCode:param.ShiptoCode,
+      ShiptoAddress:param.Address,
+      ShiptoDescription:param.ShiptoCode + ' - ' + param.ShiptoName,
+      ShiptoMobile:param.Mobile,
+      RouteId:param.RouteId,
+      SubRouteId:param.SubRouteId,
+      RouteDescription: param.Route,
+      SubRouteDescription:param.SubRoute,
+      TransportDescription:param.TransportCode    + ' - ' + param.Transport,
+      OrderDate:this.verifyDateTime(this.headerModel.OrderDate),
+      OrderEstimate:this.verifyDateTime(this.headerModel.OrderEstimate),
+      InvoiceDate:this.verifyDateTime(this.headerModel.InvoiceDate)
+    }
 
+    // Setting header model.
+    this.setHeaderOrCriteriaModel(_headerModel, 'header');
     console.log(this.headerModel);
+    
     // Set to from page.
     this.goToFromPage();
   }
@@ -235,8 +239,8 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
     // Declare setting local header model.
     let _headerModel = {
-      Process    : 'CREATE',
-      Id         : 'Auto',
+      Process: 'CREATE',
+      Id: 'Auto',
       OrderNo:'',
       InvoiceNo:'',
       Comment:'',
@@ -254,16 +258,17 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       RouteDescription: '',
       SubRouteDescription: '',
       TransportId: '',
-      OrderDate: moment(date).format('YYYY-MM-DD 00:00:00'),
-      InvoiceDate: moment(date).format('YYYY-MM-DD 00:00:00'),
-      OrderEstimate: moment(date.setDate(date.getDate() + 1)).format('YYYY-MM-DD 00:00:00'),
+      TransportDescription: '',
+      OrderDate: this.verifyDateTime(date),
+      InvoiceDate: this.verifyDateTime(date),
+      OrderEstimate: this.verifyDateTime(date.setDate(date.getDate() + 1)),
       Task: 'new'
     }
 
     // Setting header model.
-    Object.keys(_headerModel).forEach((key) => { 
-      this.headerModel[key] = _headerModel[key];
-    })
+    this.headerModel = {};
+    this.setHeaderOrCriteriaModel(_headerModel, 'header');
+    console.log(this.headerModel);
 
     // Set to from page.
     this.goToFromPage();
@@ -357,6 +362,47 @@ export class OrderComponent implements OnInit, AfterContentChecked {
         // Setting header model.
         _criteriaModel = this.setModel(_criteriaModel);
         this.criteriaModel = {...this.criteriaModel, ..._criteriaModel};
+      }
+    });
+  }
+
+  //use
+  chooseStatusFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(JobStatusDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'สถานะบิล' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('chooseStatusFilter', result);
+      if (result != undefined) {
+        this.criteriaModel.StatusCode = result.Code;
+        this.criteriaModel.StatusDescription = result.Code + ' - ' + result.Description;
+      } else {
+        this.criteriaModel.StatusCode = '';
+        this.criteriaModel.StatusDescription = '';
+      }
+    });
+  }
+
+  chooseTransportStatusFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(StatusDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'สถานะขนส่ง' } 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.TransportOrderStatus = result.Code;
+        this.criteriaModel.TransportOrderStatusDesc = result.Code + ' - ' + result.Description;
       }
     });
   }
@@ -632,28 +678,6 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   }
 
   //use
-  chooseStatusFilter() {
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(JobStatusDialog, {
-      disableClose: false,
-      height: '400px',
-      width: '800px',
-      data: { title: 'Status' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('chooseStatusFilter', result);
-      if (result != undefined) {
-        this.criteriaModel.StatusCode = result.Code;
-        this.criteriaModel.StatusDescription = result.Code + ' - ' + result.Description;
-      } else {
-        this.criteriaModel.StatusCode = '';
-        this.criteriaModel.StatusDescription = '';
-      }
-    });
-  }
-
-  //use
   chooseShipToFilter() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(ShipToDialog, {
@@ -787,6 +811,31 @@ export class OrderComponent implements OnInit, AfterContentChecked {
         return 'status-color-F'
         case 'H':
           return 'status-color-H'
+      default:
+        break;
+    }
+  }
+
+  statusTransportColorClassiyf(param) {
+    switch (param) {
+      case 'C':
+        return 'status-color-C'
+      case 'D':
+        return 'status-color-D'
+      case 'L': 
+        return 'status-color-L'
+      case 'O':
+        return 'status-color-O'
+      case 'P':
+        return 'status-color-P'
+      case 'R':
+        return 'status-color-R'
+      case 'S':
+        return 'status-color-S'
+      case 'W':
+        return 'status-color-W'
+      case 'F':
+        return 'status-color-F'
       default:
         break;
     }

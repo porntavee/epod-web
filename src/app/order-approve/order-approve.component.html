@@ -5,14 +5,14 @@
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <label class="card-panel-header-label">
+                    <label class="card-panel-header-span">
                         งานขนส่ง / อนุมัติงาน
                     </label>
                 </div>
             </div>
         </div>
         <!-- [hidden]="isAdvanceSearch" -->
-        <div class="card-panel hide-on-med-and-down reset-margin-top">
+        <div class="card-panel hide-on-med-and-down mt-0px">
             <div class="row">
                 <div class="col l3 s12 p-0">
                     <citxt
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l3 s12 p-0 margin-top-mminus-20">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.vehicleDescription = $event"
                         [label]="'ทะเบียนรถ'"
@@ -58,7 +58,7 @@
                         (click)="chooseVehicle()">
                     </citxt>
                 </div>
-                <div class="col l3 s12 p-0 margin-top-mminus-20">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.driverDescription = $event"
                         [label]="'ชื่อคนขับ'"
@@ -67,7 +67,7 @@
                         (click)="chooseDriver()">
                     </citxt>
                 </div>
-                <div class="col l3 s12 p-0 margin-top-mminus-20">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.statusDescription = $event"
                         [label]="'สถานะ'"
@@ -76,7 +76,7 @@
                         (click)="chooseStatus()">
                     </citxt>
                 </div>
-                <div class="col l3 s12 pl-0 margin-top-mminus-20">
+                <div class="col l3 s12 pl-0 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.typeOfWorkDescription = $event"
                         [label]="'Type of Work'"
@@ -88,7 +88,7 @@
             </div>
 
             <div class="row">
-                <div class="col l3 s12 pl-0 margin-top-mminus-20">
+                <div class="col l3 s12 pl-0 mtm-20">
                     <cdp
                         (cModel)="criteriaModel.TransportDate = $event"
                         [label]="'วันที่เอกสาร'"
@@ -97,8 +97,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l8 s12 p-0 margin-bottom-5"></div>
-                <div class="col l4 s12 p-0 text-right margin-bottom-5">
+                <div class="col l8 s12 p-0 mb-5px"></div>
+                <div class="col l4 s12 p-0 text-right mb-5px">
                     <cbtn
                         [label]="'ล้าง'"
                         [color]="'red'"
@@ -114,7 +114,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-panel hide-on-large-only reset-margin-top">
+        <div class="card-panel hide-on-large-only mt-0">
             <div class="row">
                 <div class="col s12">
                     <citxt
@@ -185,14 +185,14 @@
                         (click)="chooseTypeOfWork()">
                     </citxt>
                 </div>
-                <div class="col s12 p-0 margin-bottom-5">
+                <div class="col s12 p-0 mb-5px">
                     <cbtnl
                     [label]="'ล้าง'"
                     [color]="'red'"
                     [icon]="'clear'"
                     (click)="clear()"></cbtnl>
                 </div>
-                <div class="col s12 p-0 margin-bottom-5">
+                <div class="col s12 p-0 mb-5px">
                     <cbtnl
                     [label]="'ค้นหา'"
                     [color]="'blue'"
@@ -207,13 +207,13 @@
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l2 s12">
-                    <label class="table-panel-header-lebel">
+                    <label class="table-panel-header-span">
                         รายการข้อมูล
                     </label>
                 </div>
             </div>
         </div>
-        <div class="card-panel reset-margin-top">
+        <div class="card-panel mt-0">
             <div class="overflow-x">
                 <table id="users-list-datatable" class="bordered centered striped">
                     <thead>
@@ -319,7 +319,7 @@
 
         </div>
         <!-- [hidden]="isAdvanceSearch" -->
-        <div class="card-panel hide-on-med-and-down reset-margin-top">
+        <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l4 s12">
                     <citxt
@@ -348,7 +348,7 @@
             </div>
 
             <div class="row">
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.TransportDate = $event"
                         [label]="'วันที่เอกสาร'"
@@ -356,7 +356,7 @@
                         [readonly]="true">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.Route = $event"
                         [label]="'Route'"
@@ -364,7 +364,7 @@
                         [readonly]="true">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.Remark = $event"
                         [label]="'Picking For'"
@@ -375,7 +375,7 @@
             </div>
 
             <div class="row">
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.xxx = $event"
                         [label]="'Shipment No.'"
@@ -383,7 +383,7 @@
                         [readonly]="true">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.SubRoute = $event"
                         [label]="'SubRoute'"
@@ -391,7 +391,7 @@
                         [readonly]="true">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.DriverFirstName = $event"
                         [label]="'ชื่อคนขับ'"
@@ -402,7 +402,7 @@
             </div>
 
             <div class="row">
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.Region = $event"
                         [label]="'Plant'"
@@ -410,7 +410,7 @@
                         [readonly]="true">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.VehicleType = $event"
                         [label]="'Truck Type'"
@@ -418,7 +418,7 @@
                         [readonly]="true">
                     </citxt>
                 </div>
-                <div class="col l4 s12 margin-top-mminus-20">
+                <div class="col l4 s12 mtm-20">
                     <citxt
                         (cModel)="headerModel.DriverMobile = $event"
                         [label]="'เบอร์โทรศัพท์คนขับ'"
@@ -428,7 +428,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-panel hide-on-large-only reset-margin-top">
+        <div class="card-panel hide-on-large-only mt-0">
             <div class="row">
                 <div class="col s12">
                     <citxt
@@ -540,7 +540,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-panel reset-margin-top">
+        <div class="card-panel mt-0">
             <div cdkDropList (cdkDropListDropped)="drop($event)" style="overflow-x: auto;">
                 <table id="users-list-datatable" class="bordered centered striped">
                     <thead>

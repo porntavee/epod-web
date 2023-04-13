@@ -10,7 +10,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-panel hide-on-med-and-down reset-margin-top">
+        <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l3 s12 p-0">
                     <cdp
@@ -195,14 +195,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l3 s12 p-0 margin-top-minus-20">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt 
                         (cModel)="criteriaModel.InvoiceNo = $event" 
                         [label]="'เลขที่อินวอยน์'" 
                         [data]="criteriaModel.InvoiceNo">
                     </citxt>
                 </div>
-                <div class="col l3 s12 p-0 margin-top-minus-20">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.VehicleDescription = $event" 
                         [label]="'ทะเบียนรถ'"
@@ -210,7 +210,7 @@
                         (click)="chooseVehicle()">
                     </citxt>
                 </div>
-                <div class="col l3 s12 p-0 margin-top-minus-20">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.DriverDescription = $event" 
                         [label]="'ชื่อคนขับ'"
@@ -218,7 +218,7 @@
                         (click)="chooseDriver()">
                     </citxt>
                 </div>
-                <div class="col l3 s12 pl-0  margin-top-minus-20">
+                <div class="col l3 s12 pl-0  mtm-20">
                     <citxt
                         (cModel)="criteriaModel.TransportTypeDescription = $event" 
                         [label]="'Type of Work'"
@@ -228,7 +228,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l3 s12 p-0 margin-top-minus-20">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.JobOrderStatusDescription = $event" 
                         [label]="'สถานะงานขนส่ง'"
@@ -236,7 +236,7 @@
                         (click)="chooseJobOrderStatus()">
                     </citxt>
                 </div>
-                <div class="col l3 s12 p-0 margin-top-minus-20">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt
                         (cModel)="criteriaModel.transportstatusDescription = $event" 
                         [label]="'สถานะใบคุม'"
@@ -246,8 +246,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l8 s12 p-0 margin-bottom-5"></div>
-                <div class="col l4 s12 p-0 text-right margin-bottom-5">
+                <div class="col l12 p-0 text-right mb-5px">
                     <cbtn 
                         [label]="'ล้าง'"
                         [color]="'red'"
@@ -264,7 +263,7 @@
             </div>
         </div>
     </div>
-    <div class="card-panel hide-on-large-only reset-margin-top">
+    <div class="card-panel hide-on-large-only mt-0">
         <div class="row">
             <div class="col s12">
                 <citxt
@@ -297,7 +296,7 @@
                     [data]="criteriaModel.OrderEstimate">
                 </cdp>
             </div>
-            <div class="col s12margin-top-10">
+            <div class="col s12 mt-10px">
                 <citxt
                     (cModel)="criteriaModel.VehicleDescription = $event" 
                     [label]="'ทะเบียนรถ'"
@@ -339,14 +338,14 @@
                 </citxt>
             </div>
 
-            <div class="col s12 p-0 margin-bottom-5">
+            <div class="col s12 p-0 mb-5px">
                 <cbtnl 
                 [label]="'ล้าง'"
                 [color]="'red'"
                 [icon]="'clear'" 
                 (click)="clear()"></cbtnl>
             </div>
-            <div class="col s12 p-0 margin-bottom-5">
+            <div class="col s12 p-0 mb-5px">
                 <cbtnl 
                 [label]="'ค้นหา'"
                 [color]="'blue'"
@@ -367,7 +366,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-panel reset-margin-top">
+        <div class="card-panel mt-0">
             <div style="overflow-x: auto;">
                 <!-- min-height: 200px; max-height: 200px; -->
                 <table id="users-list-datatable" class="bordered centered striped">
@@ -552,7 +551,7 @@
             <!-- [hidden]="isAdvanceSearch" -->
             <!-- {{headerModel|json}} -->
 
-            <div class="card-panel hide-on-med-and-down reset-margin-top">
+            <div class="card-panel hide-on-med-and-down mt-0">
                 <div class="row">
                     <div class="col l8">
                         <div class="row">
@@ -574,7 +573,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.InvoiceNo = $event" 
                                     [label]="'Invoice No.'"
@@ -584,7 +583,7 @@
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.Comment = $event" 
                                     [label]="'หมายเหตุ'"
@@ -594,7 +593,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <cdp
                                     (cModel)="headerModel.OrderDate = $event" 
                                     [label]="'วันที่เอกสาร'"
@@ -604,7 +603,7 @@
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.OrderNo = $event" 
                                     [label]="'Doc No.'"
@@ -614,7 +613,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.OrderType = $event" 
                                     [label]="'ประเภทเอกสาร'"
@@ -624,7 +623,7 @@
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.PurchaseNo = $event" 
                                     [label]="'PO No.'"
@@ -634,7 +633,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <cdp
                                     (cModel)="headerModel.OrderEstimate = $event" 
                                     [label]="'Appt. Date'"
@@ -644,7 +643,7 @@
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.CBM = $event" 
                                     [label]="'CBM'"
@@ -654,7 +653,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.OwnerDescription = $event" 
                                     [label]="'ผู้ส่ง'"
@@ -664,7 +663,7 @@
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.Qty = $event" 
                                     [label]="'Carton'"
@@ -674,7 +673,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.ShiptoDescription = $event" 
                                     [label]="'ผู้รับ'"
@@ -684,7 +683,7 @@
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.Weight = $event" 
                                     [label]="'Weight'"
@@ -694,7 +693,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.ShiptoMobile = $event" 
                                     [label]="'โทรศัพท์ผู้รับ'"
@@ -704,7 +703,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.ShiptoAdress = $event" 
                                     [label]="'ที่อยู่ผู้รับ'"
@@ -714,7 +713,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.Route = $event" 
                                     [label]="'เส้นทางหลัก'"
@@ -724,7 +723,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col l5 s12 p-0 margin-top-minus-20">
+                            <div class="col l5 s12 p-0 mtm-20">
                                 <citxt
                                     (cModel)="headerModel.SubRoute = $event" 
                                     [label]="'เส้นทางย่อย'"
@@ -929,7 +928,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-panel reset-margin-top">
+            <div class="card-panel mt-0">
                 <div class="row">
                     <div class="col l3 s12">
                         Manifest Number : {{headerModel.TransportNo}}
@@ -1047,7 +1046,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-panel reset-margin-top">
+            <div class="card-panel mt-0">
                 <div class="row">
                     <div class="col l8 s12">
                         <div style="overflow-x: auto;">
@@ -1140,7 +1139,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-panel hide-on-med-and-down reset-margin-top">
+                            <div class="card-panel hide-on-med-and-down mt-0">
                                 <div class="row">
                                     <div class="col l4 s4 p-10">
                                         <img alt="" [src]="headerModel.ReceiveCheckInImage1" (error)="handleMissingImage($event)" width="96%" />
@@ -1164,7 +1163,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-panel hide-on-med-and-down reset-margin-top">
+                            <div class="card-panel hide-on-med-and-down mt-0">
                                 <div class="row">
                                     <div class="col l3 s12 p-20">
                                         <img alt="" [src]="headerModel.DeliverySignature" (error)="handleMissingImage($event)" width="100%" />
@@ -1182,7 +1181,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-panel hide-on-med-and-down reset-margin-top">
+                            <div class="card-panel hide-on-med-and-down mt-0">
                                 <div class="row">
                                     <div class="col l4 s4 p-10">
                                         <img alt="" [src]="headerModel.DeliveryCheckInImage1" (error)="handleMissingImage($event)" width="96%" />

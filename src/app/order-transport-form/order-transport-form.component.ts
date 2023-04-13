@@ -8,7 +8,7 @@ import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialog, DriverDialog, JobStatusDialog, RegionDialog, RouteDialog,
-  RoutingDialog, ShipToDialog,StatusDialog, SubRoutingDialog, TypeOfWorkDialog,
+  RoutingDialog, ShipToDialog, StatusDialog, SubRoutingDialog, TransportNoDialog, TypeOfWorkDialog,
   VehicleDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { Logger } from '../shared/logger.service';
@@ -80,13 +80,14 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
     this.GroupCode = this.serviceProviderService.userinformation.GroupCode;
 
-  
-
     const date = new Date();
     this.criteriaModel.TransportDateString = moment(date.setDate(date.getDate())).format('YYYYMMDD');
   }
 
   ngOnInit(): void {
+    this.formModel.StatusCode = 'O';
+    this.formModel.StatusDescription = 'O - รอจัดใบคุมรถ';
+
     this.readTransport();
     this.readVehicleType();
 
@@ -113,6 +114,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     }
     criteria = {...this.criteria, ...criteria};
 
+    console.log('criteria', criteria);
+
     this.serviceProviderService.post('api/Transport/GetTransportHeader', criteria)
     .subscribe(data => {
       this.spinner.hide();
@@ -123,6 +126,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.showChooseHub = model.Data[0].TransportTypeId == 'NM' ? false : true;
         this.criteriaModel = model.Data[0];
         let criteria = {
+          OrderStatus: model.Data[0].StatusCode,
           TransportDescription: model.Data[0].Transport,
           ReceiveFromDescription: model.Data[0].ReceiveFromName,
           RouteDescription: model.Data[0].Route,
@@ -158,8 +162,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.listModel = model.Data;
 
         model.Data.forEach(element => {
-          element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
+          element.OrderEstimateStr = this.verifyDateTime(element.OrderEstimate);
+          element.InvoiceDateStr = this.verifyDateTime(element.InvoiceDate);
         });
       } else {
         this.spinner.hide();
@@ -669,6 +673,125 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       param.BillableTmText = moment.utc(billTotalHour * 3600 * 1000).format('HH:mm')
   }
 
+   // Set Header Model.
+   private setFormOrCriteriaModel(model, type): any {
+    // Set model.
+    Object.keys(model).forEach((key) => {
+        if (type == 'form') {
+          this.formModel[key] = model[key];;
+        } else {
+          this.criteriaModel[key] = model[key];
+        }
+    });
+  }
+
+  chooseTransportFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Transport',
+        listData: this.listTransport,
+        listDataSearch: this.listTransport 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('chooseTransportFilter->', result);
+
+      if (result != undefined) {
+        // Declare setting local criteria model.
+        let _formModel = {
+          TransportId: result.Id,
+          TransportCode: result.Code,
+          TransportDescription: result.Code + ' - ' + result.Description
+        }
+        // Setting header model.
+        this.setFormOrCriteriaModel(_formModel, 'form');
+        console.log('chooseTransportFilter->', this.formModel);
+        // this.formModel = {...this.formModel, ..._formModel};
+        
+      }
+    });
+  }
+
+  chooseTransportStatusFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(StatusDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'สถานะขนส่ง' } 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.formModel.TransportOrderStatus = result.Code;
+        this.formModel.TransportOrderStatusDesc = result.Code + ' - ' + result.Description;
+      }
+    });
+  }
+
+  //use
+  chooseStatusFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(JobStatusDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'สถานะบิล' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('chooseStatusFilter', result);
+      if (result != undefined) {
+        this.formModel.StatusCode = result.Code;
+        this.formModel.StatusDescription = result.Code + ' - ' + result.Description;
+      } else {
+        this.formModel.StatusCode = '';
+        this.formModel.StatusDescription = '';
+      }
+    });
+  }
+
+  //use
+  chooseShipToFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ShipToDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Ship to' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('chooseShipToFilter', result);
+      if (result != undefined) {
+        
+        this.formModel.ShiptoId = result.Id;
+        this.formModel.ShiptoCode = result.Code;
+        this.formModel.ShiptoName = result.CustomerName;
+        this.formModel.ShiptoAddress = result.Address;
+        this.formModel.ShiptoDescription = result.Code + ' - ' + result.CustomerName;
+        this.formModel.ShiptoMobile = result.Mobile;
+        this.formModel.RouteDescription = result.Route;
+        this.formModel.SubRouteDescription = result.SubRoute;
+      } else {
+        this.formModel.ShiptoId = '';
+        this.formModel.ShiptoCode = '';
+        this.formModel.ShiptoName = '';
+        this.formModel.ShiptoAddress = '';
+        this.formModel.ShipToDescription = '';
+        this.formModel.ShiptoMobile = '';
+        this.formModel.RouteDescription = '';
+        this.formModel.SubRouteDescription = '';
+      }
+    });
+  }
+
   //use
   chooseTransport() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
@@ -687,6 +810,25 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       }
     });
   }
+
+    //use
+    chooseTransportNo() {
+      //ต้องเอาไปใส่ใน app.module ที่ declarations
+      const dialogRef = this.dialog.open(TransportNoDialog, { 
+        disableClose: false,
+        height: '400px',
+        width: '800px',
+        data: { title: 'Transport No.' } 
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+  
+        if (result != undefined) {
+          this.criteriaModel.transportNo = result.TransportNo;
+        }
+      });
+    }
 
   chooseRoute() {
     const dialogRef = this.dialog.open(RoutingDialog, { 
@@ -1152,44 +1294,75 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     moveItemInArray(this.listModel, event.previousIndex, event.currentIndex);
   }
 
-  clear() {
-    this.formModel = { OrderDateString: '' };
+  clearModel() {
+     // Clear formModel.
+     this.formModel = {
+      OrderDateStart: this.verifyDateTime(''),
+      OrderDateEnd: this.verifyDateTime(''),
+      InvoiceDate: this.verifyDateTime('')
+    };
+  }
+
+  verifyDateTime(date: any): any {
+    let dateObj: any = (date === "Invalid date" || date == undefined) ? undefined : moment(date).format('YYYY-MM-DD 00:00:00.000');
+    // console.log((date === "Invalid date"), dateObj, from);
+    return dateObj;
   }
 
   readOrder(param) {
 
-    if(param!='')
-    {
-      if (param.key === "Enter") {
-        if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.OrderNo == '') {
-          this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-          return;
-        }
-      } else{
-        return;
-      }
-    }
+    // if(param!='')
+    // {
+    //   if (param.key === "Enter") {
+    //     if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.OrderNo == '') {
+    //       this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    //       return;
+    //     }
+    //   } else{
+    //     return;
+    //   }
+    // }
 
 
     this.spinner.show();
-    this.formModel.OrderStatus = this.formModel.StatusCode;
-    this.formModel.userinformation = this.serviceProviderService.userinformation;
-    this.formModel.Process = 'TRANSPORT';
-    this.formModel.OrderDate = this.criteriaModel.OrderDateString != undefined &&
-      this.criteriaModel.OrderDateString != "Invalid date" ?
-      moment(this.criteriaModel.OrderDateString).format('YYYY-MM-DD 00:00:00.000') : undefined;
 
-    this.serviceProviderService.post('api/Transport/GetOrder', this.formModel)
+    let _form = {
+      userinformation: this.serviceProviderService.userinformation,
+      Process: 'TRANSPORT',
+      OrderNo: this.formModel.OrderNo,
+      ShiptoId: this.formModel.ShiptoId,
+      InvoiceNo: this.formModel.InvoiceNo,
+      OrderDateStart: this.verifyDateTime(this.formModel.OrderDateStart),
+      OrderDateEnd: this.verifyDateTime(this.formModel.OrderDateEnd),
+      OrderStatus: this.formModel.StatusCode,
+      InvoiceDate: this.verifyDateTime(this.formModel.InvoiceDate),
+      TransportId: this.formModel.TransportId,
+      TransportOrderStatus: this.formModel.TransportOrderStatus,
+    }
+    console.log(_form);
+
+    // this.formModel.OrderStatus = this.formModel.StatusCode;
+    // this.formModel.userinformation = this.serviceProviderService.userinformation;
+    // this.formModel.Process = 'TRANSPORT';
+    // this.formModel.OrderStatus = this.criteriaModel.StatusCode;
+    // this.formModel.OrderDateStart = this.verifyDateTime(this.formModel.OrderDateStart, '1332');
+    // this.formModel.OrderDateEnd = this.verifyDateTime(this.formModel.OrderDateEnd, '1332');
+    // this.formModel.InvoiceDate = this.verifyDateTime(this.formModel.InvoiceDate, '1332');
+
+    this.serviceProviderService.post('api/Transport/GetOrder', _form)
     .subscribe(data => {
       this.spinner.hide();
       let model: any = data;
       this.viewModel = model;
 
       if (model.Status) {
-
         model.Data.forEach(element => {
-          element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
+          Object.keys(element).forEach((key) => {
+            if (key.includes('InvoiceDate') || key.includes('OrderEstimate')) {
+              element[key + 'Str'] = element[key] == "Invalid date" || element[key] == undefined ? 
+                undefined : moment(element[key]).format('DD-MM-YYYY');
+            }
+          });
         });
 
         this.listFormModel = model.Data;
@@ -1487,55 +1660,53 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     this.changeDetector.detectChanges();
   }
 
-  // statusOrderColor(param) {
-  //   switch (param) {
-  //     case 'C':
-  //       return '#E16E5B'
-  //     case 'D':
-  //       return '#F7E884'
-  //     case 'L':
-  //       return '#F7E884'
-  //     case 'O':
-  //       return '#B6B6B6'
-  //     case 'P':
-  //       return '#79D58B'
-  //     case 'R':
-  //       return '#79D58B'
-  //     case 'S':
-  //       return '#66A5D9'
-  //     case 'W':
-  //       return '#B6B6B6'
-  //     case 'F':
-  //       return '#EBB146'
-  //     case 'H':
-  //       return '#66A5D9'
-  //     default:
-  //       break;
-  //   }
-  // }
-
   statusOrderClassify(param) {
     switch (param) {
       case 'C':
-        return '#E16E5B'
+        return 'status-color-C'
       case 'D':
-        return '#F7E884'
+        return 'status-color-D'
       case 'L':
-        return '#F7E884'
+        return 'status-color-L'
       case 'O':
-        return '#B6B6B6'
+        return 'status-color-O'
       case 'P':
-        return '#79D58B'
+        return 'status-color-P'
       case 'R':
-        return '#79D58B'
+        return 'status-color-R'
       case 'S':
-        return '#66A5D9'
+        return 'status-color-S'
       case 'W':
-        return '#B6B6B6'
+        return 'status-color-W'
       case 'F':
-        return '#EBB146'
+        return 'status-color-F'
         case 'H':
-          return '#66A5D9'
+          return 'status-color-O'
+      default:
+        break;
+    }
+  }
+
+  statusTransportColorClassiyf(param) {
+    switch (param) {
+      case 'C':
+        return 'status-color-C'
+      case 'D':
+        return 'status-color-D'
+      case 'L': 
+        return 'status-color-L'
+      case 'O':
+        return 'status-color-O'
+      case 'P':
+        return 'status-color-P'
+      case 'R':
+        return 'status-color-R'
+      case 'S':
+        return 'status-color-S'
+      case 'W':
+        return 'status-color-W'
+      case 'F':
+        return 'status-color-F'
       default:
         break;
     }

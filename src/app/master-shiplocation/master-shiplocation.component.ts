@@ -40,6 +40,9 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
   }
 
   ngOnInit(): void {
+    this.criteriaModel.StatusCode = 'O';
+    this.criteriaModel.StatusDescription = 'O - รอจัดใบคุมรถ';
+    
     this.render();
   }
 

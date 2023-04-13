@@ -22,20 +22,20 @@
                 <div class="col l3 s12 p-0">
                     <citxt (cModel)="criteriaModel.ShipToDescription = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.ShipToDescription" [readonly]="true" (click)="chooseShipTo()"></citxt>
                 </div>
-                <div class="col l3 s12 p-0">
+                <div class="col l3 s12 pl-0">
                     <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'Route'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()"></citxt>
                 </div>
 
             </div>
 
             <div class="row">
-                <div class="col l3 s12 pl-0">
+                <div class="col l3 s12 pl-0 mtm-20">
                     <cdp (cModel)="criteriaModel.OrderEstimate = $event" [label]="'Appt. Date'" [data]="criteriaModel.OrderEstimate"></cdp>
                 </div>
-                <div class="col l3 s12 p-0" style="margin-top: -20px;">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt (cModel)="criteriaModel.VehicleDescription = $event" [label]="'ทะเบียนรถ'" [data]="criteriaModel.VehicleDescription" [readonly]="true" (click)="chooseVehicle()"></citxt>
                 </div>
-                <div class="col l3 s12 p-0" style="margin-top: -20px;">
+                <div class="col l3 s12 p-0 mtm-20">
                     <citxt (cModel)="criteriaModel.DriverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.DriverDescription" [readonly]="true" (click)="chooseDriver()"></citxt>
                 </div>
             </div>
