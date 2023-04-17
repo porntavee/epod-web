@@ -13,28 +13,18 @@
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <cdp
-                        (cModel)="criteriaModelStatus.startDate = $event" 
-                        [label]="'เลือกช่วงเวลา'"
-                        [data]="criteriaModelStatus.startDate">
+                    <cdp (cModel)="criteriaModelStatus.startDate = $event" [label]="'เลือกช่วงเวลา'" [data]="criteriaModelStatus.startDate">
                     </cdp>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <cdp
-                        (cModel)="criteriaModelStatus.endDate = $event" 
-                        [label]="'จนถึง'"
-                        [data]="criteriaModelStatus.endDate">
+                    <cdp (cModel)="criteriaModelStatus.endDate = $event" [label]="'จนถึง'" [data]="criteriaModelStatus.endDate">
                     </cdp>
                 </div>
                 <div class="col l1 s12 p-0">
                     <h1>&nbsp;</h1>
                 </div>
                 <div class="col l3 s12">
-                    <cbtn 
-                        [label]="'เรียกดู'"
-                        [color]="'blue'"
-                        [icon]="''" 
-                        (click)="readAll()">
+                    <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="readAll()">
                     </cbtn>
                 </div>
             </div>
@@ -163,101 +153,55 @@
             <br>
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt
-                        (cModel)="criteriaModel.TransportNo = $event" 
-                        [label]="'เลขที่ใบคุม'"
-                        [data]="criteriaModel.TransportNo" [readonly]="true" 
-                        (click)="chooseTransportNo()">
+                    <citxt (cModel)="criteriaModel.TransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.TransportNo" [readonly]="true" (click)="chooseTransportNo()">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt
-                        (cModel)="criteriaModel.ShiptoDescription = $event" 
-                        [label]="'ชื่อผู้รับ'"
-                        [data]="criteriaModel.ShiptoDescription" [readonly]="true" 
-                        (click)="chooseShipTo()">
+                    <citxt (cModel)="criteriaModel.ShiptoDescription = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.ShiptoDescription" [readonly]="true" (click)="chooseShipTo()">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt
-                        (cModel)="criteriaModel.RouteDescription = $event" 
-                        [label]="'Route'"
-                        [data]="criteriaModel.RouteDescription" [readonly]="true" 
-                        (click)="chooseRoute()">
+                    <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'Route'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()">
                     </citxt>
                 </div>
                 <div class="col l3 s12 pl-0">
-                    <cdp
-                        (cModel)="criteriaModel.OrderEstimate = $event" 
-                        [label]="'Appt. Date'"
-                        [data]="criteriaModel.OrderEstimate">
+                    <cdp (cModel)="criteriaModel.OrderEstimate = $event" [label]="'Appt. Date'" [data]="criteriaModel.OrderEstimate">
                     </cdp>
                 </div>
             </div>
             <div class="row">
                 <div class="col l3 s12 p-0 mtm-20">
-                    <citxt 
-                        (cModel)="criteriaModel.InvoiceNo = $event" 
-                        [label]="'เลขที่อินวอยน์'" 
-                        [data]="criteriaModel.InvoiceNo">
+                    <citxt (cModel)="criteriaModel.InvoiceNo = $event" [label]="'เลขที่อินวอยน์'" [data]="criteriaModel.InvoiceNo">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0 mtm-20">
-                    <citxt
-                        (cModel)="criteriaModel.VehicleDescription = $event" 
-                        [label]="'ทะเบียนรถ'"
-                        [data]="criteriaModel.VehicleDescription" [readonly]="true" 
-                        (click)="chooseVehicle()">
+                    <citxt (cModel)="criteriaModel.VehicleDescription = $event" [label]="'ทะเบียนรถ'" [data]="criteriaModel.VehicleDescription" [readonly]="true" (click)="chooseVehicle()">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0 mtm-20">
-                    <citxt
-                        (cModel)="criteriaModel.DriverDescription = $event" 
-                        [label]="'ชื่อคนขับ'"
-                        [data]="criteriaModel.DriverDescription" [readonly]="true" 
-                        (click)="chooseDriver()">
+                    <citxt (cModel)="criteriaModel.DriverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.DriverDescription" [readonly]="true" (click)="chooseDriver()">
                     </citxt>
                 </div>
                 <div class="col l3 s12 pl-0  mtm-20">
-                    <citxt
-                        (cModel)="criteriaModel.TransportTypeDescription = $event" 
-                        [label]="'Type of Work'"
-                        [data]="criteriaModel.TransportTypeDescription" [readonly]="true" 
-                        (click)="chooseTypeOfWork()">
+                    <citxt (cModel)="criteriaModel.TransportTypeDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.TransportTypeDescription" [readonly]="true" (click)="chooseTypeOfWork()">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l3 s12 p-0 mtm-20">
-                    <citxt
-                        (cModel)="criteriaModel.JobOrderStatusDescription = $event" 
-                        [label]="'สถานะงานขนส่ง'"
-                        [data]="criteriaModel.JobOrderStatusDescription" [readonly]="true" 
-                        (click)="chooseJobOrderStatus()">
+                    <citxt (cModel)="criteriaModel.JobOrderStatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.JobOrderStatusDescription" [readonly]="true" (click)="chooseJobOrderStatus()">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0 mtm-20">
-                    <citxt
-                        (cModel)="criteriaModel.transportstatusDescription = $event" 
-                        [label]="'สถานะใบคุม'"
-                        [data]="criteriaModel.transportstatusDescription" [readonly]="true" 
-                        (click)="chooseStatus()">
+                    <citxt (cModel)="criteriaModel.transportstatusDescription = $event" [label]="'สถานะใบคุม'" [data]="criteriaModel.transportstatusDescription" [readonly]="true" (click)="chooseStatus()">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l12 p-0 text-right mb-5px">
-                    <cbtn 
-                        [label]="'ล้าง'"
-                        [color]="'red'"
-                        [icon]="'clear'" 
-                        (click)="clear()">
+                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()">
                     </cbtn>
-                    <cbtn 
-                        [label]="'ค้นหา'"
-                        [color]="'blue'"
-                        [icon]="'search'" 
-                        (click)="read()">
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()">
                     </cbtn>
                 </div>
             </div>
@@ -266,95 +210,52 @@
     <div class="card-panel hide-on-large-only mt-0">
         <div class="row">
             <div class="col s12">
-                <citxt
-                    (cModel)="criteriaModel.TransportNo = $event" 
-                    [label]="'เลขที่ใบคุม'"
-                    [data]="criteriaModel.TransportNo" [readonly]="true" 
-                    (click)="chooseTransportNo()">
+                <citxt (cModel)="criteriaModel.TransportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.TransportNo" [readonly]="true" (click)="chooseTransportNo()">
                 </citxt>
             </div>
             <div class="col s12 margin-top-mminus-10">
-                <citxt
-                    (cModel)="criteriaModel.shipToDescription = $event" 
-                    [label]="'ชื่อผู้รับ'"
-                    [data]="criteriaModel.shipToDescription" [readonly]="true" 
-                    (click)="chooseShipTo()">
+                <citxt (cModel)="criteriaModel.shipToDescription = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.shipToDescription" [readonly]="true" (click)="chooseShipTo()">
                 </citxt>
             </div>
             <div class="col s12 margin-top-mminus-10">
-                <citxt
-                    (cModel)="criteriaModel.RouteDescription = $event" 
-                    [label]="'Route'"
-                    [data]="criteriaModel.RouteDescription" [readonly]="true" 
-                    (click)="chooseRoute()">
+                <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'Route'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseRoute()">
                 </citxt>
             </div>
             <div class="col s12 margin-top-mminus-10">
-                <cdp
-                    (cModel)="criteriaModel.OrderEstimate = $event" 
-                    [label]="'Appt. Date'"
-                    [data]="criteriaModel.OrderEstimate">
+                <cdp (cModel)="criteriaModel.OrderEstimate = $event" [label]="'Appt. Date'" [data]="criteriaModel.OrderEstimate">
                 </cdp>
             </div>
             <div class="col s12 mt-10px">
-                <citxt
-                    (cModel)="criteriaModel.VehicleDescription = $event" 
-                    [label]="'ทะเบียนรถ'"
-                    [data]="criteriaModel.VehicleDescription" [readonly]="true" 
-                    (click)="chooseVehicle()">
+                <citxt (cModel)="criteriaModel.VehicleDescription = $event" [label]="'ทะเบียนรถ'" [data]="criteriaModel.VehicleDescription" [readonly]="true" (click)="chooseVehicle()">
                 </citxt>
             </div>
             <div class="col s12 margin-top-mminus-10">
-                <citxt
-                    (cModel)="criteriaModel.DriverDescription = $event" 
-                    [label]="'ชื่อคนขับ'"
-                    [data]="criteriaModel.DriverDescription" [readonly]="true" 
-                    (click)="chooseDriver()">
+                <citxt (cModel)="criteriaModel.DriverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.DriverDescription" [readonly]="true" (click)="chooseDriver()">
                 </citxt>
             </div>
             <div class="col s12 margin-top-mminus-10">
-                <citxt
-                    (cModel)="criteriaModel.transportstatusDescription = $event" 
-                    [label]="'สถานะใบคุม'"
-                    [data]="criteriaModel.transportstatusDescription" [readonly]="true" 
-                    (click)="chooseStatus()">
+                <citxt (cModel)="criteriaModel.transportstatusDescription = $event" [label]="'สถานะใบคุม'" [data]="criteriaModel.transportstatusDescription" [readonly]="true" (click)="chooseStatus()">
                 </citxt>
             </div>
             <div class="col s12 margin-top-mminus-10">
-                <citxt
-                    (cModel)="criteriaModel.TransportTypeDescription = $event" 
-                    [label]="'Type of Work'"
-                    [data]="criteriaModel.TransportTypeDescription" [readonly]="true" 
-                    (click)="chooseTypeOfWork()">
+                <citxt (cModel)="criteriaModel.TransportTypeDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.TransportTypeDescription" [readonly]="true" (click)="chooseTypeOfWork()">
                 </citxt>
             </div>
 
             <div class="col s12 margin-top-mminus-10">
-                <citxt
-                    (cModel)="criteriaModel.JobOrderStatusDescription = $event" 
-                    [label]="'สถานะงานขนส่ง'"
-                    [data]="criteriaModel.JobOrderStatusDescription" [readonly]="true" 
-                    (click)="chooseJobOrderStatus()">
+                <citxt (cModel)="criteriaModel.JobOrderStatusDescription = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.JobOrderStatusDescription" [readonly]="true" (click)="chooseJobOrderStatus()">
                 </citxt>
             </div>
 
             <div class="col s12 p-0 mb-5px">
-                <cbtnl 
-                [label]="'ล้าง'"
-                [color]="'red'"
-                [icon]="'clear'" 
-                (click)="clear()"></cbtnl>
+                <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
             </div>
             <div class="col s12 p-0 mb-5px">
-                <cbtnl 
-                [label]="'ค้นหา'"
-                [color]="'blue'"
-                [icon]="'search'" 
-                (click)="read()"></cbtnl>
+                <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
             </div>
         </div>
     </div>
-    
+
     <!-- {{this.viewModel|json}} -->
     <div class="col s12">
         <div class="card-panel table-panel-header">
@@ -407,14 +308,12 @@
                         <tr *ngFor="let i of viewModel2 | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
                             <td>
                                 <div class="w100">
-                                    <a style="cursor: pointer;" 
-                                    (click)="readDetail(i)">{{i.ShipmentNo}}</a>
+                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.ShipmentNo}}</a>
                                 </div>
                             </td>
                             <td>
                                 <div class="w100">
-                                    <a style="cursor: pointer;" 
-                                    (click)="readDetail(i)">{{i.TransportNo}}</a>
+                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a>
                                 </div>
                             </td>
                             <td>
@@ -535,7 +434,7 @@
 </div>
 
 <div *ngIf="isFormPage">
-    
+
     <div class="col s12">
         <div class="filter-fixed">
             <div class="card-panel card-panel-header">
@@ -556,178 +455,124 @@
                     <div class="col l8">
                         <div class="row">
                             <div class="col l5 s12 p-0">
-                                <citxt
-                                    (cModel)="headerModel.ShipmentNo = $event" 
-                                    [label]="'Shipment No.'"
-                                    [data]="headerModel.ShipmentNo" [readonly]="true">
+                                <citxt (cModel)="headerModel.ShipmentNo = $event" [label]="'Shipment No.'" [data]="headerModel.ShipmentNo" [readonly]="true">
                                 </citxt>
                             </div>
 
                             <div class="col l5 s12 p-0">
-                                <citxt
-                                    (cModel)="headerModel.TransportNo = $event" 
-                                    [label]="'Transport No.'"
-                                    [data]="headerModel.TransportNo" [readonly]="true">
+                                <citxt (cModel)="headerModel.TransportNo = $event" [label]="'Transport No.'" [data]="headerModel.TransportNo" [readonly]="true">
                                 </citxt>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.InvoiceNo = $event" 
-                                    [label]="'Invoice No.'"
-                                    [data]="headerModel.InvoiceNo">
+                                <citxt (cModel)="headerModel.InvoiceNo = $event" [label]="'Invoice No.'" [data]="headerModel.InvoiceNo">
                                 </citxt>
                             </div>
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.Comment = $event" 
-                                    [label]="'หมายเหตุ'"
-                                    [data]="headerModel.Comment">
+                                <citxt (cModel)="headerModel.Comment = $event" [label]="'หมายเหตุ'" [data]="headerModel.Comment">
                                 </citxt>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col l5 s12 p-0 mtm-20">
-                                <cdp
-                                    (cModel)="headerModel.OrderDate = $event" 
-                                    [label]="'วันที่เอกสาร'"
-                                    [data]="headerModel.OrderDate">
+                                <cdp (cModel)="headerModel.OrderDate = $event" [label]="'วันที่เอกสาร'" [data]="headerModel.OrderDate">
                                 </cdp>
                             </div>
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.OrderNo = $event" 
-                                    [label]="'Doc No.'"
-                                    [data]="headerModel.OrderNo">
+                                <citxt (cModel)="headerModel.OrderNo = $event" [label]="'Doc No.'" [data]="headerModel.OrderNo">
                                 </citxt>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.OrderType = $event" 
-                                    [label]="'ประเภทเอกสาร'"
-                                    [data]="headerModel.OrderType" [readonly]="true">
+                                <citxt (cModel)="headerModel.OrderType = $event" [label]="'ประเภทเอกสาร'" [data]="headerModel.OrderType" [readonly]="true">
                                 </citxt>
                             </div>
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.PurchaseNo = $event" 
-                                    [label]="'PO No.'"
-                                    [data]="headerModel.PurchaseNo">
+                                <citxt (cModel)="headerModel.PurchaseNo = $event" [label]="'PO No.'" [data]="headerModel.PurchaseNo">
                                 </citxt>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col l5 s12 p-0 mtm-20">
-                                <cdp
-                                    (cModel)="headerModel.OrderEstimate = $event" 
-                                    [label]="'Appt. Date'"
-                                    [data]="headerModel.OrderEstimate">
+                                <cdp (cModel)="headerModel.OrderEstimate = $event" [label]="'Appt. Date'" [data]="headerModel.OrderEstimate">
                                 </cdp>
                             </div>
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.CBM = $event" 
-                                    [label]="'CBM'"
-                                    [data]="headerModel.CBM">
+                                <citxt (cModel)="headerModel.CBM = $event" [label]="'CBM'" [data]="headerModel.CBM">
                                 </citxt>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.OwnerDescription = $event" 
-                                    [label]="'ผู้ส่ง'"
-                                    [data]="headerModel.OwnerDescription" [readonly]="true">
+                                <citxt (cModel)="headerModel.OwnerDescription = $event" [label]="'ผู้ส่ง'" [data]="headerModel.OwnerDescription" [readonly]="true">
                                 </citxt>
                             </div>
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.Qty = $event" 
-                                    [label]="'Carton'"
-                                    [data]="headerModel.Qty">
+                                <citxt (cModel)="headerModel.Qty = $event" [label]="'Carton'" [data]="headerModel.Qty">
                                 </citxt>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.ShiptoDescription = $event" 
-                                    [label]="'ผู้รับ'"
-                                    [data]="headerModel.ShiptoDescription" [readonly]="true">
+                                <citxt (cModel)="headerModel.ShiptoDescription = $event" [label]="'ผู้รับ'" [data]="headerModel.ShiptoDescription" [readonly]="true">
                                 </citxt>
                             </div>
                             <!-- <div class="col l2 s12 p-0" style="margin-top: -20px;">
                                 <h1>&nbsp;</h1>
                             </div> -->
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.Weight = $event" 
-                                    [label]="'Weight'"
-                                    [data]="headerModel.Weight">
+                                <citxt (cModel)="headerModel.Weight = $event" [label]="'Weight'" [data]="headerModel.Weight">
                                 </citxt>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.ShiptoMobile = $event" 
-                                    [label]="'โทรศัพท์ผู้รับ'"
-                                    [data]="headerModel.ShiptoMobile" [readonly]="true">
+                                <citxt (cModel)="headerModel.ShiptoMobile = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="headerModel.ShiptoMobile" [readonly]="true">
                                 </citxt>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.ShiptoAdress = $event" 
-                                    [label]="'ที่อยู่ผู้รับ'"
-                                    [data]="headerModel.ShiptoAdress" [readonly]="true">
+                                <citxt (cModel)="headerModel.ShiptoAdress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="headerModel.ShiptoAdress" [readonly]="true">
                                 </citxt>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.Route = $event" 
-                                    [label]="'เส้นทางหลัก'"
-                                    [data]="headerModel.Route" [readonly]="true">
+                                <citxt (cModel)="headerModel.Route = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.Route" [readonly]="true">
                                 </citxt>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col l5 s12 p-0 mtm-20">
-                                <citxt
-                                    (cModel)="headerModel.SubRoute = $event" 
-                                    [label]="'เส้นทางย่อย'"
-                                    [data]="headerModel.SubRoute" [readonly]="true">
+                                <citxt (cModel)="headerModel.SubRoute = $event" [label]="'เส้นทางย่อย'" [data]="headerModel.SubRoute" [readonly]="true">
                                 </citxt>
                             </div>
                         </div>
@@ -795,122 +640,71 @@
         <div class="card-panel hide-on-large-only">
             <div class="row">
                 <div class="col s12">
-                    <citxt
-                        (cModel)="headerModel.ShipmentNo = $event" 
-                        [label]="'Shipment No.'"
-                        [data]="headerModel.ShipmentNo" [readonly]="true">
+                    <citxt (cModel)="headerModel.ShipmentNo = $event" [label]="'Shipment No.'" [data]="headerModel.ShipmentNo" [readonly]="true">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="headerModel.InvoiceNo = $event" 
-                        [label]="'Invoice No.'"
-                        [data]="headerModel.InvoiceNo">
+                    <citxt (cModel)="headerModel.InvoiceNo = $event" [label]="'Invoice No.'" [data]="headerModel.InvoiceNo">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="headerModel.Comment = $event" 
-                        [label]="'หมายเหตุ'"
-                        [data]="headerModel.Comment">
+                    <citxt (cModel)="headerModel.Comment = $event" [label]="'หมายเหตุ'" [data]="headerModel.Comment">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <cdp
-                        (cModel)="headerModel.OrderDate = $event" 
-                        [label]="'วันที่เอกสาร'"
-                        [data]="headerModel.OrderDate">
+                    <cdp (cModel)="headerModel.OrderDate = $event" [label]="'วันที่เอกสาร'" [data]="headerModel.OrderDate">
                     </cdp>
                 </div>
                 <div class="col s12">
-                    <citxt
-                        (cModel)="headerModel.OrderNo = $event" 
-                        [label]="'Doc No.'"
-                        [data]="headerModel.OrderNo">
+                    <citxt (cModel)="headerModel.OrderNo = $event" [label]="'Doc No.'" [data]="headerModel.OrderNo">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="headerModel.OrderType = $event" 
-                        [label]="'ประเภทเอกสาร'"
-                        [data]="headerModel.OrderType" [readonly]="true">
+                    <citxt (cModel)="headerModel.OrderType = $event" [label]="'ประเภทเอกสาร'" [data]="headerModel.OrderType" [readonly]="true">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="headerModel.PurchaseNo = $event" 
-                        [label]="'PO No.'"
-                        [data]="headerModel.PurchaseNo">
+                    <citxt (cModel)="headerModel.PurchaseNo = $event" [label]="'PO No.'" [data]="headerModel.PurchaseNo">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <cdp
-                        (cModel)="headerModel.OrderEstimate = $event" 
-                        [label]="'Appt. Date'"
-                        [data]="headerModel.OrderEstimate">
+                    <cdp (cModel)="headerModel.OrderEstimate = $event" [label]="'Appt. Date'" [data]="headerModel.OrderEstimate">
                     </cdp>
                 </div>
                 <div class="col s12">
-                    <citxt
-                        (cModel)="headerModel.CBM = $event" 
-                        [label]="'CBM'"
-                        [data]="headerModel.CBM">
+                    <citxt (cModel)="headerModel.CBM = $event" [label]="'CBM'" [data]="headerModel.CBM">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="headerModel.OwnerDescription = $event" 
-                        [label]="'ผู้ส่ง'"
-                        [data]="headerModel.OwnerDescription" [readonly]="true">
+                    <citxt (cModel)="headerModel.OwnerDescription = $event" [label]="'ผู้ส่ง'" [data]="headerModel.OwnerDescription" [readonly]="true">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="headerModel.Qty = $event" 
-                        [label]="'Carton'"
-                        [data]="headerModel.Qty">
+                    <citxt (cModel)="headerModel.Qty = $event" [label]="'Carton'" [data]="headerModel.Qty">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="headerModel.ShiptoDescription = $event" 
-                        [label]="'ผู้รับ'"
-                        [data]="headerModel.ShiptoDescription" [readonly]="true">
+                    <citxt (cModel)="headerModel.ShiptoDescription = $event" [label]="'ผู้รับ'" [data]="headerModel.ShiptoDescription" [readonly]="true">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="headerModel.Weight = $event" 
-                        [label]="'Weight'"
-                        [data]="headerModel.Weight">
+                    <citxt (cModel)="headerModel.Weight = $event" [label]="'Weight'" [data]="headerModel.Weight">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="headerModel.ShiptoTel = $event" 
-                        [label]="'โทรศัพท์ผู้รับ'"
-                        [data]="headerModel.ShiptoTel" [readonly]="true">
+                    <citxt (cModel)="headerModel.ShiptoTel = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="headerModel.ShiptoTel" [readonly]="true">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="headerModel.ShiptoAddress = $event" 
-                        [label]="'ที่อยู่ผู้รับ'"
-                        [data]="headerModel.ShiptoAddress" [readonly]="true">
+                    <citxt (cModel)="headerModel.ShiptoAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="headerModel.ShiptoAddress" [readonly]="true">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <citxt
-                        (cModel)="headerModel.RouteDescription = $event" 
-                        [label]="'เส้นทางหลัก'"
-                        [data]="headerModel.RouteDescription" [readonly]="true">
+                    <citxt (cModel)="headerModel.RouteDescription = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.RouteDescription" [readonly]="true">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <citxt
-                        (cModel)="headerModel.SubRouteDescription = $event" 
-                        [label]="'เส้นทางย่อย'"
-                        [data]="headerModel.SubRouteDescription" [readonly]="true">
+                    <citxt (cModel)="headerModel.SubRouteDescription = $event" [label]="'เส้นทางย่อย'" [data]="headerModel.SubRouteDescription" [readonly]="true">
                     </citxt>
                 </div>
             </div>
@@ -1198,10 +992,42 @@
                     </div>
                     <div class="col l4 s12">
                         <div style="height: 500px; overflow-x: auto;">
+                            <!-- {{headerModel|json}} -->
                             <!-- <agm-map [latitude]="lat" [longitude]="lng">
                                 <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
                             </agm-map> -->
-                            <img alt="" src="./assets/img/googlemap.png">
+                            <!-- <img alt="" src="./assets/img/googlemap.png"> -->
+                            <div style="overflow-x: auto;">
+                                <table id="users-list-datatable" class="bordered centered striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer Code</th>
+                                            <th>Customer Name</th>
+                                            <th>Location</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="w100">
+                                                    {{headerModel.ShiptoCode}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="w100">
+                                                    {{headerModel.ShiptoName}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="w100 cursor-pointer" (click)="openMap(headerModel.ReceiveCheckOutLocation)">
+                                                    <!-- {{headerModel.ReceiveCheckOutLocation}} -->
+                                                    <img alt="" src="./assets/img/pin.jpg" width="50" height="50">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1209,12 +1035,8 @@
 
                     <div class="col s12 text-center">
                         <div class="row margin-bottom-10">
-                            <cbtn 
-                            [label]="'กลับ'"
-                            [color]="'grey'"
-                            [icon]="''" 
-                            (click)="backToMain()">
-                        </cbtn>
+                            <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="backToMain()">
+                            </cbtn>
                         </div>
                     </div>
                     <div class="col s5">

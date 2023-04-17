@@ -882,4 +882,9 @@ export class TrackingStatusComponent implements OnInit {
 
   }
 
+  openMap(param) {
+    let arr = param.split(',');
+    window.open('https://www.google.com/maps/search/?api=1&query=' + arr[0] + '%2C' + arr[1], '_blank');
+  }
+
 }
