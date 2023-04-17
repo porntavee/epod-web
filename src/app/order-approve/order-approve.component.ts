@@ -23,6 +23,7 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
   listModel: any = []; //ข้อมูลในตารางหน้า Main
+  listTransport: any     = [];
   listDetailModel: any = [];
   headerModel: any = {};
   criteriaModel: any = {} //ค้นหา
@@ -68,6 +69,7 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
 
     this.read();
     this.readRoute();
+    this.readTransport();
   }
 
   viewModel: any;
@@ -83,6 +85,7 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
       "TransportStatus": this.criteriaModel.statusCode,
       "TransportTypeId": this.criteriaModel.typeOfWorkCode,
       "VehicleId": this.criteriaModel.vehicleId,
+      "TransportId": this.criteriaModel.TransportId,
       "RouteId": this.criteriaModel.routeId,
       "Process": "APPROVE",
       "TransportDate": this.criteriaModel.TransportDate != undefined && this.criteriaModel.TransportDate != "Invalid date" ? moment(this.criteriaModel.TransportDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
@@ -315,6 +318,77 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
   setSeq(param, idx) {
     param = idx;
     return param;
+  }
+
+  private setModel(model) {
+    // Set model.
+    let _model: any = model;
+    for (const key in model) {
+      _model[key] = model[key];
+    }
+
+    return _model;
+  }
+
+  // If can't load data to list model.
+  private loadDataFalse(message): any {
+    let _listModel: any = [];
+    this.showErrorMessage(message);
+
+    return _listModel;
+  }
+
+  // Show Error message.
+  private showErrorMessage(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  readTransport() {
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+      "Code": ""
+    }
+
+    // let json = JSON.stringify(criteria);
+    this.serviceProviderService.post('api/Masters/GetTransport', criteria).subscribe(data => {
+      // Set data to model.
+      let model: any = data;
+      this.viewModel = model;
+      // Check model status if true set model data to list model.
+      this.listTransport = model.Status ? model.Data : this.loadDataFalse(model.Message);
+    }, err => {
+      this.showErrorMessage(err.message);
+    });
+  }
+
+  chooseTransportFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Transport',
+        listData: this.listTransport,
+        listDataSearch: this.listTransport 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        // Declare setting local criteria model.
+        let _criteriaModel = {
+          'TransportId'          : result.Id,
+          'TransportCode'        : result.Code,
+          'TransportDescription' : result.Code + ' - ' + result.Description
+        }
+        // Setting header model.
+        _criteriaModel = this.setModel(_criteriaModel);
+        this.criteriaModel = {...this.criteriaModel, ..._criteriaModel};
+      }
+    });
   }
 
   //use

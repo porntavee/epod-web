@@ -404,6 +404,14 @@ p {
     min-width: 300px !important;
 }
 
+.min-width-400 {
+    min-width: 400px !important;
+}
+
+.min-width-500 {
+    min-width: 500px !important;
+}
+
 .min-width-600 {
     min-width: 600px !important;
 }
@@ -498,4 +506,9 @@ p {
 .top-515 {
     position: relative;;
     margin-top: 515px !important;
+}
+
+.top-250 {
+    position: relative;;
+    margin-top: 250px !important;
 }
