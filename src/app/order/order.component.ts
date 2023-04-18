@@ -73,7 +73,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       OrderStatus: this.criteriaModel.StatusCode,
       InvoiceDate: this.verifyDateTime(this.criteriaModel.InvoiceDate),
       TransportId: this.criteriaModel.TransportId,
-      TransportOrderStatus: this.criteriaModel.TransportOrderStatus,
+      TransportOrderStatusCode: this.criteriaModel.TransportOrderStatusCode,
     }
     _criteria = {...this.criteria, ..._criteria};
 
@@ -401,7 +401,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        this.criteriaModel.TransportOrderStatus = result.Code;
+        this.criteriaModel.TransportOrderStatusCode = result.Code;
         this.criteriaModel.TransportOrderStatusDesc = result.Code + ' - ' + result.Description;
       }
     });
