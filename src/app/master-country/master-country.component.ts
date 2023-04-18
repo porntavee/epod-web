@@ -2,15 +2,16 @@ import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angu
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, CountryDialog } from '../dialog/dialog';
+import { ConfirmDialog } from '../dialog/dialog';
 import { Logger } from '../shared/logger.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
 @Component({
-  templateUrl: './master-route.component.html',
-  styleUrls: ['./master-route.component.css']
+  selector: 'app-master-country',
+  templateUrl: './master-country.component.html',
+  styleUrls: ['./master-country.component.css']
 })
-export class MasterRouteComponent implements OnInit, AfterContentChecked {
+export class MasterCountryComponent implements OnInit, AfterContentChecked {
 
   isDebugMode     : boolean = true;
   isMainPage      : boolean = true;
@@ -55,7 +56,7 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
     criteria = {...this.criteria, ...criteria};
     Logger.info('master-subroute', 'render-criteria', criteria, this.isDebugMode)
 
-    this.serviceProviderService.post('api/Masters/GetRoute', criteria)
+    this.serviceProviderService.post('api/Masters/GetCountry', criteria)
     .subscribe(data => {
       // Hidden spinner when load data successfuly.
       this.spinner.hide();
@@ -130,10 +131,6 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
   clearModel() {
     // Clear criteriaModel.
     this.criteriaModel = {};
-    Logger.info('master-vehicle', 'clearModel', this.criteria, this.isDebugMode)
-
-    // Reload Table data.
-    this.render();
   }
 
   addForm() {
@@ -144,11 +141,8 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
       Operation: 'INSERT',
       Id: 'Auto',
       Code: '',
-      CountryCode: '',
       Description : '',
       Active: 'Y',
-      OTD: '1',
-      OTBR: '3'
     }
     // Setting header model.
     this.headerModel = this.setModel(_headerModel);
@@ -172,15 +166,12 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
       "Operation": this.headerModel.Operation,
       "Id": this.headerModel.Id,
       "Code": this.headerModel.Code,
-      "CountryCode": this.headerModel.CountryCode,
       "Description": this.headerModel.Description,
       "Active": this.headerModel.Active,
-      "OTD": this.headerModel.OTD,
-      "OTBR": this.headerModel.OTBR,
     }
     criteria = {...this.criteria, ...criteria};
 
-    this.serviceProviderService.post('api/Masters/SaveRoute', criteria)
+    this.serviceProviderService.post('api/Masters/SaveCountry', criteria)
     .subscribe(data => {
       this.spinner.hide();
 
@@ -219,7 +210,7 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
         }
         criteria = {...this.criteria, ...criteria};
 
-        this.serviceProviderService.post('api/Masters/SaveRoute', criteria).subscribe(data => {
+        this.serviceProviderService.post('api/Masters/SaveCountry', criteria).subscribe(data => {
           this.spinner.hide();
 
           let model: any = data;
@@ -238,36 +229,6 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
       }
     });
   }
-
-  // Choose Country for Add Form.
-  chooseCountryAddForm() {
-    const dialogRef = this.dialog.open(CountryDialog, {
-      disableClose: false,
-      height: '400px',
-      width: '800px',
-      data: { title: 'Country' } 
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      let _headerModel: object = {};
-      if (result != undefined) {
-        _headerModel = {
-          CountryCode: result.Code,
-          CountryDescription: result.Description
-        }
-      } else {
-        _headerModel = {
-          CountryCode: '',
-          CountryDescription: ''
-        }
-      }
-      // Setting header model.
-      _headerModel = this.setModel(_headerModel);
-      this.headerModel = {...this.headerModel, ..._headerModel};
-      console.log(this.headerModel);
-    });
-  }
-
   // Fixing "Expression has changed after it was checked"
   ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();

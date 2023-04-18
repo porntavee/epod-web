@@ -1153,8 +1153,9 @@ export class PrintDialog {
     selector: 'close-job-dialog',
     templateUrl: 'close-job-dialog.html',
 })
-export class CloseJobDialog {
+export class CloseJobDialog implements AfterContentChecked {
     constructor(
+        public changeDetector: ChangeDetectorRef,
         public dialogRef: MatDialogRef<ConfirmDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -1166,5 +1167,62 @@ export class CloseJobDialog {
 
     ok() {
         this.dialogRef.close(this.reason);
+    }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
+}
+
+@Component({
+    selector: 'country-dialog',
+    templateUrl: 'country-dialog.html',
+})
+export class CountryDialog implements AfterContentChecked {
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        public dialogRef: MatDialogRef<RouteDialog>,
+        private serviceProviderService: ServiceProviderService,
+        private toastr: ToastrService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.read();
+    }
+
+    criteriaModel: any = {};
+
+    read() {
+        let criteria = {
+            "userinformation": this.serviceProviderService.userinformation,
+            "Fillter": this.criteriaModel.Fillter,
+        }
+
+        // let json = JSON.stringify(criteria);
+        this.serviceProviderService.post('api/Masters/GetCountry', criteria).subscribe(data => {
+            let model: any = {};
+            model = data;
+
+            if (model.Status) {
+                this.data.listData = model.Data;
+            }
+            else {
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+        }, err => {
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+    }
+
+    cancel() {
+        this.dialogRef.close(undefined);
+    }
+
+    ok(param) {
+        this.dialogRef.close(param);
+    }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
     }
 }

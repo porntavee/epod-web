@@ -103,7 +103,7 @@ import { OrderTransportComponent } from './order-transport/order-transport.compo
 import { OrderTransportFormComponent } from './order-transport-form/order-transport-form.component';
 import { ConfirmDialog, DriverDialog, GroupUserDialog, RouteDialog , RoutingDialog ,SubRoutingDialog,RegionDialog
   , ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog ,ProvinceDialog,DistrictDialog
-  ,JobStatusDialog,DocReturnDialog,MasterDataDialog,LocationAddressDataDialog, UploadOrderDialog,JobOrderStatusDialog, PrintDialog, CloseJobDialog} from "./dialog/dialog";
+  ,JobStatusDialog,DocReturnDialog,MasterDataDialog,LocationAddressDataDialog, UploadOrderDialog,JobOrderStatusDialog, PrintDialog, CloseJobDialog, CountryDialog} from "./dialog/dialog";
 import { OrderComponent } from './order/order.component';
 import { OrderFormComponent } from './order-form/order-form.component';
 import { MasterUserComponent } from './master-user/master-user.component';
@@ -117,6 +117,7 @@ import { MasterZoneregionComponent } from './master-zoneregion/master-zoneregion
 import { MasterTransportComponent } from './master-transport/master-transport.component';
 import { ReturnHubComponent } from './return-hub/return-hub.component';
 import { MasterHolidayComponent } from './master-holiday/master-holiday.component';
+import { MasterCountryComponent } from './master-country/master-country.component';
 import { ReportTransportManifestComponent } from './report-transport-manifest/report-transport-manifest.component';
 import { ReportSummaryComponent } from './report-summary/report-summary.component';
 import { ReportCustomerComponent } from './report-customer/report-customer.component';
@@ -224,6 +225,7 @@ import { NgxPrintModule } from "ngx-print";
     MasterTransportComponent,
     ReturnHubComponent,
     MasterHolidayComponent,
+    MasterCountryComponent,
     ReportTransportManifestComponent,
     ReportSummaryComponent,
     ReportCustomerComponent,
@@ -231,7 +233,8 @@ import { NgxPrintModule } from "ngx-print";
     UploadOrderDialog,
     JobOrderStatusDialog,
     PrintDialog,
-    CloseJobDialog
+    CloseJobDialog,
+    CountryDialog
   ],
   imports: [
     BrowserModule,

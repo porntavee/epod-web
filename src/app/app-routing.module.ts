@@ -38,11 +38,13 @@ import { MasterSubrouteComponent } from './master-subroute/master-subroute.compo
 import { MasterZoneregionComponent } from './master-zoneregion/master-zoneregion.component'
 import { MasterVehicleComponent } from './master-vehicle/master-vehicle.component'
 import { MasterTransportComponent } from './master-transport/master-transport.component'
-import { MasterHolidayComponent } from './master-holiday/master-holiday.component'
+import { MasterHolidayComponent } from './master-holiday/master-holiday.component';
+import { MasterCountryComponent } from './master-country/master-country.component';
 import { ReturnHubComponent } from './return-hub/return-hub.component';
 import { ReportTransportManifestComponent } from './report-transport-manifest/report-transport-manifest.component';
 import { ReportSummaryComponent } from './report-summary/report-summary.component';
 import { ReportCustomerComponent } from './report-customer/report-customer.component';
+
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -86,6 +88,7 @@ const routes: Routes = [
   { path: 'master-vehicle', component: MasterVehicleComponent },
   { path: 'master-transport', component: MasterTransportComponent },
   { path: 'master-holiday', component: MasterHolidayComponent },
+  { path: 'master-country', component: MasterCountryComponent },
   { path: 'transport-manifest-report', component: ReportTransportManifestComponent },
   { path: 'summary-report', component: ReportSummaryComponent },
   { path: 'customer-report', component: ReportCustomerComponent },

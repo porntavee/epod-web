@@ -108,7 +108,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   viewModel: any;
   read() {
     this.spinner.show();
-
+    
     let criteria = {
       "TransportNo": this.id
     }
@@ -1233,6 +1233,9 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   }
 
   addOrder() {
+    // Set current page of pagination to 1 When add new order.
+    this.currentPage = 1;
+    console.log(this.currentPage);
     this.listFormModel.forEach(element => {
       if (element.isSelected) {
         let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
@@ -1322,7 +1325,6 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     //     return;
     //   }
     // }
-
 
     this.spinner.show();
 

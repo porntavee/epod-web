@@ -396,6 +396,10 @@ p {
     min-width: 200px !important;
 }
 
+.min-width-280 {
+    min-width: 280px !important;
+}
+
 .min-width-250 {
     min-width: 250px !important;
 }
@@ -494,14 +498,48 @@ p {
     box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
-
-.filter-fixed
+.filter-fixed-top
 {
     position: fixed;
     z-index: 997;
-    width: 87.4%;
     top: 56px;
+    width: 85% !important;
 }
+
+@media (min-width: 768px)
+{
+    .filter-fixed-top
+    {
+        width: 70% !important;
+    }
+
+}
+
+@media (min-width: 992px)
+{
+    .filter-fixed-top
+    {
+        width: 75% !important;
+    }
+}
+
+@media (min-width: 1200px)
+{
+    .filter-fixed-top
+    {
+        width: 82% !important;
+    }
+}
+
+
+@media (min-width: 1900px)
+{
+    .filter-fixed-top
+    {
+        width: 88% !important;
+    }
+}
+
 
 .top-515 {
     position: relative;;
@@ -511,4 +549,16 @@ p {
 .top-250 {
     position: relative;;
     margin-top: 250px !important;
+}
+
+.dialog-min-max-height {
+    min-height: 300px !important;
+    max-height: 300px !important;
+}
+
+.dialog-position {
+    position: sticky !important;
+    top: 0 !important;
+    background-color: white;
+    z-index: 999;
 }

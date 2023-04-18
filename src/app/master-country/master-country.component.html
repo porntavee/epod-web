@@ -51,8 +51,6 @@
                             <th>รหัสระบบ</th>
                             <th>รหัส</th>
                             <th>รายละเอียด</th>
-                            <!-- <th>On Time Delivery</th> -->
-                            <th>On Time Bill Return</th>
                             <th>คำสั่ง</th>
                         </tr>
                     </thead>
@@ -67,12 +65,6 @@
                             </td>
                            <td class="min-width-100">
                                 {{i.Description}}
-                            </td>
-                           <!-- <td class="min-width-100">
-                                +{{i.OTD}}
-                            </td> -->
-                           <td class="min-width-100">
-                                +{{i.OTBR}}
                             </td>
                            <td class="min-width-100">
                                 <a class="btn-floating blue cursor-pointer" (click)="setFormData(i)">
@@ -138,15 +130,7 @@
                         [readonly]="true">
                     </citxt>
                 </div>
-                <div class="col l4 s12">
-                    <citxt
-                        (cModel)="headerModel.CountryDescription = $event" 
-                        [label]="'Country'"
-                        [data]="headerModel.CountryDescription"
-                        [readonly]="true"
-                        (click)="chooseCountryAddForm()">
-                    </citxt>
-                </div>
+                <div class="col l4 s12"></div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
@@ -161,22 +145,6 @@
                         (cModel)="headerModel.Description = $event" 
                         [label]="'*รายละเอียด'" 
                         [data]="headerModel.Description">
-                    </citxt>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.OTD = $event"
-                        [label]="'*On Time Delivery +'"
-                        [data]="headerModel.OTD">
-                    </citxt>
-                </div>
-                <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.OTBR = $event"
-                        [label]="'*On Time Bill Return +'"
-                        [data]="headerModel.OTBR">
                     </citxt>
                 </div>
             </div>
