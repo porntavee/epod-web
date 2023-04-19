@@ -21,7 +21,9 @@ export class DashboardComponent implements OnInit {
   }
 
   criteriaModel: any = {};
-  deliveryStatusModel: any = {WithInTime: 0, OutOfTime: 0, Reject: 0};
+  deliveryStatusModel: any = { WithInTime: 0, OutOfTime: 0, Reject: 0 };
+  proofDeliveryStatusModel: any = { WithInTime: 0, OutOfTime: 0, Reject: 0 };
+  fleetModel: any = { OnTheMove_Percent: 0 };
 
   ngOnInit(): void {
 
@@ -43,6 +45,47 @@ export class DashboardComponent implements OnInit {
 
     let json = JSON.stringify(criteria);
 
+    //dashboard 1
+    this.serviceProviderService.post('api/Report/Dashborad_FleetPie', criteria).subscribe(data => {
+      this.spinner.hide();
+      this.fleet = [];
+
+      let model: any = {};
+      model = data;
+
+      let json1 = JSON.stringify(model.Data);
+
+      this.fleetModel = model.Data[0];
+      this.fleet.push(
+        {
+          "name": "Total Fleet",
+          "value": model.Data[0].TotalFleet
+        },
+        {
+          "name": "On the Move",
+          "value": model.Data[0].TotalFleet.toFixed(2)
+        },
+        {
+          "name": "In Maintenance",
+          "value": model.Data[0].InMaintenance.toFixed(2)
+        });
+
+      // model.Data.forEach(element => {
+      //   this.deliveryByCountry.push(
+      //     {
+      //       "name": element.Code + ' ' + element.Percent.toFixed(2) + "%",
+      //       "value": element.Percent.toFixed(2)
+      //     });
+      // });
+
+      this.fleet = [...this.fleet];
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+
+    //dashboard 2
     this.serviceProviderService.post('api/Report/Dashborad_DeliveriesByCountryPie', criteria).subscribe(data => {
       this.spinner.hide();
       this.deliveryByCountry = [];
@@ -65,7 +108,8 @@ export class DashboardComponent implements OnInit {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
-  
+
+    //dashboard 3
     this.serviceProviderService.post('api/Report/Dashborad_DeliveryStatusPie', criteria).subscribe(data => {
       this.spinner.hide();
       this.deliveryStatus = [];
@@ -79,7 +123,7 @@ export class DashboardComponent implements OnInit {
       this.deliveryStatus.push(
         {
           "name": "Within time limit",
-          "value": model.Data[0].WithInTime || 0
+          "value": model.Data[0].TotalInvoice || 0
         });
 
       // model.Data.forEach(element => {
@@ -97,11 +141,12 @@ export class DashboardComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
 
+    //dashboard 4
     this.serviceProviderService.post('api/Report/Dashborad_DeliveriesByCountryChart', criteria).subscribe(data => {
       this.spinner.hide();
       this.deliveryByCountry3 = [];
       let model: any = {};
-      debugger
+      
       model = data;
       // this.deliveryStatusModel = model.Data[0];
 
@@ -127,6 +172,109 @@ export class DashboardComponent implements OnInit {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
+
+    //dashboard 5
+    this.serviceProviderService.post('api/Report/Dashborad_TripPerDay', criteria).subscribe(data => {
+      this.spinner.hide();
+      this.tripPerDay = [];
+      let model: any = {};
+  
+      model = data;
+      // this.deliveryStatusModel = model.Data[0];
+
+      let json1 = JSON.stringify(model.Data);
+
+      // this.deliveryByCountry3.push(
+      //   {
+      //     "name": "Within time limit",
+      //     "value": 100
+      //   });
+
+      model.Data.forEach(element => {
+        this.tripPerDay.push(
+          {
+            "name": element.MYDATE,
+            "series": [
+              {
+                "name": "2023",
+                "value": element.NumTrip
+              },
+            ]
+          });
+      });
+
+      this.tripPerDay = [...this.tripPerDay];
+      
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+
+     //dashboard 6
+     this.serviceProviderService.post('api/Report/Dashborad_ProofOfDeliveryStatusPie', criteria).subscribe(data => {
+      this.spinner.hide();
+      this.proofDeliveryStatus = [];
+      let model: any = {};
+
+      model = data;
+      this.proofDeliveryStatusModel = model.Data[0];
+
+      let json1 = JSON.stringify(model.Data);
+
+      this.proofDeliveryStatus.push(
+        {
+          "name": "Within time limit",
+          "value": model.Data[0].TotalInvoice || 0
+        });
+
+      // model.Data.forEach(element => {
+      //   this.deliveryStatus.push(
+      //     {
+      //       "name": element.Code + ' ' + element.Percent + "%",
+      //       "value": element.Percent
+      //     });
+      // });
+
+      this.proofDeliveryStatus = [...this.proofDeliveryStatus];
+      debugger
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+
+    //dashboard 7
+    this.serviceProviderService.post('api/Report/Dashborad_ProofOfDeliveriesByCountryChart', criteria).subscribe(data => {
+      this.spinner.hide();
+      this.proofDeliveryByCountry3 = [];
+      let model: any = {};
+      
+      model = data;
+      // this.deliveryStatusModel = model.Data[0];
+
+      let json1 = JSON.stringify(model.Data);
+
+      // this.deliveryByCountry3.push(
+      //   {
+      //     "name": "Within time limit",
+      //     "value": 100
+      //   });
+
+      model.Data.forEach(element => {
+        this.proofDeliveryByCountry3.push(
+          {
+            "name": element.Code,
+            "value": element.TotalInvoice
+          });
+      });
+
+      this.proofDeliveryByCountry3 = [...this.proofDeliveryByCountry3];
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
   }
 
   verifyDateTime(date: string, from: string = ''): any {
@@ -139,7 +287,7 @@ export class DashboardComponent implements OnInit {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
-}
+  }
 
   view: any[] = [350, 200];
   legend: boolean = true;
@@ -192,18 +340,18 @@ export class DashboardComponent implements OnInit {
   }
 
   fleet = [
-    {
-      "name": "Total Fleet",
-      "value": 63
-    },
-    {
-      "name": "On the Move",
-      "value": 60
-    },
-    {
-      "name": "In Maintenance",
-      "value": 3
-    }
+    // {
+    //   "name": "Total Fleet",
+    //   "value": 63
+    // },
+    // {
+    //   "name": "On the Move",
+    //   "value": 60
+    // },
+    // {
+    //   "name": "In Maintenance",
+    //   "value": 3
+    // }
   ];
 
   deliveryByCountry = [
@@ -263,242 +411,242 @@ export class DashboardComponent implements OnInit {
   ];
 
   tripPerDay = [
-    {
-      "name": "January 2022",
-      "series": [
-        {
-          "name": "2010",
-          "value": 73000000
-        },
-        {
-          "name": "2011",
-          "value": 89400000
-        },
-        {
-          "name": "1990",
-          "value": 62000000
-        }
-      ]
-    },
+    // {
+    //   "name": "January 2022",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 73000000
+    //     },
+    //     {
+    //       "name": "2011",
+    //       "value": 89400000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 62000000
+    //     }
+    //   ]
+    // },
 
-    {
-      "name": "February 2022",
-      "series": [
-        {
-          "name": "2010",
-          "value": 309000000
-        },
-        {
-          "name": "2011",
-          "value": 311000000
-        },
-        {
-          "name": "1990",
-          "value": 250000000
-        }
-      ]
-    },
+    // {
+    //   "name": "February 2022",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 309000000
+    //     },
+    //     {
+    //       "name": "2011",
+    //       "value": 311000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 250000000
+    //     }
+    //   ]
+    // },
 
-    {
-      "name": "March 2022",
-      "series": [
-        {
-          "name": "2010",
-          "value": 50000020
-        },
-        {
-          "name": "2011",
-          "value": 58000000
-        },
-        {
-          "name": "1990",
-          "value": 58000000
-        }
-      ]
-    },
-    {
-      "name": "April 2022",
-      "series": [
-        {
-          "name": "2010",
-          "value": 62000000
-        },
-        {
-          "name": "1990",
-          "value": 57000000
-        }
-      ]
-    },
-    {
-      "name": "May 2022",
-      "series": [
-        {
-          "name": "2010",
-          "value": 62000000
-        },
-        {
-          "name": "1990",
-          "value": 57000000
-        }
-      ]
-    },
-    {
-      "name": "June 2022",
-      "series": [
-        {
-          "name": "2010",
-          "value": 62000000
-        },
-        {
-          "name": "1990",
-          "value": 57000000
-        }
-      ]
-    },
-    {
-      "name": "July 2022",
-      "series": [
-        {
-          "name": "2010",
-          "value": 62000000
-        },
-        {
-          "name": "1990",
-          "value": 57000000
-        }
-      ]
-    },
-    {
-      "name": "Auguest 2022",
-      "series": [
-        {
-          "name": "2010",
-          "value": 62000000
-        },
-        {
-          "name": "1990",
-          "value": 57000000
-        }
-      ]
-    },
-    {
-      "name": "January 2023",
-      "series": [
-        {
-          "name": "2010",
-          "value": 73000000
-        },
-        {
-          "name": "2011",
-          "value": 89400000
-        },
-        {
-          "name": "1990",
-          "value": 62000000
-        }
-      ]
-    },
+    // {
+    //   "name": "March 2022",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 50000020
+    //     },
+    //     {
+    //       "name": "2011",
+    //       "value": 58000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 58000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "April 2022",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 62000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 57000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "May 2022",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 62000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 57000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "June 2022",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 62000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 57000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "July 2022",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 62000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 57000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "Auguest 2022",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 62000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 57000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "January 2023",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 73000000
+    //     },
+    //     {
+    //       "name": "2011",
+    //       "value": 89400000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 62000000
+    //     }
+    //   ]
+    // },
 
-    {
-      "name": "February 2023",
-      "series": [
-        {
-          "name": "2010",
-          "value": 309000000
-        },
-        {
-          "name": "2011",
-          "value": 311000000
-        },
-        {
-          "name": "1990",
-          "value": 250000000
-        }
-      ]
-    },
+    // {
+    //   "name": "February 2023",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 309000000
+    //     },
+    //     {
+    //       "name": "2011",
+    //       "value": 311000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 250000000
+    //     }
+    //   ]
+    // },
 
-    {
-      "name": "March 2023",
-      "series": [
-        {
-          "name": "2010",
-          "value": 50000020
-        },
-        {
-          "name": "2011",
-          "value": 58000000
-        },
-        {
-          "name": "1990",
-          "value": 58000000
-        }
-      ]
-    },
-    {
-      "name": "April 2023",
-      "series": [
-        {
-          "name": "2010",
-          "value": 62000000
-        },
-        {
-          "name": "1990",
-          "value": 57000000
-        }
-      ]
-    },
-    {
-      "name": "May 2023",
-      "series": [
-        {
-          "name": "2010",
-          "value": 62000000
-        },
-        {
-          "name": "1990",
-          "value": 57000000
-        }
-      ]
-    },
-    {
-      "name": "June 2023",
-      "series": [
-        {
-          "name": "2010",
-          "value": 62000000
-        },
-        {
-          "name": "1990",
-          "value": 57000000
-        }
-      ]
-    },
-    {
-      "name": "July 2023",
-      "series": [
-        {
-          "name": "2010",
-          "value": 62000000
-        },
-        {
-          "name": "1990",
-          "value": 57000000
-        }
-      ]
-    },
-    {
-      "name": "Auguest 2023",
-      "series": [
-        {
-          "name": "2010",
-          "value": 62000000
-        },
-        {
-          "name": "1990",
-          "value": 57000000
-        }
-      ]
-    }
+    // {
+    //   "name": "March 2023",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 50000020
+    //     },
+    //     {
+    //       "name": "2011",
+    //       "value": 58000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 58000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "April 2023",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 62000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 57000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "May 2023",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 62000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 57000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "June 2023",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 62000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 57000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "July 2023",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 62000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 57000000
+    //     }
+    //   ]
+    // },
+    // {
+    //   "name": "Auguest 2023",
+    //   "series": [
+    //     {
+    //       "name": "2010",
+    //       "value": 62000000
+    //     },
+    //     {
+    //       "name": "1990",
+    //       "value": 57000000
+    //     }
+    //   ]
+    // }
   ];
 
   deliveryByCountry3 = [
@@ -515,4 +663,7 @@ export class DashboardComponent implements OnInit {
     //   "value": 7200000
     // }
   ];
+
+  proofDeliveryStatus = [];
+  proofDeliveryByCountry3 = [];
 }
