@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col l5 s12 p-0 text-right" style="margin-bottom: 5px;">
         <cbtn [label]="'ย้อนหลัง 24 ชม.'" [color]="'grey'" [icon]="''"></cbtn>
         <cbtn [label]="'ย้อนหลัง 7 วัน'" [color]="'grey'" [icon]="''"></cbtn>
@@ -9,6 +9,23 @@
         <cbtn [label]="'รายวัน'" [color]="'grey'" [icon]="''"></cbtn>
         <cbtn [label]="'รายสัปดาห์'" [color]="'grey'" [icon]="''"></cbtn>
         <cbtn [label]="'รายเดือน'" [color]="'grey'" [icon]="''"></cbtn>
+    </div>
+</div> -->
+<div class="row">
+    <div class="col l3 s12 p-0">
+        <cdp (cModel)="criteriaModel.startDate = $event" [label]="'เลือกช่วงเวลา'" [data]="criteriaModel.startDate">
+        </cdp>
+    </div>
+    <div class="col l3 s12 p-0">
+        <cdp (cModel)="criteriaModel.endDate = $event" [label]="'จนถึง'" [data]="criteriaModel.endDate">
+        </cdp>
+    </div>
+    <div class="col l1 s12 p-0">
+        <h1>&nbsp;</h1>
+    </div>
+    <div class="col l3 s12">
+        <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="read()">
+        </cbtn>
     </div>
 </div>
 <div class="row">
@@ -43,8 +60,8 @@
 </div>
 <div class="row">
     <div class="col l3 s12 pl-0" style="background-color:white;">
-        <ngx-charts-gauge [scheme]="colorScheme" [results]="fleet" [legend]="legend" [legendPosition]="legendPosition" [units]="'95%'" [showText]="true" [showAxis]="true" [legendTitle]="'95% Fleet Efficiency'" [smallSegments]="5" (select)="onSelect($event)" (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)">
+        <ngx-charts-gauge [scheme]="colorScheme" [results]="fleet" [legend]="legend" [legendPosition]="legendPosition" [units]="fleetModel.OnTheMove_Percent.toFixed(2) + '%'" [showText]="true" [showAxis]="true" [legendTitle]="fleetModel.OnTheMove_Percent.toFixed(2) + '% Fleet Efficiency'"
+            [smallSegments]="5" (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
         </ngx-charts-gauge>
     </div>
     <div class="col l3 s12">
@@ -55,23 +72,45 @@
         </div>
         <div style="width: 100%; height: 70px; background-color: white; padding-left: 10px;">
             <div class="row">
-                <div class="col l6">
+                <div class="col l4">
                     <div style="display: inline; background-color: #5AA454; min-width: 50px; min-height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
                     <div style="display: inline">&nbsp;BKK</div>
                 </div>
-                <div class="col l6">
+                <div class="col l4">
                     <div style="display: inline; background-color: #E44D25; min-width: 50px; min-height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    <div style="display: inline">&nbsp;Central</div>
+                    <div style="display: inline">&nbsp;CEN</div>
+                </div>
+                <div class="col l4">
+                    <div style="display: inline; background-color: #CFC0BB; min-width: 50px; min-height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div style="display: inline">&nbsp;UN</div>
                 </div>
             </div>
             <div class="row">
-                <div class="col l6">
-                    <div style="display: inline; background-color: #CFC0BB; min-width: 50px; min-height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    <div style="display: inline">&nbsp;Up Country</div>
-                </div>
-                <div class="col l6">
+                <div class="col l4">
                     <div style="display: inline; background-color: #7aa3e5; min-width: 50px; min-height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    <div style="display: inline">&nbsp;MTDC&DEPO</div>
+                    <div style="display: inline">&nbsp;LN</div>
+                </div>
+                <div class="col l4">
+                    <div style="display: inline; background-color: #a8385d; min-width: 50px; min-height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div style="display: inline">&nbsp;US</div>
+                </div>
+                <div class="col l4">
+                    <div style="display: inline; background-color: #aae3f5; min-width: 50px; min-height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div style="display: inline">&nbsp;LS</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l4">
+                    <div style="display: inline; background-color: #c8f557; min-width: 50px; min-height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div style="display: inline">&nbsp;UNE</div>
+                </div>
+                <div class="col l4">
+                    <div style="display: inline; background-color: #8eed4f; min-width: 50px; min-height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div style="display: inline">&nbsp;LNE</div>
+                </div>
+                <div class="col l4">
+                    <div style="display: inline; background-color: #0ceef5; min-width: 50px; min-height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div style="display: inline">&nbsp;N/A</div>
                 </div>
             </div>
         </div>
@@ -83,13 +122,13 @@
         </div>
         <div style="width: 100%; height: 70px; background-color: white; padding-left: 70px;">
             <p>
-                Within time limit 549
+                Within time limit {{numberWithCommas(deliveryStatusModel.WithInTime)}}
             </p>
             <p>
-                Out of time limit 73
+                Out of time limit {{numberWithCommas(deliveryStatusModel.OutOfTime)}}
             </p>
             <p>
-                Reject 0
+                Reject {{numberWithCommas(deliveryStatusModel.Reject)}}
             </p>
         </div>
     </div>
@@ -124,29 +163,29 @@
 </div>
 <div class="row">
     <div class="col l6 s12" style="background-color:white;">
-        <ngx-charts-bar-vertical-normalized [view]="[550, 300]" [scheme]="colorScheme" [results]="tripPerDay" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+        <ngx-charts-line-chart [view]="[550, 300]" [scheme]="colorScheme" [results]="tripPerDay" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
-        </ngx-charts-bar-vertical-normalized>
+        </ngx-charts-line-chart>
     </div>
     <div class="col l3 s12">
         <div style="width: 100%; height: 200px;">
-            <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="deliveryStatus" (select)="onSelect($event)">
+            <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="proofDeliveryStatus" (select)="onSelect($event)">
             </ngx-charts-pie-grid>
         </div>
         <div style="width: 100%; height: 70px; background-color: white; padding-left: 70px;">
             <p>
-                Within time limit 549
+                Within time limit {{numberWithCommas(proofDeliveryStatusModel.WithInTime)}}
             </p>
             <p>
-                Out of time limit 73
+                Out of time limit {{numberWithCommas(proofDeliveryStatusModel.OutOfTime)}}
             </p>
             <p>
-                Reject 0
+                Reject {{numberWithCommas(proofDeliveryStatusModel.Reject)}}
             </p>
         </div>
     </div>
     <div class="col l3 s12">
-        <ngx-charts-bar-horizontal [view]="view" [scheme]="colorScheme" [results]="deliveryByCountry3" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+        <ngx-charts-bar-horizontal [view]="view" [scheme]="colorScheme" [results]="proofDeliveryByCountry3" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel" (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
         </ngx-charts-bar-horizontal>
     </div>
