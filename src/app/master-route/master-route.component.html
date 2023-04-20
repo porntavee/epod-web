@@ -20,6 +20,15 @@
                         [data]="criteriaModel.Fillter">
                     </citxt>
                 </div>
+                <div class="col l3 s12 p-0">
+                    <citxt
+                        (cModel)="criteriaModel.CountryCode = $event" 
+                        [label]="'Country'"
+                        [data]="criteriaModel.CountryCode"
+                        [readonly]="true"
+                        (click)="chooseCountryFilter()">
+                    </citxt>
+                </div>
             </div>
             <div class="row">
                 <div class="col l8 s12 p-0 mb-5px"></div>
@@ -52,7 +61,8 @@
                             <th>รหัส</th>
                             <th>รายละเอียด</th>
                             <!-- <th>On Time Delivery</th> -->
-                            <th>On Time Bill Return</th>
+                            <!-- <th>On Time Bill Return</th> -->
+                            <th>Country</th>
                             <th>คำสั่ง</th>
                         </tr>
                     </thead>
@@ -71,8 +81,11 @@
                            <!-- <td class="min-width-100">
                                 +{{i.OTD}}
                             </td> -->
-                           <td class="min-width-100">
+                           <!-- <td class="min-width-100">
                                 +{{i.OTBR}}
+                            </td> -->
+                            <td class="min-width-100">
+                                {{i.CountryCode}}
                             </td>
                            <td class="min-width-100">
                                 <a class="btn-floating blue cursor-pointer" (click)="setFormData(i)">
@@ -140,11 +153,11 @@
                 </div>
                 <div class="col l4 s12">
                     <citxt
-                        (cModel)="headerModel.CountryDescription = $event" 
+                        (cModel)="headerModel.CountryCode = $event" 
                         [label]="'Country'"
-                        [data]="headerModel.CountryDescription"
+                        [data]="headerModel.CountryCode"
                         [readonly]="true"
-                        (click)="chooseCountryAddForm()">
+                        (click)="chooseCountryForm()">
                     </citxt>
                 </div>
             </div>
@@ -161,22 +174,6 @@
                         (cModel)="headerModel.Description = $event" 
                         [label]="'*รายละเอียด'" 
                         [data]="headerModel.Description">
-                    </citxt>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.OTD = $event"
-                        [label]="'*On Time Delivery +'"
-                        [data]="headerModel.OTD">
-                    </citxt>
-                </div>
-                <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.OTBR = $event"
-                        [label]="'*On Time Bill Return +'"
-                        [data]="headerModel.OTBR">
                     </citxt>
                 </div>
             </div>

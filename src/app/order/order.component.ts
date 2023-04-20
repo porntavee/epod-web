@@ -138,7 +138,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     // Set model.
     Object.keys(model).forEach((key) => {
         if (type == 'header') {
-          this.headerModel[key] = model[key];;
+          this.headerModel[key] = model[key];
         } else {
           this.criteriaModel[key] = model[key];
         }

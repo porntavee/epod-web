@@ -455,7 +455,7 @@
                 </div>
                 <div class="col s2">
                     <div class="row mt-10px">
-                        <cbtn *ngIf="GroupCode == 'S'"
+                        <cbtn *ngIf="GroupCode == 'S' || GroupCode == 'T'"
                             [label]="'ปิดงาน'"
                             [color]="'orange'"
                             [icon]="''" (click)="closeJob()">

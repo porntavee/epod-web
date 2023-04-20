@@ -49,13 +49,14 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
     this.currentPage = 1;
     // Set Operations in Header Model.
     this.headerModel.Operation = 'SELECT';
-    let criteria = {
-      "Fillter": this.criteriaModel.Fillter,
+    let _criteria = {
+      "CountryCode": this.criteriaModel.CountryCode,
+      "Fillter": this.criteriaModel.Fillter
     }
-    criteria = {...this.criteria, ...criteria};
-    Logger.info('master-subroute', 'render-criteria', criteria, this.isDebugMode)
+    _criteria = {...this.criteria, ..._criteria};
 
-    this.serviceProviderService.post('api/Masters/GetRoute', criteria)
+    // Call service provider service to get route data.
+    this.serviceProviderService.post('api/Masters/GetRoute', _criteria)
     .subscribe(data => {
       // Hidden spinner when load data successfuly.
       this.spinner.hide();
@@ -69,15 +70,16 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
    });
   }
 
-  // Set Model.
-  private setModel(model) {
+  // Set Header or Criteria Model.
+  private setHeaderOrCriteriaModel(model, type): any {
     // Set model.
-    let _model: any = model;
-    for (const key in model) {
-      _model[key] = model[key];
-    }
-
-    return _model;
+    Object.keys(model).forEach((key) => {
+      if (type == 'header') {
+        this.headerModel[key] = model[key];;
+      } else {
+        this.criteriaModel[key] = model[key];
+      }
+    });
   }
 
   // If can't load data to list model.
@@ -121,7 +123,7 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
     _headerModel = {...param, ..._headerModel};
 
     // Setting header model.
-    this.headerModel = this.setModel(_headerModel);
+    this.setHeaderOrCriteriaModel(_headerModel, 'header');
 
      // Set to from page.
      this.goToFromPage();
@@ -146,12 +148,10 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
       Code: '',
       CountryCode: '',
       Description : '',
-      Active: 'Y',
-      OTD: '1',
-      OTBR: '3'
+      Active: 'Y'
     }
     // Setting header model.
-    this.headerModel = this.setModel(_headerModel);
+    this.setHeaderOrCriteriaModel(_headerModel, 'header');
     // Set to from page.
     this.goToFromPage();
   }
@@ -174,9 +174,7 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
       "Code": this.headerModel.Code,
       "CountryCode": this.headerModel.CountryCode,
       "Description": this.headerModel.Description,
-      "Active": this.headerModel.Active,
-      "OTD": this.headerModel.OTD,
-      "OTBR": this.headerModel.OTBR,
+      "Active": this.headerModel.Active
     }
     criteria = {...this.criteria, ...criteria};
 
@@ -240,7 +238,32 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
   }
 
   // Choose Country for Add Form.
-  chooseCountryAddForm() {
+  chooseCountryFilter() {
+    const dialogRef = this.dialog.open(CountryDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Country' } 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let _criteriaModel: object = {};
+      if (result != undefined) {
+        _criteriaModel = {
+          CountryCode: result.Code,
+        }
+      } else {
+        _criteriaModel = {
+          CountryCode: '',
+        }
+      }
+      // Setting header model.
+      this.setHeaderOrCriteriaModel(_criteriaModel, 'criteria');
+    });
+  }
+
+  // Choose Country for Add Form.
+  chooseCountryForm() {
     const dialogRef = this.dialog.open(CountryDialog, {
       disableClose: false,
       height: '400px',
@@ -253,18 +276,14 @@ export class MasterRouteComponent implements OnInit, AfterContentChecked {
       if (result != undefined) {
         _headerModel = {
           CountryCode: result.Code,
-          CountryDescription: result.Description
         }
       } else {
         _headerModel = {
           CountryCode: '',
-          CountryDescription: ''
         }
       }
       // Setting header model.
-      _headerModel = this.setModel(_headerModel);
-      this.headerModel = {...this.headerModel, ..._headerModel};
-      console.log(this.headerModel);
+      this.setHeaderOrCriteriaModel(_headerModel, 'header');
     });
   }
 

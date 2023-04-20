@@ -95,7 +95,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
   }
 
   // If sucess load data.
-  private hideSninnerAndShowSuccess(message: string) {
+  private showSuccessMessage(message: string) {
     this.spinner.hide();
     this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
   }
@@ -330,7 +330,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
 
       let model: any = data;
       if (model.Status) {
-        this.hideSninnerAndShowSuccess('บันทึกยกเลิกเสร็จสิ้น');
+        this.showSuccessMessage('บันทึกยกเลิกเสร็จสิ้น');
         this.backToMainPage();
       }
       else {
@@ -372,7 +372,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
 
           this.viewModel = model;
           if (model.Status) {
-            this.hideSninnerAndShowSuccess('เสร็จสิ้น');
+            this.showSuccessMessage('เสร็จสิ้น');
             this.backToMainPage();
           }
           else {

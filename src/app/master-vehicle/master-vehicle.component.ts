@@ -55,6 +55,7 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
     this.headerModel.Operation = 'SELECT';
     let criteria = {
       "Fillter": this.criteriaModel.Fillter,
+      "IsMaintenance": (this.criteriaModel.IsMaintenance == undefined || this.criteriaModel.IsMaintenance == false) ? '' : 'Y',
     }
     criteria = {...this.criteria, ...criteria};
     Logger.info('master-vehicle', 'render-criteria', criteria, this.isDebugMode)
@@ -70,7 +71,7 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
       // Check model status if true set model data to list model.
       this.listModel = model.Status ? model.Data : this.loadDataFalse(model.Message);
     }, err => {
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
   }
 
@@ -87,19 +88,19 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
   // If can't load data to list model.
   private loadDataFalse(message): boolean {
     let _listModel: any = [];
-    this.hideSninnerAndShowError(message);
+    this.showErrorMessage(message);
 
     return _listModel;
   }
 
   // If sucess load data.
-  private hideSninnerAndShowSuccess(message: string) {
+  private showSuccessMessage(message: string) {
     this.spinner.hide();
     this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
   }
 
   // If error load data.
-  private hideSninnerAndShowError(message: string) {
+  private showErrorMessage(message: string) {
     this.spinner.hide();
     this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
   }
@@ -124,9 +125,9 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
       this.viewModel = model;
       this.listVehicleType = model.Status ? 
         model.Data : 
-        this.hideSninnerAndShowError(model.Message);
+        this.showErrorMessage(model.Message);
     }, err => {
-      this.hideSninnerAndShowError(err.Message);
+      this.showErrorMessage(err.Message);
     });
   }
   
@@ -203,6 +204,7 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
       VehicleTypeId : '',
       VehicleTypeCode : '',
       VehicleTypeDescription : '',
+      IsMaintenance:''
     }
     // Setting header model.
     this.headerModel = this.setModel(_headerModel);
@@ -228,6 +230,7 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
       "VehicleTypeId": this.headerModel.VehicleTypeId,
       "Code": this.headerModel.Code,
       "Description": this.headerModel.Description,
+      "IsMaintenance": this.headerModel.IsMaintenance,
       "Active": this.headerModel.Active,
     }
     criteria = {...this.criteria, ...criteria};
@@ -238,13 +241,13 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
 
       let model: any = data;
       if (model.Status) {
-        this.hideSninnerAndShowSuccess('บันทึกยกเลิกเสร็จสิ้น');
+        this.showSuccessMessage('บันทึกยกเลิกเสร็จสิ้น');
         this.backToMainPage();
       } else {
-        this.hideSninnerAndShowError(model.Message);
+        this.showErrorMessage(model.Message);
       }
     }, err => {
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
   }
 
@@ -276,13 +279,13 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
           let model: any = data;
           this.viewModel = model;
           if (model.Status) {
-            this.hideSninnerAndShowSuccess('เสร็จสิ้น');
+            this.showSuccessMessage('เสร็จสิ้น');
             this.backToMainPage();
           } else {
-            this.hideSninnerAndShowError(model.Message);
+            this.showErrorMessage(model.Message);
           }
         }, err => {
-          this.hideSninnerAndShowError(err.message);
+          this.showErrorMessage(err.message);
         });
         // Clear criteriaModel and Reload Table Data.
         this.clearAndReloadData();

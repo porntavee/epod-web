@@ -124,6 +124,8 @@ export class MasterCountryComponent implements OnInit, AfterContentChecked {
     // Setting header model.
     this.headerModel = this.setModel(_headerModel);
 
+    console.log(this.headerModel);
+
      // Set to from page.
      this.goToFromPage();
   }
@@ -142,7 +144,9 @@ export class MasterCountryComponent implements OnInit, AfterContentChecked {
       Id: 'Auto',
       Code: '',
       Description : '',
-      Active: 'Y',
+      OTD: '1',
+      OTBR: '3',
+      Active: 'Y'
     }
     // Setting header model.
     this.headerModel = this.setModel(_headerModel);
@@ -167,6 +171,8 @@ export class MasterCountryComponent implements OnInit, AfterContentChecked {
       "Id": this.headerModel.Id,
       "Code": this.headerModel.Code,
       "Description": this.headerModel.Description,
+      "OTD": this.headerModel.OTD,
+      "OTBR": this.headerModel.OTBR,
       "Active": this.headerModel.Active,
     }
     criteria = {...this.criteria, ...criteria};
