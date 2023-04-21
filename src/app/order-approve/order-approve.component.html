@@ -124,9 +124,9 @@
                 </div>
             </div>
         </div>
-        <!-- Responsive Filter-->
-        <!-- <div class="card-panel hide-on-large-only mt-0">
-            <div class="row">
+        <!-- Start Order Filter Mobile -->
+        <div class="card-panel hide-on-large-only mt-0">
+            <!-- <div class="row">
                 <div class="col s12">
                     <citxt
                         (cModel)="criteriaModel.transportNo = $event"
@@ -136,7 +136,16 @@
                         (click)="chooseTransportNo()">
                     </citxt>
                 </div>
-                <div class="col s12 margin-top-mminus-10">
+                <div class="col s12">
+                    <citxt
+                        (cModel)="criteriaModel.shipToDescription = $event"
+                        [label]="'ชื่อผู้รับ'"
+                        [data]="criteriaModel.shipToDescription"
+                        [readonly]="true"
+                        (click)="chooseShipTo()">
+                    </citxt>
+                </div>
+                <div class="col s12">
                     <citxt
                         (cModel)="criteriaModel.routeDescription = $event"
                         [label]="'Route'"
@@ -145,20 +154,14 @@
                         (click)="chooseRoute()">
                     </citxt>
                 </div>
-                <div class="col s12 margin-top-mminus-10">
+                <div class="col s12">
                     <cdp
                         (cModel)="criteriaModel.apptDate = $event"
                         [label]="'Appt. Date'"
                         [data]="criteriaModel.apptDate">
                     </cdp>
                 </div>
-                <div class="col s12 margin-top-mminus-10">
-                    <cdp
-                        (cModel)="criteriaModel.apptDate = $event"
-                        [label]="'Appt. Date'"
-                        [data]="criteriaModel.apptDate"></cdp>
-                </div>
-                <div class="col s12" style="margin-top: 10px;">
+                <div class="col s12 mt-10px">
                     <citxt
                         (cModel)="criteriaModel.vehicleDescription = $event"
                         [label]="'ทะเบียนรถ'"
@@ -167,7 +170,7 @@
                         (click)="chooseVehicle()">
                     </citxt>
                 </div>
-                <div class="col s12 margin-top-mminus-10">
+                <div class="col s12">
                     <citxt
                         (cModel)="criteriaModel.driverDescription = $event"
                         [label]="'ชื่อคนขับ'"
@@ -176,7 +179,7 @@
                         (click)="chooseDriver()">
                     </citxt>
                 </div>
-                <div class="col s12 margin-top-mminus-10">
+                <div class="col s12">
                     <citxt
                         (cModel)="criteriaModel.statusDescription = $event"
                         [label]="'สถานะ'"
@@ -185,7 +188,7 @@
                         (click)="chooseStatus()">
                     </citxt>
                 </div>
-                <div class="col s12 margin-top-mminus-10">
+                <div class="col s12">
                     <citxt
                         (cModel)="criteriaModel.typeOfWorkDescription = $event"
                         [label]="'Type of Work'"
@@ -194,14 +197,14 @@
                         (click)="chooseTypeOfWork()">
                     </citxt>
                 </div>
-                <div class="col s12 margin-top-mminus-10">
+                <div class="col s12">
                     <cdp
                         (cModel)="criteriaModel.TransportDate = $event"
                         [label]="'วันที่เอกสาร'"
                         [data]="criteriaModel.TransportDate">
                     </cdp>
                 </div>
-                <div class="col s12 margin-top-mminus-10">
+                <div class="col s12">
                     <citxt 
                         (cModel)="criteriaModel.TransportDescription = $event" 
                         [label]="'บริษัทขนส่ง'" 
@@ -212,24 +215,26 @@
                 </div>
                 <div class="col s12 p-0 mb-5px">
                     <cbtnl
-                    [label]="'ล้าง'"
-                    [color]="'red'"
-                    [icon]="'clear'"
-                    (click)="clear()"></cbtnl>
+                        [label]="'ล้าง'"
+                        [color]="'red'"
+                        [icon]="'clear'"
+                        (click)="clear()">
+                    </cbtnl>
                 </div>
                 <div class="col s12 p-0 mb-5px">
                     <cbtnl
-                    [label]="'ค้นหา'"
-                    [color]="'blue'"
-                    [icon]="'search'"
-                    (click)="read()"></cbtnl>
+                        [label]="'ค้นหา'"
+                        [color]="'blue'"
+                        [icon]="'search'"
+                        (click)="read()">
+                    </cbtnl>
                 </div>
-            </div>
-        </div> -->
+            </div> -->
+        </div>
     </div>
     <!-- {{this.viewModel|json}} -->
     <div class="col s12">
-        <div class="top-250">
+        <div class="top-250 top-1050">
             <div class="card-panel card-panel-header">
                 <div class="row">
                     <div class="col l2 s12">

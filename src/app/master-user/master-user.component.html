@@ -1,6 +1,6 @@
-<!-- Start Vehicle Main Page. -->
+<!-- Start User Main Page. -->
 <div *ngIf="isMainPage">
-    <!-- Start Vehicle Form -->
+    <!-- Start User Filter -->
     <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">
@@ -67,12 +67,60 @@
                 </div>
             </div>
         </div>
+        <!-- Start User Filter Mobile -->
         <div class="card-panel hide-on-large-only mt-0">
-            <div class="row"></div>
+            <div class="row">
+                <div class="col s12">
+                    <citxt
+                        (cModel)="criteriaModel.UserName = $event"
+                        [label]="'รหัสเข้าระบบ'"
+                        [data]="criteriaModel.UserName">
+                    </citxt>
+                </div>
+                <div class="col s12">
+                    <citxt 
+                        (cModel)="criteriaModel.FirstName = $event"
+                        [label]="'ชื่อ'"
+                        [data]="criteriaModel.FirstName">
+                    </citxt>
+                </div>
+                <div class="col s12">
+                    <citxt
+                        (cModel)="criteriaModel.Mobile = $event"
+                        [label]="'เบอร์โทร'"
+                        [data]="criteriaModel.Mobile">
+                    </citxt>
+                </div>
+                <div class="col s12">
+                    <citxt
+                        (cModel)="criteriaModel.GroupName = $event"
+                        [label]="'กลุ่มผู้ใช้งาน'"
+                        [data]="criteriaModel.GroupName"
+                        [readonly]="true"
+                        (click)="chooseGroupUser()">
+                    </citxt>
+                </div>
+                <div class="col s12 mb-1">
+                    <cbtnl
+                        [label]="'ล้าง'"
+                        [color]="'red'"
+                        [icon]="'clear'"
+                        (click)="clearAndReloadData()">
+                    </cbtnl>
+                </div>
+                <div class="col s12">
+                    <cbtnl
+                        [label]="'ค้นหา'"
+                        [color]="'blue'"
+                        [icon]="'search'"
+                        (click)="render()">
+                    </cbtnl>
+                </div>
+            </div>
         </div>
     </div>
     <!-- End Vehicle Form -->
-    <!-- Start Vehicle Data Table. -->
+    <!-- Start User Data Table. -->
     <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">

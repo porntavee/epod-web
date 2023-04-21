@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { TransportNoDialog, ShipToDialog, StatusDialog, JobStatusDialog, TypeOfWorkDialog,
+import { TransportNoDialog, ShipToDialog, StatusDialog, JobStatusDialog, JobOrderStatusDialog, TypeOfWorkDialog,
   RoutingDialog, RouteDialog, SubRoutingDialog, VehicleDialog, DriverDialog, ConfirmDialog, UploadOrderDialog,
   LocationAddressDataDialog, MasterDataDialog } from '../dialog/dialog';
 import { ServiceProviderService } from '../shared/service-provider.service';
@@ -73,9 +73,11 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       OrderStatus: this.criteriaModel.StatusCode,
       InvoiceDate: this.verifyDateTime(this.criteriaModel.InvoiceDate),
       TransportId: this.criteriaModel.TransportId,
-      TransportOrderStatusCode: this.criteriaModel.TransportOrderStatusCode,
+      TransportOrderStatus: this.criteriaModel.TransportOrderStatus,
     }
     _criteria = {...this.criteria, ..._criteria};
+
+    console.log('render', _criteria);
 
     // Check empty search.
     if (task == 'search') {
@@ -90,9 +92,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
         this.showErrorMessage('กรุณาระบุเงื่อนไขค้นหา');
         return;
       }
-
     }
-    // Logger.info('master-order', 'render-_criteria', _criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Transport/GetOrder', _criteria).subscribe(data => {
       // Logger.info('master-order', 'render', _criteria, this.isDebugMode)
@@ -105,7 +105,8 @@ export class OrderComponent implements OnInit, AfterContentChecked {
         model.Data.forEach(element => {
           Object.keys(element).forEach((key) => {
             if (key.includes('InvoiceDate') || key.includes('OrderDate') || key.includes('OrderEstimate')) {
-              element[key + 'Str'] = element[key] == "Invalid date" || element[key] == undefined ? undefined : moment(element[key]).format('DD-MM-YYYY');
+              element[key + 'Str'] = (element[key] == "Invalid date" || element[key] == undefined) ?
+                undefined : moment(element[key]).format('DD-MM-YYYY');
             }
           });
         });
@@ -224,7 +225,6 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
     // Setting header model.
     this.setHeaderOrCriteriaModel(_headerModel, 'header');
-    console.log(this.headerModel);
     
     // Set to from page.
     this.goToFromPage();
@@ -268,7 +268,6 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     // Setting header model.
     this.headerModel = {};
     this.setHeaderOrCriteriaModel(_headerModel, 'header');
-    console.log(this.headerModel);
 
     // Set to from page.
     this.goToFromPage();
@@ -388,6 +387,27 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     });
   }
 
+  chooseJobOrderStatus() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(JobOrderStatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะ' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        console.log('chooseJobOrderStatus', result);
+        // this.criteriaModel.OrderStatus = result.Id;
+        this.criteriaModel.TransportOrderStatus = result.Code;
+        this.criteriaModel.TransportOrderStatusDesc = result.Code + ' - ' + result.Description;
+        // param.Code = result.Code;
+        // param.FirstName = result.firstName;
+        // param.LastName = result.lastName;
+        // param.UserID = result.empID;
+        // this.costCenter = result.CostCenter;
+      }
+    });
+  }
+
   chooseTransportStatusFilter() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(StatusDialog, {
@@ -401,7 +421,7 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-        this.criteriaModel.TransportOrderStatusCode = result.Code;
+        this.criteriaModel.TransportOrderStatus = result.Code;
         this.criteriaModel.TransportOrderStatusDesc = result.Code + ' - ' + result.Description;
       }
     });

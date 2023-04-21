@@ -1,6 +1,6 @@
-<!-- Start Route Main Page -->
+<!-- Start Country Main Page -->
 <div *ngIf="isMainPage">
-    <!-- Start Route Filter -->
+    <!-- Start Country Filter -->
     <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">
@@ -24,13 +24,50 @@
             <div class="row">
                 <div class="col l8 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clearModel()"></cbtn>
-                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="render()"></cbtn>
+                    <cbtn 
+                        [label]="'ล้าง'"
+                        [color]="'red'" 
+                        [icon]="'clear'" 
+                        (click)="clearModel()">
+                    </cbtn>
+                    <cbtn 
+                        [label]="'ค้นหา'" 
+                        [color]="'blue'" 
+                        [icon]="'search'" 
+                        (click)="render()">
+                </cbtn>
                 </div>
             </div>
         </div>
+        <!-- Start Country Filter Mobile -->
         <div class="card-panel hide-on-large-only mt-0">
-            <div class="row"></div>
+            <div class="row">
+                <div class="row">
+                    <div class="col s12">
+                        <citxt 
+                            (cModel)="criteriaModel.Fillter = $event"
+                            [label]="'กรอง (รหัส/รายละเอียด)'"
+                            [data]="criteriaModel.Fillter">
+                        </citxt>
+                    </div>
+                    <div class="col s12 mb-5px">
+                        <cbtnl
+                            [label]="'ล้าง'"
+                            [color]="'red'" 
+                            [icon]="'clear'" 
+                            (click)="clearModel()">
+                        </cbtnl>
+                    </div>
+                    <div class="col s12">
+                        <cbtnl
+                            [label]="'ค้นหา'" 
+                            [color]="'blue'" 
+                            [icon]="'search'" 
+                            (click)="render()">
+                        </cbtnl>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col s12">
@@ -104,9 +141,9 @@
         </div>
     </div>
 </div>
-<!-- End Route Main Page -->
+<!-- End Country Main Page -->
 
-<!-- Start Add Route Page -->
+<!-- Start Add Country Page -->
 <div *ngIf="isFormPage">
 
     <div class="col s12">
@@ -119,7 +156,7 @@
                 </div>
             </div>
         </div>
-        <!-- Start Add Route Form -->
+        <!-- Start Add Country Form -->
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l4 s12">
@@ -182,7 +219,7 @@
                 </div>
             </div>
         </div>
-        <!-- End Add Route Form -->
+        <!-- End Add Country Form -->
     </div>
 </div>
-<!-- End Add Route Form -->
+<!-- End Add Country Form -->

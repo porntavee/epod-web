@@ -112,6 +112,12 @@ export class AppComponent {
           localStorage.setItem('token_epod_20221006', model.Data[0].Id);
           localStorage.setItem('userName', model.Data[0].UserName);
           localStorage.setItem('groupCode', model.Data[0].GroupCode);
+          
+          // Code	GroupName
+          // A	Hub Admin
+          // D	Driver
+          // S	Super Admin
+          // T	Transport Admin
 
           let groupCode = model.Data[0].GroupCode;
           // console.log("GroupCode", groupCode);
