@@ -54,7 +54,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
   itemSelected = false;
   id: any = '';
-  GroupCode: any = '';
+  groupCode: any = '';
 
   permission: any; // <----- Permission ส่งเข้า Read เพื่อให้เห็นเฉพาะ Category ที่ถูกเซตไว้กับ Role สรุปคือ (Category Code List)
   permissionList: any; // <----- PermissionList ไว้สำหรับตรวจสอบว่า Category มีสิทธิ์ในการ Create Read Update Read หรือเปล่า
@@ -78,13 +78,14 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       "userinformation": this.serviceProviderService.userinformation 
     }
 
-    this.GroupCode = this.serviceProviderService.userinformation.GroupCode;
+    
 
     const date = new Date();
     this.criteriaModel.TransportDateString = moment(date.setDate(date.getDate())).format('YYYYMMDD');
   }
 
   ngOnInit(): void {
+    this.groupCode = localStorage.getItem('groupCode');
     this.formModel.StatusCode = 'O';
     this.formModel.StatusDescription = 'O - รอจัดใบคุมรถ';
 

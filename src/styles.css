@@ -519,7 +519,7 @@ p {
 {
     .filter-fixed-top
     {
-        width: 75% !important;
+        width: 70% !important;
     }
 }
 
@@ -527,12 +527,36 @@ p {
 {
     .filter-fixed-top
     {
+        width: 78% !important;
+    }
+}
+
+@media (min-width: 1400px)
+{
+    .filter-fixed-top
+    {
         width: 82% !important;
+    }
+}
+
+@media (min-width: 1600px)
+{
+    .filter-fixed-top
+    {
+        width: 84% !important;
     }
 }
 
 
 @media (min-width: 1900px)
+{
+    .filter-fixed-top
+    {
+        width: 86% !important;
+    }
+}
+
+@media (min-width: 2200px)
 {
     .filter-fixed-top
     {

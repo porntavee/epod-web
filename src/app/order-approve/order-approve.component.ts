@@ -42,6 +42,7 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
   listStage: any = [];
   costCenter: any = '';
   p = 1;
+  groupCode: any = '';
 
   listRoute: any = [];
 
@@ -54,16 +55,7 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
     public changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-
-    // this.listEmployeeCode = [{ value: '', display: '----- เลือก -----' },
-    // { value: 'TH00641001026', display: 'TH00641001026' },
-    // { value: 'TH00641001027', display: 'TH00641001027' },
-    // { value: 'TH00641001028', display: 'TH00641001028' }];
-    // this.listFirstName = [{ value: '', display: '----- เลือก -----' },
-    // { value: '1', display: 'First Name' },
-    // { value: '2', display: 'First Name' },
-    // { value: '3', display: 'First Name' }];
-
+    this.groupCode = localStorage.getItem('groupCode');
     this.criteriaModel.statusCode = 'O';
     this.criteriaModel.statusDescription = 'O - รออนุมัติงาน';
 

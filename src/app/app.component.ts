@@ -94,8 +94,7 @@ export class AppComponent {
 
       this.goToHome();
       window.location.href = "";
-    }
-    else {
+    } else {
 
       let criteria = {
         "userinformation": this.serviceProviderService.userinformation,
@@ -113,13 +112,97 @@ export class AppComponent {
           localStorage.setItem('token_epod_20221006', model.Data[0].Id);
           localStorage.setItem('userName', model.Data[0].UserName);
           localStorage.setItem('groupCode', model.Data[0].GroupCode);
-          localStorage.setItem('category', JSON.stringify({ orderApprove: true, }));
+
+          let groupCode = model.Data[0].GroupCode;
+          // console.log("GroupCode", groupCode);
+          // return;
+          // Driver Role.
+          if (groupCode == 'D') {
+            this.spinner.hide();
+            this.toastr.error("ชื่อผู็ใช้ไม่มีสิทธิ์เข้าใช้งานระบบ", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            localStorage.clear();
+            return;
+          }
+
+          // Hub Admin Role.
+          if(groupCode == 'A') {
+            localStorage.setItem(
+              'category', JSON.stringify({
+                // groupCode: groupCode, 
+                //Transport
+                orderApprove: true,
+                order: true,
+                orderTransport: true,
+                returnHub: true,
+                returnDocument: true,
+                returnTransaction: true,
+                trackingStatus: true,
+                closeJob: true,
+                // Report
+                dashboard: true,
+                transportManifestReport: true,
+                summaryReport: true,
+                customerReport: true
+              })
+            );
+          // Transport Admin Role.
+          } else if (groupCode == 'T') {
+            localStorage.setItem(
+              'category', JSON.stringify({
+                // groupCode: groupCode,
+                //Transport
+                orderApprove: true,
+                order: true,
+                orderTransport: true,
+                returnHub: true,
+                returnDocument: true,
+                returnTransaction: true,
+                trackingStatus: true,
+                // Report
+                dashboard: true,
+                transportManifestReport: true,
+                summaryReport: true,
+                customerReport: true
+              })
+            );
+          // Super Admin Role.
+          } else if (groupCode == 'S') {
+            localStorage.setItem(
+              'category', JSON.stringify({
+                // groupCode: groupCode,
+                //Transport
+                orderApprove: true,
+                order: true,
+                orderTransport: true,
+                returnHub: true,
+                returnDocument: true,
+                returnTransaction: true,
+                trackingStatus: true,
+                // Master
+                masterUser: true,
+                masterShiplocation: true,
+                masterCountry: true,
+                masterRoute: true,
+                masterSubRoute: true,
+                masterZoneregion: true,
+                masterVehicle: true,
+                masterTransport: true,
+                masterHoliday: true,
+                // Report
+                dashboard: true,
+                transportManifestReport: true,
+                summaryReport: true,
+                customerReport: true
+                // Return Document
+              })
+            );
+          }
 
           // this.getIPAddress('Log in');
           window.location.href = "";
-        }
-        else {
+        } else {
           this.spinner.hide();
+          console.log("Model.Messate", model.Message);
           this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         }
 
@@ -159,8 +242,7 @@ export class AppComponent {
           localStorage.clear();
 
         window.location.href = "";
-      }
-      else {
+      } else {
         if (param == 'Log off')
           localStorage.clear();
 
@@ -207,15 +289,12 @@ export class AppComponent {
     //check type for go to router
     if (param.type == 'N') {
       this.router.navigate([param.routing]);
-    }
-    else if (param.type == 'P') {
+    } else if (param.type == 'P') {
       this.router.navigate([param.routing, param.data]);
-    }
-    else if (param.type == 'PS') {
+    } else if (param.type == 'PS') {
       let model = param.data.split(',');
       this.router.navigate([param.routing, model[0], model[1]], { skipLocationChange: true });
-    }
-    else if (param.type == 'O') {
+    } else if (param.type == 'O') {
       let navigationExtras: NavigationExtras = {
         queryParams: {
           special: JSON.stringify(param.data)
@@ -269,8 +348,7 @@ export class AppComponent {
 
       if (model.Status) {
         this.backToLogin();
-      }
-      else {
+      } else {
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
