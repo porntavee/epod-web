@@ -14,28 +14,17 @@
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt 
-                        (cModel)="criteriaModel.Fillter = $event"
-                        [label]="'กรอง (รหัส/รายละเอียด)'"
-                        [data]="criteriaModel.Fillter">
+                    <citxt (cModel)="criteriaModel.Fillter = $event" [label]="'กรอง (รหัส/รายละเอียด)'" [data]="criteriaModel.Fillter">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l8 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn 
-                        [label]="'ล้าง'"
-                        [color]="'red'" 
-                        [icon]="'clear'" 
-                        (click)="clearModel()">
+                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clearModel()">
                     </cbtn>
-                    <cbtn 
-                        [label]="'ค้นหา'" 
-                        [color]="'blue'" 
-                        [icon]="'search'" 
-                        (click)="render()">
-                </cbtn>
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="render()">
+                    </cbtn>
                 </div>
             </div>
         </div>
@@ -44,26 +33,15 @@
             <div class="row">
                 <div class="row">
                     <div class="col s12">
-                        <citxt 
-                            (cModel)="criteriaModel.Fillter = $event"
-                            [label]="'กรอง (รหัส/รายละเอียด)'"
-                            [data]="criteriaModel.Fillter">
+                        <citxt (cModel)="criteriaModel.Fillter = $event" [label]="'กรอง (รหัส/รายละเอียด)'" [data]="criteriaModel.Fillter">
                         </citxt>
                     </div>
                     <div class="col s12 mb-5px">
-                        <cbtnl
-                            [label]="'ล้าง'"
-                            [color]="'red'" 
-                            [icon]="'clear'" 
-                            (click)="clearModel()">
+                        <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clearModel()">
                         </cbtnl>
                     </div>
                     <div class="col s12">
-                        <cbtnl
-                            [label]="'ค้นหา'" 
-                            [color]="'blue'" 
-                            [icon]="'search'" 
-                            (click)="render()">
+                        <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="render()">
                         </cbtnl>
                     </div>
                 </div>
@@ -74,9 +52,13 @@
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <span class="card-panel-header-span">
+                    <!-- <span class="card-panel-header-span">
                         รายการข้อมูล
-                    </span>
+                    </span> -->
+
+                    <label class="table-panel-header-span">
+                        ข้อมูล {{numberWithCommas(listModel.length)}} รายการ
+                    </label>
                 </div>
             </div>
         </div>
@@ -92,18 +74,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: currentPage };; let idx = index">
-                           <td class="min-width-100">
+                        <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: currentPage };; let idx = index">
+                            <td class="min-width-100">
                                 {{i.Id}}
                             </td>
-                           <td class="min-width-100">
+                            <td class="min-width-100">
                                 {{i.Code}}
                             </td>
-                           <td class="min-width-100">
+                            <td class="min-width-100">
                                 {{i.Description}}
                             </td>
-                           <td class="min-width-100">
+                            <td class="min-width-100">
                                 <a class="btn-floating blue cursor-pointer" (click)="setFormData(i)">
                                     <i class="medium material-icons">edit</i>
                                 </a>&nbsp;
@@ -119,21 +100,14 @@
                 <div class="col s6">
                     <div class="row">
                         <div class="col s6 mt-10px">
-                            <cbtn 
-                                [label]="'สร้าง'"
-                                [color]="'blue'"
-                                [icon]="'add'"
-                                (click)="addForm()">
+                            <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="addForm()">
                             </cbtn>
                         </div>
                     </div>
                 </div>
                 <div class="col s6">
                     <div class="text-right">
-                        <pagination-controls
-                            (pageChange)="currentPage = $event"
-                            previousLabel="ก่อนหน้า"
-                            nextLabel="ถัดไป">
+                        <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป">
                         </pagination-controls>
                     </div>
                 </div>
@@ -160,61 +134,37 @@
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l4 s12">
-                    <citxt
-                        (cModel)="headerModel.Id = $event"
-                        [label]="'รหัสระบบ'"
-                        [data]="headerModel.Id"
-                        [readonly]="true">
+                    <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id" [readonly]="true">
                     </citxt>
                 </div>
                 <div class="col l4 s12"></div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Code = $event"
-                        [label]="'*รหัส'"
-                        [data]="headerModel.Code">
+                    <citxt (cModel)="headerModel.Code = $event" [label]="'*รหัส'" [data]="headerModel.Code">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Description = $event" 
-                        [label]="'*รายละเอียด'" 
-                        [data]="headerModel.Description">
+                    <citxt (cModel)="headerModel.Description = $event" [label]="'*รายละเอียด'" [data]="headerModel.Description">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.OTD = $event"
-                        [label]="'*On Time Delivery +'"
-                        [data]="headerModel.OTD">
+                    <citxt (cModel)="headerModel.OTD = $event" [label]="'*On Time Delivery +'" [data]="headerModel.OTD">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.OTBR = $event"
-                        [label]="'*On Time Bill Return +'"
-                        [data]="headerModel.OTBR">
+                    <citxt (cModel)="headerModel.OTBR = $event" [label]="'*On Time Bill Return +'" [data]="headerModel.OTBR">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn
-                        [label]="'บันทึก'"
-                        [color]="'blue'"
-                        [icon]="'save'"
-                        (click)="save()">
+                    <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'" (click)="save()">
                     </cbtn>
-                    <cbtn
-                        [label]="'กลับ'"
-                        [color]="'grey'"
-                        [icon]="'keyboard_backspace'"
-                        (click)="backToMainPage()">
+                    <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="'keyboard_backspace'" (click)="backToMainPage()">
                     </cbtn>
                 </div>
             </div>

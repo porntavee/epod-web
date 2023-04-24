@@ -74,9 +74,9 @@
                     <!-- <i class="material-icons header-icon">
                         featured_play_list
                     </i> -->
-                    <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                        <b>รายการข้อมูล</b>
-                    </span>
+                    <label class="table-panel-header-span">
+                        ข้อมูล {{numberWithCommas(listModel.length)}} รายการ
+                    </label>
                 </div>
                 <div class="col l8 s12">
                     <!-- <cbtn [label]="'New+'" [color]="'blue'" [icon]="'add_circle_outline'" (click)="newTimeSheet()"></cbtn> -->
@@ -221,7 +221,7 @@
                                 <div class="w100">
                                     {{i.InvoiceDate}}
                                 </div>
-                            </td>                
+                            </td>
                             <td>
                                 <div class="w100">
                                     {{i.OrderEstimate}}

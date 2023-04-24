@@ -14,65 +14,40 @@
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <ccb 
-                        (cModel)="headerModel.Monday = $event"
-                        [label]="'วันจันทร์'" 
-                        [data]="headerModel.Monday">
+                    <ccb (cModel)="headerModel.Monday = $event" [label]="'วันจันทร์'" [data]="headerModel.Monday">
                     </ccb>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <ccb
-                        (cModel)="headerModel.Tuesday = $event"
-                        [label]="'วันอังคาร'" 
-                        [data]="headerModel.Tuesday">
+                    <ccb (cModel)="headerModel.Tuesday = $event" [label]="'วันอังคาร'" [data]="headerModel.Tuesday">
                     </ccb>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <ccb
-                        (cModel)="headerModel.Wednesday = $event"
-                        [label]="'วันพุธ'"
-                        [data]="headerModel.Wednesday">
+                    <ccb (cModel)="headerModel.Wednesday = $event" [label]="'วันพุธ'" [data]="headerModel.Wednesday">
                     </ccb>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <ccb
-                        (cModel)="headerModel.Thursday = $event"
-                        [label]="'วันพฤหัสบดี'"
-                        [data]="headerModel.Thursday">
+                    <ccb (cModel)="headerModel.Thursday = $event" [label]="'วันพฤหัสบดี'" [data]="headerModel.Thursday">
                     </ccb>
                 </div>
             </div>
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <ccb
-                        (cModel)="headerModel.Friday = $event"
-                        [label]="'วันศุกร์'"
-                        [data]="headerModel.Friday">
+                    <ccb (cModel)="headerModel.Friday = $event" [label]="'วันศุกร์'" [data]="headerModel.Friday">
                     </ccb>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <ccb
-                        (cModel)="headerModel.Saturday = $event"
-                        [label]="'วันเสาร์'"
-                        [data]="headerModel.Saturday">
+                    <ccb (cModel)="headerModel.Saturday = $event" [label]="'วันเสาร์'" [data]="headerModel.Saturday">
                     </ccb>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <ccb
-                        (cModel)="headerModel.Sunday = $event"
-                        [label]="'วันอาทิตย์'"
-                        [data]="headerModel.Sunday">
+                    <ccb (cModel)="headerModel.Sunday = $event" [label]="'วันอาทิตย์'" [data]="headerModel.Sunday">
                     </ccb>
                 </div>
             </div>
             <div class="row">
                 <div class="col l8 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn 
-                        [label]="'อัพเดท'"
-                        [color]="'blue'"
-                        [icon]="'update'"
-                        (click)="update()">
+                    <cbtn [label]="'อัพเดท'" [color]="'blue'" [icon]="'update'" (click)="update()">
                     </cbtn>
                 </div>
             </div>
@@ -87,9 +62,13 @@
         <div class="card-panel table-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <span class="card-panel-header-span">
+                    <!-- <span class="card-panel-header-span">
                         รายการข้อมูล
-                    </span>
+                    </span> -->
+
+                    <label class="table-panel-header-span">
+                        ข้อมูล {{numberWithCommas(listModel.length)}} รายการ
+                    </label>
                 </div>
             </div>
         </div>
@@ -114,12 +93,10 @@
                                 {{i.Description}}
                             </td>
                             <td class="min-width-100">
-                                <a class="btn-floating blue cursor-pointer"
-                                    (click)="setForm(i)">
+                                <a class="btn-floating blue cursor-pointer" (click)="setForm(i)">
                                     <i class="medium material-icons">edit</i>
                                 </a>&nbsp;
-                                <a class="btn-floating red cursor-pointer"
-                                    (click)="delete(i)">
+                                <a class="btn-floating red cursor-pointer" (click)="delete(i)">
                                     <i class="medium material-icons">delete</i>
                                 </a>
                             </td>
@@ -131,21 +108,14 @@
                 <div class="col s6">
                     <div class="row">
                         <div class="col s6 mt-10px">
-                            <cbtn
-                                [label]="'สร้าง'"
-                                [color]="'blue'"
-                                [icon]="'add'"
-                                (click)="addForm()">
+                            <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="addForm()">
                             </cbtn>
                         </div>
                     </div>
                 </div>
                 <div class="col s6">
                     <div class="text-right">
-                        <pagination-controls
-                            (pageChange)="currentPage = $event"
-                            previousLabel="ก่อนหน้า" 
-                            nextLabel="ถัดไป">
+                        <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป">
                         </pagination-controls>
                     </div>
                 </div>
@@ -172,27 +142,17 @@
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l4 s12">
-                    <citxt
-                        (cModel)="headerModel.Id = $event"
-                        [label]="'รหัสระบบ'"
-                        [data]="headerModel.Id"
-                        [readonly]="true">
+                    <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id" [readonly]="true">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <cdp
-                        (cModel)="headerModel.StrDate = $event"
-                        [label]="'*วันที่หยุด'"
-                        [data]="headerModel.StrDate">
+                    <cdp (cModel)="headerModel.StrDate = $event" [label]="'*วันที่หยุด'" [data]="headerModel.StrDate">
                     </cdp>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Description = $event"
-                        [label]="'*รายละเอียด'"
-                        [data]="headerModel.Description">
+                    <citxt (cModel)="headerModel.Description = $event" [label]="'*รายละเอียด'" [data]="headerModel.Description">
                     </citxt>
                 </div>
             </div>
@@ -201,17 +161,9 @@
             <div class="row">
                 <div class="col l4 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn 
-                        [label]="'บันทึก'"
-                        [color]="'blue'"
-                        [icon]="'save'"
-                        (click)="save()">
+                    <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'" (click)="save()">
                     </cbtn>
-                    <cbtn
-                        [label]="'กลับ'"
-                        [color]="'grey'"
-                        [icon]="'keyboard_backspace'" 
-                        (click)="back()">
+                    <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="'keyboard_backspace'" (click)="back()">
                     </cbtn>
                 </div>
             </div>

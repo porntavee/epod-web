@@ -38,7 +38,7 @@
                         </i>
                         <br>
                         <p>{{listModel[0].Description}}</p>
-                        <p class="fs-20-w-700">{{listModel[0].NumStatus}}</p>
+                        <p class="fs-20-w-700">{{numberWithCommas(listModel[0].NumStatus)}}</p>
                     </div>
                 </div>
 
@@ -50,7 +50,7 @@
                         </i>
                         <br>
                         <p>{{listModel[1].Description}}</p>
-                        <p class="fs-20-w-700">{{listModel[1].NumStatus}}</p>
+                        <p class="fs-20-w-700">{{numberWithCommas(listModel[1].NumStatus)}}</p>
                     </div>
                 </div>
 
@@ -62,7 +62,7 @@
                         </i>
                         <br>
                         <p>{{listModel[2].Description}}</p>
-                        <p class="fs-20-w-700">{{listModel[2].NumStatus}}</p>
+                        <p class="fs-20-w-700">{{numberWithCommas(listModel[2].NumStatus)}}</p>
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@
                         </i>
                         <br>
                         <p>{{listModel[3].Description}}</p>
-                        <p class="fs-20-w-700">{{listModel[3].NumStatus}}</p>
+                        <p class="fs-20-w-700">{{numberWithCommas(listModel[3].NumStatus)}}</p>
                     </div>
                 </div>
 
@@ -86,7 +86,7 @@
                         </i>
                         <br>
                         <p>{{listModel[4].Description}}</p>
-                        <p class="fs-20-w-700">{{listModel[4].NumStatus}}</p>
+                        <p class="fs-20-w-700">{{numberWithCommas(listModel[4].NumStatus)}}</p>
                     </div>
                 </div>
 
@@ -98,7 +98,7 @@
                         </i>
                         <br>
                         <p>{{listModel[5].Description}}</p>
-                        <p class="fs-20-w-700">{{listModel[5].NumStatus}}</p>
+                        <p class="fs-20-w-700">{{numberWithCommas(listModel[5].NumStatus)}}</p>
                     </div>
                 </div>
 
@@ -110,7 +110,7 @@
                         </i>
                         <br>
                         <p>{{listModel[7].Description}}</p>
-                        <p class="fs-20-w-700">{{listModel[7].NumStatus}}</p>
+                        <p class="fs-20-w-700">{{numberWithCommas(listModel[7].NumStatus)}}</p>
                     </div>
                 </div>
 
@@ -122,7 +122,7 @@
                         </i>
                         <br>
                         <p>{{listModel[8].Description}}</p>
-                        <p class="fs-20-w-700">{{listModel[8].NumStatus}}</p>
+                        <p class="fs-20-w-700">{{numberWithCommas(listModel[8].NumStatus)}}</p>
                     </div>
                 </div>
 
@@ -134,7 +134,7 @@
                         </i>
                         <br>
                         <p>{{listModel[9].Description}}</p>
-                        <p class="fs-20-w-700">{{listModel[9].NumStatus}}</p>
+                        <p class="fs-20-w-700">{{numberWithCommas(listModel[9].NumStatus)}}</p>
                     </div>
                 </div>
 
@@ -146,7 +146,7 @@
                             </i>
                         <br>
                         <p>{{listModel[6].Description}}</p>
-                        <p class="fs-20-w-700">{{listModel[6].NumStatus}}</p>
+                        <p class="fs-20-w-700">{{numberWithCommas(listModel[6].NumStatus)}}</p>
                     </div>
                 </div>
             </div>
@@ -261,9 +261,13 @@
         <div class="card-panel table-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <span class="card-panel-header-span">
+                    <!-- <span class="card-panel-header-span">
                         รายการข้อมูล
-                    </span>
+                    </span> -->
+
+                    <label class="table-panel-header-span">
+                        ข้อมูล {{numberWithCommas(viewModel2.length)}} รายการ
+                    </label>
                 </div>
             </div>
         </div>
@@ -417,7 +421,7 @@
                     </div> -->
 
                     <!-- <ul>
-                        <li>paginationModel.textPage</li>
+                        <li>จำนวนทั้งหมด {{numberWithCommas(viewModel2.length)}}</li>
                     </ul> -->
                 </div>
                 <div class="col s6">

@@ -12,86 +12,45 @@
     <div class="card-panel hide-on-med-and-down mt-0px">
         <div class="row">
             <div class="col l3 s12 p-0">
-                <citxt
-                    (cModel)="criteriaModel.transportNo = $event"
-                    [label]="'เลขที่ใบคุม'"
-                    [data]="criteriaModel.transportNo"
-                    [readonly]="true"
-                    (click)="chooseTransportNo()">
+                <citxt (cModel)="criteriaModel.transportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.transportNo" [readonly]="true" (click)="chooseTransportNo()">
                 </citxt>
             </div>
             <div class="col l3 s12 p-0">
-                <citxt
-                    (cModel)="criteriaModel.shipToCode = $event"
-                    [label]="'ชื่อผู้รับ'"
-                    [data]="criteriaModel.shipToDescription"
-                    [readonly]="true"
-                    (click)="chooseShipTo()">
+                <citxt (cModel)="criteriaModel.shipToCode = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.shipToDescription" [readonly]="true" (click)="chooseShipTo()">
                 </citxt>
             </div>
             <div class="col l3 s12 p-0">
-                <citxt
-                    (cModel)="criteriaModel.shipToAddress = $event"
-                    [label]="'ที่อยู่ผู้รับ'"
-                    [data]="criteriaModel.shipToAddress"
-                    [readonly]="true"
-                    (click)="chooseShipTo()">
+                <citxt (cModel)="criteriaModel.shipToAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="criteriaModel.shipToAddress" [readonly]="true" (click)="chooseShipTo()">
                 </citxt>
             </div>
             <div class="col l3 s12 pl-0">
-                <cdp
-                    (cModel)="criteriaModel.approveDateString = $event"
-                    [label]="'Appt. Date'"
-                    [data]="criteriaModel.approveDateString">
+                <cdp (cModel)="criteriaModel.approveDateString = $event" [label]="'Appt. Date'" [data]="criteriaModel.approveDateString">
                 </cdp>
             </div>
         </div>
 
         <div class="row">
             <div class="col l3 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="criteriaModel.vehicleDescription = $event"
-                    [label]="'ทะเบียนรถ'"
-                    [data]="criteriaModel.vehicleDescription"
-                    [readonly]="true"
-                    (click)="chooseVehicle()">
+                <citxt (cModel)="criteriaModel.vehicleDescription = $event" [label]="'ทะเบียนรถ'" [data]="criteriaModel.vehicleDescription" [readonly]="true" (click)="chooseVehicle()">
                 </citxt>
             </div>
             <div class="col l3 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="criteriaModel.driverDescription = $event"
-                    [label]="'ชื่อคนขับ'"
-                    [data]="criteriaModel.driverDescription"
-                    [readonly]="true"
-                    (click)="chooseDriver()">
+                <citxt (cModel)="criteriaModel.driverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.driverDescription" [readonly]="true" (click)="chooseDriver()">
                 </citxt>
             </div>
             <div class="col l3 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="criteriaModel.statusDescription = $event"
-                    [label]="'สถานะ'"
-                    [data]="criteriaModel.statusDescription"
-                    [readonly]="true"
-                    (click)="chooseStatus()">
+                <citxt (cModel)="criteriaModel.statusDescription = $event" [label]="'สถานะ'" [data]="criteriaModel.statusDescription" [readonly]="true" (click)="chooseStatus()">
                 </citxt>
             </div>
             <div class="col l3 s12 pl-0 mtm-20">
-                <citxt
-                    (cModel)="criteriaModel.typeOfWorkDescription = $event"
-                    [label]="'Type of Work'"
-                    [data]="criteriaModel.typeOfWorkDescription"
-                    [readonly]="true"
-                    (click)="chooseTypeOfWork()">
+                <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()">
                 </citxt>
             </div>
         </div>
 
         <div class="row">
             <div class="col l3 s12 pl-0 mtm-20">
-                <cdp
-                    (cModel)="criteriaModel.TransportDate = $event"
-                    [label]="'วันที่เอกสาร'"
-                    [data]="criteriaModel.TransportDate"></cdp>
+                <cdp (cModel)="criteriaModel.TransportDate = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.TransportDate"></cdp>
             </div>
         </div>
 
@@ -99,12 +58,8 @@
         <div class="row">
             <div class="col l8 s12 p-0" style="margin-bottom: 5px;"></div>
             <div class="col l4 s12 p-0 text-right" style="margin-bottom: 5px;">
-                <cbtn
-                [label]="'ล้าง'" [color]="'red'" [icon]="'clear'"
-                (click)="clear()"></cbtn>
-                <cbtn
-                [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'"
-                (click)="read()"></cbtn>
+                <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtn>
+                <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtn>
             </div>
         </div>
 
@@ -112,72 +67,36 @@
     <div class="card-panel hide-on-large-only" style="margin-top: 0px;">
         <div class="row">
             <div class="col s12">
-                <citxt
-                    (cModel)="criteriaModel.transportNo = $event"
-                    [label]="'เลขที่ใบคุม'"
-                    [data]="criteriaModel.transportNo"
-                    [readonly]="true"
-                    (click)="chooseTransportNo()">
+                <citxt (cModel)="criteriaModel.transportNo = $event" [label]="'เลขที่ใบคุม'" [data]="criteriaModel.transportNo" [readonly]="true" (click)="chooseTransportNo()">
                 </citxt>
             </div>
             <div class="col s12" style="margin-top: -10px;">
-                <citxt
-                    (cModel)="criteriaModel.shipToCode = $event"
-                    [label]="'ชื่อผู้รับ'"
-                    [data]="criteriaModel.shipToDescription"
-                    [readonly]="true"
-                    (click)="chooseShipTo()">
+                <citxt (cModel)="criteriaModel.shipToCode = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.shipToDescription" [readonly]="true" (click)="chooseShipTo()">
                 </citxt>
             </div>
             <div class="col s12" style="margin-top: -10px;">
-                <citxt
-                    (cModel)="criteriaModel.shipToAddress = $event"
-                    [label]="'ที่อยู่ผู้รับ'"
-                    [data]="criteriaModel.shipToAddress"
-                    [readonly]="true"
-                    (click)="chooseShipTo()">
+                <citxt (cModel)="criteriaModel.shipToAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="criteriaModel.shipToAddress" [readonly]="true" (click)="chooseShipTo()">
                 </citxt>
             </div>
             <div class="col s12" style="margin-top: -10px;">
-                <citxt
-                    (cModel)="criteriaModel.approveDateString = $event"
-                    [label]="'Appt. Date'"
-                    [data]="criteriaModel.approveDateString">
+                <citxt (cModel)="criteriaModel.approveDateString = $event" [label]="'Appt. Date'" [data]="criteriaModel.approveDateString">
                 </citxt>
             </div>
 
             <div class="col s12" style="margin-top: -10px;">
-                <citxt
-                    (cModel)="criteriaModel.xxx = $event"
-                    [label]="'ชื่อผู้ใช้งาน'"
-                    [data]="criteriaModel.xxx">
+                <citxt (cModel)="criteriaModel.xxx = $event" [label]="'ชื่อผู้ใช้งาน'" [data]="criteriaModel.xxx">
                 </citxt>
             </div>
             <div class="col s12" style="margin-top: -10px;">
-                <citxt
-                    (cModel)="criteriaModel.driverDescription = $event"
-                    [label]="'ชื่อคนขับ'"
-                    [data]="criteriaModel.driverDescription"
-                    [readonly]="true"
-                    (click)="chooseDriver()">
+                <citxt (cModel)="criteriaModel.driverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.driverDescription" [readonly]="true" (click)="chooseDriver()">
                 </citxt>
             </div>
             <div class="col s12" style="margin-top: -10px;">
-                <citxt
-                    (cModel)="criteriaModel.statusDescription = $event"
-                    [label]="'สถานะ'"
-                    [data]="criteriaModel.statusDescription"
-                    [readonly]="true"
-                    (click)="chooseStatus()">
+                <citxt (cModel)="criteriaModel.statusDescription = $event" [label]="'สถานะ'" [data]="criteriaModel.statusDescription" [readonly]="true" (click)="chooseStatus()">
                 </citxt>
             </div>
             <div class="col s12" style="margin-top: -10px;">
-                <citxt
-                    (cModel)="criteriaModel.typeOfWorkDescription = $event"
-                    [label]="'Type of Work'"
-                    [data]="criteriaModel.typeOfWorkDescription"
-                    [readonly]="true"
-                    (click)="chooseTypeOfWork()">
+                <citxt (cModel)="criteriaModel.typeOfWorkDescription = $event" [label]="'Type of Work'" [data]="criteriaModel.typeOfWorkDescription" [readonly]="true" (click)="chooseTypeOfWork()">
                 </citxt>
             </div>
             <!-- <div class="col s12" style="margin-top: -10px;">
@@ -199,14 +118,10 @@
             </div> -->
 
             <div class="col s12 p-0" style="margin-bottom: 5px;">
-                <cbtnl
-                [label]="'ล้าง'" [color]="'red'" [icon]="'clear'"
-                (click)="clear()"></cbtnl>
+                <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
             </div>
             <div class="col s12 p-0" style="margin-bottom: 5px;">
-                <cbtnl
-                [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'"
-                (click)="read()"></cbtnl>
+                <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
             </div>
         </div>
     </div>
@@ -216,9 +131,9 @@
     <div class="card-panel" style="padding: 2px; margin-bottom: 0px; background-color:lavender; vertical-align: text-top;">
         <div class="row">
             <div class="col l2 s12">
-                <span style="position: relative; float:left; font-size: 1em; padding-left: 10px; padding-top: 10px; margin-bottom: 5px;">
-                    <b>รายการข้อมูล</b>
-                </span>
+                <label class="table-panel-header-span">
+                    ข้อมูล {{numberWithCommas(listModel.length)}} รายการ
+                </label>
             </div>
             <div class="col l8 s12">
             </div>
@@ -251,8 +166,7 @@
                     <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
                         <td>
                             <div class="w100">
-                                <a style="cursor: pointer;"
-                                (click)="edit(i.TransportNo)">{{i.TransportNo}}</a>
+                                <a style="cursor: pointer;" (click)="edit(i.TransportNo)">{{i.TransportNo}}</a>
                             </div>
                         </td>
                         <td>
@@ -329,12 +243,10 @@
                         </td>
                         <td>
                             <div class="w100">
-                                <a class="btn-floating blue" style="cursor: pointer;"
-                                (click)="edit(i.TransportNo)">
+                                <a class="btn-floating blue" style="cursor: pointer;" (click)="edit(i.TransportNo)">
                                     <i class="medium material-icons">edit</i>
                                 </a>&nbsp;
-                                <a class="btn-floating red" style="cursor: pointer;"
-                                (click)="delete(i.TransportNo)">
+                                <a class="btn-floating red" style="cursor: pointer;" (click)="delete(i.TransportNo)">
                                     <i class="medium material-icons">delete</i>
                                 </a>
                             </div>
@@ -348,9 +260,7 @@
             <div class="col s6">
                 <div class="row">
                     <div class="col s6" style="margin-top: 10px;">
-                        <cbtn
-                        [label]="'สร้างใบคุมรถ'" [color]="'blue'" [icon]="'add'"
-                        (click)="create()"></cbtn>
+                        <cbtn [label]="'สร้างใบคุมรถ'" [color]="'blue'" [icon]="'add'" (click)="create()"></cbtn>
                     </div>
                 </div>
             </div>

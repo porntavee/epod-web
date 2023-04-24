@@ -1,7 +1,7 @@
 <!-- Start Order Main Page -->
 <div *ngIf="isMainPage">
-   <!-- Start Order Filter -->
-   <div class="col s12">
+    <!-- Start Order Filter -->
+    <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
@@ -14,89 +14,49 @@
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l4 s12 p-0">
-                    <citxt
-                        (cModel)="criteriaModel.OrderNo = $event"
-                        [label]="'Doc No.'"
-                        [data]="criteriaModel.OrderNo">
+                    <citxt (cModel)="criteriaModel.OrderNo = $event" [label]="'Doc No.'" [data]="criteriaModel.OrderNo">
                     </citxt>
                 </div>
                 <div class="col l4 s12 p-0">
-                    <citxt
-                        (cModel)="criteriaModel.ShiptoDescription = $event" 
-                        [label]="'ชื่อผู้รับ'" 
-                        [data]="criteriaModel.ShiptoDescription"
-                        [readonly]="true"
-                        (click)="chooseShipToFilter()">
+                    <citxt (cModel)="criteriaModel.ShiptoDescription = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.ShiptoDescription" [readonly]="true" (click)="chooseShipToFilter()">
                     </citxt>
                 </div>
                 <div class="col l4 s12 pl-0">
-                    <citxt 
-                        (cModel)="criteriaModel.ShiptoAddress = $event" 
-                        [label]="'ที่อยู่ผู้รับ'" 
-                        [data]="criteriaModel.ShiptoAddress"
-                        [readonly]="true"
-                        (click)="chooseShipToFilter()">
+                    <citxt (cModel)="criteriaModel.ShiptoAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="criteriaModel.ShiptoAddress" [readonly]="true" (click)="chooseShipToFilter()">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 p-0 mtm-20">
-                    <citxt 
-                        (cModel)="criteriaModel.InvoiceNo = $event" 
-                        [label]="'Invoice No.'" 
-                        [data]="criteriaModel.InvoiceNo">
+                    <citxt (cModel)="criteriaModel.InvoiceNo = $event" [label]="'Invoice No.'" [data]="criteriaModel.InvoiceNo">
                     </citxt>
                 </div>
                 <div class="col l4 s12 p-0 mtm-20">
-                    <cdp 
-                        (cModel)="criteriaModel.OrderDateStart = $event" 
-                        [label]="'วันที่เอกสาร'" 
-                        [data]="criteriaModel.OrderDateStart">
+                    <cdp (cModel)="criteriaModel.OrderDateStart = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.OrderDateStart">
                     </cdp>
                 </div>
                 <div class="col l4 s12 pl-0 mtm-20">
-                    <cdp 
-                        (cModel)="criteriaModel.OrderDateEnd = $event" 
-                        [label]="'ถึงวันที่เอกสาร'" 
-                        [data]="criteriaModel.OrderDateEnd">
+                    <cdp (cModel)="criteriaModel.OrderDateEnd = $event" [label]="'ถึงวันที่เอกสาร'" [data]="criteriaModel.OrderDateEnd">
                     </cdp>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 p-0 mtm-20">
-                    <citxt 
-                        (cModel)="criteriaModel.StatusDescription = $event" 
-                        [label]="'สถานะบิล'" 
-                        [data]="criteriaModel.StatusDescription"
-                        [readonly]="true"
-                        (click)="chooseStatusFilter()">
+                    <citxt (cModel)="criteriaModel.StatusDescription = $event" [label]="'สถานะบิล'" [data]="criteriaModel.StatusDescription" [readonly]="true" (click)="chooseStatusFilter()">
                     </citxt>
                 </div>
                 <div class="col l4 s12 p-0 mtm-20">
-                    <cdp 
-                        (cModel)="criteriaModel.InvoiceDate = $event" 
-                        [label]="'Invoice Date'" 
-                        [data]="criteriaModel.InvoiceDate">
+                    <cdp (cModel)="criteriaModel.InvoiceDate = $event" [label]="'Invoice Date'" [data]="criteriaModel.InvoiceDate">
                     </cdp>
                 </div>
                 <div class="col l4 s12 pl-0 mtm-20">
-                    <citxt 
-                        (cModel)="criteriaModel.TransportDescription = $event" 
-                        [label]="'บริษัทขนส่ง'" 
-                        [data]="criteriaModel.TransportDescription"
-                        [readonly]="true"
-                        (click)="chooseTransportFilter()">
+                    <citxt (cModel)="criteriaModel.TransportDescription = $event" [label]="'บริษัทขนส่ง'" [data]="criteriaModel.TransportDescription" [readonly]="true" (click)="chooseTransportFilter()">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 p-0 mtm-20">
-                    <citxt
-                        (cModel)="criteriaModel.TransportOrderStatusDesc = $event"
-                        [label]="'สถานะงานขนส่ง'"
-                        [data]="criteriaModel.TransportOrderStatusDesc"
-                        [readonly]="true" 
-                        (click)="chooseJobOrderStatus()">
+                    <citxt (cModel)="criteriaModel.TransportOrderStatusDesc = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.TransportOrderStatusDesc" [readonly]="true" (click)="chooseJobOrderStatus()">
                     </citxt>
                 </div>
             </div>
@@ -104,17 +64,9 @@
             <div class="row">
                 <div class="col l8 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn 
-                        [label]="'ล้าง'"
-                        [color]="'red'"
-                        [icon]="'clear'"
-                        (click)="clearModel()">
+                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clearModel()">
                     </cbtn>
-                    <cbtn 
-                        [label]="'ค้นหา'"
-                        [color]="'blue'"
-                        [icon]="'search'"
-                        (click)="render('search')">
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="render('search')">
                     </cbtn>
                 </div>
             </div>
@@ -124,100 +76,52 @@
         <div class="card-panel hide-on-large-only mt-0">
             <div class="row">
                 <div class="col s12">
-                    <citxt
-                        (cModel)="criteriaModel.OrderNo = $event"
-                        [label]="'Doc No.'"
-                        [data]="criteriaModel.OrderNo">
+                    <citxt (cModel)="criteriaModel.OrderNo = $event" [label]="'Doc No.'" [data]="criteriaModel.OrderNo">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <citxt
-                        (cModel)="criteriaModel.ShiptoDescription = $event" 
-                        [label]="'ชื่อผู้รับ'" 
-                        [data]="criteriaModel.ShiptoDescription"
-                        [readonly]="true"
-                        (click)="chooseShipToFilter()">
+                    <citxt (cModel)="criteriaModel.ShiptoDescription = $event" [label]="'ชื่อผู้รับ'" [data]="criteriaModel.ShiptoDescription" [readonly]="true" (click)="chooseShipToFilter()">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <citxt 
-                        (cModel)="criteriaModel.ShiptoAddress = $event" 
-                        [label]="'ที่อยู่ผู้รับ'" 
-                        [data]="criteriaModel.ShiptoAddress"
-                        [readonly]="true"
-                        (click)="chooseShipToFilter()">
+                    <citxt (cModel)="criteriaModel.ShiptoAddress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="criteriaModel.ShiptoAddress" [readonly]="true" (click)="chooseShipToFilter()">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <citxt 
-                        (cModel)="criteriaModel.InvoiceNo = $event" 
-                        [label]="'Invoice No.'" 
-                        [data]="criteriaModel.InvoiceNo">
+                    <citxt (cModel)="criteriaModel.InvoiceNo = $event" [label]="'Invoice No.'" [data]="criteriaModel.InvoiceNo">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <cdp 
-                        (cModel)="criteriaModel.OrderDateStart = $event" 
-                        [label]="'วันที่เอกสาร'" 
-                        [data]="criteriaModel.OrderDateStart">
+                    <cdp (cModel)="criteriaModel.OrderDateStart = $event" [label]="'วันที่เอกสาร'" [data]="criteriaModel.OrderDateStart">
                     </cdp>
                 </div>
                 <div class="col s12">
-                    <cdp 
-                        (cModel)="criteriaModel.OrderDateEnd = $event" 
-                        [label]="'ถึงวันที่เอกสาร'" 
-                        [data]="criteriaModel.OrderDateEnd">
+                    <cdp (cModel)="criteriaModel.OrderDateEnd = $event" [label]="'ถึงวันที่เอกสาร'" [data]="criteriaModel.OrderDateEnd">
                     </cdp>
                 </div>
-            
+
                 <div class="col s12">
-                    <citxt 
-                        (cModel)="criteriaModel.StatusDescription = $event" 
-                        [label]="'สถานะบิล'" 
-                        [data]="criteriaModel.StatusDescription"
-                        [readonly]="true"
-                        (click)="chooseStatusFilter()">
+                    <citxt (cModel)="criteriaModel.StatusDescription = $event" [label]="'สถานะบิล'" [data]="criteriaModel.StatusDescription" [readonly]="true" (click)="chooseStatusFilter()">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <cdp 
-                        (cModel)="criteriaModel.InvoiceDate = $event" 
-                        [label]="'Invoice Date'" 
-                        [data]="criteriaModel.InvoiceDate">
+                    <cdp (cModel)="criteriaModel.InvoiceDate = $event" [label]="'Invoice Date'" [data]="criteriaModel.InvoiceDate">
                     </cdp>
                 </div>
                 <div class="col s12">
-                    <citxt 
-                        (cModel)="criteriaModel.TransportDescription = $event" 
-                        [label]="'บริษัทขนส่ง'" 
-                        [data]="criteriaModel.TransportDescription"
-                        [readonly]="true"
-                        (click)="chooseTransportFilter()">
+                    <citxt (cModel)="criteriaModel.TransportDescription = $event" [label]="'บริษัทขนส่ง'" [data]="criteriaModel.TransportDescription" [readonly]="true" (click)="chooseTransportFilter()">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <citxt
-                        (cModel)="criteriaModel.TransportOrderStatusDesc = $event"
-                        [label]="'สถานะงานขนส่ง'"
-                        [data]="criteriaModel.TransportOrderStatusDesc"
-                        [readonly]="true" 
-                        (click)="chooseJobOrderStatus()">
+                    <citxt (cModel)="criteriaModel.TransportOrderStatusDesc = $event" [label]="'สถานะงานขนส่ง'" [data]="criteriaModel.TransportOrderStatusDesc" [readonly]="true" (click)="chooseJobOrderStatus()">
                     </citxt>
                 </div>
                 <div class="col s12 p-0 mb-1">
-                    <cbtnl 
-                        [label]="'ล้าง'"
-                        [color]="'red'"
-                        [icon]="'clear'"
-                        (click)="clearModel()">
+                    <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clearModel()">
                     </cbtnl>
                 </div>
                 <div class="col s12 p-0">
-                    <cbtnl 
-                        [label]="'ค้นหา'"
-                        [color]="'blue'"
-                        [icon]="'search'"
-                        (click)="render('search')">
+                    <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="render('search')">
                     </cbtnl>
                 </div>
             </div>
@@ -228,7 +132,7 @@
             <div class="row">
                 <div class="col l8 s12">
                     <span class="card-panel-header-span">
-                        รายการข้อมูล
+                        ข้อมูล {{numberWithCommas(listModel.length)}} รายการ
                     </span>
                 </div>
             </div>
@@ -259,18 +163,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr 
-                            *ngFor="let i of listModel | paginate: 
+                        <tr *ngFor="let i of listModel | paginate: 
                                 { itemsPerPage: 10, currentPage: currentPage }; 
                                 let idx = index">
                             <td class="min-width-100">
-                                <a  class="cursor-pointer"
-                                    (click)="setForm(i)">{{i.OrderNo}}
+                                <a class="cursor-pointer" (click)="setForm(i)">{{i.OrderNo}}
                                 </a>
                             </td>
                             <td class="min-width-100">
-                                <a  class="cursor-pointer"
-                                    (click)="setForm(i)">{{i.InvoiceNo}}
+                                <a class="cursor-pointer" (click)="setForm(i)">{{i.InvoiceNo}}
                                 </a>
                             </td>
                             <td class="min-width-100">
@@ -323,12 +224,10 @@
                                 {{i.Comment}}
                             </td>
                             <td class="min-width-150">
-                                <a class="btn-floating blue cursor-pointer"
-                                    (click)="setForm(i)">
+                                <a class="btn-floating blue cursor-pointer" (click)="setForm(i)">
                                     <i class="medium material-icons">edit</i>
-                                </a>&nbsp; 
-                                <a class="btn-floating red cursor-pointer"
-                                    (click)="delete(i)">
+                                </a>&nbsp;
+                                <a class="btn-floating red cursor-pointer" (click)="delete(i)">
                                     <i class="medium material-icons">delete</i>
                                 </a>
                             </td>
@@ -338,20 +237,17 @@
             </div>
 
             <div class="row">
+                <!-- <div class="col s4">
+                    <ul>
+                        <li>จำนวนทั้งหมด {{numberWithCommas(listModel.length)}}</li>
+                    </ul>
+                </div> -->
                 <div class="col s2 mt-10px">
-                    <cbtn 
-                        [label]="'สร้าง'"
-                        [color]="'blue'"
-                        [icon]="'add'"
-                        (click)="addForm()">
+                    <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="addForm()">
                     </cbtn>
                 </div>
                 <div class="col s2 mt-10px">
-                    <cbtn 
-                        [label]="'อัพโหลดไฟล์'"
-                        [color]="'green'"
-                        [icon]="'file_upload'"
-                        (click)="upload()">
+                    <cbtn [label]="'อัพโหลดไฟล์'" [color]="'green'" [icon]="'file_upload'" (click)="upload()">
                     </cbtn>
                 </div>
                 <div class="col s8">
@@ -375,241 +271,156 @@
                 </div>
             </div>
         </div>
-    <div class="card-panel hide-on-med-and-down mt-0">
-        <div class="row">
-            <div class="col l4 s12 p-0">
-                <citxt
-                    (cModel)="headerModel.OrderNo = $event"
-                    [label]="'Doc No.'"
-                    [data]="headerModel.OrderNo"
-                    [readonly]="true">
-                </citxt>
+        <div class="card-panel hide-on-med-and-down mt-0">
+            <div class="row">
+                <div class="col l4 s12 p-0">
+                    <citxt (cModel)="headerModel.OrderNo = $event" [label]="'Doc No.'" [data]="headerModel.OrderNo" [readonly]="true">
+                    </citxt>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.InvoiceNo = $event"
-                    [label]="'** Invoice No.'"
-                    [data]="headerModel.InvoiceNo">
-                </citxt>
-            </div>
-            <div class="col l2 s12 p-0 mtm-20">
-                <h1>&nbsp;</h1>
-            </div>
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.Comment = $event"
-                    [label]="'หมายเหตุ'"
-                    [data]="headerModel.Comment">
-                </citxt>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <cdp
-                    (cModel)="headerModel.OrderDate = $event"
-                    [label]="'** วันที่เอกสาร'"
-                    [data]="headerModel.OrderDate"></cdp>
-            </div>
-            <div class="col l2 s12 p-0 mtm-20">
-                <h1>&nbsp;</h1>
-            </div>
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.ReferenceNo = $event"
-                    [label]="'Reference No.'"
-                    [data]="headerModel.ReferenceNo">
-                </citxt>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.OrderTypeDescription = $event"
-                    [label]="'** ประเภทเอกสาร'"
-                    [data]="headerModel.OrderTypeDescription"
-                    [readonly]="true"
-                    (click)="chooseJobType()">
-                </citxt>
-            </div>
-            <div class="col l2 s12 p-0 mtm-20">
-                <h1>&nbsp;</h1>
-            </div>
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.PurchaseNo = $event"
-                    [label]="'PO No.'"
-                    [data]="headerModel.PurchaseNo">
-                </citxt>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <cdp
-                    (cModel)="headerModel.OrderEstimate = $event"
-                    [label]="'** Appt. Date'"
-                    [data]="headerModel.OrderEstimate"></cdp>
-            </div>
-            <div class="col l2 s12 p-0 mtm-20">
-                <h1>&nbsp;</h1>
-            </div>
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.Qty = $event"
-                    [label]="'** Carton'"
-                    [data]="headerModel.Qty">
-                </citxt>
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.InvoiceNo = $event" [label]="'** Invoice No.'" [data]="headerModel.InvoiceNo">
+                    </citxt>
+                </div>
+                <div class="col l2 s12 p-0 mtm-20">
+                    <h1>&nbsp;</h1>
+                </div>
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.Comment = $event" [label]="'หมายเหตุ'" [data]="headerModel.Comment">
+                    </citxt>
+                </div>
             </div>
 
-        </div>
-
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.OwnerDescription = $event"
-                    [label]="'** เจ้าของงาน'"
-                    [data]="headerModel.OwnerDescription"
-                    [readonly]="true"
-                    (click)="chooseOwner()">
-                </citxt>
-            </div>
-            <div class="col l2 s12 p-0 mtm-20">
-                <h1>&nbsp;</h1>
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <cdp (cModel)="headerModel.OrderDate = $event" [label]="'** วันที่เอกสาร'" [data]="headerModel.OrderDate"></cdp>
+                </div>
+                <div class="col l2 s12 p-0 mtm-20">
+                    <h1>&nbsp;</h1>
+                </div>
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.ReferenceNo = $event" [label]="'Reference No.'" [data]="headerModel.ReferenceNo">
+                    </citxt>
+                </div>
             </div>
 
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.UoM = $event"
-                    [label]="'** UoM'"
-                    [data]="headerModel.UoM">
-                </citxt>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.ShiptoDescription = $event"
-                    [label]="'** ผู้รับ'"
-                    [data]="headerModel.ShiptoDescription"
-                    [readonly]="true"
-                    (click)="chooseShipTo()">
-                </citxt>
-            </div>
-            <div class="col l2 s12 p-0 mtm-20">
-                <h1>&nbsp;</h1>
-            </div>
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.CBM = $event"
-                    [label]="'** CBM'"
-                    [data]="headerModel.CBM">
-                </citxt>
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.OrderTypeDescription = $event" [label]="'** ประเภทเอกสาร'" [data]="headerModel.OrderTypeDescription" [readonly]="true" (click)="chooseJobType()">
+                    </citxt>
+                </div>
+                <div class="col l2 s12 p-0 mtm-20">
+                    <h1>&nbsp;</h1>
+                </div>
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.PurchaseNo = $event" [label]="'PO No.'" [data]="headerModel.PurchaseNo">
+                    </citxt>
+                </div>
             </div>
 
-        </div>
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <cdp (cModel)="headerModel.OrderEstimate = $event" [label]="'** Appt. Date'" [data]="headerModel.OrderEstimate"></cdp>
+                </div>
+                <div class="col l2 s12 p-0 mtm-20">
+                    <h1>&nbsp;</h1>
+                </div>
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.Qty = $event" [label]="'** Carton'" [data]="headerModel.Qty">
+                    </citxt>
+                </div>
 
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.ShiptoMobile = $event"
-                    [label]="'โทรศัพท์ผู้รับ'"
-                    [data]="headerModel.ShiptoMobile"
-                    [readonly]="true"
-                    (click)="chooseShipTo()">
-                </citxt>
             </div>
-            <div class="col l2 s12 p-0 mtm-20">
-                <h1>&nbsp;</h1>
-            </div>
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.Weight = $event"
-                    [label]="'** Weight'"
-                    [data]="headerModel.Weight">
-                </citxt>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <cdp
-                    (cModel)="headerModel.InvoiceDate = $event"
-                    [label]="'** Invoice Date'"
-                    [data]="headerModel.InvoiceDate"></cdp>
-            </div>
-            <div class="col l2 s12 p-0 mtm-20">
-                <h1>&nbsp;</h1>
-            </div>
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt 
-                    (cModel)="headerModel.TransportDescription = $event"
-                    [label]="'** บริษัทขนส่ง'"
-                    [data]="headerModel.TransportDescription"
-                    [readonly]="true"
-                    (click)="chooseTransport()">
-                </citxt>
-            </div>
-        </div>
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.OwnerDescription = $event" [label]="'** เจ้าของงาน'" [data]="headerModel.OwnerDescription" [readonly]="true" (click)="chooseOwner()">
+                    </citxt>
+                </div>
+                <div class="col l2 s12 p-0 mtm-20">
+                    <h1>&nbsp;</h1>
+                </div>
 
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <ctxta
-                    (cModel)="headerModel.ShiptoAddress = $event"
-                    [label]="'** ที่อยู่ผู้รับ'"
-                    [data]="headerModel.ShiptoAddress"
-                    (click)="chooseShipTo()">
-                </ctxta>
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.UoM = $event" [label]="'** UoM'" [data]="headerModel.UoM">
+                    </citxt>
+                </div>
             </div>
-        </div>
-        
-        
 
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.RouteDescription = $event"
-                    [label]="'** เส้นทางหลัก'"
-                    [data]="headerModel.RouteDescription"
-                    [readonly]="true"
-                    (click)="chooseRoute()">
-                </citxt>
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.ShiptoDescription = $event" [label]="'** ผู้รับ'" [data]="headerModel.ShiptoDescription" [readonly]="true" (click)="chooseShipTo()">
+                    </citxt>
+                </div>
+                <div class="col l2 s12 p-0 mtm-20">
+                    <h1>&nbsp;</h1>
+                </div>
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.CBM = $event" [label]="'** CBM'" [data]="headerModel.CBM">
+                    </citxt>
+                </div>
+
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col l4 s12 p-0 mtm-20">
-                <citxt
-                    (cModel)="headerModel.SubRouteDescription = $event"
-                    [label]="'** เส้นทางย่อย'"
-                    [data]="headerModel.SubRouteDescription"
-                    [readonly]="true"
-                    (click)="chooseSubRoute()">
-                </citxt>
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.ShiptoMobile = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="headerModel.ShiptoMobile" [readonly]="true" (click)="chooseShipTo()">
+                    </citxt>
+                </div>
+                <div class="col l2 s12 p-0 mtm-20">
+                    <h1>&nbsp;</h1>
+                </div>
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.Weight = $event" [label]="'** Weight'" [data]="headerModel.Weight">
+                    </citxt>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col l4 s12 p-0 mb-5px"></div>
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <cdp (cModel)="headerModel.InvoiceDate = $event" [label]="'** Invoice Date'" [data]="headerModel.InvoiceDate"></cdp>
+                </div>
+                <div class="col l2 s12 p-0 mtm-20">
+                    <h1>&nbsp;</h1>
+                </div>
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.TransportDescription = $event" [label]="'** บริษัทขนส่ง'" [data]="headerModel.TransportDescription" [readonly]="true" (click)="chooseTransport()">
+                    </citxt>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <ctxta (cModel)="headerModel.ShiptoAddress = $event" [label]="'** ที่อยู่ผู้รับ'" [data]="headerModel.ShiptoAddress" (click)="chooseShipTo()">
+                    </ctxta>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.RouteDescription = $event" [label]="'** เส้นทางหลัก'" [data]="headerModel.RouteDescription" [readonly]="true" (click)="chooseRoute()">
+                    </citxt>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="headerModel.SubRouteDescription = $event" [label]="'** เส้นทางย่อย'" [data]="headerModel.SubRouteDescription" [readonly]="true" (click)="chooseSubRoute()">
+                    </citxt>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col l4 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn
-                    
-                    [label]="'บันทึก'"
-                        [color]="'blue'"
-                        [icon]="'save'"
-                        (click)="save()">
+                    <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'" (click)="save()">
                     </cbtn>
-                    <cbtn
-                        [label]="'กลับ'"
-                        [color]="'grey'"
-                        [icon]="'keyboard_backspace'"
-                        (click)="backToMainPage()">
+                    <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="'keyboard_backspace'" (click)="backToMainPage()">
                     </cbtn>
                 </div>
+            </div>
         </div>
     </div>
-</div>

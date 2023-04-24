@@ -14,66 +14,38 @@
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt
-                        (cModel)="criteriaModel.Code = $event" 
-                        [label]="'รหัส'"
-                        [data]="criteriaModel.Code">
+                    <citxt (cModel)="criteriaModel.Code = $event" [label]="'รหัส'" [data]="criteriaModel.Code">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt
-                        (cModel)="criteriaModel.Address = $event" 
-                        [label]="'สถานที่ (Address)'"
-                        [data]="criteriaModel.Address">
+                    <citxt (cModel)="criteriaModel.Address = $event" [label]="'สถานที่ (Address)'" [data]="criteriaModel.Address">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt
-                        (cModel)="criteriaModel.Mobile = $event" 
-                        [label]="'เบอร์โทร'"
-                        [data]="criteriaModel.Mobile">
+                    <citxt (cModel)="criteriaModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="criteriaModel.Mobile">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l3 s12 p-0 mtm-20">
-                    <citxt
-                        (cModel)="criteriaModel.ContractName = $event" 
-                        [label]="'ชื่อผู้ติดต่อ'"
-                        [data]="criteriaModel.ContractName">
+                    <citxt (cModel)="criteriaModel.ContractName = $event" [label]="'ชื่อผู้ติดต่อ'" [data]="criteriaModel.ContractName">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0 mtm-20">
-                    <citxt
-                        (cModel)="criteriaModel.RouteDescription = $event" 
-                        [label]="'เส้นทางหลัก'"
-                        [data]="criteriaModel.RouteDescription"
-                        [readonly]="true"
-                        (click)="chooseMainRouteFilter()">
+                    <citxt (cModel)="criteriaModel.RouteDescription = $event" [label]="'เส้นทางหลัก'" [data]="criteriaModel.RouteDescription" [readonly]="true" (click)="chooseMainRouteFilter()">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0 ml-130 mtm-30">
-                    <ccb
-                        (cModel)="criteriaModel.IsHub = $event" 
-                        [label]="'HUB'"
-                        [data]="criteriaModel.IsHub">
+                    <ccb (cModel)="criteriaModel.IsHub = $event" [label]="'HUB'" [data]="criteriaModel.IsHub">
                     </ccb>
                 </div>
             </div>
             <div class="row">
                 <div class="col l8 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn 
-                        [label]="'ล้าง'"
-                        [color]="'red'"
-                        [icon]="'clear'"
-                        (click)="clearAndReloadData()">
+                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clearAndReloadData()">
                     </cbtn>
-                    <cbtn 
-                        [label]="'ค้นหา'"
-                        [color]="'blue'"
-                        [icon]="'search'"
-                        (click)="render()">
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="render()">
                     </cbtn>
                 </div>
             </div>
@@ -86,9 +58,13 @@
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <span class="card-panel-header-span">
+                    <!-- <span class="card-panel-header-span">
                         รายการข้อมูล
-                    </span>
+                    </span> -->
+
+                    <label class="table-panel-header-span">
+                        ข้อมูล {{numberWithCommas(listModel.length)}} รายการ
+                    </label>
                 </div>
             </div>
         </div>
@@ -155,12 +131,10 @@
                                 {{i.Latitude}}, {{i.Longtitude}}
                             </td>
                             <td class="min-width-100">
-                                <a class="btn-floating blue cursor-pointer"
-                                    (click)="setForm(i)">
+                                <a class="btn-floating blue cursor-pointer" (click)="setForm(i)">
                                     <i class="medium material-icons">edit</i>
                                 </a>&nbsp;
-                                <a class="btn-floating red cursor-pointer"
-                                    (click)="delete(i)">
+                                <a class="btn-floating red cursor-pointer" (click)="delete(i)">
                                     <i class="medium material-icons">delete</i>
                                 </a>
                             </td>
@@ -172,21 +146,14 @@
                 <div class="col s6">
                     <div class="row">
                         <div class="col s6 mt-10px">
-                            <cbtn 
-                                [label]="'สร้าง'" 
-                                [color]="'blue'"
-                                [icon]="'add'"
-                                (click)="addForm()">
+                            <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="addForm()">
                             </cbtn>
                         </div>
                     </div>
                 </div>
                 <div class="col s6">
                     <div class="text-right">
-                        <pagination-controls
-                            (pageChange)="currentPage = $event"
-                            previousLabel="ก่อนหน้า"
-                            nextLabel="ถัดไป">
+                        <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป">
                         </pagination-controls>
                     </div>
                 </div>
@@ -213,10 +180,7 @@
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l4 s12">
-                    <citxt
-                        (cModel)="headerModel.Code = $event"
-                        [label]="'รหัส'"
-                        [data]="headerModel.Code">
+                    <citxt (cModel)="headerModel.Code = $event" [label]="'รหัส'" [data]="headerModel.Code">
                     </citxt>
                 </div>
                 <div class="col l4 s12">
@@ -226,127 +190,74 @@
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.CustomerName = $event"
-                        [label]="'ชื่อ'"
-                        [data]="headerModel.CustomerName">
+                    <citxt (cModel)="headerModel.CustomerName = $event" [label]="'ชื่อ'" [data]="headerModel.CustomerName">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <ctxta
-                        (cModel)="headerModel.Address = $event"
-                        [label]="'ที่อยู่'"
-                        [data]="headerModel.Address">
+                    <ctxta (cModel)="headerModel.Address = $event" [label]="'ที่อยู่'" [data]="headerModel.Address">
                     </ctxta>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.ContractName = $event"
-                        [label]="'ชื่อผู้ติดต่อ'"
-                        [data]="headerModel.ContractName">
+                    <citxt (cModel)="headerModel.ContractName = $event" [label]="'ชื่อผู้ติดต่อ'" [data]="headerModel.ContractName">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Mobile = $event"
-                        [label]="'เบอร์โทร'"
-                        [data]="headerModel.Mobile">
+                    <citxt (cModel)="headerModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="headerModel.Mobile">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Province = $event"
-                        [label]="'จังหวัด'"
-                        [data]="headerModel.Province"
-                        [readonly]="true"
-                        (click)="chooseProvince()">
+                    <citxt (cModel)="headerModel.Province = $event" [label]="'จังหวัด'" [data]="headerModel.Province" [readonly]="true" (click)="chooseProvince()">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.District = $event"
-                        [label]="'อำเภอ'"
-                        [data]="headerModel.District"
-                        [readonly]="true"
-                        (click)="chooseDistrict()">
+                    <citxt (cModel)="headerModel.District = $event" [label]="'อำเภอ'" [data]="headerModel.District" [readonly]="true" (click)="chooseDistrict()">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.PostCode = $event"
-                        [label]="'รหัสไปรษณีย์'"
-                        [data]="headerModel.PostCode">
+                    <citxt (cModel)="headerModel.PostCode = $event" [label]="'รหัสไปรษณีย์'" [data]="headerModel.PostCode">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Region = $event"
-                        [label]="'โซน'"
-                        [data]="headerModel.Region"
-                        [readonly]="true"
-                        (click)="chooseRegion()">
+                    <citxt (cModel)="headerModel.Region = $event" [label]="'โซน'" [data]="headerModel.Region" [readonly]="true" (click)="chooseRegion()">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Route = $event"
-                        [label]="'เส้นทางหลัก'"
-                        [data]="headerModel.Route"
-                        [readonly]="true"
-                        (click)="chooseMainRoute()">
+                    <citxt (cModel)="headerModel.Route = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.Route" [readonly]="true" (click)="chooseMainRoute()">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.SubRoute = $event"
-                        [label]="'เส้นทางย่อย'"
-                        [data]="headerModel.SubRoute"
-                        [readonly]="true"
-                        (click)="chooseSubRoute()">
+                    <citxt (cModel)="headerModel.SubRoute = $event" [label]="'เส้นทางย่อย'" [data]="headerModel.SubRoute" [readonly]="true" (click)="chooseSubRoute()">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Latitude = $event"
-                        [label]="'ละติจูด'"
-                        [data]="headerModel.Latitude">
+                    <citxt (cModel)="headerModel.Latitude = $event" [label]="'ละติจูด'" [data]="headerModel.Latitude">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Longtitude = $event"
-                        [label]="'ลองติจูด'"
-                        [data]="headerModel.Longtitude">
+                    <citxt (cModel)="headerModel.Longtitude = $event" [label]="'ลองติจูด'" [data]="headerModel.Longtitude">
                     </citxt>
                 </div>
             </div>
             <div>
                 <div class="col l4 s12 mtm-20 ml-225">
-                    <ccb
-                        (cModel)="headerModel.Hub = $event"
-                        [label]="'HUB'"
-                        [data]="headerModel.Hub"></ccb>
+                    <ccb (cModel)="headerModel.Hub = $event" [label]="'HUB'" [data]="headerModel.Hub"></ccb>
                 </div>
             </div>
             <div class="row">
                 <!-- Hidden -->
                 <div class="row" hidden="true">
                     <div class="col l4 s12">
-                        <citxt
-                            (cModel)="headerModel.Id = $event"
-                            [label]="'รหัสระบบ'"
-                            [data]="headerModel.Id"
-                            [readonly]="true">
+                        <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id" [readonly]="true">
                         </citxt>
                     </div>
                 </div>
@@ -355,17 +266,9 @@
             <div class="row">
                 <div class="col l4 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn
-                        [label]="'บันทึก'"
-                        [color]="'blue'"
-                        [icon]="'save'"
-                        (click)="save()">
+                    <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'" (click)="save()">
                     </cbtn>
-                    <cbtn
-                        [label]="'กลับ'"
-                        [color]="'grey'"
-                        [icon]="'keyboard_backspace'"
-                        (click)="backToMainPage()">
+                    <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="'keyboard_backspace'" (click)="backToMainPage()">
                     </cbtn>
                 </div>
             </div>

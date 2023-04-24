@@ -14,36 +14,22 @@
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l3 s12 p-0">
-                    <citxt
-                        (cModel)="criteriaModel.UserName = $event"
-                        [label]="'รหัสเข้าระบบ'"
-                        [data]="criteriaModel.UserName">
+                    <citxt (cModel)="criteriaModel.UserName = $event" [label]="'รหัสเข้าระบบ'" [data]="criteriaModel.UserName">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt 
-                        (cModel)="criteriaModel.FirstName = $event"
-                        [label]="'ชื่อ'"
-                        [data]="criteriaModel.FirstName">
+                    <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'ชื่อ'" [data]="criteriaModel.FirstName">
                     </citxt>
                 </div>
                 <div class="col l3 s12 p-0">
-                    <citxt
-                        (cModel)="criteriaModel.Mobile = $event"
-                        [label]="'เบอร์โทร'"
-                        [data]="criteriaModel.Mobile">
+                    <citxt (cModel)="criteriaModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="criteriaModel.Mobile">
                     </citxt>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l3 s12 p-0 mtm-20">
-                    <citxt
-                        (cModel)="criteriaModel.GroupName = $event"
-                        [label]="'กลุ่มผู้ใช้งาน'"
-                        [data]="criteriaModel.GroupName"
-                        [readonly]="true"
-                        (click)="chooseGroupUser()">
+                    <citxt (cModel)="criteriaModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'" [data]="criteriaModel.GroupName" [readonly]="true" (click)="chooseGroupUser()">
                     </citxt>
                 </div>
             </div>
@@ -52,17 +38,9 @@
             <div class="row">
                 <div class="col l8 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn
-                        [label]="'ล้าง'"
-                        [color]="'red'"
-                        [icon]="'clear'"
-                        (click)="clearAndReloadData()">
+                    <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clearAndReloadData()">
                     </cbtn>
-                    <cbtn
-                        [label]="'ค้นหา'"
-                        [color]="'blue'"
-                        [icon]="'search'"
-                        (click)="render()">
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="render()">
                     </cbtn>
                 </div>
             </div>
@@ -71,49 +49,27 @@
         <div class="card-panel hide-on-large-only mt-0">
             <div class="row">
                 <div class="col s12">
-                    <citxt
-                        (cModel)="criteriaModel.UserName = $event"
-                        [label]="'รหัสเข้าระบบ'"
-                        [data]="criteriaModel.UserName">
+                    <citxt (cModel)="criteriaModel.UserName = $event" [label]="'รหัสเข้าระบบ'" [data]="criteriaModel.UserName">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <citxt 
-                        (cModel)="criteriaModel.FirstName = $event"
-                        [label]="'ชื่อ'"
-                        [data]="criteriaModel.FirstName">
+                    <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'ชื่อ'" [data]="criteriaModel.FirstName">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <citxt
-                        (cModel)="criteriaModel.Mobile = $event"
-                        [label]="'เบอร์โทร'"
-                        [data]="criteriaModel.Mobile">
+                    <citxt (cModel)="criteriaModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="criteriaModel.Mobile">
                     </citxt>
                 </div>
                 <div class="col s12">
-                    <citxt
-                        (cModel)="criteriaModel.GroupName = $event"
-                        [label]="'กลุ่มผู้ใช้งาน'"
-                        [data]="criteriaModel.GroupName"
-                        [readonly]="true"
-                        (click)="chooseGroupUser()">
+                    <citxt (cModel)="criteriaModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'" [data]="criteriaModel.GroupName" [readonly]="true" (click)="chooseGroupUser()">
                     </citxt>
                 </div>
                 <div class="col s12 mb-1">
-                    <cbtnl
-                        [label]="'ล้าง'"
-                        [color]="'red'"
-                        [icon]="'clear'"
-                        (click)="clearAndReloadData()">
+                    <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clearAndReloadData()">
                     </cbtnl>
                 </div>
                 <div class="col s12">
-                    <cbtnl
-                        [label]="'ค้นหา'"
-                        [color]="'blue'"
-                        [icon]="'search'"
-                        (click)="render()">
+                    <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="render()">
                     </cbtnl>
                 </div>
             </div>
@@ -125,9 +81,13 @@
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
-                    <span class="card-panel-header-span">
+                    <!-- <span class="card-panel-header-span">
                         รายการข้อมูล
-                    </span>
+                    </span> -->
+
+                    <label class="table-panel-header-span">
+                        ข้อมูล {{numberWithCommas(listModel.length)}} รายการ
+                    </label>
                 </div>
             </div>
         </div>
@@ -185,7 +145,7 @@
                             </td>
                             <td class="min-width-100">
                                 <a class="btn-floating blue cursor-pointer" (click)="setFormData(i)">
-                                <i class="medium material-icons">edit</i>
+                                    <i class="medium material-icons">edit</i>
                                 </a>&nbsp;
                                 <a class="btn-floating red cursor-pointer" (click)="delete(i)">
                                     <i class="medium material-icons">delete</i>
@@ -200,21 +160,14 @@
                 <div class="col s6">
                     <div class="row">
                         <div class="col s6 mt-10px">
-                            <cbtn
-                                [label]="'สร้าง'"
-                                [color]="'blue'"
-                                [icon]="'add'"
-                                (click)="addForm()">
+                            <cbtn [label]="'สร้าง'" [color]="'blue'" [icon]="'add'" (click)="addForm()">
                             </cbtn>
                         </div>
                     </div>
                 </div>
                 <div class="col s6">
                     <div class="text-right">
-                        <pagination-controls
-                            (pageChange)="currentPage = $event"
-                            previousLabel="ก่อนหน้า"
-                            nextLabel="ถัดไป">
+                        <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป">
                         </pagination-controls>
                     </div>
                 </div>
@@ -239,11 +192,7 @@
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
                 <div class="col l4 s12">
-                    <citxt
-                        (cModel)="headerModel.Code = $event"
-                        [label]="'รหัส'"
-                        [data]="headerModel.Code"
-                        [readonly]="true">
+                    <citxt (cModel)="headerModel.Code = $event" [label]="'รหัส'" [data]="headerModel.Code" [readonly]="true">
                     </citxt>
                 </div>
                 <div class="col l4 s12">
@@ -254,132 +203,79 @@
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.FirstName = $event" 
-                        [label]="'ชื่อ'"
-                        [data]="headerModel.FirstName">
+                    <citxt (cModel)="headerModel.FirstName = $event" [label]="'ชื่อ'" [data]="headerModel.FirstName">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.LastName = $event"
-                        [label]="'นามสกุล'"
-                        [data]="headerModel.LastName">
+                    <citxt (cModel)="headerModel.LastName = $event" [label]="'นามสกุล'" [data]="headerModel.LastName">
                     </citxt>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.UserName = $event"
-                        [label]="'Username'"
-                        [data]="headerModel.UserName">
+                    <citxt (cModel)="headerModel.UserName = $event" [label]="'Username'" [data]="headerModel.UserName">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt (cModel)="headerModel.Password = $event"
-                        [label]="'Password'"
-                        [data]="headerModel.Password"
-                        type="password">
+                    <citxt (cModel)="headerModel.Password = $event" [label]="'Password'" [data]="headerModel.Password" type="password">
                     </citxt>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt 
-                        (cModel)="headerModel.GroupName = $event"
-                        [label]="'กลุ่มผู้ใช้งาน'"
-                        [data]="headerModel.GroupName"
-                        [readonly]="true"
-                        (click)="chooseGroupUserDetail()">
+                    <citxt (cModel)="headerModel.GroupName = $event" [label]="'กลุ่มผู้ใช้งาน'" [data]="headerModel.GroupName" [readonly]="true" (click)="chooseGroupUserDetail()">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt 
-                        (cModel)="headerModel.VehicleNo = $event"
-                        [label]="'ทะเบียนรถ'"
-                        [data]="headerModel.VehicleNo"
-                        [readonly]="true"
-                        (click)="chooseVehicleDetail()">
+                    <citxt (cModel)="headerModel.VehicleNo = $event" [label]="'ทะเบียนรถ'" [data]="headerModel.VehicleNo" [readonly]="true" (click)="chooseVehicleDetail()">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt 
-                        (cModel)="headerModel.NationalityID = $event"
-                        [label]="'เลขที่บัตรประชาชน'"
-                        [data]="headerModel.NationalityID">
+                    <citxt (cModel)="headerModel.NationalityID = $event" [label]="'เลขที่บัตรประชาชน'" [data]="headerModel.NationalityID">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt 
-                        (cModel)="headerModel.LicenseNo = $event"
-                        [label]="'เลขที่ใบขับขี่'"
-                        [data]="headerModel.LicenseNo">
+                    <citxt (cModel)="headerModel.LicenseNo = $event" [label]="'เลขที่ใบขับขี่'" [data]="headerModel.LicenseNo">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Mobile = $event"
-                        [label]="'เบอร์โทร'" [data]="headerModel.Mobile">
+                    <citxt (cModel)="headerModel.Mobile = $event" [label]="'เบอร์โทร'" [data]="headerModel.Mobile">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.Email = $event"
-                        [label]="'อีเมล์'" [data]="headerModel.Email">
+                    <citxt (cModel)="headerModel.Email = $event" [label]="'อีเมล์'" [data]="headerModel.Email">
                     </citxt>
                 </div>
                 <!-- Hidden -->
                 <div class="row" hidden="true">
                     <div class="col l4 s12">
-                        <citxt 
-                            (cModel)="headerModel.Id = $event"
-                            [label]="'รหัสระบบ'" [data]="headerModel.Id"
-                            [readonly]="true">
+                        <citxt (cModel)="headerModel.Id = $event" [label]="'รหัสระบบ'" [data]="headerModel.Id" [readonly]="true">
                         </citxt>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 p-0 mtm-20">
-                    <citxt
-                        (cModel)="headerModel.HubDescription = $event"
-                        [label]="'HUB'"
-                        [data]="headerModel.HubDescription"
-                        [readonly]="true"
-                        (click)="chooseTransportShipTo()">
+                    <citxt (cModel)="headerModel.HubDescription = $event" [label]="'HUB'" [data]="headerModel.HubDescription" [readonly]="true" (click)="chooseTransportShipTo()">
                     </citxt>
                 </div>
                 <div class="col l4 s12 p-0 mtm-20">
-                    <citxt 
-                        (cModel)="headerModel.TransportDescription = $event"
-                        [label]="'บริษัทขนส่ง'"
-                        [data]="headerModel.TransportDescription"
-                        [readonly]="true"
-                        (click)="chooseTransport()">
+                    <citxt (cModel)="headerModel.TransportDescription = $event" [label]="'บริษัทขนส่ง'" [data]="headerModel.TransportDescription" [readonly]="true" (click)="chooseTransport()">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 p-0 mb-5px"></div>
                 <div class="col l4 s12 p-0 text-right mb-5px">
-                    <cbtn
-                        [label]="'บันทึก'"
-                        [color]="'blue'"
-                        [icon]="'save'"
-                        (click)="save()">
+                    <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'" (click)="save()">
                     </cbtn>
-                    <cbtn
-                        [label]="'กลับ'"
-                        [color]="'grey'"
-                        [icon]="'keyboard_backspace'"
-                        (click)="backToMainPage()">
+                    <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="'keyboard_backspace'" (click)="backToMainPage()">
                     </cbtn>
                 </div>
             </div>
