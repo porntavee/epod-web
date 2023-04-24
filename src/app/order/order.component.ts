@@ -897,13 +897,14 @@ export class OrderComponent implements OnInit, AfterContentChecked {
             "CBM": element.CBM,
             "OwnerDescription": "",
             "Qty": element.Carton,
+            "UOM":"N/A",
             "ShiptoDescription": "",
             "Weight": element.Weight,
             "ShiptoAddress": "",
-            "Route": element.Route,
-            "SubRoute": element.SubRoute,
+            "OwnerCode": element.SenderCode,
+            "RouteCode": element.Route,
+            "SubRouteCode": element.SubRoute,
             "OrderTypeId": element.TypeOfWork,
-            "OwnerId": element.SenderCode,
             "ShiptoId": "",
             "ShiptoCode": element.RecipientCode,
             "ShiptoMobile": "",
@@ -912,7 +913,9 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
         this.criteriaModel.TTRANSPORTDLIST = model;
 
-        this.serviceProviderService.post('api/Transport/CreateOrders', this.criteriaModel).subscribe(data => {
+        let json = JSON.stringify(this.criteriaModel);
+
+        this.serviceProviderService.post('api/Transport/CreateOrderImport', this.criteriaModel).subscribe(data => {
           debugger
           this.spinner.hide();
           let model: any = {};

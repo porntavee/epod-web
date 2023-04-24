@@ -192,6 +192,7 @@ export class TrackingStatusComponent implements OnInit {
         // });
 
         this.listModel = model.Data;
+        
       }
       else {
         this.listModel = [];
@@ -203,6 +204,12 @@ export class TrackingStatusComponent implements OnInit {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
+  }
+
+  readByStatus(param) {
+    this.criteriaModel.OrderStatus = param;
+    debugger
+    this.read();
   }
 
   viewModel2: any;
@@ -228,6 +235,7 @@ export class TrackingStatusComponent implements OnInit {
 
     let json = JSON.stringify(criteria);
 
+    
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
@@ -351,7 +359,7 @@ export class TrackingStatusComponent implements OnInit {
 
         this.listDetailModel = model.Data;
         
-        debugger
+        
         
         // this.headerModel.InvoiceDate = moment(model.Data[0].InvoiceDate).format('DD-MM-YYYY');
         // this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
