@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  _mode: any = 'รายวัน';
   criteriaModel: any = {};
   deliveryStatusModel: any = { TotalInvoice: 0, WithInTime_Percent: '0', WithInTime: 0, OutOfTime: 0, Reject: 0 };
   proofDeliveryStatusModel: any = { TotalInvoice: 0, WithInTime_Percent: '0', WithInTime: 0, OutOfTime: 0, Reject: 0 };
@@ -32,6 +33,7 @@ export class DashboardComponent implements OnInit {
     // this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
     this.criteriaModel.startDate = moment(startDate).format('YYYYMMDD');
     this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
+    this.read();
   }
 
   read() {
@@ -47,10 +49,12 @@ export class DashboardComponent implements OnInit {
 
     let json = JSON.stringify(criteria);
 
+
+    this.fleet = [];
     //dashboard 1
     this.serviceProviderService.post('api/Report/Dashborad_FleetPie', criteria).subscribe(data => {
       this.spinner.hide();
-      this.fleet = [];
+      // this.fleet = [];
 
       let model: any = {};
       model = data;
@@ -87,10 +91,11 @@ export class DashboardComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
 
+    this.deliveryByCountry = [];
     //dashboard 2
     this.serviceProviderService.post('api/Report/Dashborad_DeliveriesByCountryPie', criteria).subscribe(data => {
       this.spinner.hide();
-      this.deliveryByCountry = [];
+      // this.deliveryByCountry = [];
       let model: any = {};
       model = data;
 
@@ -111,15 +116,20 @@ export class DashboardComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
 
+    this.deliveryStatus = [];
     //dashboard 3
     this.serviceProviderService.post('api/Report/Dashborad_DeliveryStatusPie', criteria).subscribe(data => {
       this.spinner.hide();
-      this.deliveryStatus = [];
+      // this.deliveryStatus = [];
       let model: any = {};
 
       model = data;
       this.deliveryStatusModel = model.Data[0];
-      this.deliveryStatusModel.WithInTime_Percent = this.deliveryStatusModel.WithInTime_Percent.toFixed(2);
+
+      if (this.deliveryStatusModel.WithInTime_Percent != null)
+        this.deliveryStatusModel.WithInTime_Percent = this.deliveryStatusModel.WithInTime_Percent.toFixed(2);
+      else
+        this.deliveryStatusModel.WithInTime_Percent = 0;
 
       let json1 = JSON.stringify(model.Data);
 
@@ -144,12 +154,13 @@ export class DashboardComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
 
+    this.deliveryByCountry3 = [];
     //dashboard 4
     this.serviceProviderService.post('api/Report/Dashborad_DeliveriesByCountryChart', criteria).subscribe(data => {
       this.spinner.hide();
-      this.deliveryByCountry3 = [];
+      // this.deliveryByCountry3 = [];
       let model: any = {};
-      
+
       model = data;
       // this.deliveryStatusModel = model.Data[0];
 
@@ -176,12 +187,13 @@ export class DashboardComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
 
+    this.tripPerDay = [];
     //dashboard 5
     this.serviceProviderService.post('api/Report/Dashborad_TripPerDay', criteria).subscribe(data => {
       this.spinner.hide();
-      this.tripPerDay = [];
+      // this.tripPerDay = [];
       let model: any = {};
-  
+
       model = data;
       // this.deliveryStatusModel = model.Data[0];
 
@@ -215,22 +227,27 @@ export class DashboardComponent implements OnInit {
       });
 
       this.tripPerDay = [...this.tripPerDay];
-      
+
 
     }, err => {
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
 
-     //dashboard 6
-     this.serviceProviderService.post('api/Report/Dashborad_ProofOfDeliveryStatusPie', criteria).subscribe(data => {
+    this.proofDeliveryStatus = [];
+    //dashboard 6
+    this.serviceProviderService.post('api/Report/Dashborad_ProofOfDeliveryStatusPie', criteria).subscribe(data => {
       this.spinner.hide();
-      this.proofDeliveryStatus = [];
+      // this.proofDeliveryStatus = [];
       let model: any = {};
 
       model = data;
       this.proofDeliveryStatusModel = model.Data[0];
-      this.proofDeliveryStatusModel.WithInTime_Percent = this.proofDeliveryStatusModel.WithInTime_Percent.toFixed(2);
+
+      if (this.proofDeliveryStatusModel.WithInTime_Percent != null)
+        this.proofDeliveryStatusModel.WithInTime_Percent = this.proofDeliveryStatusModel.WithInTime_Percent.toFixed(2);
+      else
+        this.proofDeliveryStatusModel.WithInTime_Percent = 0;
 
       let json1 = JSON.stringify(model.Data);
 
@@ -256,12 +273,13 @@ export class DashboardComponent implements OnInit {
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
 
+    this.proofDeliveryByCountry3 = [];
     //dashboard 7
     this.serviceProviderService.post('api/Report/Dashborad_ProofOfDeliveriesByCountryChart', criteria).subscribe(data => {
       this.spinner.hide();
-      this.proofDeliveryByCountry3 = [];
+      // this.proofDeliveryByCountry3 = [];
       let model: any = {};
-      
+
       model = data;
       // this.deliveryStatusModel = model.Data[0];
 
@@ -299,6 +317,54 @@ export class DashboardComponent implements OnInit {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
+  }
+
+  checkMode(param) {
+    if (param == this._mode)
+      return 'green';
+    else
+      return 'grey';
+  }
+
+  selectMode(param) {
+
+    this.deliveryStatusModel = { TotalInvoice: 0, WithInTime_Percent: '0', WithInTime: 0, OutOfTime: 0, Reject: 0 };
+    this.proofDeliveryStatusModel = { TotalInvoice: 0, WithInTime_Percent: '0', WithInTime: 0, OutOfTime: 0, Reject: 0 };
+    this.fleetModel = { OnTheMove_Percent: 0 };
+
+    if (param == 'รายวัน') {
+      this._mode = 'รายวัน';
+      const startDate = new Date();
+      const endDate = new Date();
+      // this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
+      this.criteriaModel.startDate = moment(startDate).format('YYYYMMDD');
+      this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
+
+      this.read();
+    }
+    else if (param == 'รายสัปดาห์') {
+      this._mode = 'รายสัปดาห์';
+      const startDate = new Date();
+      const endDate = new Date();
+      this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
+      // this.criteriaModel.startDate = moment(startDate).format('YYYYMMDD');
+      this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
+      this.read();
+    }
+    else if (param == 'รายเดือน') {
+      this._mode = 'รายเดือน';
+
+      // var date = new Date();
+      // var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+      // var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+      const startDate = new Date();
+      const endDate = new Date();
+      // this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
+      this.criteriaModel.startDate = moment(new Date(startDate.getFullYear(), startDate.getMonth(), 1)).format('YYYYMMDD');
+      this.criteriaModel.endDate = moment(new Date(endDate.getFullYear(), endDate.getMonth() + 1, 0)).format('YYYYMMDD');
+      this.read();
+    }
   }
 
   view: any[] = [350, 200];

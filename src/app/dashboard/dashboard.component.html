@@ -1,16 +1,16 @@
-<!-- <div class="row">
-    <div class="col l5 s12 p-0 text-right" style="margin-bottom: 5px;">
+<div class="row">
+    <!-- <div class="col l5 s12 p-0 text-right" style="margin-bottom: 5px;">
         <cbtn [label]="'ย้อนหลัง 24 ชม.'" [color]="'grey'" [icon]="''"></cbtn>
         <cbtn [label]="'ย้อนหลัง 7 วัน'" [color]="'grey'" [icon]="''"></cbtn>
         <cbtn [label]="'ย้อน 30 วัน'" [color]="'grey'" [icon]="''"></cbtn>
+    </div> -->
+    <!-- <div class="col l2 s12 p-0 text-right" style="margin-bottom: 5px;"></div> -->
+    <div class="col l5 s12 p-0" style="margin-bottom: 5px;">
+        <cbtn [label]="'รายวัน'" [color]="checkMode('รายวัน')" [icon]="''" (click)="selectMode('รายวัน')"></cbtn>
+        <cbtn [label]="'รายสัปดาห์'" [color]="checkMode('รายสัปดาห์')" [icon]="''" (click)="selectMode('รายสัปดาห์')"></cbtn>
+        <cbtn [label]="'รายเดือน'" [color]="checkMode('รายเดือน')" [icon]="''" (click)="selectMode('รายเดือน')"></cbtn>
     </div>
-    <div class="col l2 s12 p-0 text-right" style="margin-bottom: 5px;"></div>
-    <div class="col l5 s12 p-0 text-right" style="margin-bottom: 5px;">
-        <cbtn [label]="'รายวัน'" [color]="'grey'" [icon]="''"></cbtn>
-        <cbtn [label]="'รายสัปดาห์'" [color]="'grey'" [icon]="''"></cbtn>
-        <cbtn [label]="'รายเดือน'" [color]="'grey'" [icon]="''"></cbtn>
-    </div>
-</div> -->
+</div>
 <div class="row">
     <div class="col l3 s12 p-0">
         <cdp (cModel)="criteriaModel.startDate = $event" [label]="'เลือกช่วงเวลา'" [data]="criteriaModel.startDate">
@@ -60,9 +60,12 @@
 </div>
 <div class="row">
     <div class="col l3 s12 pl-0" style="background-color:white;">
-        <ngx-charts-gauge [scheme]="colorScheme" [results]="fleet" [legend]="legend" [legendPosition]="legendPosition" [units]="fleetModel.OnTheMove_Percent.toFixed(2) + '%'" [showText]="true" [showAxis]="true" [legendTitle]="fleetModel.OnTheMove_Percent.toFixed(2) + '% Fleet Efficiency'"
-            [smallSegments]="5" (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
-        </ngx-charts-gauge>
+        <div style="width: 100%; height: 200px;">
+            <ngx-charts-gauge [scheme]="colorScheme" [results]="fleet" [legend]="legend" [legendPosition]="legendPosition" [units]="fleetModel.OnTheMove_Percent.toFixed(2) + '%'" [showText]="true" [showAxis]="true" [legendTitle]="fleetModel.OnTheMove_Percent.toFixed(2) + '% Fleet Efficiency'"
+                [smallSegments]="5" (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+            </ngx-charts-gauge>
+        </div>
+
     </div>
     <div class="col l3 s12">
         <div style="width: 100%; height: 200px;">
@@ -117,19 +120,19 @@
     </div>
     <div class="col l3 s12">
         <div style="width: 100%; height: 200px;">
-            <ngx-charts-linear-gauge [view]="[300, 200]" [scheme]="colorScheme" [value]="deliveryStatusModel.TotalInvoice" [units]="deliveryStatusModel.WithInTime_Percent + '%'" (select)="onSelect($event)">
+            <ngx-charts-linear-gauge [view]="[300, 200]" [scheme]="colorScheme" [value]="deliveryStatusModel.TotalInvoice" [units]="deliveryStatusModel.WithInTime_Percent || 0 + '%'" (select)="onSelect($event)">
             </ngx-charts-linear-gauge>
 
         </div>
         <div style="width: 100%; height: 70px; background-color: white; padding-left: 70px;">
             <p>
-                Within time limit {{numberWithCommas(deliveryStatusModel.WithInTime)}}
+                Within time limit {{numberWithCommas(deliveryStatusModel.WithInTime || 0)}}
             </p>
             <p>
-                Out of time limit {{numberWithCommas(deliveryStatusModel.OutOfTime)}}
+                Out of time limit {{numberWithCommas(deliveryStatusModel.OutOfTime || 0)}}
             </p>
             <p>
-                Reject {{numberWithCommas(deliveryStatusModel.Reject)}}
+                Reject {{numberWithCommas(deliveryStatusModel.Reject || 0)}}
             </p>
         </div>
     </div>
@@ -172,18 +175,18 @@
         <div style="width: 100%; height: 200px;">
             <!-- <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="proofDeliveryStatus" (select)="onSelect($event)">
             </ngx-charts-pie-grid> -->
-            <ngx-charts-linear-gauge [view]="[300, 200]" [scheme]="colorScheme" [value]="proofDeliveryStatusModel.TotalInvoice" [units]="proofDeliveryStatusModel.WithInTime_Percent + '%'" (select)="onSelect($event)">
+            <ngx-charts-linear-gauge [view]="[300, 200]" [scheme]="colorScheme" [value]="proofDeliveryStatusModel.TotalInvoice" [units]="proofDeliveryStatusModel.WithInTime_Percent || 0 + '%'" (select)="onSelect($event)">
             </ngx-charts-linear-gauge>
         </div>
-        <div style="width: 100%; height: 70px; background-color: white; padding-left: 70px;">
+        <div style="width: 100%; height: 70px; background-color: white; padding-left: ß70px;">
             <p>
-                Within time limit {{numberWithCommas(proofDeliveryStatusModel.WithInTime)}}
+                Within time limit {{numberWithCommas(proofDeliveryStatusModel.WithInTime || 0)}}
             </p>
             <p>
-                Out of time limit {{numberWithCommas(proofDeliveryStatusModel.OutOfTime)}}
+                Out of time limit {{numberWithCommas(proofDeliveryStatusModel.OutOfTime || 0)}}
             </p>
             <p>
-                Reject {{numberWithCommas(proofDeliveryStatusModel.Reject)}}
+                Reject {{numberWithCommas(proofDeliveryStatusModel.Reject || 0)}}
             </p>
         </div>
     </div>
