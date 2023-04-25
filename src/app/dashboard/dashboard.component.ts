@@ -127,7 +127,7 @@ export class DashboardComponent implements OnInit {
       this.deliveryStatusModel = model.Data[0];
 
       if (this.deliveryStatusModel.WithInTime_Percent != null)
-        this.deliveryStatusModel.WithInTime_Percent = this.deliveryStatusModel.WithInTime_Percent.toFixed(2);
+        this.deliveryStatusModel.WithInTime_Percent = this.deliveryStatusModel.WithInTime_Percent.toFixed(2) + '%';
       else
         this.deliveryStatusModel.WithInTime_Percent = 0;
 
@@ -245,7 +245,7 @@ export class DashboardComponent implements OnInit {
       this.proofDeliveryStatusModel = model.Data[0];
 
       if (this.proofDeliveryStatusModel.WithInTime_Percent != null)
-        this.proofDeliveryStatusModel.WithInTime_Percent = this.proofDeliveryStatusModel.WithInTime_Percent.toFixed(2);
+        this.proofDeliveryStatusModel.WithInTime_Percent = this.proofDeliveryStatusModel.WithInTime_Percent.toFixed(2) + '%';
       else
         this.proofDeliveryStatusModel.WithInTime_Percent = 0;
 
