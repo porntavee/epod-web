@@ -21,8 +21,8 @@ export class DashboardComponent implements OnInit {
   }
 
   criteriaModel: any = {};
-  deliveryStatusModel: any = { WithInTime: 0, OutOfTime: 0, Reject: 0 };
-  proofDeliveryStatusModel: any = { WithInTime: 0, OutOfTime: 0, Reject: 0 };
+  deliveryStatusModel: any = { TotalInvoice: 0, WithInTime_Percent: '0', WithInTime: 0, OutOfTime: 0, Reject: 0 };
+  proofDeliveryStatusModel: any = { TotalInvoice: 0, WithInTime_Percent: '0', WithInTime: 0, OutOfTime: 0, Reject: 0 };
   fleetModel: any = { OnTheMove_Percent: 0 };
 
   ngOnInit(): void {
@@ -41,6 +41,8 @@ export class DashboardComponent implements OnInit {
       "userinformation": this.serviceProviderService.userinformation,
       "InvoiceDateStart": this.verifyDateTime(this.criteriaModel.startDate),
       "InvoiceDateEnd": this.verifyDateTime(this.criteriaModel.endDate),
+      "TransportDateBegin": this.verifyDateTime(this.criteriaModel.startDate),
+      "TransportDateEnd": this.verifyDateTime(this.criteriaModel.endDate),
     }
 
     let json = JSON.stringify(criteria);
@@ -117,6 +119,7 @@ export class DashboardComponent implements OnInit {
 
       model = data;
       this.deliveryStatusModel = model.Data[0];
+      this.deliveryStatusModel.WithInTime_Percent = this.deliveryStatusModel.WithInTime_Percent.toFixed(2);
 
       let json1 = JSON.stringify(model.Data);
 
@@ -162,7 +165,7 @@ export class DashboardComponent implements OnInit {
         this.deliveryByCountry3.push(
           {
             "name": element.Code,
-            "value": element.TotalInvoice
+            "value": element.TotalInvoice || 0
           });
       });
 
@@ -193,11 +196,19 @@ export class DashboardComponent implements OnInit {
       model.Data.forEach(element => {
         this.tripPerDay.push(
           {
-            "name": element.MYDATE,
+            "name": element.TransportDate,
             "series": [
+              // {
+              //   "name": "TotalTrip",
+              //   "value": element.TotalTrip
+              // },
               {
-                "name": "2023",
+                "name": "NumTrip",
                 "value": element.NumTrip
+              },
+              {
+                "name": "NumTripOutSource",
+                "value": element.NumTripOutSource
               },
             ]
           });
@@ -219,6 +230,7 @@ export class DashboardComponent implements OnInit {
 
       model = data;
       this.proofDeliveryStatusModel = model.Data[0];
+      this.proofDeliveryStatusModel.WithInTime_Percent = this.proofDeliveryStatusModel.WithInTime_Percent.toFixed(2);
 
       let json1 = JSON.stringify(model.Data);
 
@@ -265,7 +277,7 @@ export class DashboardComponent implements OnInit {
         this.proofDeliveryByCountry3.push(
           {
             "name": element.Code,
-            "value": element.TotalInvoice
+            "value": element.TotalInvoice || 0
           });
       });
 

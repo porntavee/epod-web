@@ -117,8 +117,9 @@
     </div>
     <div class="col l3 s12">
         <div style="width: 100%; height: 200px;">
-            <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="deliveryStatus" (select)="onSelect($event)">
-            </ngx-charts-pie-grid>
+            <ngx-charts-linear-gauge [view]="[300, 200]" [scheme]="colorScheme" [value]="deliveryStatusModel.TotalInvoice" [units]="deliveryStatusModel.WithInTime_Percent + '%'" (select)="onSelect($event)">
+            </ngx-charts-linear-gauge>
+
         </div>
         <div style="width: 100%; height: 70px; background-color: white; padding-left: 70px;">
             <p>
@@ -163,14 +164,16 @@
 </div>
 <div class="row">
     <div class="col l6 s12" style="background-color:white;">
-        <ngx-charts-line-chart [view]="[550, 300]" [scheme]="colorScheme" [results]="tripPerDay" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+        <ngx-charts-bar-vertical-stacked [view]="[550, 300]" [scheme]="colorScheme" [results]="tripPerDay" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
-        </ngx-charts-line-chart>
+        </ngx-charts-bar-vertical-stacked>
     </div>
     <div class="col l3 s12">
         <div style="width: 100%; height: 200px;">
-            <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="proofDeliveryStatus" (select)="onSelect($event)">
-            </ngx-charts-pie-grid>
+            <!-- <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="proofDeliveryStatus" (select)="onSelect($event)">
+            </ngx-charts-pie-grid> -->
+            <ngx-charts-linear-gauge [view]="[300, 200]" [scheme]="colorScheme" [value]="proofDeliveryStatusModel.TotalInvoice" [units]="proofDeliveryStatusModel.WithInTime_Percent + '%'" (select)="onSelect($event)">
+            </ngx-charts-linear-gauge>
         </div>
         <div style="width: 100%; height: 70px; background-color: white; padding-left: 70px;">
             <p>
