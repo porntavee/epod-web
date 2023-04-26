@@ -46,14 +46,14 @@
     <div class="col l3 s12">
         <div style="text-align: center;">
             <h2>
-                Delivery Status
+                Deliveries by Country
             </h2>
         </div>
     </div>
     <div class="col l3 s12">
         <div style="text-align: center;">
             <h2>
-                Deliveries by Country
+                Delivery Status
             </h2>
         </div>
     </div>
@@ -119,12 +119,18 @@
         </div>
     </div>
     <div class="col l3 s12">
+        <ngx-charts-bar-horizontal [view]="view" [scheme]="colorScheme" [results]="deliveryByCountry3" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel" (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+        </ngx-charts-bar-horizontal>
+    </div>
+    <div class="col l3 s12">
         <div style="width: 100%; height: 200px;">
-            <ngx-charts-linear-gauge [view]="[300, 200]" [scheme]="colorScheme" [value]="deliveryStatusModel.TotalInvoice" [units]="deliveryStatusModel.WithInTime_Percent || 0 + '%'" (select)="onSelect($event)">
-            </ngx-charts-linear-gauge>
-
+            <!-- <ngx-charts-linear-gauge [view]="[300, 200]" [scheme]="colorScheme" [value]="deliveryStatusModel.TotalInvoice" [units]="deliveryStatusModel.WithInTime_Percent || 0 + '%'" (select)="onSelect($event)">
+            </ngx-charts-linear-gauge> -->
+            <ngx-charts-advanced-pie-chart [view]="[500, 200]" [scheme]="colorScheme" [results]="deliveryStatus" (select)="onSelect($event)">
+            </ngx-charts-advanced-pie-chart>
         </div>
-        <div style="width: 100%; height: 70px; background-color: white; padding-left: 70px;">
+        <!-- <div style="width: 100%; height: 70px; background-color: white; padding-left: 70px;">
             <p>
                 Within time limit {{numberWithCommas(deliveryStatusModel.WithInTime || 0)}}
             </p>
@@ -134,12 +140,7 @@
             <p>
                 Reject {{numberWithCommas(deliveryStatusModel.Reject || 0)}}
             </p>
-        </div>
-    </div>
-    <div class="col l3 s12">
-        <ngx-charts-bar-horizontal [view]="view" [scheme]="colorScheme" [results]="deliveryByCountry3" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel" (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
-        </ngx-charts-bar-horizontal>
+        </div> -->
     </div>
 </div>
 <div class="row">
@@ -152,16 +153,16 @@
     </div>
     <div class="col l3 s12">
         <div style="text-align: center;">
-            <h2>
-                Proof of Delivery Status
-            </h2>
+            <h3>
+                Proof of Delivery by Country
+            </h3>
         </div>
     </div>
     <div class="col l3 s12">
         <div style="text-align: center;">
-            <h3>
-                Proof of Delivery by Country
-            </h3>
+            <h2>
+                Proof of Delivery Status
+            </h2>
         </div>
     </div>
 </div>
@@ -172,13 +173,21 @@
         </ngx-charts-bar-vertical-stacked>
     </div>
     <div class="col l3 s12">
+        <ngx-charts-bar-horizontal [view]="view" [scheme]="colorScheme" [results]="proofDeliveryByCountry3" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel" (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+        </ngx-charts-bar-horizontal>
+    </div>
+    <div class="col l3 s12">
         <div style="width: 100%; height: 200px;">
             <!-- <ngx-charts-pie-grid [view]="[300, 200]" [scheme]="colorScheme" [results]="proofDeliveryStatus" (select)="onSelect($event)">
             </ngx-charts-pie-grid> -->
-            <ngx-charts-linear-gauge [view]="[300, 200]" [scheme]="colorScheme" [value]="proofDeliveryStatusModel.TotalInvoice" [units]="proofDeliveryStatusModel.WithInTime_Percent || 0 + '%'" (select)="onSelect($event)">
-            </ngx-charts-linear-gauge>
+            <!-- <ngx-charts-linear-gauge [view]="[300, 200]" [scheme]="colorScheme" [value]="proofDeliveryStatusModel.TotalInvoice" [units]="proofDeliveryStatusModel.WithInTime_Percent || 0 + '%'" (select)="onSelect($event)">
+            </ngx-charts-linear-gauge> -->
+            <ngx-charts-advanced-pie-chart [view]="[500, 200]" [scheme]="colorScheme" [results]="proofDeliveryStatus" (select)="onSelect($event)">
+            </ngx-charts-advanced-pie-chart>
+
         </div>
-        <div style="width: 100%; height: 70px; background-color: white; padding-left: ß70px;">
+        <!-- <div style="width: 100%; height: 70px; background-color: white; padding-left: ß70px;">
             <p>
                 Within time limit {{numberWithCommas(proofDeliveryStatusModel.WithInTime || 0)}}
             </p>
@@ -188,11 +197,6 @@
             <p>
                 Reject {{numberWithCommas(proofDeliveryStatusModel.Reject || 0)}}
             </p>
-        </div>
-    </div>
-    <div class="col l3 s12">
-        <ngx-charts-bar-horizontal [view]="view" [scheme]="colorScheme" [results]="proofDeliveryByCountry3" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel" (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
-        </ngx-charts-bar-horizontal>
+        </div> -->
     </div>
 </div>

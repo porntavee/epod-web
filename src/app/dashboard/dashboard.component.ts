@@ -135,8 +135,16 @@ export class DashboardComponent implements OnInit {
 
       this.deliveryStatus.push(
         {
-          "name": "Within time limit",
-          "value": model.Data[0].TotalInvoice || 0
+          "name": "WithInTime",
+          "value": model.Data[0].WithInTime || 0
+        },
+        {
+          "name": "OutOfTime",
+          "value": model.Data[0].OutOfTime || 0
+        },
+        {
+          "name": "Reject",
+          "value": model.Data[0].Reject || 0
         });
 
       // model.Data.forEach(element => {
@@ -253,8 +261,16 @@ export class DashboardComponent implements OnInit {
 
       this.proofDeliveryStatus.push(
         {
-          "name": "Within time limit",
-          "value": model.Data[0].TotalInvoice || 0
+          "name": "WithInTime",
+          "value": model.Data[0].WithInTime || 0
+        },
+        {
+          "name": "OutOfTime",
+          "value": model.Data[0].OutOfTime || 0
+        },
+        {
+          "name": "Reject",
+          "value": model.Data[0].Reject || 0
         });
 
       // model.Data.forEach(element => {
