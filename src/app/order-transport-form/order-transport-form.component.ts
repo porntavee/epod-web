@@ -1227,15 +1227,11 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     || this.criteriaModel.TransportStatus== undefined) {
       this.isMainPage = false;
       this.isFormPage = true;
-  
-      if (this.listModel.length > 0) {
 
-        this.listFormModel = this.listFormModel.filter(c => c.isSelected != true)
-
-      } else {
-        this.readOrder('');
-      }
-
+      this.formModel = {};
+      this.formModel.StatusCode = 'O';
+      this.formModel.StatusDescription = 'O - รอจัดใบคุมรถ';
+      this.readOrder('');
     } else {
       this.toastr.error('สถานะไม่สามารถเพิ่มงานขนส่งได้', 'แจ้งเตือนระบบ', { timeOut: 5000 });
     }
@@ -1370,6 +1366,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       let model: any = data;
       this.viewModel = model;
 
+      let tmpChecked;
+      // console.log('readOrder->this.listFormModel', this.listFormModel);
+
+      tmpChecked = this.listFormModel.filter(c => c.isSelected == true);
+      // console.log('tmpChecked', tmpChecked);
+
       if (model.Status) {
         model.Data.forEach(element => {
           Object.keys(element).forEach((key) => {
@@ -1380,15 +1382,17 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           });
         });
 
-        this.listFormModel = model.Data;
-        
+        let tmp = new Set(tmpChecked.map(t => t.InvoiceNo));
+        this.listFormModel = [...tmpChecked, ...model.Data.filter(d => !tmp.has(d.InvoiceNo))];
+        // console.log('this.listFormModel', this.listFormModel);
+        // console.log('this.listModel', this.listModel);
         if (this.listModel.length > 0) {
           this.listModel.forEach(element => {
             this.listFormModel = this.removeObjectElementByKeyValue(this.listFormModel, element.InvoiceNo);
           });
         }
       } else {
-        this.listFormModel = [];
+        this.listFormModel = tmpChecked;
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
