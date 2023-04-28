@@ -51,6 +51,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
   formModel: any = {};
   listFormModel: any = [];
+  listFormModelTmp: any = [];
 
   itemSelected = false;
   id: any = '';
@@ -1227,7 +1228,14 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       this.isMainPage = false;
       this.isFormPage = true;
   
-      this.readOrder('');
+      if (this.listModel.length > 0) {
+
+        this.listFormModel = this.listFormModel.filter(c => c.isSelected != true)
+
+      } else {
+        this.readOrder('');
+      }
+
     } else {
       this.toastr.error('สถานะไม่สามารถเพิ่มงานขนส่งได้', 'แจ้งเตือนระบบ', { timeOut: 5000 });
     }
@@ -1236,17 +1244,20 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   addOrder() {
     // Set current page of pagination to 1 When add new order.
     this.currentPage = 1;
-    console.log(this.currentPage);
+    console.log('this.listFormModel', this.listFormModel);
+    console.log('this.listModel', this.listModel);
     this.listFormModel.forEach(element => {
       if (element.isSelected) {
         let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
-
         if (dup.length == 0) {
           element.Process = 'CREATE';
+          
           this.listModel.push(element);
         }
       }
     });
+
+    console.log('this.listModel', this.listModel);
 
     this.isMainPage = true;
     this.isFormPage = false;
@@ -1313,6 +1324,16 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     return dateObj;
   }
 
+  removeObjectElementByKeyValue(arr, InvoiceNo) {
+    const objWithIdIndex = arr.findIndex((obj) => obj.InvoiceNo === InvoiceNo);
+  
+    if (objWithIdIndex > -1) {
+      arr.splice(objWithIdIndex, 1);
+    }
+  
+    return arr;
+  }
+
   readOrder(param) {
 
     // if(param!='')
@@ -1342,15 +1363,6 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       TransportId: this.formModel.TransportId,
       TransportOrderStatus: this.formModel.TransportOrderStatus,
     }
-    console.log(_form);
-
-    // this.formModel.OrderStatus = this.formModel.StatusCode;
-    // this.formModel.userinformation = this.serviceProviderService.userinformation;
-    // this.formModel.Process = 'TRANSPORT';
-    // this.formModel.OrderStatus = this.criteriaModel.StatusCode;
-    // this.formModel.OrderDateStart = this.verifyDateTime(this.formModel.OrderDateStart, '1332');
-    // this.formModel.OrderDateEnd = this.verifyDateTime(this.formModel.OrderDateEnd, '1332');
-    // this.formModel.InvoiceDate = this.verifyDateTime(this.formModel.InvoiceDate, '1332');
 
     this.serviceProviderService.post('api/Transport/GetOrder', _form)
     .subscribe(data => {
@@ -1369,6 +1381,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         });
 
         this.listFormModel = model.Data;
+        
+        if (this.listModel.length > 0) {
+          this.listModel.forEach(element => {
+            this.listFormModel = this.removeObjectElementByKeyValue(this.listFormModel, element.InvoiceNo);
+          });
+        }
       } else {
         this.listFormModel = [];
         this.spinner.hide();

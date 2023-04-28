@@ -13,10 +13,6 @@ export class MenuService {
       this.category = JSON.parse(localStorage.getItem('category'));
     }
     
-    // console.log('groupCode', this.groupCode);
-    console.log('category', this.category);
-
-    this.menu = [];
     this.menu = [{
       name: 'งานขนส่ง',
       // isActive: true,
