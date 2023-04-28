@@ -52,6 +52,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   formModel: any = {};
   listFormModel: any = [];
   listFormModelTmp: any = [];
+  tmpChecked : any = [];
 
   itemSelected = false;
   id: any = '';
@@ -425,6 +426,10 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   }
 
   backToMain() {
+    this.listFormModel.filter(x => x.isSelected == true).forEach(element => {
+      element.isSelected = false;
+    });
+
     this.isMainPage = true;
     this.isFormPage = false;
   }
@@ -1240,8 +1245,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   addOrder() {
     // Set current page of pagination to 1 When add new order.
     this.currentPage = 1;
-    console.log('this.listFormModel', this.listFormModel);
-    console.log('this.listModel', this.listModel);
+    // console.log('this.listFormModel', this.listFormModel);
+    // console.log('this.listModel', this.listModel);
     this.listFormModel.forEach(element => {
       if (element.isSelected) {
         let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
@@ -1253,7 +1258,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       }
     });
 
-    console.log('this.listModel', this.listModel);
+    // console.log('this.listModel', this.listModel);
 
     this.isMainPage = true;
     this.isFormPage = false;
@@ -1280,22 +1285,29 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         criteria.TransportNo = this.criteriaModel.TransportNo;
         criteria.OrderNo = this.listModel[idx].OrderNo;
 
-        this.serviceProviderService.post('api/Transport/DeleteTransportItem', criteria)
-        .subscribe(data => {
-          this.spinner.hide();
-          let model: any = {};
-          model = data;
-          if (model.Status) {
-            this.toastr.success("ลบรายการเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            // this.read();
-          }
+        // console.log('criteria', criteria);
+        if (criteria.TransportNo != '' && criteria.OrderNo != '') {
+          this.serviceProviderService.post('api/Transport/DeleteTransportItem', criteria)
+          .subscribe(data => {
+            this.spinner.hide();
+            let model: any = {};
+            model = data;
+            if (model.Status) {
+              this.toastr.success("ลบรายการเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+              // this.read();
+            }
 
-        }, err => {
-          this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        });
+          }, err => {
+            this.spinner.hide();
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          });
+        } else {
+          this.listFormModel.filter(x => x.OrderNo == this.listModel[idx].OrderNo).forEach(element => {
+            element.isSelected = false;
+          });
 
-        this.listModel.splice(idx, 1);
+          this.listModel.splice(idx, 1);
+        }
       }
     });
 
@@ -1366,11 +1378,10 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       let model: any = data;
       this.viewModel = model;
 
-      let tmpChecked;
       // console.log('readOrder->this.listFormModel', this.listFormModel);
 
-      tmpChecked = this.listFormModel.filter(c => c.isSelected == true);
-      // console.log('tmpChecked', tmpChecked);
+      this.tmpChecked = this.listFormModel.filter(c => c.isSelected == true);
+      // console.log('tmpChecked', this.tmpChecked);
 
       if (model.Status) {
         model.Data.forEach(element => {
@@ -1382,8 +1393,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           });
         });
 
-        let tmp = new Set(tmpChecked.map(t => t.InvoiceNo));
-        this.listFormModel = [...tmpChecked, ...model.Data.filter(d => !tmp.has(d.InvoiceNo))];
+        let tmp = new Set(this.tmpChecked.map(t => t.InvoiceNo));
+        this.listFormModel = [...this.tmpChecked, ...model.Data.filter(d => !tmp.has(d.InvoiceNo))];
         // console.log('this.listFormModel', this.listFormModel);
         // console.log('this.listModel', this.listModel);
         if (this.listModel.length > 0) {
@@ -1392,7 +1403,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           });
         }
       } else {
-        this.listFormModel = tmpChecked;
+        this.listFormModel = this.tmpChecked;
         this.spinner.hide();
         this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
       }
