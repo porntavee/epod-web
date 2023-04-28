@@ -10,10 +10,10 @@ export class ServiceProviderService {
   // ng build --base-href "/epod/" --prod --aot --output-hashing=all
   // ng build --prod --aot --output-hashing=all
 
-  // server: string = 'http://202.44.230.195/sino-api/';
+  //server: string = 'http://202.44.230.195/sino-api/';
   server: string = 'http://202.44.230.195/test-sino-api/';
 
-  version: string = '2023.03.16.1';
+  version: string = '2023.04.2701';
 
   userinformation: any = {
     "UserId": localStorage.getItem('token_epod_20221006') ?? '',
