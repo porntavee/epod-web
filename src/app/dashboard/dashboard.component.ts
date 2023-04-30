@@ -26,6 +26,11 @@ export class DashboardComponent implements OnInit {
   proofDeliveryStatusModel: any = { TotalInvoice: 0, WithInTime_Percent: '0', WithInTime: 0, OutOfTime: 0, Reject: 0 };
   fleetModel: any = { OnTheMove_Percent: 0 };
 
+  timerModel: any = {};
+  defaultDisplayTimer: any = '15:00';
+  displayTimerTmp: any;
+  interValtimer: any;
+
   ngOnInit(): void {
 
     const startDate = new Date();
@@ -33,6 +38,7 @@ export class DashboardComponent implements OnInit {
     // this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
     this.criteriaModel.startDate = moment(startDate).format('YYYYMMDD');
     this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
+    this.timerModel.displayTimer = this.defaultDisplayTimer;
     this.read();
   }
 
@@ -282,7 +288,7 @@ export class DashboardComponent implements OnInit {
       // });
 
       this.proofDeliveryStatus = [...this.proofDeliveryStatus];
-      debugger
+      // debugger
 
     }, err => {
       this.spinner.hide();
@@ -760,4 +766,47 @@ export class DashboardComponent implements OnInit {
 
   proofDeliveryStatus = [];
   proofDeliveryByCountry3 = [];
+
+  timer(minute) {
+    // let minute = 1;
+    let seconds: number = minute * 60;
+    let textSec: any = "0";
+    let statSec: number = 60;
+
+    const prefix = minute < 10 ? "0" : "";
+
+    this.interValtimer = setInterval(() => {
+      seconds--;
+      if (statSec != 0) statSec--;
+      else statSec = 59;
+
+      if (statSec < 10) {
+        textSec = "0" + statSec;
+      } else textSec = statSec;
+
+      this.timerModel.displayTimer = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
+
+      if (seconds == 0) {
+        this.read();
+        clearInterval(this.interValtimer);
+        this.timerModel.displayTimer = this.displayTimerTmp;
+        this.autoRefresh();
+      }
+    }, 1000);
+  }
+
+  autoRefresh() {
+    // console.log('autoRefresh', this.timerModel.autoRefresh);
+    if (this.timerModel.autoRefresh) {
+      // Display Timer temp for new timer loop.
+      this.displayTimerTmp = this.timerModel.displayTimer;
+      this.timerModel.displayTimer = this.timerModel.displayTimer == '' ? this.defaultDisplayTimer : this.timerModel.displayTimer;
+      // console.log('autoRefresh is true displayTimer', this.timerModel.displayTimer);
+      this.timer(parseInt(this.timerModel.displayTimer));
+    } else {
+      clearInterval(this.interValtimer);
+      this.timerModel.displayTimer = this.displayTimerTmp ? this.displayTimerTmp : this.defaultDisplayTimer;
+      // console.log('autoRefresh is false displayTimer', this.timerModel.displayTimer);
+    }
+  }
 }

@@ -5,10 +5,19 @@
         <cbtn [label]="'ย้อน 30 วัน'" [color]="'grey'" [icon]="''"></cbtn>
     </div> -->
     <!-- <div class="col l2 s12 p-0 text-right" style="margin-bottom: 5px;"></div> -->
-    <div class="col l5 s12 p-0" style="margin-bottom: 5px;">
+    <div class="col l3 s12 p-0" style="margin-bottom: 5px;">
         <cbtn [label]="'รายวัน'" [color]="checkMode('รายวัน')" [icon]="''" (click)="selectMode('รายวัน')"></cbtn>
         <cbtn [label]="'รายสัปดาห์'" [color]="checkMode('รายสัปดาห์')" [icon]="''" (click)="selectMode('รายสัปดาห์')"></cbtn>
         <cbtn [label]="'รายเดือน'" [color]="checkMode('รายเดือน')" [icon]="''" (click)="selectMode('รายเดือน')"></cbtn>
+    </div>
+    <div class="col l4 s12">
+        <div class="col s4 mtm-20">
+            <ccb (cModel)="timerModel.autoRefresh = $event" [data]="timerModel.autoRefresh" [label]="'Auto Refresh'" (change)="autoRefresh()"></ccb>
+        </div>
+        <div class="col s3 mtm-10 text-center">
+            <citxt [class]="'text-center'" (cModel)="timerModel.displayTimer = $event" [data]="timerModel.displayTimer" [readonly]="timerModel.autoRefresh"></citxt>
+        </div>
+        <div class="col s2 mt-10px"> นาที</div>
     </div>
 </div>
 <div class="row">

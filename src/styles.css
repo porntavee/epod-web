@@ -564,6 +564,13 @@ p {
     }
 }
 
+.ms-1 {
+    margin-left: 1rem !important;
+}
+
+.ms-2 {
+    margin-left: 2rem !important;
+}
 
 .top-515 {
     position: relative;;
