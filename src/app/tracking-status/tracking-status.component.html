@@ -12,20 +12,26 @@
         </div>
         <div class="card-panel hide-on-med-and-down mt-0">
             <div class="row">
-                <div class="col l3 s12 p-0">
+                <div class="col l2 s12 p-0">
                     <cdp (cModel)="criteriaModelStatus.startDate = $event" [label]="'เลือกช่วงเวลา'" [data]="criteriaModelStatus.startDate">
                     </cdp>
                 </div>
-                <div class="col l3 s12 p-0">
+                <div class="col l2 s12 p-0">
                     <cdp (cModel)="criteriaModelStatus.endDate = $event" [label]="'จนถึง'" [data]="criteriaModelStatus.endDate">
                     </cdp>
                 </div>
-                <div class="col l1 s12 p-0">
-                    <h1>&nbsp;</h1>
-                </div>
-                <div class="col l3 s12">
+                <div class="col l1 s12 ms-2">
                     <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="readAll()">
                     </cbtn>
+                </div>
+                <div class="col l4 s12">
+                    <div class="col s6 mtm-20">
+                        <ccb (cModel)="timerModel.autoRefresh = $event" [data]="timerModel.autoRefresh" [label]="'Auto Refresh'" (change)="autoRefresh()"></ccb>
+                    </div>
+                    <div class="col s4 mtm-10 text-center">
+                        <citxt [class]="'text-center'" (cModel)="timerModel.displayTimer = $event" [data]="timerModel.displayTimer" [readonly]="timerModel.autoRefresh"></citxt>
+                    </div>
+                    <div class="col s2 mt-10px"> นาที</div>
                 </div>
             </div>
             <div class="row">

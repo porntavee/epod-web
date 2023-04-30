@@ -144,6 +144,8 @@ export class TrackingStatusComponent implements OnInit {
 
   timelineModel: any = {};
 
+  
+
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
@@ -157,7 +159,8 @@ export class TrackingStatusComponent implements OnInit {
     // this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
     this.criteriaModelStatus.startDate = moment(startDate).format('YYYYMMDD');
     this.criteriaModelStatus.endDate = moment(endDate).format('YYYYMMDD');
-
+    this.timerModel.displayTimer = this.defaultDisplayTimer;
+    
     this.readAll();
     this.readRoute();
     // this.readSumStatus();
@@ -899,6 +902,54 @@ export class TrackingStatusComponent implements OnInit {
   openMap(param) {
     let arr = param.split(',');
     window.open('https://www.google.com/maps/search/?api=1&query=' + arr[0] + '%2C' + arr[1], '_blank');
+  }
+
+  timerModel: any = {};
+  defaultDisplayTimer: any = '15:00';
+  displayTimerTmp: any;
+  interValtimer: any;
+  
+  timer(minute) {
+    // let minute = 1;
+    let seconds: number = minute * 60;
+    let textSec: any = "0";
+    let statSec: number = 60;
+
+    const prefix = minute < 10 ? "0" : "";
+
+    this.interValtimer = setInterval(() => {
+      seconds--;
+      if (statSec != 0) statSec--;
+      else statSec = 59;
+
+      if (statSec < 10) {
+        textSec = "0" + statSec;
+      } else textSec = statSec;
+
+      this.timerModel.displayTimer = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
+
+      if (seconds == 0) {
+        this.readAll();
+        clearInterval(this.interValtimer);
+        this.timerModel.displayTimer = this.displayTimerTmp;
+        this.autoRefresh();
+      }
+    }, 1000);
+  }
+
+  autoRefresh() {
+    // console.log('autoRefresh', this.timerModel.autoRefresh);
+    if (this.timerModel.autoRefresh) {
+      // Display Timer temp for new timer loop.
+      this.displayTimerTmp = this.timerModel.displayTimer;
+      this.timerModel.displayTimer = this.timerModel.displayTimer == '' ? this.defaultDisplayTimer : this.timerModel.displayTimer;
+      // console.log('autoRefresh is true displayTimer', this.timerModel.displayTimer);
+      this.timer(parseInt(this.timerModel.displayTimer));
+    } else {
+      clearInterval(this.interValtimer);
+      this.timerModel.displayTimer = this.displayTimerTmp ? this.displayTimerTmp : this.defaultDisplayTimer;
+      // console.log('autoRefresh is false displayTimer', this.timerModel.displayTimer);
+    }
   }
 
 }
