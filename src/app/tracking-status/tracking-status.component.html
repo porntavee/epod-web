@@ -24,11 +24,11 @@
                     <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="readAll()">
                     </cbtn>
                 </div>
-                <div class="col l4 s12">
-                    <div class="col s6 mtm-20">
+                <div class="col l4 s12" style="max-width: 420px;">
+                    <div class="col s5 mtm-20" style="max-width: 200px;">
                         <ccb (cModel)="timerModel.autoRefresh = $event" [data]="timerModel.autoRefresh" [label]="'Auto Refresh'" (change)="autoRefresh()"></ccb>
                     </div>
-                    <div class="col s4 mtm-10 text-center">
+                    <div class="col s3 mtm-10 text-center">
                         <citxt [class]="'text-center'" (cModel)="timerModel.displayTimer = $event" [data]="timerModel.displayTimer" [readonly]="timerModel.autoRefresh"></citxt>
                     </div>
                     <div class="col s2 mt-10px"> นาที</div>
