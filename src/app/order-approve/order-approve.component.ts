@@ -41,7 +41,7 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
   listFinancialProject: any = [];
   listStage: any = [];
   costCenter: any = '';
-  p = 1;
+  currentPage : number  = 1;
   groupCode: any = '';
 
   listRoute: any = [];
@@ -68,6 +68,7 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
   read() {
     this.spinner.show();
 
+    this.currentPage = 1;
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "TransportNo": this.criteriaModel.transportNo,

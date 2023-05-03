@@ -217,7 +217,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
+                            <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: currentPage }; let idx = index">
 
                                 <td class="min-width-100">
                                     <a class="cursor-pointer" (click)="readDetail(i)">{{i.TransportNo}}</a>
@@ -279,7 +279,7 @@
                     </div>
                     <div class="col s6">
                         <div style="text-align: right;">
-                            <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                            <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
                         </div>
                     </div>
 
@@ -542,7 +542,7 @@
                         <!-- <ul>
                             <li *ngFor="let item of listModel | paginate: { itemsPerPage: 10, currentPage: p }">{{item}}</li>
                         </ul> -->
-                        <!-- <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls> -->
+                        <!-- <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls> -->
                     </div>
                 </div>
             </div>
