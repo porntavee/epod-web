@@ -205,13 +205,13 @@
                                 <th>Type of Work</th>
                                 <th>บริษัทขนส่ง</th>
                                 <th>ทะเบียนรถ</th>
+                                <th>รหัสคนขับ</th>
                                 <th>ชื่อคนขับ</th>
                                 <th>เบอร์โทรศัพท์คนขับ</th>
                                 <th>ประเภทรถ</th>
                                 <th>Route</th>
                                 <th>SubRoute</th>
                                 <th>สถานที่รับสินค้า</th>
-                                <th>ชื่อผู้ใช้งาน</th>
                                 <th>วันที่เอกสาร</th>
                                 <th>หมายเหตุ</th>
                             </tr>
@@ -240,6 +240,9 @@
                                     {{i.Vehicle}}
                                 </td>
                                 <td class="min-width-100">
+                                    {{i.DriverUser}}
+                                </td>
+                                <td class="min-width-100">
                                     {{i.DriverFirstName}} {{i.DriverLastName}}
                                 </td>
                                 <td class="min-width-100">
@@ -256,9 +259,6 @@
                                 </td>
                                 <td class="min-width-800">
                                     {{i.ReceiveFromName}} {{i.ReceiveFromAddress}}
-                                </td>
-                                <td class="min-width-100">
-                                    {{i.DriverUser}}
                                 </td>
                                 <td class="min-width-100">
                                     {{i.TransportDate}}
