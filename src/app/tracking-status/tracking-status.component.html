@@ -20,18 +20,20 @@
                     <cdp (cModel)="criteriaModelStatus.endDate = $event" [label]="'จนถึง'" [data]="criteriaModelStatus.endDate">
                     </cdp>
                 </div>
-                <div class="col l1 s12 ms-2">
+                <div class="col l2 s12 ms-2">
                     <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="readAll()">
                     </cbtn>
                 </div>
-                <div class="col l4 s12" style="max-width: 420px;">
-                    <div class="col s5 mtm-20" style="max-width: 200px;">
+            </div>
+            <div class="row">
+                <div class="col l12">
+                    <div class="col l3 s12 p-0 mtm-20">
                         <ccb (cModel)="timerModel.autoRefresh = $event" [data]="timerModel.autoRefresh" [label]="'Auto Refresh'" (change)="autoRefresh()"></ccb>
                     </div>
-                    <div class="col s3 mtm-10 text-center">
-                        <citxt [class]="'text-center'" (cModel)="timerModel.displayTimer = $event" [data]="timerModel.displayTimer" [readonly]="timerModel.autoRefresh"></citxt>
+                    <div class="col l3 s12 p-0 mtm-10">
+                        <citxt [class]="'text-center'" (cModel)="timerModel.displayMinute = $event" [label]="'เวลา'" [data]="timerModel.displayMinute" [readonly]="timerModel.autoRefresh"></citxt>
                     </div>
-                    <div class="col s2 mt-10px"> นาที</div>
+                    <div class="col l4 s12 mt-10px"> นาที &nbsp; {{ showNextTime }}</div>
                 </div>
             </div>
             <div class="row">
