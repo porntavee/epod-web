@@ -489,9 +489,10 @@
                             <h1>&nbsp;</h1>
                         </div> -->
                         <div class="col l5 s12 p-0 mtm-20">
-                            <citxt (cModel)="headerModel.Comment = $event" [label]="'หมายเหตุ'" [data]="headerModel.Comment">
+                            <citxt (cModel)="headerModel.Route = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.Route" [readonly]="true">
                             </citxt>
                         </div>
+                        
                     </div>
 
                     <div class="row">
@@ -503,7 +504,7 @@
                             <h1>&nbsp;</h1>
                         </div> -->
                         <div class="col l5 s12 p-0 mtm-20">
-                            <citxt (cModel)="headerModel.OrderNo = $event" [label]="'Doc No.'" [data]="headerModel.OrderNo">
+                            <citxt (cModel)="headerModel.SubRoute = $event" [label]="'เส้นทางย่อย'" [data]="headerModel.SubRoute" [readonly]="true">
                             </citxt>
                         </div>
                     </div>
@@ -517,7 +518,7 @@
                             <h1>&nbsp;</h1>
                         </div> -->
                         <div class="col l5 s12 p-0 mtm-20">
-                            <citxt (cModel)="headerModel.PurchaseNo = $event" [label]="'PO No.'" [data]="headerModel.PurchaseNo">
+                            <citxt (cModel)="headerModel.OrderNo = $event" [label]="'Doc No.'" [data]="headerModel.OrderNo">
                             </citxt>
                         </div>
                     </div>
@@ -531,7 +532,7 @@
                             <h1>&nbsp;</h1>
                         </div> -->
                         <div class="col l5 s12 p-0 mtm-20">
-                            <citxt (cModel)="headerModel.CBM = $event" [label]="'CBM'" [data]="headerModel.CBM">
+                            <citxt (cModel)="headerModel.PurchaseNo = $event" [label]="'PO No.'" [data]="headerModel.PurchaseNo">
                             </citxt>
                         </div>
                     </div>
@@ -545,7 +546,7 @@
                             <h1>&nbsp;</h1>
                         </div> -->
                         <div class="col l5 s12 p-0 mtm-20">
-                            <citxt (cModel)="headerModel.Qty = $event" [label]="'Carton'" [data]="headerModel.Qty">
+                            <citxt (cModel)="headerModel.CBM = $event" [label]="'CBM'" [data]="headerModel.CBM">
                             </citxt>
                         </div>
                     </div>
@@ -559,7 +560,7 @@
                             <h1>&nbsp;</h1>
                         </div> -->
                         <div class="col l5 s12 p-0 mtm-20">
-                            <citxt (cModel)="headerModel.Weight = $event" [label]="'Weight'" [data]="headerModel.Weight">
+                            <citxt (cModel)="headerModel.Qty = $event" [label]="'Carton'" [data]="headerModel.Qty">
                             </citxt>
                         </div>
                     </div>
@@ -569,25 +570,15 @@
                             <citxt (cModel)="headerModel.ShiptoMobile = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="headerModel.ShiptoMobile" [readonly]="true">
                             </citxt>
                         </div>
+                        <div class="col l5 s12 p-0 mtm-20">
+                            <citxt (cModel)="headerModel.Weight = $event" [label]="'Weight'" [data]="headerModel.Weight">
+                            </citxt>
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col l5 s12 p-0 mtm-20">
                             <citxt (cModel)="headerModel.ShiptoAdress = $event" [label]="'ที่อยู่ผู้รับ'" [data]="headerModel.ShiptoAdress" [readonly]="true">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 mtm-20">
-                            <citxt (cModel)="headerModel.Route = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.Route" [readonly]="true">
-                            </citxt>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col l5 s12 p-0 mtm-20">
-                            <citxt (cModel)="headerModel.SubRoute = $event" [label]="'เส้นทางย่อย'" [data]="headerModel.SubRoute" [readonly]="true">
                             </citxt>
                         </div>
                     </div>
@@ -726,7 +717,7 @@
     </div>
     <!-- {{this.viewModel|json}} -->
     <div class="col s12">
-        <div class="top-535">
+        <div class="top-485">
             <div class="card-panel table-panel-header">
                 <div class="row">
                     <div class="col l8 s12">
