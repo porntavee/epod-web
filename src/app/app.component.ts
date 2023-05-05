@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ServiceProviderService } from './shared/service-provider.service';
 import { ToastrService } from 'ngx-toastr';
 import { MenuService } from './shared/menu.service';
 import { ONE } from '@angular/cdk/keycodes';
 import { HttpClient } from '@angular/common/http';
-
+import{ GlobalConstants } from './shared/global-constants';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -29,6 +29,7 @@ export class AppComponent {
   authTimeSheet: string = 'false';
   authDocLogReport: string = 'false';
   authUserLogReport: string = 'false';
+  currentRoute: string;
 
   userModel: any = {};
 
@@ -40,6 +41,16 @@ export class AppComponent {
     public menuService: MenuService,
     private http: HttpClient
   ) {
+    // Event listeners for route change events
+    this.currentRoute = "";
+    this.router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationStart) {
+            // Show loading indicator
+            // console.log('Route change detected');
+            clearInterval(GlobalConstants.interValtimer);
+        }
+    });
+    
     this.versionString= this.serviceProviderService.version;
     this.userModel.username = '';
     this.userModel.password = '';

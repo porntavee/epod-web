@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, JobStatusDialog, JobOrderStatusDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
-import { Logger } from '../shared/logger.service';
+import{ GlobalConstants } from '../shared/global-constants';
 
 @Component({
   selector: 'app-tracking-status',
@@ -910,7 +910,6 @@ export class TrackingStatusComponent implements OnInit {
   msSinceEpoch: any;
   timeLater: any;
   showNextTime: any;
-  interValtimer: any;
  
   autoRefresh() {
     console.log('autoRefresh', this.timerModel.autoRefresh);
@@ -935,7 +934,7 @@ export class TrackingStatusComponent implements OnInit {
         this.criteriaModelStatus.endDate = moment(this.timeLater).format('YYYYMMDD');
       }
 
-      this.interValtimer = setInterval(() => {
+      GlobalConstants.interValtimer = setInterval(() => {
         let iToday = new Date();
 
         console.log(moment(iToday.getTime()).format('HH:mm:ss'), moment(this.timeLater).format('HH:mm:ss'));
@@ -950,7 +949,7 @@ export class TrackingStatusComponent implements OnInit {
           this.readAll();
 
           // Clear interval timer when timeLater is equal current time.
-          clearInterval(this.interValtimer);
+          clearInterval(GlobalConstants.interValtimer);
           this.autoRefresh();
         }
       }, 1000);
@@ -958,7 +957,7 @@ export class TrackingStatusComponent implements OnInit {
       this.timerModel.displayMinute = this.displayMinuteTmp ? this.displayMinuteTmp : this.defaultMinute;
       this.showNextTime = '';
       // Clear interval timer when auto refresh not checked.
-      clearInterval(this.interValtimer);
+      clearInterval(GlobalConstants.interValtimer);
       console.log('autoRefresh is false displayMinute', this.timerModel.displayMinute);
     }
   }

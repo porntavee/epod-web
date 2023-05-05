@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as moment from 'moment';
+import{ GlobalConstants } from '../shared/global-constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -762,14 +763,12 @@ export class DashboardComponent implements OnInit {
   proofDeliveryStatus = [];
   proofDeliveryByCountry3 = [];
 
-
   timerModel: any = {};
   defaultMinute: any = '1';
   displayMinuteTmp: any;
   msSinceEpoch: any;
   timeLater: any;
   showNextTime: any;
-  interValtimer: any;
  
   autoRefresh() {
     console.log('autoRefresh', this.timerModel.autoRefresh);
@@ -794,7 +793,7 @@ export class DashboardComponent implements OnInit {
         this.criteriaModel.endDate = moment(this.timeLater).format('YYYYMMDD');
       }
 
-      this.interValtimer = setInterval(() => {
+      GlobalConstants.interValtimer = setInterval(() => {
         let iToday = new Date();
 
         console.log(moment(iToday.getTime()).format('HH:mm:ss'), moment(this.timeLater).format('HH:mm:ss'));
@@ -809,7 +808,7 @@ export class DashboardComponent implements OnInit {
           this.read();
 
           // Clear interval timer when timeLater is equal current time.
-          clearInterval(this.interValtimer);
+          clearInterval(GlobalConstants.interValtimer);
           this.autoRefresh();
         }
       }, 1000);
@@ -817,7 +816,7 @@ export class DashboardComponent implements OnInit {
       this.timerModel.displayMinute = this.displayMinuteTmp ? this.displayMinuteTmp : this.defaultMinute;
       this.showNextTime = '';
       // Clear interval timer when auto refresh not checked.
-      clearInterval(this.interValtimer);
+      clearInterval(GlobalConstants.interValtimer);
       console.log('autoRefresh is false displayMinute', this.timerModel.displayMinute);
     }
   }
