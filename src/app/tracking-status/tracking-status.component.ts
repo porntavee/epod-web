@@ -905,30 +905,30 @@ export class TrackingStatusComponent implements OnInit {
   }
 
   timerModel: any = {};
-  defaultMinute: any = '1';
+  defaultMinute: any = '15';
   displayMinuteTmp: any;
   msSinceEpoch: any;
   timeLater: any;
   showNextTime: any;
  
   autoRefresh() {
-    console.log('autoRefresh', this.timerModel.autoRefresh);
+    // console.log('autoRefresh', this.timerModel.autoRefresh);
     if (this.timerModel.autoRefresh) {
       // Display Timer temp for new timer loop.
       this.displayMinuteTmp = this.timerModel.displayMinute;
       this.timerModel.displayMinute = this.timerModel.displayMinute == '' ? this.defaultMinute : this.timerModel.displayMinute;
 
       let today = new Date();
-      let currentDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+ today.getDate();
-      let currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      // let currentDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+ today.getDate();
+      // let currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       this.msSinceEpoch = today.getTime();
       this.timeLater = new Date(this.msSinceEpoch + this.timerModel.displayMinute * 60 * 1000);
       this.showNextTime = 'โหลดข้อมูลใหม่ เวลา : ' + moment(this.timeLater).format('HH:mm:ss');
 
-      console.log(currentDate, currentTime, today.getTime());
-      console.log(this.timerModel.displayMinute + ' minute later getFull', moment(this.timeLater).format('YYYYMMDD'));
-      console.log(this.timerModel.displayMinute + ' minute later Refresh Data Next Time', this.showNextTime);
-      console.log('autoRefresh is true displayMinute', this.timerModel.displayMinute);
+      // console.log(currentDate, currentTime, today.getTime());
+      // console.log(this.timerModel.displayMinute + ' minute later getFull', moment(this.timeLater).format('YYYYMMDD'));
+      // console.log(this.timerModel.displayMinute + ' minute later Refresh Data Next Time', this.showNextTime);
+      // console.log('autoRefresh is true displayMinute', this.timerModel.displayMinute);
 
       if (this.criteriaModelStatus.endDate !=  moment(this.timeLater).format('YYYYMMDD')) {
         this.criteriaModelStatus.endDate = moment(this.timeLater).format('YYYYMMDD');
@@ -937,7 +937,7 @@ export class TrackingStatusComponent implements OnInit {
       GlobalConstants.interValtimer = setInterval(() => {
         let iToday = new Date();
 
-        console.log(moment(iToday.getTime()).format('HH:mm:ss'), moment(this.timeLater).format('HH:mm:ss'));
+        // console.log(moment(iToday.getTime()).format('HH:mm:ss'), moment(this.timeLater).format('HH:mm:ss'));
         if (moment(iToday.getTime()).format('HH:mm:ss') == moment(this.timeLater).format('HH:mm:ss')) {
           // Check if date is not equal change endDate.
           if(moment(iToday.getTime()).format('YYYYMMDD') != moment(this.timeLater).format('YYYYMMDD')) {
@@ -945,7 +945,7 @@ export class TrackingStatusComponent implements OnInit {
           }
 
           // Refresh data.
-          console.log('Refresh Data call method: readAll()');
+          // console.log('Refresh Data call method: readAll()');
           this.readAll();
 
           // Clear interval timer when timeLater is equal current time.
@@ -958,7 +958,7 @@ export class TrackingStatusComponent implements OnInit {
       this.showNextTime = '';
       // Clear interval timer when auto refresh not checked.
       clearInterval(GlobalConstants.interValtimer);
-      console.log('autoRefresh is false displayMinute', this.timerModel.displayMinute);
+      // console.log('autoRefresh is false displayMinute', this.timerModel.displayMinute);
     }
   }
 
