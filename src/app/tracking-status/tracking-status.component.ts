@@ -118,6 +118,7 @@ export class TrackingStatusComponent implements OnInit {
       Status: "On time"
     }
   ];
+  listTransport: any = [];
   headerModel: any = {};
   criteriaModel: any = {}; //ค้นหา
   criteriaModelStatus:any={};
@@ -163,6 +164,7 @@ export class TrackingStatusComponent implements OnInit {
     
     this.readAll();
     this.readRoute();
+    this.readTransport();
     // this.readSumStatus();
     // this.read();
   }
@@ -233,6 +235,7 @@ export class TrackingStatusComponent implements OnInit {
       "InvoiceDateEnd":this.verifyDateTime(this.criteriaModelStatus.endDate, 'InvoiceDateEnd'),
       // Filter.
       "userinformation": this.serviceProviderService.userinformation,
+      "TransportId": this.verifySring(this.criteriaModel.TransportId),
       "TransportNo": this.verifySring(this.criteriaModel.TransportNo),
       "TransportStatus": this.verifySring(this.criteriaModel.transportstatusCode),
       "OrderStatusId": this.verifySring(this.criteriaModel.OrderStatusId),
@@ -367,8 +370,6 @@ export class TrackingStatusComponent implements OnInit {
       if (model.Status) {
 
         this.listDetailModel = model.Data;
-        
-        
         
         // this.headerModel.InvoiceDate = moment(model.Data[0].InvoiceDate).format('DD-MM-YYYY');
         // this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
@@ -533,6 +534,70 @@ export class TrackingStatusComponent implements OnInit {
   setSeq(param, idx) {
     param = idx;
     return param;
+  }
+
+  // If can't load data to list model.
+  private loadDataFalse(message): any {
+    let _listModel: any = [];
+    this.showErrorMessage(message);
+
+    return _listModel;
+  }
+
+  // Show Error message.
+  private showErrorMessage(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  readTransport() {
+    let criteria = {
+      "userinformation": this.serviceProviderService.userinformation,
+      "Code": ""
+    }
+
+    // let json = JSON.stringify(criteria);
+    this.serviceProviderService.post('api/Masters/GetTransport', criteria).subscribe(data => {
+      // Set data to model.
+      let model: any = data;
+      this.viewModel = model;
+      // Check model status if true set model data to list model.
+      this.listTransport = model.Status ? model.Data : this.loadDataFalse(model.Message);
+    }, err => {
+      this.showErrorMessage(err.message);
+    });
+  }
+
+  chooseTransportFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'Transport',
+        listData: this.listTransport,
+        listDataSearch: this.listTransport 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.TransportId = result.Id;
+        this.criteriaModel.TransportCode = result.Code;
+        this.criteriaModel.TransportDescription = result.Code + ' - ' + result.Description;
+        // Declare setting local criteria model.
+        // let _criteriaModel = {
+        //   'TransportId'          : result.Id,
+        //   'TransportCode'        : result.Code,
+        //   'TransportDescription' : result.Code + ' - ' + result.Description
+        // }
+        // // Setting header model.
+        // _criteriaModel = this.setModel(_criteriaModel);
+        // this.criteriaModel = {...this.criteriaModel, ..._criteriaModel};
+      }
+    });
   }
 
   //use

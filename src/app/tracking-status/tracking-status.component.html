@@ -204,6 +204,10 @@
                     <citxt (cModel)="criteriaModel.transportstatusDescription = $event" [label]="'สถานะใบคุม'" [data]="criteriaModel.transportstatusDescription" [readonly]="true" (click)="chooseStatus()">
                     </citxt>
                 </div>
+                <div class="col l3 s12 p-0 mtm-20">
+                    <citxt (cModel)="criteriaModel.TransportDescription = $event" [label]="'บริษัทขนส่ง'" [data]="criteriaModel.TransportDescription" [readonly]="true" (click)="chooseTransportFilter()">
+                    </citxt>
+                </div>
             </div>
             <div class="row">
                 <div class="col l12 p-0 text-right mb-5px">
