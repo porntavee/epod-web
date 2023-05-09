@@ -307,6 +307,7 @@
                             <th>Doc Type</th>
                             <th>Doc No.</th>
                             <th>PO</th>
+                            <th>บริษัทขนส่ง</th>
                             <th>Cus Code</th>
                             <th>ShipTp</th>
                             <th>ที่อยู่ผู้รับ</th>
@@ -322,20 +323,15 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let i of viewModel2 | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
-                            <td>
-                                <div class="w100">
+                            <td class="min-width-100">
                                     <a style="cursor: pointer;" (click)="readDetail(i)">{{i.ShipmentNo}}</a>
-                                </div>
                             </td>
-                            <td>
-                                <div class="w100">
+                            <td class="min-width-100">
                                     <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a>
-                                </div>
+
                             </td>
-                            <td>
-                                <div class="w100">
+                            <td class="min-width-100">
                                     {{i.InvoiceNo}}
-                                </div>
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
                                 <div class="w100" style="background-color: {{statusTransportColor(i.TransportStatus)}}; height: 42px; padding-top: 10px;">
@@ -348,25 +344,20 @@
                                 </div>
                             </td>
 
-                            <td>
-                                <div class="w100">
-                                    {{i.OrderType}}
-                                </div>
+                            <td class="min-width-100">
+                                {{i.OrderType}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.OrderNo}}
-                                </div>
+                            <td class="min-width-100">
+                                {{i.OrderNo}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.PurchaseNo}}
-                                </div>
+                            <td class="min-width-100">
+                                {{i.PurchaseNo}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.ShiptoCode}}
-                                </div>
+                            <td class="min-width-300">
+                                {{i.Transport}}
+                            </td>
+                            <td class="min-width-100">
+                                {{i.ShiptoCode}}
                             </td>
                             <td>
                                 <div class="w300">
@@ -383,35 +374,23 @@
                                     {{i.Route}}
                                 </div>
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.InvoiceDateStr}}
-                                </div>
+                            <td class="min-width-100">
+                                {{i.InvoiceDateStr}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.OrderEstimateStr}}
-                                </div>
+                            <td class="min-width-100">
+                                {{i.OrderEstimateStr}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.CBM}}
-                                </div>
+                            <td class="min-width-100">
+                                {{i.CBM}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Qty}}
-                                </div>
+                            <td class="min-width-100">
+                                {{i.Qty}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.Weight}}
-                                </div>
+                            <td class="min-width-100">
+                                {{i.Weight}}
                             </td>
-                            <td>
-                                <div class="w100">
-                                    {{i.ReasonClose}}
-                                </div>
+                            <td class="min-width-150">
+                                {{i.ReasonClose}}
                             </td>
 
                         </tr>
