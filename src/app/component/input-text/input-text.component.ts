@@ -13,6 +13,7 @@ export class InputTextComponent implements OnInit {
   
   @Input() readonly = false;
   @Input() type = 'text';
+  @Input() class = '';
 
   constructor() { }
 

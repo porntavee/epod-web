@@ -66,7 +66,7 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
       }
     }, err => {
         this.spinner.hide();
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
   }
 
@@ -83,9 +83,8 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
       // Set data to model.
       let model: any = data;
       this.headerModel = model.Status ? model.Data[0] : this.loadDataFalse(model.Message);
-      Logger.info('master-holiday', 'renderHolidayCheck:', this.headerModel, this.isDebugMode)
     }, err => {
-      this.hideSninnerAndShowError(err.message);
+      this.showErrorMessage(err.message);
     });
   }
 
@@ -102,7 +101,7 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
   // If can't load data to list model.
   private loadDataFalse(message): boolean {
     let _listModel: any = [];
-    this.hideSninnerAndShowError(message);
+    this.showErrorMessage(message);
 
     return _listModel;
   }
@@ -114,7 +113,7 @@ export class MasterHolidayComponent  implements OnInit, AfterContentChecked {
   }
 
   // If error load data.
-  private hideSninnerAndShowError(message: string) {
+  private showErrorMessage(message: string) {
     this.spinner.hide();
     this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
   }

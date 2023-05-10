@@ -498,28 +498,19 @@ p {
     box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
-.filter-fixed-top
-{
-    position: fixed;
-    z-index: 997;
-    top: 56px;
-    width: 85% !important;
-}
-
 @media (min-width: 768px)
 {
     .filter-fixed-top
     {
         width: 70% !important;
     }
-
 }
 
 @media (min-width: 992px)
 {
     .filter-fixed-top
     {
-        width: 70% !important;
+        width: 75% !important;
     }
 }
 
@@ -552,7 +543,7 @@ p {
 {
     .filter-fixed-top
     {
-        width: 86% !important;
+        width: 84.7% !important;
     }
 }
 
@@ -560,19 +551,46 @@ p {
 {
     .filter-fixed-top
     {
-        width: 88% !important;
+        width: 88.5% !important;
     }
 }
 
-
-.top-515 {
-    position: relative;;
-    margin-top: 515px !important;
+.dfix {
+    line-height: 40px;
+    background-color: #F2F4F8;
+    position: fixed;
+    z-index: 990;
+    top: 40px;
 }
 
-.top-250 {
+.filter-fixed-top
+{
+    position: fixed;
+    z-index: 997;
+    width: 85% !important;
+}
+
+.ms-1 {
+    margin-left: 1rem !important;
+}
+
+.ms-2 {
+    margin-left: 2rem !important;
+}
+
+.top-485 {
     position: relative;;
-    margin-top: 250px !important;
+    margin-top: 465px !important;
+}
+
+.top-290 {
+    position: relative;;
+    margin-top: 290px !important;
+}
+
+.top-310 {
+    position: relative;;
+    margin-top: 310px !important;
 }
 
 .dialog-min-max-height {

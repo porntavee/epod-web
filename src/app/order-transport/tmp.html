@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col s12">
+        <citxt
+            (cModel)="criteriaModel.transportNo = $event"
+            [label]="'เลขที่ใบคุม'"
+            [data]="criteriaModel.transportNo"
+            [readonly]="true"
+            (click)="chooseTransportNo()">
+        </citxt>
+    </div>
+    <div class="col s12 margin-top-mminus-10">
+        <citxt
+            (cModel)="criteriaModel.shipToDescription = $event"
+            [label]="'ชื่อผู้รับ'"
+            [data]="criteriaModel.shipToDescription"
+            [readonly]="true"
+            (click)="chooseShipTo()">
+        </citxt>
+    </div>
+    <div class="col s12 margin-top-mminus-10">
+        <citxt
+            (cModel)="criteriaModel.routeDescription = $event"
+            [label]="'Route'"
+            [data]="criteriaModel.routeDescription"
+            [readonly]="true"
+            (click)="chooseRoute()">
+        </citxt>
+    </div>
+    <div class="col s12 margin-top-mminus-10">
+        <cdp
+            (cModel)="criteriaModel.apptDate = $event"
+            [label]="'Appt. Date'"
+            [data]="criteriaModel.apptDate">
+        </cdp>
+    </div>
+    <div class="col s12" style="margin-top: 10px;">
+        <citxt
+            (cModel)="criteriaModel.vehicleDescription = $event"
+            [label]="'ทะเบียนรถ'"
+            [data]="criteriaModel.vehicleDescription"
+            [readonly]="true"
+            (click)="chooseVehicle()">
+        </citxt>
+    </div>
+    <div class="col s12 margin-top-mminus-10">
+        <citxt
+            (cModel)="criteriaModel.driverDescription = $event"
+            [label]="'ชื่อคนขับ'"
+            [data]="criteriaModel.driverDescription"
+            [readonly]="true"
+            (click)="chooseDriver()">
+        </citxt>
+    </div>
+    <div class="col s12 margin-top-mminus-10">
+        <citxt
+            (cModel)="criteriaModel.statusDescription = $event"
+            [label]="'สถานะ'"
+            [data]="criteriaModel.statusDescription"
+            [readonly]="true"
+            (click)="chooseStatus()">
+        </citxt>
+    </div>
+    <div class="col s12 margin-top-mminus-10">
+        <citxt
+            (cModel)="criteriaModel.typeOfWorkDescription = $event"
+            [label]="'Type of Work'"
+            [data]="criteriaModel.typeOfWorkDescription"
+            [readonly]="true"
+            (click)="chooseTypeOfWork()">
+        </citxt>
+    </div>
+    <div class="col s12 margin-top-mminus-10">
+        <cdp
+            (cModel)="criteriaModel.TransportDate = $event"
+            [label]="'วันที่เอกสาร'"
+            [data]="criteriaModel.TransportDate">
+        </cdp>
+    </div>
+    <div class="col s12 margin-top-mminus-10">
+        <citxt 
+            (cModel)="criteriaModel.TransportDescription = $event" 
+            [label]="'บริษัทขนส่ง'" 
+            [data]="criteriaModel.TransportDescription"
+            [readonly]="true"
+            (click)="chooseTransportFilter()">
+        </citxt>
+    </div>
+    <div class="col s12 p-0 mb-5px">
+        <cbtnl
+            [label]="'ล้าง'"
+            [color]="'red'"
+            [icon]="'clear'"
+            (click)="clear()">
+        </cbtnl>
+    </div>
+    <div class="col s12 p-0 mb-5px">
+        <cbtnl
+            [label]="'ค้นหา'"
+            [color]="'blue'"
+            [icon]="'search'"
+            (click)="read()">
+        </cbtnl>
+    </div>
+</div>

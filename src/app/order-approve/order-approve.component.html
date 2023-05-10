@@ -1,5 +1,9 @@
 <!-- Start Vehicle Main Page. -->
 <div *ngIf="isMainPage">
+    <!-- Div for filter fix top. -->
+    <div class="col s12 dfix">
+        &nbsp;
+    </div>
     <!-- Start Vehicle Form -->
     <div class="col md-12 filter-fixed-top">
         <div class="card-panel card-panel-header">
@@ -180,7 +184,7 @@
     </div>
     <!-- {{this.viewModel|json}} -->
     <div class="col s12">
-        <div class="top-250 top-1050">
+        <div class="top-290">
             <div class="card-panel card-panel-header">
                 <div class="row">
                     <div class="col l2 s12">
@@ -201,19 +205,19 @@
                                 <th>Type of Work</th>
                                 <th>บริษัทขนส่ง</th>
                                 <th>ทะเบียนรถ</th>
+                                <th>รหัสคนขับ</th>
                                 <th>ชื่อคนขับ</th>
                                 <th>เบอร์โทรศัพท์คนขับ</th>
                                 <th>ประเภทรถ</th>
                                 <th>Route</th>
                                 <th>SubRoute</th>
                                 <th>สถานที่รับสินค้า</th>
-                                <th>ชื่อผู้ใช้งาน</th>
                                 <th>วันที่เอกสาร</th>
                                 <th>หมายเหตุ</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
+                            <tr *ngFor="let i of listModel | paginate: { itemsPerPage: 10, currentPage: currentPage }; let idx = index">
 
                                 <td class="min-width-100">
                                     <a class="cursor-pointer" (click)="readDetail(i)">{{i.TransportNo}}</a>
@@ -236,6 +240,9 @@
                                     {{i.Vehicle}}
                                 </td>
                                 <td class="min-width-100">
+                                    {{i.DriverUser}}
+                                </td>
+                                <td class="min-width-100">
                                     {{i.DriverFirstName}} {{i.DriverLastName}}
                                 </td>
                                 <td class="min-width-100">
@@ -252,9 +259,6 @@
                                 </td>
                                 <td class="min-width-800">
                                     {{i.ReceiveFromName}} {{i.ReceiveFromAddress}}
-                                </td>
-                                <td class="min-width-100">
-                                    {{i.DriverUser}}
                                 </td>
                                 <td class="min-width-100">
                                     {{i.TransportDate}}
@@ -275,7 +279,7 @@
                     </div>
                     <div class="col s6">
                         <div style="text-align: right;">
-                            <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
+                            <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls>
                         </div>
                     </div>
 
@@ -538,7 +542,7 @@
                         <!-- <ul>
                             <li *ngFor="let item of listModel | paginate: { itemsPerPage: 10, currentPage: p }">{{item}}</li>
                         </ul> -->
-                        <!-- <pagination-controls (pageChange)="p = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls> -->
+                        <!-- <pagination-controls (pageChange)="currentPage = $event" previousLabel="ก่อนหน้า" nextLabel="ถัดไป"></pagination-controls> -->
                     </div>
                 </div>
             </div>
