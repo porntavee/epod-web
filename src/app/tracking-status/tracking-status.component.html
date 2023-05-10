@@ -213,7 +213,7 @@
                 <div class="col l12 p-0 text-right mb-5px">
                     <cbtn [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()">
                     </cbtn>
-                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()">
+                    <cbtn [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read('search')">
                     </cbtn>
                 </div>
             </div>
@@ -263,7 +263,7 @@
                 <cbtnl [label]="'ล้าง'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
             </div>
             <div class="col s12 p-0 mb-5px">
-                <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>
+                <cbtnl [label]="'ค้นหา'" [color]="'blue'" [icon]="'search'" (click)="read('search')"></cbtnl>
             </div>
         </div>
     </div>
