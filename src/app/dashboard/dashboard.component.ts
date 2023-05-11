@@ -766,7 +766,7 @@ export class DashboardComponent implements OnInit {
   proofDeliveryStatus = [];
   proofDeliveryByCountry3 = [];
 
-  timerModel: any = { displayMinute: '1', autoRefresh: false};
+  timerModel: any = { displayMinute: '15', autoRefresh: false};
   displayMinuteTmp: any;
   msSinceEpoch: any;
   timeLater: any;
@@ -793,11 +793,11 @@ export class DashboardComponent implements OnInit {
         // console.log(moment(iToday).format('YYYY-MM-DD HH:mm:ss'), moment(this.timeLater).format('YYYY-MM-DD HH:mm:ss'));
         if (moment(iToday).format('YYYY-MM-DD HH:mm:ss') == moment(this.timeLater).format('YYYY-MM-DD HH:mm:ss')) {
           
-         // Check if timeLater date is greater than time later change endDate.
-            if ((moment(this.timeLater).format('YYYYMMDD') > moment(today).format('YYYYMMDD'))) {
-              this.criteriaModel.startDate = moment(this.timeLater).format('YYYYMMDD');
-              this.criteriaModel.endDate = moment(this.timeLater).format('YYYYMMDD');
-            }
+          // Check if timeLater date is greater than time later change endDate.
+          if ((moment(this.timeLater).format('YYYYMMDD') > moment(today).format('YYYYMMDD'))) {
+            this.criteriaModel.startDate = moment(this.timeLater).format('YYYYMMDD');
+            this.criteriaModel.endDate = moment(this.timeLater).format('YYYYMMDD');
+          }
 
           // Refresh data.
           // console.log('Refresh Data call method: readAll()');

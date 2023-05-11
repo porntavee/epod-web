@@ -985,7 +985,7 @@ export class TrackingStatusComponent implements OnInit {
     window.open('https://www.google.com/maps/search/?api=1&query=' + arr[0] + '%2C' + arr[1], '_blank');
   }
 
-  timerModel: any = { displayMinute: '1', autoRefresh: false};
+  timerModel: any = { displayMinute: '15', autoRefresh: false};
   displayMinuteTmp: any;
   msSinceEpoch: any;
   timeLater: any;
@@ -1012,11 +1012,11 @@ export class TrackingStatusComponent implements OnInit {
         // console.log(moment(iToday).format('YYYY-MM-DD HH:mm:ss'), moment(this.timeLater).format('YYYY-MM-DD HH:mm:ss'));
         if (moment(iToday).format('YYYY-MM-DD HH:mm:ss') == moment(this.timeLater).format('YYYY-MM-DD HH:mm:ss')) {
           
-         // Check if timeLater date is greater than time later change endDate.
-            if ((moment(this.timeLater).format('YYYYMMDD') > moment(today).format('YYYYMMDD'))) {
-              this.criteriaModelStatus.startDate = moment(this.timeLater).format('YYYYMMDD');
-              this.criteriaModelStatus.endDate = moment(this.timeLater).format('YYYYMMDD');
-            }
+          // Check if timeLater date is greater than time later change endDate.
+          if ((moment(this.timeLater).format('YYYYMMDD') > moment(today).format('YYYYMMDD'))) {
+            this.criteriaModelStatus.startDate = moment(this.timeLater).format('YYYYMMDD');
+            this.criteriaModelStatus.endDate = moment(this.timeLater).format('YYYYMMDD');
+          }
 
           // Refresh data.
           // console.log('Refresh Data call method: readAll()');
