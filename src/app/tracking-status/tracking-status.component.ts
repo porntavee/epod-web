@@ -224,7 +224,7 @@ export class TrackingStatusComponent implements OnInit {
   }
 
   viewModel2: any = [];
-  read() {
+  read(task='') {
     this.spinner.show();
 
     this.p = 1;
@@ -247,6 +247,20 @@ export class TrackingStatusComponent implements OnInit {
 
     let json = JSON.stringify(criteria);
 
+    // Check empty search.
+    if (task == 'search') {
+      let filterNone: any = []
+      for (const [key, value] of Object.entries(criteria)) {
+        if (key != 'userinformation') {
+          filterNone.push(value == undefined || value == '');
+        }
+      }
+
+      if (!filterNone.includes(false)) {
+        this.showErrorMessage('กรุณาระบุเงื่อนไขค้นหา');
+        return;
+      }
+    }
     
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
       this.spinner.hide();
@@ -901,6 +915,9 @@ export class TrackingStatusComponent implements OnInit {
     this.criteriaModel = {
       OrderEstimate: this.verifyDateTime('')
     };
+
+    this.criteriaModelStatus.startDate = this.verifyDateTime('');
+    this.criteriaModelStatus.endDate = this.verifyDateTime('');
 
     // const startDate = new Date();
     // const endDate = new Date();
