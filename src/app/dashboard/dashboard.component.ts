@@ -34,7 +34,6 @@ export class DashboardComponent implements OnInit {
     // this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
     this.criteriaModel.startDate = moment(startDate).format('YYYYMMDD');
     this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
-    this.timerModel.displayMinute = this.defaultMinute;
     this.read();
   }
 
@@ -763,8 +762,7 @@ export class DashboardComponent implements OnInit {
   proofDeliveryStatus = [];
   proofDeliveryByCountry3 = [];
 
-  timerModel: any = {};
-  defaultMinute: any = '15';
+  timerModel: any = { displayMinute: '1', autoRefresh: false};
   displayMinuteTmp: any;
   msSinceEpoch: any;
   timeLater: any;
@@ -775,33 +773,27 @@ export class DashboardComponent implements OnInit {
     if (this.timerModel.autoRefresh) {
       // Display Timer temp for new timer loop.
       this.displayMinuteTmp = this.timerModel.displayMinute;
-      this.timerModel.displayMinute = this.timerModel.displayMinute == '' ? this.defaultMinute : this.timerModel.displayMinute;
 
       let today = new Date();
-      // let currentDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+ today.getDate();
-      // let currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
       this.msSinceEpoch = today.getTime();
       this.timeLater = new Date(this.msSinceEpoch + this.timerModel.displayMinute * 60 * 1000);
       this.showNextTime = 'โหลดข้อมูลใหม่ เวลา : ' + moment(this.timeLater).format('HH:mm:ss');
 
-      // console.log(currentDate, currentTime, today.getTime());
-      // console.log(this.timerModel.displayMinute + ' minute later getFull', moment(this.timeLater).format('YYYYMMDD'));
       // console.log(this.timerModel.displayMinute + ' minute later Refresh Data Next Time', this.showNextTime);
       // console.log('autoRefresh is true displayMinute', this.timerModel.displayMinute);
-
-      if (this.criteriaModel.endDate !=  moment(this.timeLater).format('YYYYMMDD')) {
-        this.criteriaModel.endDate = moment(this.timeLater).format('YYYYMMDD');
-      }
 
       GlobalConstants.interValtimer = setInterval(() => {
         let iToday = new Date();
 
-        // console.log(moment(iToday.getTime()).format('HH:mm:ss'), moment(this.timeLater).format('HH:mm:ss'));
-        if (moment(iToday.getTime()).format('HH:mm:ss') == moment(this.timeLater).format('HH:mm:ss')) {
-          // Check if date is not equal change endDate.
-          if(moment(iToday.getTime()).format('YYYYMMDD') != moment(this.timeLater).format('YYYYMMDD')) {
-            this.criteriaModel.endDate = moment(this.timeLater).format('YYYYMMDD');
-          }
+        // console.log(moment(iToday).format('YYYY-MM-DD HH:mm:ss'), moment(this.timeLater).format('YYYY-MM-DD HH:mm:ss'));
+        if (moment(iToday).format('YYYY-MM-DD HH:mm:ss') == moment(this.timeLater).format('YYYY-MM-DD HH:mm:ss')) {
+          
+         // Check if timeLater date is greater than time later change endDate.
+            if ((moment(this.timeLater).format('YYYYMMDD') > moment(today).format('YYYYMMDD'))) {
+              this.criteriaModel.startDate = moment(this.timeLater).format('YYYYMMDD');
+              this.criteriaModel.endDate = moment(this.timeLater).format('YYYYMMDD');
+            }
 
           // Refresh data.
           // console.log('Refresh Data call method: readAll()');
@@ -813,54 +805,11 @@ export class DashboardComponent implements OnInit {
         }
       }, 1000);
     } else {
-      this.timerModel.displayMinute = this.displayMinuteTmp ? this.displayMinuteTmp : this.defaultMinute;
+      this.timerModel.displayMinute = this.displayMinuteTmp ? this.displayMinuteTmp : this.timerModel.displayMinute;
       this.showNextTime = '';
       // Clear interval timer when auto refresh not checked.
       clearInterval(GlobalConstants.interValtimer);
       // console.log('autoRefresh is false displayMinute', this.timerModel.displayMinute);
     }
   }
-
-  // timer(minute) {
-  //   // let minute = 1;
-  //   let seconds: number = minute * 60;
-  //   let textSec: any = "0";
-  //   let statSec: number = 60;
-
-  //   const prefix = minute < 10 ? "0" : "";
-
-  //   this.interValtimer = setInterval(() => {
-  //     seconds--;
-  //     if (statSec != 0) statSec--;
-  //     else statSec = 59;
-
-  //     if (statSec < 10) {
-  //       textSec = "0" + statSec;
-  //     } else textSec = statSec;
-
-  //     this.timerModel.displayTimer = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
-
-  //     if (seconds == 0) {
-  //       this.read();
-  //       clearInterval(this.interValtimer);
-  //       this.timerModel.displayTimer = this.displayTimerTmp;
-  //       this.autoRefresh();
-  //     }
-  //   }, 1000);
-  // }
-
-  // autoRefresh() {
-  //   // console.log('autoRefresh', this.timerModel.autoRefresh);
-  //   if (this.timerModel.autoRefresh) {
-  //     // Display Timer temp for new timer loop.
-  //     this.displayTimerTmp = this.timerModel.displayTimer;
-  //     this.timerModel.displayTimer = this.timerModel.displayTimer == '' ? this.defaultDisplayTimer : this.timerModel.displayTimer;
-  //     // console.log('autoRefresh is true displayTimer', this.timerModel.displayTimer);
-  //     this.timer(parseInt(this.timerModel.displayTimer));
-  //   } else {
-  //     clearInterval(this.interValtimer);
-  //     this.timerModel.displayTimer = this.displayTimerTmp ? this.displayTimerTmp : this.defaultDisplayTimer;
-  //     // console.log('autoRefresh is false displayTimer', this.timerModel.displayTimer);
-  //   }
-  // }
 }

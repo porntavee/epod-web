@@ -160,7 +160,6 @@ export class TrackingStatusComponent implements OnInit {
     // this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
     this.criteriaModelStatus.startDate = moment(startDate).format('YYYYMMDD');
     this.criteriaModelStatus.endDate = moment(endDate).format('YYYYMMDD');
-    this.timerModel.displayMinute = this.defaultMinute;
     
     this.readAll();
     this.readRoute();
@@ -986,8 +985,7 @@ export class TrackingStatusComponent implements OnInit {
     window.open('https://www.google.com/maps/search/?api=1&query=' + arr[0] + '%2C' + arr[1], '_blank');
   }
 
-  timerModel: any = {};
-  defaultMinute: any = '15';
+  timerModel: any = { displayMinute: '1', autoRefresh: false};
   displayMinuteTmp: any;
   msSinceEpoch: any;
   timeLater: any;
@@ -998,33 +996,27 @@ export class TrackingStatusComponent implements OnInit {
     if (this.timerModel.autoRefresh) {
       // Display Timer temp for new timer loop.
       this.displayMinuteTmp = this.timerModel.displayMinute;
-      this.timerModel.displayMinute = this.timerModel.displayMinute == '' ? this.defaultMinute : this.timerModel.displayMinute;
 
       let today = new Date();
-      // let currentDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+ today.getDate();
-      // let currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
       this.msSinceEpoch = today.getTime();
       this.timeLater = new Date(this.msSinceEpoch + this.timerModel.displayMinute * 60 * 1000);
       this.showNextTime = 'โหลดข้อมูลใหม่ เวลา : ' + moment(this.timeLater).format('HH:mm:ss');
 
-      // console.log(currentDate, currentTime, today.getTime());
-      // console.log(this.timerModel.displayMinute + ' minute later getFull', moment(this.timeLater).format('YYYYMMDD'));
       // console.log(this.timerModel.displayMinute + ' minute later Refresh Data Next Time', this.showNextTime);
       // console.log('autoRefresh is true displayMinute', this.timerModel.displayMinute);
-
-      if (this.criteriaModelStatus.endDate !=  moment(this.timeLater).format('YYYYMMDD')) {
-        this.criteriaModelStatus.endDate = moment(this.timeLater).format('YYYYMMDD');
-      }
-
+      
       GlobalConstants.interValtimer = setInterval(() => {
         let iToday = new Date();
 
-        // console.log(moment(iToday.getTime()).format('HH:mm:ss'), moment(this.timeLater).format('HH:mm:ss'));
-        if (moment(iToday.getTime()).format('HH:mm:ss') == moment(this.timeLater).format('HH:mm:ss')) {
-          // Check if date is not equal change endDate.
-          if(moment(iToday.getTime()).format('YYYYMMDD') != moment(this.timeLater).format('YYYYMMDD')) {
-            this.criteriaModel.endDate = moment(this.timeLater).format('YYYYMMDD');
-          }
+        // console.log(moment(iToday).format('YYYY-MM-DD HH:mm:ss'), moment(this.timeLater).format('YYYY-MM-DD HH:mm:ss'));
+        if (moment(iToday).format('YYYY-MM-DD HH:mm:ss') == moment(this.timeLater).format('YYYY-MM-DD HH:mm:ss')) {
+          
+         // Check if timeLater date is greater than time later change endDate.
+            if ((moment(this.timeLater).format('YYYYMMDD') > moment(today).format('YYYYMMDD'))) {
+              this.criteriaModelStatus.startDate = moment(this.timeLater).format('YYYYMMDD');
+              this.criteriaModelStatus.endDate = moment(this.timeLater).format('YYYYMMDD');
+            }
 
           // Refresh data.
           // console.log('Refresh Data call method: readAll()');
@@ -1036,7 +1028,7 @@ export class TrackingStatusComponent implements OnInit {
         }
       }, 1000);
     } else {
-      this.timerModel.displayMinute = this.displayMinuteTmp ? this.displayMinuteTmp : this.defaultMinute;
+      this.timerModel.displayMinute = this.displayMinuteTmp ? this.displayMinuteTmp : this.timerModel.displayMinute;
       this.showNextTime = '';
       // Clear interval timer when auto refresh not checked.
       clearInterval(GlobalConstants.interValtimer);
