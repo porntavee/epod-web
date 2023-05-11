@@ -71,11 +71,15 @@ export class DashboardComponent implements OnInit {
         },
         {
           "name": "On the Move",
-          "value": model.Data[0].TotalFleet.toFixed(2)
+          "value": model.Data[0].OnTheMove.toFixed(2)
         },
         {
           "name": "In Maintenance",
           "value": model.Data[0].InMaintenance.toFixed(2)
+        },
+        {
+          "name": "Pending",
+          "value": model.Data[0].TotalFleet - (model.Data[0].OnTheMove + model.Data[0].InMaintenance)
         });
 
       // model.Data.forEach(element => {
