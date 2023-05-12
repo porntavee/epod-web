@@ -17,10 +17,10 @@
     <!-- {{data.title}} <br> -->
     <!-- {{data.ReturnNo}} -->
     <!-- {{calPage}} -->
-    <button style="background-color: transparent; border-width: 0px !important;" printSectionId="print-section" ngxPrint [printStyle]="{ '@page': { size: 'landscape !important' } }" [useExistingCss]="true">
+    <button style="background-color: transparent; border-width: 0px !important;" printSectionId="print-section" ngxPrint>
         <a class="btn waves-effect waves-light light-blue custom-button">Original</a>
     </button>
-    <button style="background-color: transparent; border-width: 0px !important;" printSectionId="print-section2" ngxPrint [printStyle]="{ '@page': { size: 'landscape !important' } }" [useExistingCss]="true">
+    <button style="background-color: transparent; border-width: 0px !important;" printSectionId="print-section2" ngxPrint>
         <a class="btn waves-effect waves-light red custom-button">Copy</a>
     </button>
     <!-- <cbtn [label]="'original'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn> -->
@@ -43,7 +43,7 @@
             <b>ใบกำกับการคืนเอกสาร (POD Return)</b>
         </div>
         <br>
-        <div style="min-height: 450px;">
+        <div style="min-height: 430px;">
             <table style="width: 100%;">
                 <tr style="border: 1px solid black;">
                     <th style="border: 1px solid black;">Seq</th>
@@ -94,7 +94,7 @@
             <b>ใบกำกับการคืนเอกสาร (POD Return)</b>
         </div>
         <br>
-        <div style="min-height: 450px;">
+        <div style="min-height: 430px;">
             <table style="width: 100%;">
                 <tr style="border: 1px solid black;">
                     <th style="border: 1px solid black;">Seq</th>
