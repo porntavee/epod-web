@@ -865,8 +865,8 @@ export class OrderComponent implements OnInit, AfterContentChecked {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(UploadOrderDialog, { 
       disableClose: false, 
-      height: '600px', 
-      width: '1000px', 
+      height: '700px', 
+      width: '1200px', 
       data: { title: 'คุณต้องลบรายการใช่หรือไม่?' }
     });
 
