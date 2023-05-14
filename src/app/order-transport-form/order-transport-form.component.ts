@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, DriverDialog, JobStatusDialog, RegionDialog, RouteDialog,
+import { ConfirmDialog, DriverDialog, JobStatusDialog, BillStatusDialog, RegionDialog, RouteDialog,
   RoutingDialog, ShipToDialog, StatusDialog, SubRoutingDialog, TransportNoDialog, TypeOfWorkDialog,
   VehicleDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
@@ -745,7 +745,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   //use
   chooseStatusFilter() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(JobStatusDialog, {
+    const dialogRef = this.dialog.open(BillStatusDialog, {
       disableClose: false,
       height: '400px',
       width: '800px',
@@ -1716,8 +1716,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         return 'status-color-W'
       case 'F':
         return 'status-color-F'
-        case 'H':
-          return 'status-color-O'
+      case 'H':
+        return 'status-color-H'
       default:
         break;
     }
@@ -1743,6 +1743,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         return 'status-color-W'
       case 'F':
         return 'status-color-F'
+      case 'H':
+        return 'status-color-H'
       default:
         break;
     }

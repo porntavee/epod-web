@@ -929,6 +929,60 @@ export class JobStatusDialog implements AfterContentChecked {
 }
 
 @Component({
+    selector: 'routing-dialog',
+    templateUrl: 'routing-dialog.html',
+})
+export class BillStatusDialog implements AfterContentChecked {
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        public dialogRef: MatDialogRef<RoutingDialog>,
+        private serviceProviderService: ServiceProviderService,
+        private toastr: ToastrService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.read();
+    }
+
+    criteriaModel: any = {};
+
+    read() {
+        let criteria = {
+            "userinformation": this.serviceProviderService.userinformation,
+            "Fillter": this.criteriaModel.Fillter
+        }
+
+        // let json = JSON.stringify(criteria);
+        this.serviceProviderService.post('api/Masters/GetJobStatus', criteria).subscribe(data => {
+            let model: any = {};
+            model = data;
+
+            if (model.Status) {
+                this.data.listData = model.Data.filter((element: any) => {
+                    return element.Code == 'O' || element.Code == 'F' || element.Code == 'H'
+                });
+            }
+            else {
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+        }, err => {
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+    }
+
+    cancel() {
+        this.dialogRef.close(undefined);
+    }
+
+    ok(param) {
+        this.dialogRef.close(param);
+    }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
+}
+
+@Component({
     selector: 'docreturn-dialog',
     templateUrl: 'docreturn-dialog.html',
 })
