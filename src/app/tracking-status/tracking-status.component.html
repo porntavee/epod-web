@@ -572,50 +572,50 @@
                             <!-- {{timelineModel|json}} -->
 
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ApproveDate != null}">
-                                <div class="bold time">รอยืนยันรับ</div>
+                                <div class="bold time">พนักงานขับรถรับงาน</div>
                                 <div *ngIf="timelineModel.ApproveDate != null" class="bold">{{formatDateTime(timelineModel.ApproveDate)}}</div>
                                 <div *ngIf="timelineModel.ApproveDate == null" class="bold">-</div>
                                 <!-- <div>ApproveProcess</div> -->
                             </li>
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ReceiveCheckInDate != null}">
-                                <div class="bold time">ระหว่างรับสินค้า</div>
+                                <div class="bold time">รับสินค้า</div>
                                 <div *ngIf="timelineModel.ReceiveCheckInDate != null" class="bold">{{formatDateTime(timelineModel.ReceiveCheckInDate)}}</div>
                                 <div *ngIf="timelineModel.ReceiveCheckInDate == null" class="bold">-</div>
                                 <!-- <div>RecieveProcess</div> -->
                             </li>
                             <!-- current -->
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ReceiveCheckOutDate != null}">
-                                <div class="bold time">ระหว่างจัดส่งสินค้า</div>
+                                <div class="bold time">ระหว่างการขนส่ง</div>
                                 <div *ngIf="timelineModel.ReceiveCheckOutDate != null" class="bold">{{formatDateTime(timelineModel.ReceiveCheckOutDate)}}</div>
                                 <div *ngIf="timelineModel.ReceiveCheckOutDate == null" class="bold">-</div>
                                 <!-- <div>DeliveryProcess</div> -->
                             </li>
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.AdminReturnHubDate != null}">
-                                <div class="bold time">รับสินค้าเข้า Hub</div>
+                                <div class="bold time">ระหว่างการขนส่งพัสดุถึงสาขา</div>
                                 <div *ngIf="timelineModel.AdminReturnHubDate != null" class="bold">{{formatDateTime(timelineModel.AdminReturnHubDate)}}</div>
                                 <div *ngIf="timelineModel.AdminReturnHubDate == null" class="bold">-</div>
                                 <!-- <div>DocReturnProcess</div> -->
                             </li>
-                            <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DeliveryCheckInDate != null}">
+                            <!-- <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DeliveryCheckInDate != null}">
                                 <div class="bold time">ระหว่างลงสินค้า</div>
                                 <div *ngIf="timelineModel.DeliveryCheckInDate != null" class="bold">{{formatDateTime(timelineModel.DeliveryCheckInDate)}}</div>
                                 <div *ngIf="timelineModel.DeliveryCheckInDate == null" class="bold">-</div>
-                                <!-- <div>DocReturnProcess</div> -->
-                            </li>
+                                <div>DocReturnProcess</div>
+                            </li> -->
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DeliveryCheckOutDate != null}">
-                                <div class="bold time">จัดส่งสินค้าสำเร็จ</div>
+                                <div class="bold time">ส่งสินค้าค้างสำเร็จ</div>
                                 <div *ngIf="timelineModel.DeliveryCheckOutDate != null" class="bold">{{formatDateTime(timelineModel.DeliveryCheckOutDate)}}</div>
                                 <div *ngIf="timelineModel.DeliveryCheckOutDate == null" class="bold">-</div>
                                 <!-- <div>DocReturnProcess</div> -->
                             </li>
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.DriverReturnDate != null}">
-                                <div class="bold time">คืนเอกสารโดยพนักงานขับรถ</div>
+                                <div class="bold time">พนักงานขับรถคืนบิล</div>
                                 <div *ngIf="timelineModel.DriverReturnDate != null" class="bold">{{formatDateTime(timelineModel.DriverReturnDate)}}</div>
                                 <div *ngIf="timelineModel.DriverReturnDate == null" class="bold">-</div>
                                 <!-- <div>DocReturnProcess</div> -->
                             </li>
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.AdminReturnDate != null}">
-                                <div class="bold time">คืนเอกสารโดยพนักงานธุระการ</div>
+                                <div class="bold time">พนักงานธุรการคืนบิล</div>
                                 <div *ngIf="timelineModel.AdminReturnDate != null" class="bold">{{formatDateTime(timelineModel.AdminReturnDate)}}</div>
                                 <div *ngIf="timelineModel.AdminReturnDate == null" class="bold">-</div>
                                 <!-- <div>DocReturnProcess</div> -->

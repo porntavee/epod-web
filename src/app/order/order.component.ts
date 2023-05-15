@@ -220,12 +220,15 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       TransportDescription:param.TransportCode    + ' - ' + param.Transport,
       OrderDate:this.verifyDateTime(this.headerModel.OrderDate),
       OrderEstimate:this.verifyDateTime(this.headerModel.OrderEstimate),
-      InvoiceDate:this.verifyDateTime(this.headerModel.InvoiceDate)
+      InvoiceDate:this.verifyDateTime(this.headerModel.InvoiceDate),
+      Qty:param.Qty == 0 ? '0' : param.Qty,
+      CBM:param.CBM == 0 ? '0' : param.CBM,
+      Weight:param.Weight == 0 ? '0' : param.Weight,
     }
 
     // Setting header model.
     this.setHeaderOrCriteriaModel(_headerModel, 'header');
-    
+
     // Set to from page.
     this.goToFromPage();
   }
@@ -247,12 +250,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       ReferenceNo:'',
       OrderTypeDescription: '',
       PurchaseNo:'',
-      Qty:'',
+      Qty:'0',
       OwnerDescription: '',
       UoM:'N/A',
-      CBM:'',
+      CBM:'0',
       ShiptoMobile: '',
-      Weight:'',
+      Weight:'0',
       ShiptoAddress: '',
       ShiptoDescription: '',
       RouteDescription: '',
