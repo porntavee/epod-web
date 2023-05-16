@@ -250,12 +250,12 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       ReferenceNo:'',
       OrderTypeDescription: '',
       PurchaseNo:'',
-      Qty:'0',
+      Qty:'',
       OwnerDescription: '',
       UoM:'N/A',
-      CBM:'0',
+      CBM:'',
       ShiptoMobile: '',
-      Weight:'0',
+      Weight:'',
       ShiptoAddress: '',
       ShiptoDescription: '',
       RouteDescription: '',
@@ -739,10 +739,13 @@ export class OrderComponent implements OnInit, AfterContentChecked {
   save() {
     this.spinner.show();
     
+    this.headerModel.Qty = this.headerModel.Qty == '' ? '0' : this.headerModel.Qty;
+    this.headerModel.CBM = this.headerModel.CBM == '' ? '0' : this.headerModel.CBM;
+    this.headerModel.Weight = this.headerModel.Weight == '' ? '0' : this.headerModel.Weight;
     this.headerModel.OrderDate = this.verifyDateTime(this.headerModel.OrderDate),
     this.headerModel.OrderEstimate = this.verifyDateTime(this.headerModel.OrderEstimate),
     this.headerModel.InvoiceDate = this.verifyDateTime(this.headerModel.InvoiceDate),
-    this.headerModel.UoM = this.headerModel.UoM;
+    // this.headerModel.UoM = this.headerModel.UoM;
     this.headerModel = {...this.criteria, ...this.headerModel};
 
 
