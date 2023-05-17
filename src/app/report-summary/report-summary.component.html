@@ -107,6 +107,8 @@
                             <th>Delivery Status</th>
                             <th>POD Status</th>
                             <th>POD Return to Bang Na DC</th>
+                            <th>Order Status</th>
+                            <th>Closure Reason</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -293,6 +295,16 @@
                             <td>
                                 <div class="w100">
                                     {{i.AdminReturnDate}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.OrderStatus}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.ClosureReason}}
                                 </div>
                             </td>
                         </tr>

@@ -25,6 +25,32 @@ export class ConfirmDialog {
 }
 
 @Component({
+    selector: 'confirm-reason-dialog',
+    templateUrl: 'confirm-reason-dialog.html',
+})
+export class ConfirmReasonDialog implements AfterContentChecked {
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        public dialogRef: MatDialogRef<ConfirmDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+    reason: any = '';
+
+    cancel() {
+        this.dialogRef.close(false);
+    }
+
+    ok() {
+        this.dialogRef.close(this.reason);
+    }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
+}
+
+@Component({
     selector: 'masterdata-dialog',
     templateUrl: 'masterdata-dialog.html',
 })
@@ -1171,20 +1197,31 @@ export class PrintDialog {
         public dialogRef: MatDialogRef<PrintDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
 
-        this.calPage = Math.ceil(data.List.length / 10);
+        this.calPage = Math.ceil(data.List.length / 20);
 
         let x: any = [];
         for (let index = 0; index < this.calPage; index++) {
-            x.push(data.List[0+(index*10)]); // 0+(0*10)= 0     0+(1*10)= 10
-            x.push(data.List[1+(index*10)]); // 1+(0*10)= 1     1+(1*10)= 11
-            x.push(data.List[2+(index*10)]); // 2+(0*10)= 2
-            x.push(data.List[3+(index*10)]);
-            x.push(data.List[4+(index*10)]);
-            x.push(data.List[5+(index*10)]);
-            x.push(data.List[6+(index*10)]);
-            x.push(data.List[7+(index*10)]);
-            x.push(data.List[8+(index*10)]);
-            x.push(data.List[9+(index*10)]);
+            x.push(data.List[0+(index*20)]); // 0+(0*10)= 0     0+(1*10)= 10
+            x.push(data.List[1+(index*20)]); // 1+(0*10)= 1     1+(1*10)= 11
+            x.push(data.List[2+(index*20)]); // 2+(0*10)= 2
+            x.push(data.List[3+(index*20)]);
+            x.push(data.List[4+(index*20)]);
+            x.push(data.List[5+(index*20)]);
+            x.push(data.List[6+(index*20)]);
+            x.push(data.List[7+(index*20)]);
+            x.push(data.List[8+(index*20)]);
+            x.push(data.List[9+(index*20)]);
+
+            x.push(data.List[10+(index*20)]); // 0+(0*10)= 0     0+(1*10)= 10
+            x.push(data.List[11+(index*20)]); // 1+(0*10)= 1     1+(1*10)= 11
+            x.push(data.List[12+(index*20)]); // 2+(0*10)= 2
+            x.push(data.List[13+(index*20)]);
+            x.push(data.List[14+(index*20)]);
+            x.push(data.List[15+(index*20)]);
+            x.push(data.List[16+(index*20)]);
+            x.push(data.List[17+(index*20)]);
+            x.push(data.List[18+(index*20)]);
+            x.push(data.List[19+(index*20)]);
 
             this.dataPage.push(x);
             x = [];

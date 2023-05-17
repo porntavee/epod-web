@@ -6,9 +6,9 @@
             <input type="file" (change)="onFileChange($event)" />
         </div>
     </div>
-    <div style="overflow-x:auto;">
-        <table id="users-list-datatable" class="bordered centered striped">
-            <thead>
+    <div style="overflow-x:auto;" id="managerTable">
+        <table id="users-list-datatable" class="bordered centered striped freez-table">
+            <thead class="freez-th">
                 <tr>
                     <!-- <th>
                     <span class="header-checkbox">
@@ -138,10 +138,9 @@
             </tbody>
         </table>
     </div>
+
+</div>
+<div mat-dialog-actions>
     <cbtn [label]="'ยืนยัน'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn>
     <cbtn [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn>
 </div>
-<!-- <div mat-dialog-actions>
-    <cbtn [label]="'ยืนยัน'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn>
-    <cbtn [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn>
-</div> -->
