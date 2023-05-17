@@ -8,6 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class CustomCheckboxComponent implements OnInit {
 
   @Input() label;
+  @Input() readonly = false;
   @Input() data = '';
   @Output() cModel = new EventEmitter<string>();
 

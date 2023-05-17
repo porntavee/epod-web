@@ -917,7 +917,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       disableClose: false, 
       height: '400px',
       width: '800px',
-      data: { title: 'สถานที่' } });
+      data: { title: 'สถานที่รับสินค้า', IsHub : false } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -938,7 +938,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       disableClose: false, 
       height: '400px',
       width: '800px',
-      data: { title: 'สถานที่',IsHub :'Y' } });
+      data: { title: 'สถานที่ส่งสินค้า HUB', IsHub : true } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -948,6 +948,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.criteriaModel.TransportShiptoCode = result.Code;
         this.criteriaModel.TransportShiptoAddress = result.Address;
         this.criteriaModel.TransportShiptoDescription = result.Code + ' - ' + result.CustomerName;
+        // this.criteriaModel.IsHub = true;
       }
     });
   }

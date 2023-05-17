@@ -370,15 +370,24 @@ export class ShipToDialog implements AfterContentChecked {
 
     criteriaModel: any = {};
 
+
     read() {
+        if (this.data.IsHub || this.criteriaModel.IsHub) {
+            this.criteriaModel.IsHub = true;
+        } else {
+            this.criteriaModel.IsHub = false;
+        }
+
         let criteria = {
             "userinformation": this.serviceProviderService.userinformation,
             "Fillter": this.criteriaModel.Fillter,
-            "IsHub": (this.data.IsHub == undefined || this.data.IsHub == false) ? '' : 'Y',
+            "IsHub": (this.criteriaModel.IsHub == undefined || this.criteriaModel.IsHub == true || this.data.IsHub) ? 'Y' : '',
             "Limit": 100
         }
 
-        // let json = JSON.stringify(criteria);
+        let json = JSON.stringify(criteria);
+
+        console.log(json);
         this.serviceProviderService.post('api/Masters/GetShipto', criteria).subscribe(data => {
             let model: any = {};
             model = data;

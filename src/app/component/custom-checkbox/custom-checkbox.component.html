@@ -8,7 +8,7 @@
 
 <div class="input-field col s12">
     <label>
-        <input type="checkbox" [(ngModel)]="data" (ngModelChange)="emit($event)" />
+        <input type="checkbox" [(ngModel)]="data" (ngModelChange)="emit($event)" [disabled]="readonly"/>
         <span>{{label}}</span>
     </label>
 </div>
