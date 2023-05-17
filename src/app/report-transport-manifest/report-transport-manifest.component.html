@@ -91,6 +91,8 @@
                             <th>Total Carton</th>
                             <th>Weight (kg)</th>
                             <th>Cubic meter</th>
+                            <th>Manifest Status</th>
+                            <th>Closure Reason</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -197,6 +199,16 @@
                             <td>
                                 <div class="w100">
                                     {{i.CBM.toFixed(2)}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.ManifestStatus}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.ClosureReason}}
                                 </div>
                             </td>
                         </tr>

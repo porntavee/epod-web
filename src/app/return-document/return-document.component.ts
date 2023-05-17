@@ -239,7 +239,7 @@ export class ReturnDocumentComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
         if (result != false) {
-          this.confirm(param);
+          this.confirm(result);
         }
         else {
           return;
@@ -247,7 +247,7 @@ export class ReturnDocumentComponent implements OnInit {
       });
     }
     else {
-      this.confirm();
+      this.confirm('');
     }
   }
 
