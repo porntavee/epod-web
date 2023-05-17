@@ -25,6 +25,32 @@ export class ConfirmDialog {
 }
 
 @Component({
+    selector: 'confirm-reason-dialog',
+    templateUrl: 'confirm-reason-dialog.html',
+})
+export class ConfirmReasonDialog implements AfterContentChecked {
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        public dialogRef: MatDialogRef<ConfirmDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+    reason: any = '';
+
+    cancel() {
+        this.dialogRef.close(false);
+    }
+
+    ok() {
+        this.dialogRef.close(this.reason);
+    }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
+}
+
+@Component({
     selector: 'masterdata-dialog',
     templateUrl: 'masterdata-dialog.html',
 })

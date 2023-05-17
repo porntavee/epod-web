@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, DocReturnDialog, PrintDialog } from '../dialog/dialog';
+import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, DocReturnDialog, PrintDialog, ConfirmReasonDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -235,11 +235,11 @@ export class ReturnDocumentComponent implements OnInit {
 
   confirmAlert() {
     if (this.criteriaModel.ReturnNo == '') {
-      const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการสร้างเอกสารคืน ใช่หรือไม่ ?' } });
+      const dialogRef = this.dialog.open(ConfirmReasonDialog, { disableClose: false, height: '250px', width: '300px', data: { title: 'คุณต้องการสร้างเอกสารคืน ใช่หรือไม่ ?' } });
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
-        if (result) {
-          this.confirm();
+        if (result != false) {
+          this.confirm(param);
         }
         else {
           return;
@@ -270,7 +270,7 @@ export class ReturnDocumentComponent implements OnInit {
   }
 
 
-  confirm() {
+  confirm(param) {
 
     this.spinner.show();
 
@@ -286,7 +286,8 @@ export class ReturnDocumentComponent implements OnInit {
       "userinformation": this.serviceProviderService.userinformation,
       "Process": "ADMIN_RETRURN",
       "ReturnNo": this.criteriaModel.ReturnNo,
-      "TTRANSPORTDS": item
+      "TTRANSPORTDS": item,
+      "Reason": param
     }
 
     console.log(JSON.stringify(criteria));
