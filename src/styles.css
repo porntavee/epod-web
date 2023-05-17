@@ -498,19 +498,36 @@ p {
     box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
+.dfix {
+    line-height: 40px;
+    background-color: #F2F4F8;
+    position: fixed;
+    z-index: 990;
+    top: 64px;
+}
+
+.filter-fixed-top
+{
+    position: fixed;
+    z-index: 997;
+    top: 56px;
+    width: 85% !important;
+}
+
 @media (min-width: 768px)
 {
     .filter-fixed-top
     {
         width: 70% !important;
     }
+
 }
 
 @media (min-width: 992px)
 {
     .filter-fixed-top
     {
-        width: 75% !important;
+        width: 70% !important;
     }
 }
 
@@ -543,7 +560,7 @@ p {
 {
     .filter-fixed-top
     {
-        width: 84.7% !important;
+        width: 86% !important;
     }
 }
 
@@ -551,23 +568,8 @@ p {
 {
     .filter-fixed-top
     {
-        width: 88.5% !important;
+        width: 88% !important;
     }
-}
-
-.dfix {
-    line-height: 40px;
-    background-color: #F2F4F8;
-    position: fixed;
-    z-index: 990;
-    top: 64px;
-}
-
-.filter-fixed-top
-{
-    position: fixed;
-    z-index: 997;
-    width: 85% !important;
 }
 
 .ms-1 {
