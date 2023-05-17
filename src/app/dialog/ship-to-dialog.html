@@ -8,9 +8,9 @@
             <citxt (cModel)="criteriaModel.Fillter = $event" [label]="'Fillter'" [data]="criteriaModel.Fillter"></citxt>
         </div>
         <div class="col l4 s12 mtm-10">
-            <ccb (cModel)="criteriaModel.IsHub = $event" [label]="'HUB'" [data]="criteriaModel.IsHub" [readonly]="data.IsHub"></ccb>
+            <ccb *ngIf="!data.IsHub" (cModel)="criteriaModel.IsHub = $event" [label]="'HUB'" [data]="criteriaModel.IsHub"></ccb>
         </div>
-        <div class="col l1">
+        <div class="col l4">
 
         </div>
         <div class="col l3 s12 p-0">
