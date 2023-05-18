@@ -889,13 +889,14 @@ export class OrderComponent implements OnInit, AfterContentChecked {
 
         let model: any = [];
         result.forEach(element => {
-          const [day, month, year] = element.IssueDate.split('/');
+          const [day, month, year] = element.InvoiceDate.split('/');
           const date = new Date(+year, +month, +day);
 
           const [day2, month2, year2] = element.ApptDate.split('/');
           const date2 = new Date(+year2, +month2, +day2);
 
           model.push({
+            "InvoiceDate": moment().format('YYYY-MM-DDT00:00:00'),
             "OrderDate": moment(date).format('YYYY-MM-DDT00:00:00'),
             "OrderEstimate":  moment(date2).format('YYYY-MM-DDT00:00:00'),
             "InvoiceNo": element.InvoiceNo,
