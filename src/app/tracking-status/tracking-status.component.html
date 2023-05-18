@@ -324,14 +324,14 @@
                     <tbody>
                         <tr *ngFor="let i of viewModel2 | paginate: { itemsPerPage: 10, currentPage: p };; let idx = index">
                             <td class="min-width-100">
-                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.ShipmentNo}}</a>
+                                <a style="cursor: pointer;" (click)="readDetail(i)">{{i.ShipmentNo}}</a>
                             </td>
                             <td class="min-width-100">
-                                    <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a>
+                                <a style="cursor: pointer;" (click)="readDetail(i)">{{i.TransportNo}}</a>
 
                             </td>
                             <td class="min-width-100">
-                                    {{i.InvoiceNo}}
+                                {{i.InvoiceNo}}
                             </td>
                             <td style="padding: 0 0 0 0 !important;">
                                 <div class="w100" style="background-color: {{statusTransportColor(i.TransportStatus)}}; height: 42px; padding-top: 10px;">
@@ -475,7 +475,7 @@
                             <citxt (cModel)="headerModel.Route = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.Route" [readonly]="true">
                             </citxt>
                         </div>
-                        
+
                     </div>
 
                     <div class="row">
@@ -767,7 +767,7 @@
                                         </td>
                                         <td class="cursor-pointer">
                                             <div class="w100">
-                                                {{i.OrderNo}}
+                                                <a style="cursor: pointer;" (click)="readDetail(i)">{{i.OrderNo}}</a>
                                             </div>
                                         </td>
                                         <td>
@@ -775,9 +775,9 @@
                                                 {{i.OrderType}}
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="cursor-pointer">
                                             <div class="w100">
-                                                {{i.InvoiceNo}}
+                                                <a style="cursor: pointer;" (click)="readDetail(i)"> {{i.InvoiceNo}}</a>
                                             </div>
                                         </td>
                                         <td>

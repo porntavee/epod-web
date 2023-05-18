@@ -235,7 +235,7 @@ export class ReturnDocumentComponent implements OnInit {
 
   confirmAlert() {
     if (this.criteriaModel.ReturnNo == '') {
-      const dialogRef = this.dialog.open(ConfirmReasonDialog, { disableClose: false, height: '250px', width: '300px', data: { title: 'คุณต้องการสร้างเอกสารคืน ใช่หรือไม่ ?' } });
+      const dialogRef = this.dialog.open(ConfirmReasonDialog, { disableClose: false, height: '300px', width: '500px', data: { title: 'คุณต้องการสร้างเอกสารคืน ใช่หรือไม่ ?' } });
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
         if (result != false) {

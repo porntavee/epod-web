@@ -34,6 +34,7 @@ export class ConfirmReasonDialog implements AfterContentChecked {
         public dialogRef: MatDialogRef<ConfirmDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+    PODReturnDate: any = '';
     reason: any = '';
 
     cancel() {
