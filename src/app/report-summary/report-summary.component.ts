@@ -245,14 +245,14 @@ export class ReportSummaryComponent implements OnInit {
           element.Transport = element.Transport ?? '';
           element.DriverName = element.DriverName ?? '';
           element.HelperName = element.HelperName ?? '';
-          element.DatIn = element.DatIn != null ? element.DatIn.substring(0,10) : element.DatIn ?? '';
+          element.DatIn = element.DatIn != null ? element.DatIn.substr(8,2) + '-' + element.DatIn.substr(5,2) + '-' + element.DatIn.substr(0,4) : element.DatIn ?? '';
           element.TimeIn = element.TimeIn != null ? element.TimeIn.substring(0,8) : element.TimeIn ?? '';
-          element.DateOut = element.DateOut != null ? element.DateOut.substring(0,10) : element.DateOut ?? '';
+          element.DateOut = element.DateOut != null ? element.DateOut.substr(8,2) + '-' + element.DateOut.substr(5,2) + '-' + element.DateOut.substr(0,4) : element.DateOut ?? '';
           element.TimeOut = element.TimeOut != null ? element.TimeOut.substring(0,8) : element.TimeOut ?? '';
           element.LatitudeLongitudeIn = element.LatitudeLongitudeIn ?? '';
           element.OTDelivery = element.OTDelivery ?? '';
           element.OTBillReturn = element.OTBillReturn ?? '';
-          element.AdminReturnDate = element.AdminReturnDate ?? '';
+          element.AdminReturnDate = element.AdminReturnDate != null ? element.AdminReturnDate.substr(8,2) + '-' + element.AdminReturnDate.substr(5,2) + '-' + element.AdminReturnDate.substr(0,4) : element.AdminReturnDate ?? '';
 
 
           //D P R S 
