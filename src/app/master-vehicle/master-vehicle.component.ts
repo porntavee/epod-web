@@ -230,10 +230,12 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
       "VehicleTypeId": this.headerModel.VehicleTypeId,
       "Code": this.headerModel.Code,
       "Description": this.headerModel.Description,
-      "IsMaintenance": this.headerModel.IsMaintenance,
+      "IsMaintenance": (this.headerModel.IsMaintenance == undefined || this.headerModel.IsMaintenance == false) ? '' : 'Y',
       "Active": this.headerModel.Active,
     }
     criteria = {...this.criteria, ...criteria};
+
+
 
     this.serviceProviderService.post('api/Masters/SaveVehicle', criteria)
     .subscribe(data => {
@@ -260,9 +262,7 @@ export class MasterVehicleComponent implements OnInit, AfterContentChecked {
       data: { title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่ ?'} 
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-vehicle', 'delete', result, this.isDebugMode)
-      
+    dialogRef.afterClosed().subscribe(result => {      
       if (result) {
         this.spinner.show();
 
