@@ -42,7 +42,7 @@ export class ConfirmReasonDialog implements AfterContentChecked {
     }
 
     ok() {
-        this.dialogRef.close(this.reason);
+        this.dialogRef.close({reason: this.reason, podReturnDate: this.PODReturnDate });
     }
 
     // Fixing "Expression has changed after it was checked"

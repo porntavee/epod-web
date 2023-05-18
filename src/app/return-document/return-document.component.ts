@@ -287,7 +287,8 @@ export class ReturnDocumentComponent implements OnInit {
       "Process": "ADMIN_RETRURN",
       "ReturnNo": this.criteriaModel.ReturnNo,
       "TTRANSPORTDS": item,
-      "Reason": param
+      "Reason": param.reason,
+      "PODReturnDate": param.podReturnDate
     }
 
     console.log(JSON.stringify(criteria));
