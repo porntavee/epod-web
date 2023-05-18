@@ -245,10 +245,10 @@ export class ReportSummaryComponent implements OnInit {
           element.Transport = element.Transport ?? '';
           element.DriverName = element.DriverName ?? '';
           element.HelperName = element.HelperName ?? '';
-          element.DatIn = element.DatIn ?? '';
-          element.TimeIn = element.TimeIn ?? '';
-          element.DateOut = element.DateOut ?? '';
-          element.TimeOut = element.TimeOut ?? '';
+          element.DatIn = element.DatIn.substring(0,10) ?? '';
+          element.TimeIn = element.TimeIn.substring(0,8) ?? '';
+          element.DateOut = element.DateOut.substring(0,10) ?? '';
+          element.TimeOut = element.TimeOut.substring(0,8) ?? '';
           element.LatitudeLongitudeIn = element.LatitudeLongitudeIn ?? '';
           element.OTDelivery = element.OTDelivery ?? '';
           element.OTBillReturn = element.OTBillReturn ?? '';
