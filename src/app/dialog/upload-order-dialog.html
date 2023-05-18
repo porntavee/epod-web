@@ -24,7 +24,7 @@
                     <th>Issue Date</th>
                     <th>Type Of Work</th>
                     <th>Appt. Date</th>
-                    <th>Sender Code</th>
+                    <th>Owner Code</th>
                     <th>Recipient Code</th>
                     <th>Recipient Addr</th>
                     <th>Route</th>
@@ -34,6 +34,7 @@
                     <th>CBM</th>
                     <th>Carton</th>
                     <th>Weight</th>
+                    <th>Transport Code</th>
                     <th>Remark</th>
                     <!-- <th>จัดการ</th> -->
                 </tr>
@@ -76,7 +77,7 @@
                     </td>
                     <td>
                         <div class="w200">
-                            {{i.SenderCode}}
+                            {{i.OwnerCode}}
                         </div>
                     </td>
                     <td>
@@ -122,6 +123,11 @@
                     <td>
                         <div class="w200">
                             {{i.Weight}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w200">
+                            {{i.TransportCode}}
                         </div>
                     </td>
                     <td>
