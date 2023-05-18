@@ -573,8 +573,8 @@
 
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ApproveDate != null}">
                                 <div class="bold time">พนักงานขับรถรับงาน</div>
-                                <div *ngIf="timelineModel.ApproveDate != null" class="bold">{{formatDateTime(timelineModel.ApproveDate)}}</div>
-                                <div *ngIf="timelineModel.ApproveDate == null" class="bold">-</div>
+                                <div *ngIf="timelineModel.ReceiveJobDate != null" class="bold">{{formatDateTime(timelineModel.ReceiveJobDate)}}</div>
+                                <div *ngIf="timelineModel.ReceiveJobDate == null" class="bold">-</div>
                                 <!-- <div>ApproveProcess</div> -->
                             </li>
                             <li class="StepProgress-item" [ngClass]="{'is-done': timelineModel.ReceiveCheckInDate != null}">
