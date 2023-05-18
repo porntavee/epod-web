@@ -288,7 +288,7 @@ export class ReturnDocumentComponent implements OnInit {
       "ReturnNo": this.criteriaModel.ReturnNo,
       "TTRANSPORTDS": item,
       "Reason": param.reason,
-      "PODReturnDate": param.podReturnDate
+      "AdminReturnDate": param.podReturnDate
     }
 
     console.log(JSON.stringify(criteria));
