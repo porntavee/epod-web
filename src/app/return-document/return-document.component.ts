@@ -269,6 +269,11 @@ export class ReturnDocumentComponent implements OnInit {
     }
   }
 
+  verifyDateTime(date: any): any {
+    let dateObj: any = date == "Invalid date" || date == undefined ? undefined : moment(date).format('YYYY-MM-DD 00:00:00.000');
+
+    return dateObj;
+  }
 
   confirm(param) {
 
@@ -288,7 +293,7 @@ export class ReturnDocumentComponent implements OnInit {
       "ReturnNo": this.criteriaModel.ReturnNo,
       "TTRANSPORTDS": item,
       "Reason": param.reason,
-      "PODReturnDate": param.podReturnDate
+      "AdminReturnDate": this.verifyDateTime(param.podReturnDate)
     }
 
     console.log(JSON.stringify(criteria));

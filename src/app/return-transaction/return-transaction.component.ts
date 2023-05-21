@@ -8,7 +8,7 @@ import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ThrowStmt } from '@angular/compiler';
-import { ConfirmDialog, DocReturnDialog, DriverDialog, PrintDialog, RouteDialog, RoutingDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
+import { AdminReturnDialog, ConfirmDialog, DocReturnDialog, DriverDialog, PrintDialog, RouteDialog, RoutingDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 
 @Component({
   selector: 'app-return-transaction',
@@ -40,10 +40,15 @@ export class ReturnTransactionComponent implements OnInit {
   read() {
     this.spinner.show();
 
+    this.p = 1;
+
     let criteria = {
       "userinformation": this.serviceProviderService.userinformation,
       "Process": 'RETURN_TRANSACTION',
       "ReturnNo": this.criteriaModel.ReturnNo,
+      "InvoiceNo": this.criteriaModel.InvoiceNo,
+      "AdminReturnBy": this.criteriaModel.AdminReturnBy,
+      "AdminReturnDate": this.criteriaModel.AdminReturnDate != undefined && this.criteriaModel.AdminReturnDate != "Invalid date" ? moment(this.criteriaModel.AdminReturnDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
       "TransportNo": this.criteriaModel.TransportNo,
       "ShiptoId": this.criteriaModel.ShipToId,
       "OrderEstimate": this.criteriaModel.OrderEstimate != undefined && this.criteriaModel.OrderEstimate != "Invalid date" ? moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DD 00:00:00.000') : undefined,
@@ -63,9 +68,12 @@ export class ReturnTransactionComponent implements OnInit {
       if (model.Status) {
 
         model.Data.forEach(element => {
-          element.OrderEstimateStr = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
-          element.AdminReturnDate = moment(element.AdminReturnDate).format('DD-MM-YYYY h:mm:ss');
+          Object.keys(element).forEach((key) => {
+            if (key.includes('InvoiceDate') || key.includes('AdminReturnDate') || key.includes('OrderEstimate')) {
+              element[key + 'Str'] = (element[key] == "Invalid date" || element[key] == undefined) ?
+                undefined : moment(element[key]).format('DD-MM-YYYY');
+            }
+          });
         });
 
         this.listModel = model.Data;
@@ -173,8 +181,26 @@ export class ReturnTransactionComponent implements OnInit {
     });
   }
 
+  chooseAdminReturnFilter() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(AdminReturnDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'คนขับ' } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.AdminReturnBy = result.Id;
+        this.criteriaModel.AdminReturnCode = result.Code;
+        this.criteriaModel.AdminReturnDescription = result.Code + ' - ' + result.FirstName + ' ' + result.LastName;
+      }
+    });
+  }
+
   clear() {
-    this.criteriaModel = { OrderEstimate: '' };
+    this.criteriaModel = { 
+      OrderEstimate: '',
+      AdminReturnDate: ''
+    };
   }
 
   delete(idx) {

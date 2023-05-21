@@ -101,7 +101,7 @@ import { OrderApproveComponent } from './order-approve/order-approve.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OrderTransportComponent } from './order-transport/order-transport.component';
 import { OrderTransportFormComponent } from './order-transport-form/order-transport-form.component';
-import { ConfirmDialog, DriverDialog, GroupUserDialog, RouteDialog , RoutingDialog ,SubRoutingDialog,RegionDialog
+import { ConfirmDialog, DriverDialog, AdminReturnDialog, GroupUserDialog, RouteDialog , RoutingDialog ,SubRoutingDialog,RegionDialog
   , ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog ,ProvinceDialog,DistrictDialog
   ,JobStatusDialog , BillStatusDialog, DocReturnDialog,MasterDataDialog,LocationAddressDataDialog, UploadOrderDialog,JobOrderStatusDialog, PrintDialog, CloseJobDialog, CountryDialog, ConfirmReasonDialog} from "./dialog/dialog";
 import { OrderComponent } from './order/order.component';
@@ -206,6 +206,7 @@ import { NgxPrintModule } from "ngx-print";
     ProvinceDialog,
     DistrictDialog,
     DriverDialog,
+    AdminReturnDialog,
     JobStatusDialog,
     BillStatusDialog,
     DocReturnDialog,
