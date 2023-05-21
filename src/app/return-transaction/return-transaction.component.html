@@ -29,18 +29,27 @@
             </div>
 
             <div class="row">
-                <div class="col l3 s12 pl-0 mtm-20">
+                <div class="col l3 s12 p-0 mtm-20">
                     <cdp (cModel)="criteriaModel.OrderEstimate = $event" [label]="'Appt. Date'" [data]="criteriaModel.OrderEstimate"></cdp>
+                </div>
+                <div class="col l3 s12 p-0 mtm-20">
+                    <citxt (cModel)="criteriaModel.InvoiceNo = $event" [label]="'เลขที่ Inv.'" [data]="criteriaModel.InvoiceNo"></citxt>
                 </div>
                 <div class="col l3 s12 p-0 mtm-20">
                     <citxt (cModel)="criteriaModel.VehicleDescription = $event" [label]="'ทะเบียนรถ'" [data]="criteriaModel.VehicleDescription" [readonly]="true" (click)="chooseVehicle()"></citxt>
                 </div>
-                <div class="col l3 s12 p-0 mtm-20">
+                <div class="col l3 s12 pl-0 mtm-20">
                     <citxt (cModel)="criteriaModel.DriverDescription = $event" [label]="'ชื่อคนขับ'" [data]="criteriaModel.DriverDescription" [readonly]="true" (click)="chooseDriver()"></citxt>
                 </div>
             </div>
 
             <div class="row">
+                <div class="col l3 s12 p-0 mtm-20">
+                    <cdp (cModel)="criteriaModel.AdminReturnDate = $event" [label]="'วันที่คืนเอกสาร'" [data]="criteriaModel.AdminReturnDate"></cdp>
+                </div>
+                <div class="col l3 s12 p-0 mtm-20">
+                    <citxt (cModel)="criteriaModel.AdminReturnDescription = $event" [label]="'ผู้คืนเอกสาร'" [data]="criteriaModel.AdminReturnDescription" [readonly]="true" (click)="chooseAdminReturnFilter()"></citxt>
+                </div>
             </div>
 
             <div class="row">
@@ -98,6 +107,7 @@
                             <th>Carton</th>
                             <th>Weight (kg.)</th>
                             <th>หมายเหตุ</th>
+                            <th>ผู้คืนเอกสาร</th>
                             <th>คำสั่ง</th>
                         </tr>
                     </thead>
@@ -207,6 +217,11 @@
                             <td>
                                 <div class="w300">
                                     {{i.Comment}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w150">
+                                    {{i.AdminReturnByName}}
                                 </div>
                             </td>
                             <td>
