@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>แจ้งเตือน</h1>
 <div mat-dialog-content style="min-height: 250px; max-height: 250px;">
     {{data.title}} <br><br>
+
     <div class="row">
         <cdp (cModel)="PODReturnDate = $event" [label]="'POD Return Date'" [data]="PODReturnDate">
         </cdp>
@@ -12,6 +13,10 @@
             <!-- <label for="data" [ngClass]="{ 'active': data != '' }">{{label}}</label> -->
         </div>
     </div>
+    <div class="row">
+        <b style="color: red">{{message}}</b>
+    </div>
+
 
     <!-- <citxt (cModel)="reason = $event" [label]="'reason'" [data]="reason">
     </citxt> -->

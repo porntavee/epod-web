@@ -663,6 +663,7 @@ export class ReportTransportManifestComponent implements OnInit {
         'Total Carton': element.Qty.toFixed(2),
         'Weight (kg)': element.Weight.toFixed(2),
         'Cubic meter': element.CBM.toFixed(2),
+        'Manifest Status': element.ManifestStatus,
       });
     });
 
