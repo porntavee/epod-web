@@ -170,7 +170,7 @@
                         [data]="criteriaModel.ReceiveFromAddress">
                     </ctxta>
                 </div>
-                <div class="col l4 s12 p-0 mtm-20">
+                <div class="col l4 s12 p-0 mtm-20" *ngIf="showChooseHub">
                     <ctxta
                         (cModel)="criteriaModel.TransportShiptoAddress = $event"
                         [label]="''"
@@ -486,7 +486,11 @@
 <!-- End Order Transport Table -->
 <!-- Start Add Order Transport Form -->
 <div *ngIf="isFormPage">
-    <div class="col s12">
+    <!-- Div for filter fix top. -->
+    <div class="col s12 dfix">
+        &nbsp;
+    </div>
+    <div class="col s12 filter-fixed-top">
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
@@ -677,7 +681,7 @@
     </div>
     <!-- End Add Order Transport Form -->
     <!-- Start Add Order Transport Table -->
-    <div class="col s12">
+    <div class="col s12 top-290">
         <div class="card-panel table-panel-header">
             <div class="row">
                 <div class="col l8 s12">

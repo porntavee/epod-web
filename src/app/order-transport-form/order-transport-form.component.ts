@@ -24,7 +24,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
-  showChooseHub: boolean = true;
+  showChooseHub: boolean = false;
   listModel: any = []; //ข้อมูลในตารางหน้า Main
   criteriaModel: any = {} //ค้นหา
   criteria: object = {}; // User Information.
@@ -126,7 +126,10 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       let model: any = data;
       this.viewModel = model;
       if (model.Status) {
-        this.showChooseHub = model.Data[0].TransportTypeId == 'NM' ? false : true;
+        this.showChooseHub = (model.Data[0].TransportTypeId == 'NM' 
+          || model.Data[0].TransportTypeId == 'OT' 
+          || model.Data[0].TransportTypeId == 'SP'
+          || model.Data[0].TransportTypeId == 'SV') ? false : true;
         this.criteriaModel = model.Data[0];
         let criteria = {
           OrderStatus: model.Data[0].StatusCode,
@@ -990,7 +993,10 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.criteriaModel.TransportTypeId = result.Code;
         this.criteriaModel.TransportTypeDescription = result.Code + ' - ' + result.Description;
 
-        this.showChooseHub = result.Code == 'NM' ? false : true;
+        this.showChooseHub = (result.Code == 'NM' 
+          || result.Code == 'OT' 
+          || result.Code == 'SP'
+          || result.Code == 'SV') ? false : true;
       }
     });
   }
@@ -1358,7 +1364,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     // }
 
     this.spinner.show();
-
+    this.currentPage = 1;
+    
     let _form = {
       userinformation: this.serviceProviderService.userinformation,
       Process: 'TRANSPORT',

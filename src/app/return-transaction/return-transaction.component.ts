@@ -32,12 +32,13 @@ export class ReturnTransactionComponent implements OnInit {
     private excelService: ExcelService) { }
 
   ngOnInit(): void {
-
+    const date = new Date();
+    this.criteriaModel.AdminReturnDate = moment(date.setDate(date.getDate())).format('YYYYMMDD');
     this.read();
   }
 
   viewModel: any;
-  read() {
+  read(task = '') {
     this.spinner.show();
 
     this.p = 1;
@@ -48,13 +49,28 @@ export class ReturnTransactionComponent implements OnInit {
       "ReturnNo": this.criteriaModel.ReturnNo,
       "InvoiceNo": this.criteriaModel.InvoiceNo,
       "AdminReturnBy": this.criteriaModel.AdminReturnBy,
-      "AdminReturnDate": this.criteriaModel.AdminReturnDate != undefined && this.criteriaModel.AdminReturnDate != "Invalid date" ? moment(this.criteriaModel.AdminReturnDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "AdminReturnDate": this.verifyDateTime(this.criteriaModel.AdminReturnDate),
       "TransportNo": this.criteriaModel.TransportNo,
       "ShiptoId": this.criteriaModel.ShipToId,
-      "OrderEstimate": this.criteriaModel.OrderEstimate != undefined && this.criteriaModel.OrderEstimate != "Invalid date" ? moment(this.criteriaModel.OrderEstimate).format('YYYY-MM-DD 00:00:00.000') : undefined,
+      "OrderEstimate": this.verifyDateTime(this.criteriaModel.OrderEstimate),
       "DriverId": this.criteriaModel.DriverId,
       "VehicleId": this.criteriaModel.VehicleId,
       "RouteId": this.criteriaModel.RouteId,
+    }
+
+    // Check empty search.
+    if (task == 'search') {
+      let filterNone: any = []
+      for (const [key, value] of Object.entries(criteria)) {
+        if (key != 'userinformation' && key != 'Process') {
+          filterNone.push(value == undefined || value == '');
+        }
+      }
+
+      if (!filterNone.includes(false)) {
+        this.showErrorMessage('กรุณาระบุเงื่อนไขค้นหา');
+        return;
+      }
     }
 
     let json = JSON.stringify(criteria);
@@ -65,8 +81,7 @@ export class ReturnTransactionComponent implements OnInit {
       model = data;
       this.viewModel = model;
 
-      if (model.Status) {
-
+      if (model.Status && model.Data.length > 0) {
         model.Data.forEach(element => {
           Object.keys(element).forEach((key) => {
             if (key.includes('InvoiceDate') || key.includes('AdminReturnDate') || key.includes('OrderEstimate')) {
@@ -80,18 +95,28 @@ export class ReturnTransactionComponent implements OnInit {
       }
       else {
         this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        this.showErrorMessage('Data Not Found.');
       }
 
     }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      this.showErrorMessage(err.message);
     });
   }
   setSeq(param, idx) {
     param = idx;
     return param;
+  }
+
+  // Show Error message.
+  private showErrorMessage(message: string) {
+    this.spinner.hide();
+    this.toastr.error(message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+  }
+
+  verifyDateTime(date: string, from: string = ''): any {
+    let dateObj: any = date == "Invalid date" || date == undefined ? undefined : moment(date).format('YYYY-MM-DD 00:00:00.000');
+
+    return dateObj;
   }
 
   chooseTransportNo() {

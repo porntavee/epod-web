@@ -339,7 +339,9 @@
 
             <div class="row">
                 <div class="col l4 s12 p-0 mtm-20">
-                    <citxt (cModel)="headerModel.OwnerDescription = $event" [label]="'** เจ้าของงาน'" [data]="headerModel.OwnerDescription" [readonly]="true" (click)="chooseOwner()">
+                    <!-- <citxt (cModel)="headerModel.OwnerDescription = $event" [label]="'** เจ้าของงาน'" [data]="headerModel.OwnerDescription" [readonly]="true" (click)="chooseOwner()">
+                    </citxt> -->
+                    <citxt (cModel)="headerModel.ShiptoDescription = $event" [label]="'** สถานที่ส่งสินค้า'" [data]="headerModel.ShiptoDescription" [readonly]="true" (click)="chooseShipTo()">
                     </citxt>
                 </div>
                 <div class="col l2 s12 p-0 mtm-20">
@@ -354,7 +356,7 @@
 
             <div class="row">
                 <div class="col l4 s12 p-0 mtm-20">
-                    <citxt (cModel)="headerModel.ShiptoDescription = $event" [label]="'** ผู้รับ'" [data]="headerModel.ShiptoDescription" [readonly]="true" (click)="chooseShipTo()">
+                    <citxt (cModel)="headerModel.ShiptoMobile = $event" [label]="'โทรศัพท์สถานที่ส่งสินค้า'" [data]="headerModel.ShiptoMobile" [readonly]="true" (click)="chooseShipTo()">
                     </citxt>
                 </div>
                 <div class="col l2 s12 p-0 mtm-20">
@@ -369,8 +371,7 @@
 
             <div class="row">
                 <div class="col l4 s12 p-0 mtm-20">
-                    <citxt (cModel)="headerModel.ShiptoMobile = $event" [label]="'โทรศัพท์ผู้รับ'" [data]="headerModel.ShiptoMobile" [readonly]="true" (click)="chooseShipTo()">
-                    </citxt>
+                    <cdp (cModel)="headerModel.InvoiceDate = $event" [label]="'** Invoice Date'" [data]="headerModel.InvoiceDate"></cdp>
                 </div>
                 <div class="col l2 s12 p-0 mtm-20">
                     <h1>&nbsp;</h1>
@@ -383,7 +384,8 @@
 
             <div class="row">
                 <div class="col l4 s12 p-0 mtm-20">
-                    <cdp (cModel)="headerModel.InvoiceDate = $event" [label]="'** Invoice Date'" [data]="headerModel.InvoiceDate"></cdp>
+                    <ctxta (cModel)="headerModel.ShiptoAddress = $event" [label]="'** ที่อยู่ผู้รับ'" [data]="headerModel.ShiptoAddress" (click)="chooseShipTo()">
+                    </ctxta>
                 </div>
                 <div class="col l2 s12 p-0 mtm-20">
                     <h1>&nbsp;</h1>
@@ -396,8 +398,7 @@
 
             <div class="row">
                 <div class="col l4 s12 p-0 mtm-20">
-                    <ctxta (cModel)="headerModel.ShiptoAddress = $event" [label]="'** ที่อยู่ผู้รับ'" [data]="headerModel.ShiptoAddress" (click)="chooseShipTo()">
-                    </ctxta>
+                    
                 </div>
             </div>
 

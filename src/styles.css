@@ -579,19 +579,21 @@ p {
 
 .top-485 {
     position: relative;
-    ;
     margin-top: 465px !important;
+}
+
+.top-280 {
+    position: relative;
+    margin-top: 280px !important;
 }
 
 .top-290 {
     position: relative;
-    ;
     margin-top: 290px !important;
 }
 
 .top-310 {
     position: relative;
-    ;
     margin-top: 310px !important;
 }
 
