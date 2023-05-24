@@ -4,6 +4,7 @@ import { ToastrService } from "ngx-toastr";
 import { ServiceProviderService } from "../shared/service-provider.service";
 import * as XLSX from 'xlsx-js-style';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as moment from 'moment';
 
 
 @Component({
@@ -37,12 +38,33 @@ export class ConfirmReasonDialog implements AfterContentChecked {
     PODReturnDate: any = '';
     reason: any = '';
 
+    message: any ='';
+
     cancel() {
         this.dialogRef.close(false);
     }
 
     ok() {
-        this.dialogRef.close({reason: this.reason, podReturnDate: this.PODReturnDate });
+
+        if (this.PODReturnDate == 'Invalid date')
+        {
+            this.dialogRef.close({reason: this.reason, podReturnDate: this.PODReturnDate });
+        }
+        else if (parseInt(this.PODReturnDate) < parseInt(moment(new Date()).format('YYYYMMDD')))
+        {
+            if (this.reason == '' || this.reason == undefined)
+            {
+                this.message = 'กรุณาใส่เหตุผล'
+            }
+            else
+            {
+                this.dialogRef.close({reason: this.reason, podReturnDate: this.PODReturnDate });
+            }
+        }
+        else if (parseInt(this.PODReturnDate) > parseInt(moment(new Date()).format('YYYYMMDD')))
+        {
+            this.message = 'วันที่ไม่ถูกต้อง'
+        }
     }
 
     // Fixing "Expression has changed after it was checked"
