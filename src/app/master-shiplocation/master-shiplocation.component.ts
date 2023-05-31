@@ -236,7 +236,6 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     }
     _criteria = this.setHeaderOrCriteriaModel(_criteria, 'header');
     _criteria = {...this.criteria, ..._criteria};
-    Logger.info('master-shiplocation', 'save', _criteria, this.isDebugMode)
 
     this.serviceProviderService.post('api/Masters/CreateCustomerLocation', _criteria)
     .subscribe(data => {
@@ -244,6 +243,8 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
       let model: any = data;
       if (model.Status) {
         this.showSuccessMessage('บันทึกยกเลิกเสร็จสิ้น');
+        // Clear criteriaModel and Reload Table Data.
+        this.clearAndReloadData();
       } else {
         this.showErrorMessage(model.Message);
       }
@@ -251,8 +252,6 @@ export class MasterShiplocationComponent implements OnInit, AfterContentChecked 
     }, err => {
       this.showErrorMessage(err.message);
     });
-    // Clear criteriaModel and Reload Table Data.
-    this.clearAndReloadData();
   }
 
   delete(param) {

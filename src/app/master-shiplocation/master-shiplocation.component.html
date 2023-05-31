@@ -171,7 +171,7 @@
             <div class="row">
                 <div class="col l8 s12">
                     <span class="col l8 s12 card-panel-header-span">
-                        ทะเบียน / ผู้ใช้งาน / รายละเอียด
+                        ทะเบียน / สถานที่รับ-ส่งสินค้า
                     </span>
                 </div>
             </div>
@@ -186,6 +186,7 @@
                 <div class="col l4 s12">
                     <!-- <citxt (cModel)="headerModel.Active = $event" [label]="'สถานะ'" [data]="headerModel.Active"
                         [readonly]="true"></citxt> -->
+                        
                 </div>
             </div>
             <div class="row">
@@ -210,11 +211,11 @@
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt (cModel)="headerModel.Province = $event" [label]="'จังหวัด'" [data]="headerModel.Province" [readonly]="true" (click)="chooseProvince()">
+                    <citxt (cModel)="headerModel.Province = $event" [label]="'** จังหวัด'" [data]="headerModel.Province" [readonly]="true" (click)="chooseProvince()">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt (cModel)="headerModel.District = $event" [label]="'อำเภอ'" [data]="headerModel.District" [readonly]="true" (click)="chooseDistrict()">
+                    <citxt (cModel)="headerModel.District = $event" [label]="'** อำเภอ'" [data]="headerModel.District" [readonly]="true" (click)="chooseDistrict()">
                     </citxt>
                 </div>
             </div>
@@ -224,17 +225,17 @@
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt (cModel)="headerModel.Region = $event" [label]="'โซน'" [data]="headerModel.Region" [readonly]="true" (click)="chooseRegion()">
+                    <citxt (cModel)="headerModel.Region = $event" [label]="'** โซน'" [data]="headerModel.Region" [readonly]="true" (click)="chooseRegion()">
                     </citxt>
                 </div>
             </div>
             <div class="row">
                 <div class="col l4 s12 mtm-20">
-                    <citxt (cModel)="headerModel.Route = $event" [label]="'เส้นทางหลัก'" [data]="headerModel.Route" [readonly]="true" (click)="chooseMainRoute()">
+                    <citxt (cModel)="headerModel.Route = $event" [label]="'** เส้นทางหลัก'" [data]="headerModel.Route" [readonly]="true" (click)="chooseMainRoute()">
                     </citxt>
                 </div>
                 <div class="col l4 s12 mtm-20">
-                    <citxt (cModel)="headerModel.SubRoute = $event" [label]="'เส้นทางย่อย'" [data]="headerModel.SubRoute" [readonly]="true" (click)="chooseSubRoute()">
+                    <citxt (cModel)="headerModel.SubRoute = $event" [label]="'** เส้นทางย่อย'" [data]="headerModel.SubRoute" [readonly]="true" (click)="chooseSubRoute()">
                     </citxt>
                 </div>
             </div>
@@ -249,7 +250,7 @@
                 </div>
             </div>
             <div>
-                <div class="col l4 s12 mtm-20 ml-225">
+                <div class="col l4 s12 mtm-20 ml-85">
                     <ccb (cModel)="headerModel.Hub = $event" [label]="'HUB'" [data]="headerModel.Hub"></ccb>
                 </div>
             </div>
