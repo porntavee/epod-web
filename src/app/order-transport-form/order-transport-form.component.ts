@@ -941,7 +941,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       disableClose: false, 
       height: '400px',
       width: '800px',
-      data: { title: 'สถานที่ส่งสินค้า HUB', IsHub : true } });
+      data: { title: 'สถานที่ส่งสินค้า / HUB', IsHub : (this.criteriaModel.TransportTypeId == "XD" )} });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
