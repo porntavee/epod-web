@@ -34,7 +34,8 @@ export class DashboardComponent implements OnInit {
     // this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
     this.criteriaModel.startDate = moment(startDate).format('YYYYMMDD');
     this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
-    this.read();
+    // this.read();
+    this.selectMode('รายวัน');
   }
 
   read() {
@@ -91,6 +92,7 @@ export class DashboardComponent implements OnInit {
       // });
 
       this.fleet = [...this.fleet];
+      debugger
 
     }, err => {
       this.spinner.hide();
