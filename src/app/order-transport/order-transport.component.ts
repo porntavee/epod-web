@@ -281,10 +281,15 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
       console.log(`Dialog result: ${result}`);
 
       if (result) {
+        this.criteriaModel = {};
+
+        // console.log(this.criteriaModel);
 
         this.criteriaModel.userinformation = this.serviceProviderService.userinformation;
         this.criteriaModel.Process = 'DELETE';
         this.criteriaModel.TransportNo = param;
+
+        // console.log(this.criteriaModel);
 
         this.serviceProviderService.post('api/Transport/CancelTransport', this.criteriaModel).subscribe(data => {
           this.spinner.hide();
