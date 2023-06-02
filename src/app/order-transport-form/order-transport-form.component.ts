@@ -127,7 +127,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       this.viewModel = model;
       if (model.Status) {
         this.showChooseHub = (model.Data[0].TransportTypeId == 'NM' 
-          || model.Data[0].TransportTypeId == 'OT' 
+          // || model.Data[0].TransportTypeId == 'OT' 
           || model.Data[0].TransportTypeId == 'SP'
           || model.Data[0].TransportTypeId == 'SV') ? false : true;
         this.criteriaModel = model.Data[0];
@@ -994,7 +994,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.criteriaModel.TransportTypeDescription = result.Code + ' - ' + result.Description;
 
         this.showChooseHub = (result.Code == 'NM' 
-          || result.Code == 'OT' 
+          // || result.Code == 'OT' 
           || result.Code == 'SP'
           || result.Code == 'SV') ? false : true;
       }
