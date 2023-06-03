@@ -346,6 +346,8 @@
                             <th>ลำดับ</th>
                             <th>เลขที่ Inv.</th>
                             <th>สถานะ</th>
+                            <th>ผลการจัดส่ง</th>
+                            <th>สาเหตุ</th>
                             <th>Doc. Type</th>
                             <th>Doc. No.</th>
                             <th>PO</th>
@@ -372,6 +374,16 @@
                             <td class="min-width-100 reset-padding">
                                 <div class="status-box {{statusOrderClassify(i.OrderStatus)}}">
                                     {{i.OrderStatusDesc}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.DeliveryStatus}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w200">
+                                    {{i.Reason}}
                                 </div>
                             </td>
                             <td class="min-width-100">

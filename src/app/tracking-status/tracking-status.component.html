@@ -304,6 +304,8 @@
                             <th>เลขที่อินวอยน์</th>
                             <th>สถานะใบคุม</th>
                             <th>สถานะงานขนส่ง</th>
+                            <th>ผลการจัดส่ง</th>
+                            <th>สาเหตุ</th>
                             <th>Doc Type</th>
                             <th>Doc No.</th>
                             <th>PO</th>
@@ -344,9 +346,21 @@
                                 </div>
                             </td>
 
+                            <td>
+                                <div class="w100">
+                                    {{i.DeliveryStatus}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w200">
+                                    {{i.Reason}}
+                                </div>
+                            </td>
+
                             <td class="min-width-100">
                                 {{i.OrderType}}
                             </td>
+                            
                             <td class="min-width-100">
                                 {{i.OrderNo}}
                             </td>

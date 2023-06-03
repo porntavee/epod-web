@@ -993,10 +993,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.criteriaModel.TransportTypeId = result.Code;
         this.criteriaModel.TransportTypeDescription = result.Code + ' - ' + result.Description;
 
-        this.showChooseHub = (result.Code == 'NM' 
-          // || result.Code == 'OT' 
-          || result.Code == 'SP'
-          || result.Code == 'SV') ? false : true;
+        this.showChooseHub = (result.Code == 'XD') ? true : false; 
       }
     });
   }
