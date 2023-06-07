@@ -168,8 +168,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.listModel = model.Data;
 
         model.Data.forEach(element => {
-          element.OrderEstimateStr = this.verifyDateTime(element.OrderEstimate);
-          element.InvoiceDateStr = this.verifyDateTime(element.InvoiceDate);
+          element.OrderEstimateStr = this.verifyDate(element.OrderEstimate);
+          element.InvoiceDateStr = this.verifyDate(element.InvoiceDate);
         });
       } else {
         this.spinner.hide();
@@ -1330,6 +1330,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     };
   }
 
+  verifyDate(date: any): any {
+    let dateObj: any = (date === "Invalid date" || date == undefined) ? undefined : moment(date).format('DD-MM-YYYY');
+    // console.log((date === "Invalid date"), dateObj, from);
+    return dateObj;
+  }
+
   verifyDateTime(date: any): any {
     let dateObj: any = (date === "Invalid date" || date == undefined) ? undefined : moment(date).format('YYYY-MM-DD 00:00:00.000');
     // console.log((date === "Invalid date"), dateObj, from);
@@ -1392,8 +1398,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         model.Data.forEach(element => {
           Object.keys(element).forEach((key) => {
             if (key.includes('InvoiceDate') || key.includes('OrderEstimate')) {
-              element[key + 'Str'] = element[key] == "Invalid date" || element[key] == undefined ? 
-                undefined : moment(element[key]).format('DD-MM-YYYY');
+              element[key + 'Str'] = this.verifyDate(element[key])
             }
           });
         });
