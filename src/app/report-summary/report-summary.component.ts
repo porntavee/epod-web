@@ -692,11 +692,12 @@ export class ReportSummaryComponent implements OnInit {
         'Delivery Status': element.OTDelivery,
         'POD  Status': element.OTBillReturn,
         'POD Return to Bang Na DC': element.AdminReturnDate,
-        'Order Status': element.OrderStatus,
-        'Closure Reason': element.ClosureReason,
+        'Order Status': element.OrderStatus ?? '',
+        'Closure Reason': element.ClosureReason ?? '',
       });
     });
 
+    debugger
     this.excelService.exportAsExcelFile(model, 'Summary Report');
 
     // let criteria = {
