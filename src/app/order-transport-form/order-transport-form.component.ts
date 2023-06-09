@@ -1096,6 +1096,42 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     });
   }
 
+  private setModel(model) {
+    // Set model.
+    let _model: any = model;
+    for (const key in model) {
+      _model[key] = model[key];
+    }
+
+    return _model;
+  }
+
+  chooseHubTransportShipTo() {
+    const dialogRef = this.dialog.open(ShipToDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'สถานที่',IsHub :'Y' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      Logger.info('master-user', 'chooseTransportShipTo', this.criteria, this.isDebugMode)
+
+      if (result != undefined) {
+
+         // Declare setting local criteria model.
+         let _headerModel = {
+          'HubId'          : result.Id,
+          'HubCode'        : result.Code,
+          'HubDescription' : result.Code + ' - ' + result.CustomerName
+        }
+        // Setting header model.
+        _headerModel = this.setModel(_headerModel);
+        this.formModel = {...this.formModel, ..._headerModel};
+      }
+    });
+  }
+
   chooseFinancialProject(param) { }
 
   chooseStage(param) {
@@ -1374,6 +1410,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       Process: 'TRANSPORT',
       OrderNo: this.formModel.OrderNo,
       ShiptoId: this.formModel.ShiptoId,
+      HubId: this.formModel.HubId,
       InvoiceNo: this.formModel.InvoiceNo,
       OrderDateStart: this.verifyDateTime(this.formModel.OrderDateStart),
       OrderDateEnd: this.verifyDateTime(this.formModel.OrderDateEnd),

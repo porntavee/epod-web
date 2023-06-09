@@ -499,10 +499,10 @@
 <!-- Start Add Order Transport Form -->
 <div *ngIf="isFormPage">
     <!-- Div for filter fix top. -->
-    <div class="col s12 dfix">
+    <!-- <div class="col s12 dfix">
         &nbsp;
-    </div>
-    <div class="col s12 filter-fixed-top">
+    </div> -->
+    <div class="col s12">
         <div class="card-panel card-panel-header">
             <div class="row">
                 <div class="col l8 s12">
@@ -590,6 +590,14 @@
                     </citxt>
                 </div>
             </div>
+
+            <!-- <div class="row">
+                <div class="col l4 s12 p-0 mtm-20">
+                    <citxt (cModel)="formModel.HubDescription = $event" [label]="'HUB'" [data]="formModel.HubDescription" [readonly]="true" (click)="chooseHubTransportShipTo()">
+                    </citxt>
+                </div>
+            </div>   -->
+
             <!-- <div class="row">
                 <div class="col l4 s12 p-0 mtm-20">
                     <citxt 
@@ -620,58 +628,80 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="card-panel hide-on-large-only mt-0">
+        <div class="card-panel hide-on-large-only mt-0">
             <div class="row">
                 <div class="col s12">
+                    <citxt 
+                        (cModel)="formModel.InvoiceNo = $event" 
+                        [label]="'Invoice No.'" 
+                        [data]="formModel.InvoiceNo">
+                    </citxt>
+                </div>
+                <div class="col l4 s12 p-0">
                     <citxt
                         (cModel)="formModel.OrderNo = $event"
                         [label]="'Doc No.'"
-                        [data]="formModel.OrderNo" 
-                        (keydown)="readOrder($event)">
+                        [data]="formModel.OrderNo">
                     </citxt>
                 </div>
-                <div class="col s12 margin-top-mminus-10">
+                <div class="col s12 margin-top-mminus-10"> 
                     <citxt
-                        (cModel)="formModel.ShiptoDescription = $event"
-                        [label]="'ชื่อผู้รับ'"
+                        (cModel)="formModel.ShiptoDescription = $event" 
+                        [label]="'ชื่อผู้รับ'" 
                         [data]="formModel.ShiptoDescription"
                         [readonly]="true"
-                        (click)="chooseShipTo()">
+                        (click)="chooseShipToFilter()">
                     </citxt>
                 </div>
-                <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="formModel.ShiptoAddress = $event"
-                        [label]="'ที่อยู่ผู้รับ'"
+                <div class="col s12 margin-top-mminus-10"> 
+                    <citxt 
+                        (cModel)="formModel.ShiptoAddress = $event" 
+                        [label]="'ที่อยู่ผู้รับ'" 
                         [data]="formModel.ShiptoAddress"
                         [readonly]="true"
-                        (click)="chooseShipTo()">
+                        (click)="chooseShipToFilter()">
                     </citxt>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="formModel.InvoiceNo = $event"
-                        [label]="'เลขที่อินวอยน์'"
-                        [data]="formModel.InvoiceNo" 
-                        (keydown)="readOrder($event)">
-                    </citxt>
-                </div>
-                <div class="col s12 margin-top-mminus-10">
-                    <cdp
-                        (cModel)="formModel.OrderDate = $event"
-                        [label]="'วันที่เอกสาร'"
-                        [data]="formModel.OrderDate">
+                    <cdp 
+                        (cModel)="formModel.OrderDateStart = $event" 
+                        [label]="'วันที่เอกสาร'" 
+                        [data]="formModel.OrderDateStart">
                     </cdp>
                 </div>
                 <div class="col s12 margin-top-mminus-10">
-                    <citxt
-                        (cModel)="formModel.StatusDescription = $event"
-                        [label]="'สถานะ'"
+                    <cdp 
+                        (cModel)="formModel.OrderDateEnd = $event" 
+                        [label]="'ถึงวันที่เอกสาร'" 
+                        [data]="formModel.OrderDateEnd">
+                    </cdp>
+                </div>
+                <div class="col s12 margin-top-mminus-10">
+                    <citxt 
+                        (cModel)="formModel.StatusDescription = $event" 
+                        [label]="'สถานะบิล'" 
                         [data]="formModel.StatusDescription"
                         [readonly]="true"
-                        (click)="chooseStatus()">
+                        (click)="chooseStatusFilter()">
                     </citxt>
                 </div>
+                <div class="col s12 margin-top-mminus-10">
+                    <cdp 
+                        (cModel)="formModel.InvoiceDate = $event" 
+                        [label]="'Invoice Date'" 
+                        [data]="formModel.InvoiceDate">
+                    </cdp>
+                </div>
+                <div class="col s12 margin-top-mminus-10">
+                    <citxt 
+                        (cModel)="formModel.TransportDescription = $event" 
+                        [label]="'บริษัทขนส่ง'" 
+                        [data]="formModel.TransportDescription"
+                        [readonly]="true"
+                        (click)="chooseTransportFilter()">
+                    </citxt>
+                </div>
+
                 <div class="col s12 p-0 mb-5px">
                         <cbtnl
                         [label]="'ล้าง'"
@@ -689,11 +719,11 @@
                     </cbtnl>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
     <!-- End Add Order Transport Form -->
     <!-- Start Add Order Transport Table -->
-    <div class="col s12 top-290">
+    <div class="col s12">
         <div class="card-panel table-panel-header">
             <div class="row">
                 <div class="col l8 s12">
@@ -704,9 +734,9 @@
             </div>
         </div>
         <div class="card-panel mt-0">
-            <div class="overflow-x">
-                <table id="users-list-datatable" class="bordered centered striped">
-                    <thead>
+            <div class="overflow-x" id="managerTable">
+                <table id="users-list-datatable" class="bordered centered striped freez-table">
+                    <thead class="freez-th">
                         <tr>
                             <th>
                                 <span class="header-checkbox">
