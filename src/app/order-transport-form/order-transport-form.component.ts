@@ -726,6 +726,27 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     });
   }
 
+  
+  chooseHubFilter() {
+    const dialogRef = this.dialog.open(ShipToDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'สถานที่', IsHub :'Y' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('chooseHubTransportShipTo')
+
+      if (result != undefined) {
+        this.formModel.HubId = result.Id;
+        this.formModel.HubCode = result.Code;
+        this.formModel.HubDescription = result.Code + ' - ' + result.CustomerName;
+        // this.criteriaModel.IsHub = true;
+      }
+    });
+  }
+
   chooseTransportStatusFilter() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(StatusDialog, {
@@ -1092,42 +1113,6 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.criteriaModel.VehicleTypeId = result.Id;
         this.criteriaModel.VehicleTypeCode = result.Code;
         this.criteriaModel.VehicleTypeDescription = result.Description;
-      }
-    });
-  }
-
-  private setModel(model) {
-    // Set model.
-    let _model: any = model;
-    for (const key in model) {
-      _model[key] = model[key];
-    }
-
-    return _model;
-  }
-
-  chooseHubTransportShipTo() {
-    const dialogRef = this.dialog.open(ShipToDialog, {
-      disableClose: false,
-      height: '400px',
-      width: '800px',
-      data: { title: 'สถานที่',IsHub :'Y' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      Logger.info('master-user', 'chooseTransportShipTo', this.criteria, this.isDebugMode)
-
-      if (result != undefined) {
-
-         // Declare setting local criteria model.
-         let _headerModel = {
-          'HubId'          : result.Id,
-          'HubCode'        : result.Code,
-          'HubDescription' : result.Code + ' - ' + result.CustomerName
-        }
-        // Setting header model.
-        _headerModel = this.setModel(_headerModel);
-        this.formModel = {...this.formModel, ..._headerModel};
       }
     });
   }
