@@ -648,10 +648,9 @@ export class ReportCustomerComponent implements OnInit {
     this.viewModel2.forEach((element, idx) => {
       model.push({
         'No.': idx, 
-        'Customer Code': element.CustomerCode,
-        'Customer Name': element.CustomerName,
-        'Ship to Code': element.ShiptoCode,
-        'Ship to Name': element.ShiptoName,
+        'Customer Code': element.ShiptoCode,
+        'Customer Name': element.ShiptoName,
+        'Ship to': element.ShiptoAdress,
         'Route': element.Route,
         'SubRoute': element.SubRoute,
         'Total Times to Visit': element.Total_Time,
