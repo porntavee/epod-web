@@ -84,10 +84,10 @@
                             <th>INV NO</th>
                             <th>INV_DATE</th>
                             <th>OrderEstimate</th>
+                            <th>Owner Name</th>
                             <th>Customer Code</th>
                             <th>Customer Name</th>
                             <th>Ship to</th>
-                            <th>Address</th>
                             <th>License Plate</th>
                             <th>Truck Type</th>
                             <th>Route</th>
@@ -183,11 +183,6 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="w100">
-                                    {{i.CustomerCode}}
-                                </div>
-                            </td>
-                            <td>
                                 <div class="w300">
                                     {{i.CustomerName}}
                                 </div>
@@ -200,6 +195,11 @@
                             <td>
                                 <div class="w300">
                                     {{i.ShiptoName}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w300">
+                                    {{i.ShiptoAdress}}
                                 </div>
                             </td>
                             <td>

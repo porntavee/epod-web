@@ -77,10 +77,10 @@
                             </th> -->
                             <!-- <th></th> -->
                             <th>No.</th>
+                            <!-- <th>Owner Name</th> -->
                             <th>Customer Code</th>
                             <th>Customer Name</th>
-                            <th>Ship to Code</th>
-                            <th>Ship to Name</th>
+                            <th>Ship to</th>
                             <th>Route</th>
                             <th>SubRoute</th>
                             <th>Total Times to Visit</th>
@@ -131,24 +131,24 @@
                                     {{idx+1}}
                                 </div>
                             </td>
-                            <td>
-                                <div class="w100">
-                                    <a style="cursor: pointer;">{{i.CustomerCode}}</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="w100">
+                            <!-- <td>
+                                <div class="w300">
                                     {{i.CustomerName}}
                                 </div>
-                            </td>
+                            </td> -->
                             <td>
                                 <div class="w100">
                                     {{i.ShiptoCode}}
                                 </div>
                             </td>
                             <td>
-                                <div class="w100">
+                                <div class="w300">
                                     {{i.ShiptoName}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w300">
+                                    {{i.ShiptoAdress}}
                                 </div>
                             </td>
                             <td>
