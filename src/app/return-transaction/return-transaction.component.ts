@@ -208,7 +208,7 @@ export class ReturnTransactionComponent implements OnInit {
 
   chooseAdminReturnFilter() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(AdminReturnDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'คนขับ' } });
+    const dialogRef = this.dialog.open(AdminReturnDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'ผู้คืนเอกสาร' } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
