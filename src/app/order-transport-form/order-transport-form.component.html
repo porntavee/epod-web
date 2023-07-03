@@ -583,7 +583,7 @@
                 <div class="col l4 s12 pl-0 mtm-20">
                     <citxt 
                         (cModel)="formModel.TransportDescription = $event" 
-                        [label]="'บริษัทขนส่งx'" 
+                        [label]="'บริษัทขนส่ง'" 
                         [data]="formModel.TransportDescription"
                         [readonly]="true"
                         (click)="chooseTransportFilter()">
@@ -771,6 +771,7 @@
                             <th>CBM</th>
                             <th>Carton</th>
                             <th>Weight (kg.)</th>
+                            <th>Hub</th>
                             <th>หมายเหตุ</th>
                         </tr>
                     </thead>
@@ -838,6 +839,9 @@
                             </td>
                             <td class="min-width-100">
                                 {{i.Weight}}
+                            </td>
+                            <td class="min-width-200">
+                                {{i.Hub}}
                             </td>
                             <td class="min-width-300">
                                 {{i.Comment}}

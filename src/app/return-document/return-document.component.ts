@@ -78,10 +78,10 @@ export class ReturnDocumentComponent implements OnInit {
       debugger
 
       if (this.criteriaModel.InvoiceNo != '' && this.criteriaModel.InvoiceNo != undefined)
-      this.criteriaModel.InvoiceNo = this.criteriaModel.InvoiceNo.substring(2, this.criteriaModel.InvoiceNo.length - 1);
+        this.criteriaModel.InvoiceNo = this.criteriaModel.InvoiceNo.substring(2, this.criteriaModel.InvoiceNo.length - 1);
 
       if (this.criteriaModel.DocNo != '' && this.criteriaModel.DocNo != undefined)
-      this.criteriaModel.InvoiceNo = this.criteriaModel.DocNo;
+        this.criteriaModel.InvoiceNo = this.criteriaModel.DocNo;
 
       this.readTransport(param);
 
@@ -235,9 +235,10 @@ export class ReturnDocumentComponent implements OnInit {
 
   confirmAlert() {
     if (this.criteriaModel.ReturnNo == '') {
-      const dialogRef = this.dialog.open(ConfirmReasonDialog, { disableClose: false, height: '300px', width: '500px', data: { title: 'คุณต้องการสร้างเอกสารคืน ใช่หรือไม่ ?' } });
+      const dialogRef = this.dialog.open(ConfirmReasonDialog, { disableClose: false, height: '250px', width: '500px', data: { title: 'คุณต้องการสร้างเอกสารคืน ใช่หรือไม่ ?' } });
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
+        console.log(result);
         if (result != false) {
           this.confirm(result);
         }
@@ -270,7 +271,8 @@ export class ReturnDocumentComponent implements OnInit {
   }
 
   verifyDateTime(date: any): any {
-    let dateObj: any = date == "Invalid date" || date == undefined ? undefined : moment(date).format('YYYY-MM-DD 00:00:00.000');
+    console.log("date", date);
+    let dateObj: any = date == "Invalid date" || date == undefined ? undefined : moment(new Date()).format('YYYY-MM-DD HH:mm:ss.SSS');
 
     return dateObj;
   }
@@ -307,7 +309,7 @@ export class ReturnDocumentComponent implements OnInit {
       model = data;
       this.viewModel = model;
 
-      let printModel: any = {ReturnNo: model.Data, List: this.listModel};
+      let printModel: any = { ReturnNo: model.Data, List: this.listModel };
 
       if (model.Status) {
         this.spinner.hide();

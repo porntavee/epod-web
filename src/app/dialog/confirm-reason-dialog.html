@@ -1,15 +1,15 @@
 <h1 mat-dialog-title>แจ้งเตือน</h1>
-<div mat-dialog-content style="min-height: 250px; max-height: 250px;">
-    {{data.title}} <br><br>
+<div mat-dialog-content class="mat-dialog-return-doc" style="min-height: 150px; max-height: 160px;">
+    {{data.title}}
 
-    <div class="row">
+    <!-- <div class="row">
         <cdp (cModel)="PODReturnDate = $event" [label]="'POD Return Date'" [data]="PODReturnDate">
         </cdp>
-    </div>
+    </div> -->
 
     <div class="row">
         <div class="input-field">
-            <input placeholder="เหตุผล" class="validate input-not-readonly" [(ngModel)]="reason" name="reason" id="reason">
+            <input placeholder="หมายเหตุ" class="validate input-not-readonly" [(ngModel)]="reason" name="reason" id="reason">
             <!-- <label for="data" [ngClass]="{ 'active': data != '' }">{{label}}</label> -->
         </div>
     </div>

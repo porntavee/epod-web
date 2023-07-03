@@ -38,7 +38,7 @@ export class ConfirmReasonDialog implements AfterContentChecked {
     PODReturnDate: any = '';
     reason: any = '';
 
-    message: any ='';
+    message: any = '';
 
     cancel() {
         this.dialogRef.close(false);
@@ -46,25 +46,27 @@ export class ConfirmReasonDialog implements AfterContentChecked {
 
     ok() {
 
-        if (this.PODReturnDate == 'Invalid date')
-        {
-            this.dialogRef.close({reason: this.reason, podReturnDate: this.PODReturnDate });
-        }
-        else if (parseInt(this.PODReturnDate) < parseInt(moment(new Date()).format('YYYYMMDD')))
-        {
-            if (this.reason == '' || this.reason == undefined)
-            {
-                this.message = 'กรุณาใส่เหตุผล'
-            }
-            else
-            {
-                this.dialogRef.close({reason: this.reason, podReturnDate: this.PODReturnDate });
-            }
-        }
-        else if (parseInt(this.PODReturnDate) > parseInt(moment(new Date()).format('YYYYMMDD')))
-        {
-            this.message = 'วันที่ไม่ถูกต้อง'
-        }
+        this.dialogRef.close({ reason: this.reason, podReturnDate: this.PODReturnDate });
+
+        // if (this.PODReturnDate == 'Invalid date')
+        // {
+        //     this.dialogRef.close({reason: this.reason, podReturnDate: this.PODReturnDate });
+        // }
+        // else if (parseInt(this.PODReturnDate) < parseInt(moment(new Date()).format('YYYYMMDD')))
+        // {
+        //     if (this.reason == '' || this.reason == undefined)
+        //     {
+        //         this.message = 'กรุณาใส่เหตุผล'
+        //     }
+        //     else
+        //     {
+        //         this.dialogRef.close({reason: this.reason, podReturnDate: this.PODReturnDate });
+        //     }
+        // }
+        // else if (parseInt(this.PODReturnDate) > parseInt(moment(new Date()).format('YYYYMMDD')))
+        // {
+        //     this.message = 'วันที่ไม่ถูกต้อง'
+        // }
     }
 
     // Fixing "Expression has changed after it was checked"
@@ -1265,9 +1267,9 @@ export class JobOrderStatusDialog implements AfterContentChecked {
 export class PrintDialog {
 
     calPage = 1;
-    dataPage:any = [];
+    dataPage: any = [];
     gIndex = 0;
-    
+
 
     constructor(
         public dialogRef: MatDialogRef<PrintDialog>,
@@ -1277,27 +1279,27 @@ export class PrintDialog {
 
         let x: any = [];
         for (let index = 0; index < this.calPage; index++) {
-            x.push(data.List[0+(index*20)]); // 0+(0*10)= 0     0+(1*10)= 10
-            x.push(data.List[1+(index*20)]); // 1+(0*10)= 1     1+(1*10)= 11
-            x.push(data.List[2+(index*20)]); // 2+(0*10)= 2
-            x.push(data.List[3+(index*20)]);
-            x.push(data.List[4+(index*20)]);
-            x.push(data.List[5+(index*20)]);
-            x.push(data.List[6+(index*20)]);
-            x.push(data.List[7+(index*20)]);
-            x.push(data.List[8+(index*20)]);
-            x.push(data.List[9+(index*20)]);
+            x.push(data.List[0 + (index * 20)]); // 0+(0*10)= 0     0+(1*10)= 10
+            x.push(data.List[1 + (index * 20)]); // 1+(0*10)= 1     1+(1*10)= 11
+            x.push(data.List[2 + (index * 20)]); // 2+(0*10)= 2
+            x.push(data.List[3 + (index * 20)]);
+            x.push(data.List[4 + (index * 20)]);
+            x.push(data.List[5 + (index * 20)]);
+            x.push(data.List[6 + (index * 20)]);
+            x.push(data.List[7 + (index * 20)]);
+            x.push(data.List[8 + (index * 20)]);
+            x.push(data.List[9 + (index * 20)]);
 
-            x.push(data.List[10+(index*20)]); // 0+(0*10)= 0     0+(1*10)= 10
-            x.push(data.List[11+(index*20)]); // 1+(0*10)= 1     1+(1*10)= 11
-            x.push(data.List[12+(index*20)]); // 2+(0*10)= 2
-            x.push(data.List[13+(index*20)]);
-            x.push(data.List[14+(index*20)]);
-            x.push(data.List[15+(index*20)]);
-            x.push(data.List[16+(index*20)]);
-            x.push(data.List[17+(index*20)]);
-            x.push(data.List[18+(index*20)]);
-            x.push(data.List[19+(index*20)]);
+            x.push(data.List[10 + (index * 20)]); // 0+(0*10)= 0     0+(1*10)= 10
+            x.push(data.List[11 + (index * 20)]); // 1+(0*10)= 1     1+(1*10)= 11
+            x.push(data.List[12 + (index * 20)]); // 2+(0*10)= 2
+            x.push(data.List[13 + (index * 20)]);
+            x.push(data.List[14 + (index * 20)]);
+            x.push(data.List[15 + (index * 20)]);
+            x.push(data.List[16 + (index * 20)]);
+            x.push(data.List[17 + (index * 20)]);
+            x.push(data.List[18 + (index * 20)]);
+            x.push(data.List[19 + (index * 20)]);
 
             this.dataPage.push(x);
             x = [];
