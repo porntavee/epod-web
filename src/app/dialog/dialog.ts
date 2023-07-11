@@ -1328,6 +1328,78 @@ export class PrintDialog {
 }
 
 @Component({
+    selector: 'print-transport-dialog',
+    templateUrl: 'print-transport-dialog.html',
+})
+export class PrintTransportDialog {
+
+    calPage = 1;
+    dataPage: any = [];
+    gIndex = 0;
+
+    printDate: any = '';
+    printIndex: any = 0;
+
+
+    constructor(
+        public dialogRef: MatDialogRef<PrintTransportDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+            const date = new Date();
+            this.printDate = moment(date.setDate(date.getDate())).format('DD-MM-YYYY');
+
+        // this.calPage = Math.ceil(data.List.length / 20);
+
+        // let x: any = [];
+        // for (let index = 0; index < this.calPage; index++) {
+        //     x.push(data.List[0 + (index * 20)]); // 0+(0*10)= 0     0+(1*10)= 10
+        //     x.push(data.List[1 + (index * 20)]); // 1+(0*10)= 1     1+(1*10)= 11
+        //     x.push(data.List[2 + (index * 20)]); // 2+(0*10)= 2
+        //     x.push(data.List[3 + (index * 20)]);
+        //     x.push(data.List[4 + (index * 20)]);
+        //     x.push(data.List[5 + (index * 20)]);
+        //     x.push(data.List[6 + (index * 20)]);
+        //     x.push(data.List[7 + (index * 20)]);
+        //     x.push(data.List[8 + (index * 20)]);
+        //     x.push(data.List[9 + (index * 20)]);
+
+        //     x.push(data.List[10 + (index * 20)]); // 0+(0*10)= 0     0+(1*10)= 10
+        //     x.push(data.List[11 + (index * 20)]); // 1+(0*10)= 1     1+(1*10)= 11
+        //     x.push(data.List[12 + (index * 20)]); // 2+(0*10)= 2
+        //     x.push(data.List[13 + (index * 20)]);
+        //     x.push(data.List[14 + (index * 20)]);
+        //     x.push(data.List[15 + (index * 20)]);
+        //     x.push(data.List[16 + (index * 20)]);
+        //     x.push(data.List[17 + (index * 20)]);
+        //     x.push(data.List[18 + (index * 20)]);
+        //     x.push(data.List[19 + (index * 20)]);
+
+        //     this.dataPage.push(x);
+        //     x = [];
+        // }
+
+        // debugger
+
+        // data.List.array.forEach(element => {
+
+        // });
+
+
+    }
+
+    checkLastPage() {
+        return false;
+    }
+
+    cancel() {
+        this.dialogRef.close(false);
+    }
+
+    ok() {
+        this.dialogRef.close(true);
+    }
+}
+
+@Component({
     selector: 'close-job-dialog',
     templateUrl: 'close-job-dialog.html',
 })

@@ -1,0 +1,181 @@
+<div>
+    <table>
+        <tr>
+            <td>
+                <p mat-dialog-title><i class="material-icons custom-button-icon">print</i> Print</p>
+            </td>
+            <td style="text-align: right; cursor: pointer;">
+                <i class="material-icons custom-button-icon" (click)="cancel()">close</i>
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+<!-- style="min-height: 150px; max-height: 150px;" -->
+<div mat-dialog-content>
+    <!-- {{data.title}} <br> -->
+    <!-- {{data.ReturnNo}} -->
+    <!-- {{calPage}} -->
+    <button style="background-color: transparent; border-width: 0px !important;" printSectionId="print-section" ngxPrint>
+        <a class="btn waves-effect waves-light light-blue custom-button">พิมพ์</a>
+    </button>
+    <!-- <button style="background-color: transparent; border-width: 0px !important;" printSectionId="print-section2" ngxPrint>
+        <a class="btn waves-effect waves-light red custom-button">Copy</a>
+    </button> -->
+    <!-- <cbtn [label]="'original'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn> -->
+    <!-- <cbtn [label]="'copy'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn> -->
+</div>
+<!-- <div mat-dialog-actions>
+    <cbtn [label]="'ยืนยัน'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn>
+    <cbtn [label]="'ยกเลิก'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn>
+</div> -->
+
+<div class="display-none" id="print-section">
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 25%; text-align: center;">
+                <img src="./assets/img/logo_printout.jpg" width="80">
+            </td>
+            <td style="width: 50%; text-align: center;">
+                <h3>DELIVERY MANIFEST</h3>
+            </td>
+            <td style="width: 25%; text-align: left; font-size: 10px;">
+                Print Date {{printDate}}
+            </td>
+        </tr>
+    </table>
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                Channel :
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                Orderkey Barcode# :
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                Carrier/Transporter Name : <br>(ชื่อขนส่ง)
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                {{data.Transport}}
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                Orderkey# : <br>(เลขที่ใบส่งสินค้า)
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                Driver Name : <br>(ชื่อพนักงานขนส่ง)
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                {{data.DriverFirstName}} {{data.DriverLastName}}
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                Customer Order No : <br>(เลขที่ใบสั่งสินค้า)
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                Vessel/Vehicle No : <br>(ทะเบียนรถ)
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                {{data.Vehicle}}
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                MBOL# :
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                Request Delivery Date : <br>(วันที่นัดส่งสินค้า)
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                Route Code : <br>(เส้นทางการจัดส่ง)
+            </td>
+            <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
+                {{data.Route}}
+            </td>
+        </tr>
+    </table>
+    <br>
+    <div>
+        <table style="width: 100%; font-size: 10px;">
+            <tr style="border: 1px solid black;">
+                <th style="border: 1px solid black;">Totalcartons<br>(จำนวนสินค้า)</th>
+                <th style="border: 1px solid black;">QtyReturn<br>(จำนวนสินค้าคืน)</th>
+                <th style="border: 1px solid black;">DocReturn<br>(คืนเอกสาร)</th>
+                <th style="border: 1px solid black;">Customer Signature<br>(คืนเอกสาร)</th>
+                <th style="border: 1px solid black;">LFL<br>(รายมือชื่อผู้จัดส่งสินค้า)</th>
+            </tr>
+            <!-- <tr *ngFor="let i of page; let idx = index" style="border: 1px solid black;">
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 50px;">{{(idx + 1) + (idxx*10)}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.TransportNo}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.OrderNo}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.InvoiceNo}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 100px;">{{i.InvoiceDateStr}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 300px;">{{i.ShiptoName}}</td>
+                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.OrderEstimate}}</td>
+                </tr> -->
+        </table>
+    </div>
+    <br>
+    <div style="min-height: 550px;">
+        <table style="width: 100%; font-size: 10px;">
+            <tr style="border: 1px solid black;">
+                <th style="border: 1px solid black;">Invoice No.</th>
+                <th style="border: 1px solid black;">Customer Code</th>
+                <th style="border: 1px solid black;">Customer Name</th>
+                <th style="border: 1px solid black;">Ship To</th>
+                <th style="border: 1px solid black;">Weight</th>
+                <th style="border: 1px solid black;">ShippedQty</th>
+                <th style="border: 1px solid black;">Uom</th>
+            </tr>
+            <tr *ngFor="let i of data.items; let idx = index" style="border: 1px solid black;">
+                <td *ngIf="i != undefined" style="border: 1px solid black; width: 50px; width: 10%; text-align: center">{{i.InvoiceNo}}</td>
+                <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px; width: 10%; text-align: center;">{{i.ShiptoCode}}</td>
+                <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px; width: 25%;">{{i.ShiptoName}}</td>
+                <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px; width: 40%;">{{i.ShiptoAdress}}</td>
+                <td *ngIf="i != undefined" style="border: 1px solid black; width: 100px; width: 5%; text-align: center">{{i.Weight}}</td>
+                <td *ngIf="i != undefined" style="border: 1px solid black; width: 300px; width: 5%; text-align: center">{{i.Qty}}</td>
+                <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px; width: 5%; text-align: center">{{i.Uom}}</td>
+            </tr>
+        </table>
+    </div>
+    <!-- <div *ngIf="!last" style="min-height: 160px;"></div> -->
+    <div>
+        <p>Special Instruction / Remark : ..........................................................................................................................</p>
+        <p>...........................................................................................................................................................................</p>
+    </div>
+    <div>
+        <table style="width: 100%; border: 1px solid black;">
+            <tr style="border: 1px solid black;">
+                <td style="border: 1px solid black; width: 20%;"><br><br><br> ลงชื่อขนส่ง</td>
+                <td style="border: 1px solid black; width: 20%;"><br><br><br> ลงชื่อ Checker WH</td>
+                <td style="border: 1px solid black; width: 20%;"><br><br><br> ลงชื่อ Transport EP</td>
+                <td style="border: 1px solid black; width: 20%;"><br><br><br> ลงชื่อผู้รับสินค้า</td>
+                <td style="border: 1px solid black; width: 20%;"><br><br><br></td>
+            </tr>
+        </table>
+    </div>
+    <!-- </div> -->
+</div>

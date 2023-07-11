@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, DriverDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
+import { ConfirmDialog, DriverDialog, PrintTransportDialog, ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -25,6 +25,8 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
   mode: any = 'create';
   p = 1;
 
+
+
   constructor(public dialog: MatDialog,
     private router: Router,
     private serviceProviderService: ServiceProviderService,
@@ -32,13 +34,19 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
     private toastr: ToastrService,
     private differs: KeyValueDiffers,
     private excelService: ExcelService,
-    public changeDetector: ChangeDetectorRef) { }
+    public changeDetector: ChangeDetectorRef) {
+      this.criteria =  {
+        "userinformation": this.serviceProviderService.userinformation 
+      }
+     }
 
   ngOnInit(): void {
     const date = new Date();
     this.criteriaModel.TransportDate = moment(date.setDate(date.getDate())).format('YYYYMMDD');
 
     this.read();
+
+
   }
 
   viewModel: any;
@@ -94,6 +102,66 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
     return dateObj;
   }
 
+  criteria: object = {}; // User Information.
+
+  printAlert(param) {
+
+    debugger
+    let criteria = {
+      "TransportNo": param.TransportNo
+    }
+    criteria = {...this.criteria, ...criteria};
+
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+        this.spinner.hide();
+
+        let model: any = data;
+        this.viewModel = model;
+        if (model.Status) {
+
+          param.items = model.Data
+          // this.listModel = model.Data;
+
+          // model.Data.forEach(element => {
+          //   element.OrderEstimateStr = this.verifyDate(element.OrderEstimate);
+          //   element.InvoiceDateStr = this.verifyDate(element.InvoiceDate);
+          // });
+
+          const dialogRef = this.dialog.open(PrintTransportDialog, { disableClose: false, height: '160px', width: '300px', data: param });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+            if (result) {
+              // this.confirm();
+            }
+            else {
+              return;
+            }
+          });
+        } else {
+          this.spinner.hide();
+          // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
+        this.spinner.hide();
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
+
+
+    // if (this.criteriaModel.ReturnNo == '') {
+
+    // }
+    // else {
+    //   // this.confirm();
+    // }
+  }
+
+  verifyDate(date: any): any {
+    let dateObj: any = (date === "Invalid date" || date == undefined) ? undefined : moment(date).format('DD-MM-YYYY');
+    // console.log((date === "Invalid date"), dateObj, from);
+    return dateObj;
+  }
+
   //use
   chooseStatus() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
@@ -106,7 +174,7 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
         // this.criteriaModel.transportTypeId = result.Id;
         this.criteriaModel.statusCode = result.Code;
         this.criteriaModel.statusDescription = result.Code + ' - ' + result.Description;
-      } else{
+      } else {
         this.criteriaModel.statusCode = '';
         this.criteriaModel.statusDescription = '';
       }
@@ -149,11 +217,11 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
   //use
   chooseTransportNo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TransportNoDialog, { 
+    const dialogRef = this.dialog.open(TransportNoDialog, {
       disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'Transport No.' } 
+      data: { title: 'Transport No.' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -198,9 +266,9 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
   }
 
   clear() {
-    this.criteriaModel = { 
-      approveDateString: this.verifyDateTime('') ,
-      TransportDate: this.verifyDateTime('') 
+    this.criteriaModel = {
+      approveDateString: this.verifyDateTime(''),
+      TransportDate: this.verifyDateTime('')
     };
   }
 

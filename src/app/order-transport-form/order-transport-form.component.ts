@@ -157,6 +157,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
 
+    debugger
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria)
     .subscribe(data => {
       this.spinner.hide();
