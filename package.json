@@ -30,6 +30,7 @@
         "file-saver": "^2.0.5",
         "image-file-resize": "^1.0.3",
         "moment": "^2.24.0",
+        "ngx-barcode": "^0.3.0",
         "ngx-dropzone": "^2.2.2",
         "ngx-mat-datetime-picker": "^1.0.3",
         "ngx-pagination": "^5.0.0",

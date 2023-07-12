@@ -57,7 +57,7 @@
                 Orderkey Barcode# :
             </td>
             <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
-
+                <ngx-barcode [bc-value]="data.TransportNo" [bc-display-value]="false" [bc-height]="50"></ngx-barcode>
             </td>
         </tr>
         <tr>
@@ -71,7 +71,7 @@
                 Orderkey# : <br>(เลขที่ใบส่งสินค้า)
             </td>
             <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
-
+                {{data.TransportNo}}
             </td>
         </tr>
         <tr>
@@ -120,28 +120,26 @@
     <br>
     <div>
         <table style="width: 100%; font-size: 10px;">
-            <tr style="border: 1px solid black;">
+            <tr style="border: 1px solid black; background-color: gray;">
                 <th style="border: 1px solid black;">Totalcartons<br>(จำนวนสินค้า)</th>
                 <th style="border: 1px solid black;">QtyReturn<br>(จำนวนสินค้าคืน)</th>
                 <th style="border: 1px solid black;">DocReturn<br>(คืนเอกสาร)</th>
                 <th style="border: 1px solid black;">Customer Signature<br>(คืนเอกสาร)</th>
                 <th style="border: 1px solid black;">LFL<br>(รายมือชื่อผู้จัดส่งสินค้า)</th>
             </tr>
-            <!-- <tr *ngFor="let i of page; let idx = index" style="border: 1px solid black;">
-                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 50px;">{{(idx + 1) + (idxx*10)}}</td>
-                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.TransportNo}}</td>
-                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.OrderNo}}</td>
-                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.InvoiceNo}}</td>
-                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 100px;">{{i.InvoiceDateStr}}</td>
-                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 300px;">{{i.ShiptoName}}</td>
-                    <td *ngIf="i != undefined" style="border: 1px solid black; width: 150px;">{{i.OrderEstimate}}</td>
-                </tr> -->
+            <tr style="border: 1px solid black;">
+                <td style="border: 1px solid black; width: 50px; text-align: center;">{{data.items.length}}</td>
+                <td style="border: 1px solid black; width: 150px;"></td>
+                <td style="border: 1px solid black; width: 150px;"></td>
+                <td style="border: 1px solid black; width: 150px;"></td>
+                <td style="border: 1px solid black; width: 100px;"></td>
+            </tr>
         </table>
     </div>
     <br>
-    <div style="min-height: 550px;">
+    <div style="min-height: 540px;">
         <table style="width: 100%; font-size: 10px;">
-            <tr style="border: 1px solid black;">
+            <tr style="border: 1px solid black; background-color: rgb(231, 231, 231);">
                 <th style="border: 1px solid black;">Invoice No.</th>
                 <th style="border: 1px solid black;">Customer Code</th>
                 <th style="border: 1px solid black;">Customer Name</th>

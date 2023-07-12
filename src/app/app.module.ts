@@ -123,6 +123,7 @@ import { ReportSummaryComponent } from './report-summary/report-summary.componen
 import { ReportCustomerComponent } from './report-customer/report-customer.component';
 import { MasterVehicleComponent } from './master-vehicle/master-vehicle.component';
 import { NgxPrintModule } from "ngx-print";
+import { NgxBarcodeModule } from "ngx-barcode";
 
 @NgModule({
   declarations: [
@@ -270,7 +271,8 @@ import { NgxPrintModule } from "ngx-print";
     MatChipsModule,
     MatAutocompleteModule,
     DragDropModule,
-    NgxPrintModule
+    NgxPrintModule,
+    NgxBarcodeModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],
