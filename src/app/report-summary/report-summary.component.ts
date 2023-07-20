@@ -1,87 +1,94 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, KeyValueDiffers, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import * as moment from 'moment';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog } from '../dialog/dialog';
-import { ExcelService } from '../shared/excel.service';
-import { ServiceProviderService } from '../shared/service-provider.service';
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Component, KeyValueDiffers, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import * as moment from "moment";
+import { NgxSpinnerService } from "ngx-spinner";
+import { ToastrService } from "ngx-toastr";
+import {
+  ConfirmDialog,
+  TransportNoDialog,
+  ShipToDialog,
+  StatusDialog,
+  TypeOfWorkDialog,
+  RouteDialog,
+  VehicleDialog,
+  DriverDialog,
+} from "../dialog/dialog";
+import { ExcelService } from "../shared/excel.service";
+import { ServiceProviderService } from "../shared/service-provider.service";
 
 @Component({
-  selector: 'app-report-summary',
-  templateUrl: './report-summary.component.html',
-  styleUrls: ['./report-summary.component.css']
+  selector: "app-report-summary",
+  templateUrl: "./report-summary.component.html",
+  styleUrls: ["./report-summary.component.css"],
 })
 export class ReportSummaryComponent implements OnInit {
-
-
   isDelivery: boolean = false;
   isMainPage: boolean = true;
   isFormPage: boolean = false;
   isTimeSheetPage: boolean = false;
   listModel: any = [
     {
-      "Seq": 1,
-      "Code": "T",
-      "Description": "รอจัดใบคุมรถ",
-      "NumStatus": 0
+      Seq: 1,
+      Code: "T",
+      Description: "รอจัดใบคุมรถ",
+      NumStatus: 0,
     },
     {
-      "Seq": 2,
-      "Code": "O",
-      "Description": "รอยืนยันใบคุมรถ",
-      "NumStatus": 0
+      Seq: 2,
+      Code: "O",
+      Description: "รอยืนยันใบคุมรถ",
+      NumStatus: 0,
     },
     {
-      "Seq": 3,
-      "Code": "W",
-      "Description": "รอคนขับรับงาน",
-      "NumStatus": 0
+      Seq: 3,
+      Code: "W",
+      Description: "รอคนขับรับงาน",
+      NumStatus: 0,
     },
     {
-      "Seq": 5,
-      "Code": "L",
-      "Description": "ระหว่างรับสินค้า",
-      "NumStatus": 0
+      Seq: 5,
+      Code: "L",
+      Description: "ระหว่างรับสินค้า",
+      NumStatus: 0,
     },
     {
-      "Seq": 6,
-      "Code": "D",
-      "Description": "ระหว่างจัดส่งสินค้า",
-      "NumStatus": 0
+      Seq: 6,
+      Code: "D",
+      Description: "ระหว่างจัดส่งสินค้า",
+      NumStatus: 0,
     },
     {
-      "Seq": 7,
-      "Code": "P",
-      "Description": "จัดส่งสินค้าสำเร็จ",
-      "NumStatus": 0
+      Seq: 7,
+      Code: "P",
+      Description: "จัดส่งสินค้าสำเร็จ",
+      NumStatus: 0,
     },
     {
-      "Seq": 8,
-      "Code": "F",
-      "Description": "จัดส่งสินค้าไม่สำเร็จ",
-      "NumStatus": 0
+      Seq: 8,
+      Code: "F",
+      Description: "จัดส่งสินค้าไม่สำเร็จ",
+      NumStatus: 0,
     },
     {
-      "Seq": 9,
-      "Code": "R",
-      "Description": "คนขับคืนบิลเสร็จสิ้น",
-      "NumStatus": 0
+      Seq: 9,
+      Code: "R",
+      Description: "คนขับคืนบิลเสร็จสิ้น",
+      NumStatus: 0,
     },
     {
-      "Seq": 10,
-      "Code": "S",
-      "Description": "คืนบิลเสร็จสิ้น",
-      "NumStatus": 0
+      Seq: 10,
+      Code: "S",
+      Description: "คืนบิลเสร็จสิ้น",
+      NumStatus: 0,
     },
     {
-      "Seq": 11,
-      "Code": "C",
-      "Description": "ยกเลิก",
-      "NumStatus": 0
-    }
+      Seq: 11,
+      Code: "C",
+      Description: "ยกเลิก",
+      NumStatus: 0,
+    },
   ]; //ข้อมูลในตารางหน้า Main
   listDetailModel: any = [
     {
@@ -89,15 +96,15 @@ export class ReportSummaryComponent implements OnInit {
       TypeOfWork: "Normal",
       PlanIn: "25/9/2022",
       ActualIn: "25/9/2022",
-      Status: "Complete"
+      Status: "Complete",
     },
     {
       CustomerName: "Customer1",
       TypeOfWork: "Service",
       PlanIn: "25/9/2022",
       ActualIn: "",
-      Status: "Pending"
-    }
+      Status: "Pending",
+    },
   ];
 
   listDetailModel2: any = [
@@ -105,8 +112,8 @@ export class ReportSummaryComponent implements OnInit {
       InvoiceNo: "2032022225",
       ApptDate: "25/9/2022",
       ActualArrive: "25/9/2022",
-      Status: "On time"
-    }
+      Status: "On time",
+    },
   ];
 
   listDetailModel3: any = [
@@ -114,25 +121,25 @@ export class ReportSummaryComponent implements OnInit {
       DriverReturn: "2032022225",
       DueDate: "25/9/2022",
       ReturnDate: "25/9/2022",
-      Status: "On time"
-    }
+      Status: "On time",
+    },
   ];
   headerModel: any = {};
-  criteriaModel: any = {} //ค้นหา
-  title: string = 'เพิ่มข้อมูล';
+  criteriaModel: any = {}; //ค้นหา
+  title: string = "เพิ่มข้อมูล";
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
   timeSheetModel: any = {};
-  dateControl = new FormControl(moment().format('YYYYMMDD'));
+  dateControl = new FormControl(moment().format("YYYYMMDD"));
 
-  mode: any = 'create';
+  mode: any = "create";
   listEmployee: any = [];
   listEmployeeCode: any = [];
   listFirstName: any = [];
   listActivityType: any = [];
   listFinancialProject: any = [];
   listStage: any = [];
-  costCenter: any = '';
+  costCenter: any = "";
   p = 1;
 
   listRoute: any = [];
@@ -142,62 +149,78 @@ export class ReportSummaryComponent implements OnInit {
 
   timelineModel: any = {};
 
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private differs: KeyValueDiffers,
-    private excelService: ExcelService) { }
+    private excelService: ExcelService
+  ) {}
 
   ngOnInit(): void {
     const startDate = new Date();
     const endDate = new Date();
-    this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
-    this.criteriaModel.endDate = moment(endDate).format('YYYYMMDD');
+    this.criteriaModel.startDate = moment(
+      startDate.setDate(startDate.getDate() - 7)
+    ).format("YYYYMMDD");
+    this.criteriaModel.endDate = moment(endDate).format("YYYYMMDD");
     this.readSumStatus();
     this.read();
   }
-
 
   viewModel: any;
   readSumStatus() {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "BeginDate": this.criteriaModel.startDate != undefined && this.criteriaModel.startDate != "Invalid date" ? moment(this.criteriaModel.startDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-      "EndDate": this.criteriaModel.endDate != undefined && this.criteriaModel.endDate != "Invalid date" ? moment(this.criteriaModel.endDate).format('YYYY-MM-DD 00:00:00.000') : undefined,
-
-    }
+      userinformation: this.serviceProviderService.userinformation,
+      BeginDate:
+        this.criteriaModel.startDate != undefined &&
+        this.criteriaModel.startDate != "Invalid date"
+          ? moment(this.criteriaModel.startDate).format(
+              "YYYY-MM-DD 00:00:00.000"
+            )
+          : undefined,
+      EndDate:
+        this.criteriaModel.endDate != undefined &&
+        this.criteriaModel.endDate != "Invalid date"
+          ? moment(this.criteriaModel.endDate).format("YYYY-MM-DD 00:00:00.000")
+          : undefined,
+    };
 
     let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/Transport/GetAllStatus', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
+    this.serviceProviderService
+      .post("api/Transport/GetAllStatus", criteria)
+      .subscribe(
+        (data) => {
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
+          this.viewModel = model;
 
-      if (model.Status) {
+          if (model.Status) {
+            // model.Data.forEach(element => {
+            //   element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
+            //   // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+            //   // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+            // });
 
-        // model.Data.forEach(element => {
-        //   element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
-        //   // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-        //   // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
-        // });
-
-        this.listModel = model.Data;
-      }
-      else {
-        this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+            this.listModel = model.Data;
+          } else {
+            this.listModel = [];
+            this.spinner.hide();
+            this.toastr.error(model.Message, "แจ้งเตือนระบบ", {
+              timeOut: 5000,
+            });
+          }
+        },
+        (err) => {
+          this.spinner.hide();
+          this.toastr.error(err.message, "แจ้งเตือนระบบ", { timeOut: 5000 });
+        }
+      );
   }
 
   viewModel2: any = [];
@@ -205,84 +228,130 @@ export class ReportSummaryComponent implements OnInit {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "InvoiceDateStart":  this.criteriaModel.startDate != undefined &&  this.criteriaModel.startDate != "Invalid date" ? moment( this.criteriaModel.startDate).format('YYYY-MM-DD') : undefined,
-      "InvoiceDateEnd":  this.criteriaModel.endDate != undefined &&  this.criteriaModel.endDate != "Invalid date" ? moment( this.criteriaModel.endDate).format('YYYY-MM-DD') : undefined,
-    }
+      userinformation: this.serviceProviderService.userinformation,
+      InvoiceDateStart:
+        this.criteriaModel.startDate != undefined &&
+        this.criteriaModel.startDate != "Invalid date"
+          ? moment(this.criteriaModel.startDate).format("YYYY-MM-DD")
+          : undefined,
+      InvoiceDateEnd:
+        this.criteriaModel.endDate != undefined &&
+        this.criteriaModel.endDate != "Invalid date"
+          ? moment(this.criteriaModel.endDate).format("YYYY-MM-DD")
+          : undefined,
+    };
 
     let json = JSON.stringify(criteria);
 
-    debugger
-    this.serviceProviderService.post('api/Report/ReportTransportOrders', criteria).subscribe(data => {
-      debugger
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
+    debugger;
+    this.serviceProviderService
+      .post("api/Report/ReportTransportOrders", criteria)
+      .subscribe(
+        (data) => {
+          debugger;
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
 
-      if (model.Status) {
+          if (model.Status) {
+            model.Data.forEach((element) => {
+              element.TransportDate = moment(element.TransportDate).format(
+                "DD-MM-YYYY"
+              );
+              element.InvoiceDate = moment(element.InvoiceDate).format(
+                "DD-MM-YYYY"
+              );
+              element.OrderEstimate = moment(element.OrderEstimate).format(
+                "DD-MM-YYYY"
+              );
+              // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
+              // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
+              // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
 
-        model.Data.forEach(element => {
-          element.TransportDate = moment(element.TransportDate).format('DD-MM-YYYY');
-          element.InvoiceDate = moment(element.InvoiceDate).format('DD-MM-YYYY');
-          element.OrderEstimate = moment(element.OrderEstimate).format('DD-MM-YYYY');
-          // element.DriverFirstName = element.DriverFirstName + ' ' + element.DriverLastName;
-          // element.DateTo = moment(element.DateTo).format('DD-MM-YYYY');
-          // element.LastDate = moment(element.LastDate).format('DD-MM-YYYY');
+              element.ShipmentNo = element.ShipmentNo ?? "";
+              element.TransportNo = element.TransportNo ?? "";
+              element.OrderNo = element.OrderNo ?? "";
+              element.InvoiceNo = element.InvoiceNo ?? "";
+              element.CustomerCode = element.CustomerCode ?? "";
+              element.CustomerName = element.CustomerName ?? "";
 
-          element.ShipmentNo = element.ShipmentNo ?? '';
-          element.TransportNo = element.TransportNo ?? '';
-          element.OrderNo = element.OrderNo ?? '';
-          element.InvoiceNo = element.InvoiceNo ?? '';
-          element.CustomerCode = element.CustomerCode ?? '';
-          element.CustomerName = element.CustomerName ?? '';
+              element.ShiptoCode = element.ShiptoCode ?? "";
+              element.ShiptoName = element.ShiptoName ?? "";
+              element.Vehicle = element.Vehicle ?? "";
+              element.VehicleType = element.VehicleType ?? "";
+              element.Route = element.Route ?? "";
+              element.SubRoute = element.SubRoute ?? "";
+              element.Transport = element.Transport ?? "";
+              element.DriverName = element.DriverName ?? "";
+              element.HelperName = element.HelperName ?? "";
+              element.DateIn =
+                element.DateIn != null
+                  ? element.DateIn.substr(8, 2) +
+                    "-" +
+                    element.DateIn.substr(5, 2) +
+                    "-" +
+                    element.DateIn.substr(0, 4)
+                  : element.DateIn ?? "";
+              element.TimeIn =
+                element.TimeIn != null
+                  ? element.TimeIn.substring(0, 8)
+                  : element.TimeIn ?? "";
+              element.DateOut =
+                element.DateOut != null
+                  ? element.DateOut.substr(8, 2) +
+                    "-" +
+                    element.DateOut.substr(5, 2) +
+                    "-" +
+                    element.DateOut.substr(0, 4)
+                  : element.DateOut ?? "";
+              element.TimeOut =
+                element.TimeOut != null
+                  ? element.TimeOut.substring(0, 8)
+                  : element.TimeOut ?? "";
+              element.LatitudeLongitudeIn = element.LatitudeLongitudeIn ?? "";
+              element.OTDelivery = element.OTDelivery ?? "";
+              element.OTBillReturn = element.OTBillReturn ?? "";
+              element.AdminReturnDate =
+                element.AdminReturnDate != null
+                  ? element.AdminReturnDate.substr(8, 2) +
+                    "-" +
+                    element.AdminReturnDate.substr(5, 2) +
+                    "-" +
+                    element.AdminReturnDate.substr(0, 4)
+                  : element.AdminReturnDate ?? "";
 
-          element.ShiptoCode = element.ShiptoCode ?? '';
-          element.ShiptoName = element.ShiptoName ?? '';
-          element.Vehicle = element.Vehicle ?? '';
-          element.VehicleType = element.VehicleType ?? '';
-          element.Route = element.Route ?? '';
-          element.SubRoute = element.SubRoute ?? '';
-          element.Transport = element.Transport ?? '';
-          element.DriverName = element.DriverName ?? '';
-          element.HelperName = element.HelperName ?? '';
-          element.DatIn = element.DatIn != null ? element.DatIn.substr(8,2) + '-' + element.DatIn.substr(5,2) + '-' + element.DatIn.substr(0,4) : element.DatIn ?? '';
-          element.TimeIn = element.TimeIn != null ? element.TimeIn.substring(0,8) : element.TimeIn ?? '';
-          element.DateOut = element.DateOut != null ? element.DateOut.substr(8,2) + '-' + element.DateOut.substr(5,2) + '-' + element.DateOut.substr(0,4) : element.DateOut ?? '';
-          element.TimeOut = element.TimeOut != null ? element.TimeOut.substring(0,8) : element.TimeOut ?? '';
-          element.LatitudeLongitudeIn = element.LatitudeLongitudeIn ?? '';
-          element.OTDelivery = element.OTDelivery ?? '';
-          element.OTBillReturn = element.OTBillReturn ?? '';
-          element.AdminReturnDate = element.AdminReturnDate != null ? element.AdminReturnDate.substr(8,2) + '-' + element.AdminReturnDate.substr(5,2) + '-' + element.AdminReturnDate.substr(0,4) : element.AdminReturnDate ?? '';
+              //D P R S
+              // var strDeliveryStatus = "DPRS";
+              // if (strDeliveryStatus.includes(String(element.OrderStatus))) {
+              //   this.isDelivery = true;
+              // }
+            });
 
+            this.viewModel2 = model.Data;
 
-          //D P R S 
-          // var strDeliveryStatus = "DPRS";
-          // if (strDeliveryStatus.includes(String(element.OrderStatus))) {
-          //   this.isDelivery = true;
-          // }
-        });
-
-        this.viewModel2 = model.Data;
-      }
-      else {
-        this.listModel = [];
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+            // console.log(this.viewModel2);
+          } else {
+            this.listModel = [];
+            this.spinner.hide();
+            this.toastr.error(model.Message, "แจ้งเตือนระบบ", {
+              timeOut: 5000,
+            });
+          }
+        },
+        (err) => {
+          this.spinner.hide();
+          this.toastr.error(err.message, "แจ้งเตือนระบบ", { timeOut: 5000 });
+        }
+      );
   }
 
   readDetail(param) {
     this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "OrderNo": param.OrderNo
-    }
+      userinformation: this.serviceProviderService.userinformation,
+      OrderNo: param.OrderNo,
+    };
 
     // this.headerModel = param;
     // this.headerModel.DriverFirstName = '';
@@ -290,36 +359,44 @@ export class ReportSummaryComponent implements OnInit {
 
     let json = JSON.stringify(criteria);
     this.isDelivery = false;
-    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      // this.viewModel = model;
+    this.serviceProviderService
+      .post("api/Transport/GetTransportDetail", criteria)
+      .subscribe(
+        (data) => {
+          this.spinner.hide();
+          let model: any = {};
+          model = data;
+          // this.viewModel = model;
 
-      if (model.Status) {
+          if (model.Status) {
+            this.headerModel = model.Data[0];
 
-        this.headerModel = model.Data[0];
+            this.headerModel.OrderEstimate = moment(
+              model.Data[0].OrderEstimate
+            ).format("DD-MM-YYYY");
+            this.headerModel.OwnerDescription =
+              model.Data[0].OwnerCode + " - " + model.Data[0].OwnerName;
+            this.headerModel.ShiptoDescription =
+              model.Data[0].ShiptoCode + " - " + model.Data[0].ShiptoName;
 
-        this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
-        this.headerModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
-        this.headerModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;
+            // this.headerModel = model.Data;
 
-        // this.headerModel = model.Data;
+            this.isMainPage = false;
+            this.isFormPage = true;
 
-        this.isMainPage = false;
-        this.isFormPage = true;
-
-        this.readTimeline(param);
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+            this.readTimeline(param);
+          } else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, "แจ้งเตือนระบบ", {
+              timeOut: 5000,
+            });
+          }
+        },
+        (err) => {
+          this.spinner.hide();
+          this.toastr.error(err.message, "แจ้งเตือนระบบ", { timeOut: 5000 });
+        }
+      );
   }
 
   readTimeline(param) {
@@ -327,9 +404,9 @@ export class ReportSummaryComponent implements OnInit {
     // this.spinner.show();
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": param.TransportNo
-    }
+      userinformation: this.serviceProviderService.userinformation,
+      TransportNo: param.TransportNo,
+    };
 
     // this.headerModel = param;
     // this.headerModel.DriverFirstName = '';
@@ -337,37 +414,41 @@ export class ReportSummaryComponent implements OnInit {
 
     let json = JSON.stringify(criteria);
     this.isDelivery = false;
-    this.serviceProviderService.post('api/Transport/GetTransportStatus', criteria).subscribe(data => {
-      // this.spinner.hide();
-      let model: any = {};
-      model = data;
-      // this.viewModel = model;
+    this.serviceProviderService
+      .post("api/Transport/GetTransportStatus", criteria)
+      .subscribe(
+        (data) => {
+          // this.spinner.hide();
+          let model: any = {};
+          model = data;
+          // this.viewModel = model;
 
-      // debugger
+          // debugger
 
-      if (model.Status) {
-        this.timelineModel = model.Data[0];
-        // this.headerModel = model.Data[0];
+          if (model.Status) {
+            this.timelineModel = model.Data[0];
+            // this.headerModel = model.Data[0];
 
-        // this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
-        // this.headerModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
-        // this.headerModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;
+            // this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
+            // this.headerModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
+            // this.headerModel.ShiptoDescription = model.Data[0].ShiptoCode + ' - ' + model.Data[0].ShiptoName;
 
-        // // this.headerModel = model.Data;
+            // // this.headerModel = model.Data;
 
-        // this.isMainPage = false;
-        // this.isFormPage = true;
-
-      }
-      else {
-        // this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+            // this.isMainPage = false;
+            // this.isFormPage = true;
+          } else {
+            // this.spinner.hide();
+            this.toastr.error(model.Message, "แจ้งเตือนระบบ", {
+              timeOut: 5000,
+            });
+          }
+        },
+        (err) => {
+          this.spinner.hide();
+          this.toastr.error(err.message, "แจ้งเตือนระบบ", { timeOut: 5000 });
+        }
+      );
   }
 
   confirm() {
@@ -377,59 +458,21 @@ export class ReportSummaryComponent implements OnInit {
       this.listDetailModel[index].Seq = index + 1;
     }
     // this.listDetailModel.forEach(element => {
-    //   element.Seq = 
+    //   element.Seq =
     // });
 
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "TransportNo": this.headerModel.TransportNo,
-      "TTRANSPORTDS": this.listDetailModel
-    }
+      userinformation: this.serviceProviderService.userinformation,
+      TransportNo: this.headerModel.TransportNo,
+      TTRANSPORTDS: this.listDetailModel,
+    };
 
     let json = JSON.stringify(criteria);
 
-    this.serviceProviderService.post('api/Transport/ApproveTransport', criteria).subscribe(data => {
-      this.spinner.hide();
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.spinner.hide();
-        this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        this.backToMain();
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
-  }
-
-  cancel() {
-
-    //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ConfirmDialog, { disableClose: false, height: '150px', width: '300px', data: { title: 'คุณต้องการยกเลิกใช่หรือไม่?' } });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-
-      if (result) {
-        this.spinner.show();
-
-        let criteria = {
-          "userinformation": this.serviceProviderService.userinformation,
-          "TransportNo": this.headerModel.TransportNo,
-          // "TTRANSPORTDS": this.listDetailModel
-        }
-
-        let json = JSON.stringify(criteria);
-
-        this.serviceProviderService.post('api/Transport/CancelTransport', criteria).subscribe(data => {
+    this.serviceProviderService
+      .post("api/Transport/ApproveTransport", criteria)
+      .subscribe(
+        (data) => {
           this.spinner.hide();
           let model: any = {};
           model = data;
@@ -437,19 +480,77 @@ export class ReportSummaryComponent implements OnInit {
 
           if (model.Status) {
             this.spinner.hide();
-            this.toastr.success('บันทึกยกเลิกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            debugger
+            this.toastr.success("บันทึกเสร็จสิ้น", "แจ้งเตือนระบบ", {
+              timeOut: 5000,
+            });
             this.backToMain();
-          }
-          else {
+          } else {
             this.spinner.hide();
-            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            this.toastr.error(model.Message, "แจ้งเตือนระบบ", {
+              timeOut: 5000,
+            });
           }
-
-        }, err => {
+        },
+        (err) => {
           this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        });
+          this.toastr.error(err.message, "แจ้งเตือนระบบ", { timeOut: 5000 });
+        }
+      );
+  }
+
+  cancel() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      disableClose: false,
+      height: "150px",
+      width: "300px",
+      data: { title: "คุณต้องการยกเลิกใช่หรือไม่?" },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+        this.spinner.show();
+
+        let criteria = {
+          userinformation: this.serviceProviderService.userinformation,
+          TransportNo: this.headerModel.TransportNo,
+          // "TTRANSPORTDS": this.listDetailModel
+        };
+
+        let json = JSON.stringify(criteria);
+
+        this.serviceProviderService
+          .post("api/Transport/CancelTransport", criteria)
+          .subscribe(
+            (data) => {
+              this.spinner.hide();
+              let model: any = {};
+              model = data;
+              this.viewModel = model;
+
+              if (model.Status) {
+                this.spinner.hide();
+                this.toastr.success("บันทึกยกเลิกเสร็จสิ้น", "แจ้งเตือนระบบ", {
+                  timeOut: 5000,
+                });
+                debugger;
+                this.backToMain();
+              } else {
+                this.spinner.hide();
+                this.toastr.error(model.Message, "แจ้งเตือนระบบ", {
+                  timeOut: 5000,
+                });
+              }
+            },
+            (err) => {
+              this.spinner.hide();
+              this.toastr.error(err.message, "แจ้งเตือนระบบ", {
+                timeOut: 5000,
+              });
+            }
+          );
       }
     });
   }
@@ -462,9 +563,14 @@ export class ReportSummaryComponent implements OnInit {
   //use
   chooseTransportNo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TransportNoDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Transport No.' } });
+    const dialogRef = this.dialog.open(TransportNoDialog, {
+      disableClose: false,
+      height: "400px",
+      width: "800px",
+      data: { title: "Transport No." },
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
@@ -485,9 +591,14 @@ export class ReportSummaryComponent implements OnInit {
   //use
   chooseShipTo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานที่รับ-ส่งสินค้า' } });
+    const dialogRef = this.dialog.open(ShipToDialog, {
+      disableClose: false,
+      height: "400px",
+      width: "800px",
+      data: { title: "สถานที่รับ-ส่งสินค้า" },
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
@@ -495,7 +606,8 @@ export class ReportSummaryComponent implements OnInit {
         this.criteriaModel.shipToId = result.Id;
         this.criteriaModel.shipToCode = result.Code;
         this.criteriaModel.shipToAddress = result.Address;
-        this.criteriaModel.shipToDescription = result.Code + ' - ' + result.CustomerName;
+        this.criteriaModel.shipToDescription =
+          result.Code + " - " + result.CustomerName;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -508,15 +620,21 @@ export class ReportSummaryComponent implements OnInit {
   //use
   chooseStatus() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(StatusDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานะเอกสาร' } });
+    const dialogRef = this.dialog.open(StatusDialog, {
+      disableClose: false,
+      height: "400px",
+      width: "800px",
+      data: { title: "สถานะเอกสาร" },
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
         // this.criteriaModel.transportTypeId = result.Id;
         this.criteriaModel.statusCode = result.Code;
-        this.criteriaModel.statusDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.statusDescription =
+          result.Code + " - " + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -529,15 +647,21 @@ export class ReportSummaryComponent implements OnInit {
   //use
   chooseTypeOfWork() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TypeOfWorkDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'ประเภทงาน' } });
+    const dialogRef = this.dialog.open(TypeOfWorkDialog, {
+      disableClose: false,
+      height: "400px",
+      width: "800px",
+      data: { title: "ประเภทงาน" },
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
         // this.criteriaModel.transportTypeId = result.Id;
         this.criteriaModel.typeOfWorkCode = result.Code;
-        this.criteriaModel.typeOfWorkDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.typeOfWorkDescription =
+          result.Code + " - " + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -550,20 +674,29 @@ export class ReportSummaryComponent implements OnInit {
   //use
   chooseRoute() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(RouteDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'เส้นทางหลัก', listData: this.listRoute, listDataSearch: this.listRoute } });
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false,
+      height: "400px",
+      width: "800px",
+      data: {
+        title: "เส้นทางหลัก",
+        listData: this.listRoute,
+        listDataSearch: this.listRoute,
+      },
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
-
-        this.criteriaModel.subRouteId = '';
-        this.criteriaModel.subRouteCode = '';
-        this.criteriaModel.subRouteDescription = '';
+        this.criteriaModel.subRouteId = "";
+        this.criteriaModel.subRouteCode = "";
+        this.criteriaModel.subRouteDescription = "";
 
         this.criteriaModel.routeId = result.Id;
         this.criteriaModel.routeCode = result.Code;
-        this.criteriaModel.routeDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.routeDescription =
+          result.Code + " - " + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -576,15 +709,21 @@ export class ReportSummaryComponent implements OnInit {
   //use
   chooseVehicle() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(VehicleDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'ทะเบียนรถ' } });
+    const dialogRef = this.dialog.open(VehicleDialog, {
+      disableClose: false,
+      height: "400px",
+      width: "800px",
+      data: { title: "ทะเบียนรถ" },
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
         this.criteriaModel.vehicleId = result.Id;
         this.criteriaModel.vehicleCode = result.Code;
-        this.criteriaModel.vehicleDescription = result.Code + ' - ' + result.Description;
+        this.criteriaModel.vehicleDescription =
+          result.Code + " - " + result.Description;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -597,15 +736,21 @@ export class ReportSummaryComponent implements OnInit {
   //use
   chooseDriver() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(DriverDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'คนขับ' } });
+    const dialogRef = this.dialog.open(DriverDialog, {
+      disableClose: false,
+      height: "400px",
+      width: "800px",
+      data: { title: "คนขับ" },
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
 
       if (result != undefined) {
         this.criteriaModel.driverId = result.Id;
         this.criteriaModel.driverCode = result.Code;
-        this.criteriaModel.driverDescription = result.Code + ' - ' + result.FirstName + ' ' + result.LastName;
+        this.criteriaModel.driverDescription =
+          result.Code + " - " + result.FirstName + " " + result.LastName;
         // param.Code = result.Code;
         // param.FirstName = result.firstName;
         // param.LastName = result.lastName;
@@ -618,28 +763,33 @@ export class ReportSummaryComponent implements OnInit {
   //use
   readRoute() {
     let criteria = {
-      "userinformation": this.serviceProviderService.userinformation,
-      "Code": ""
-    }
+      userinformation: this.serviceProviderService.userinformation,
+      Code: "",
+    };
 
     // let json = JSON.stringify(criteria);
-    this.serviceProviderService.post('api/Masters/GetRoute', criteria).subscribe(data => {
-      let model: any = {};
-      model = data;
-      this.viewModel = model;
+    this.serviceProviderService
+      .post("api/Masters/GetRoute", criteria)
+      .subscribe(
+        (data) => {
+          let model: any = {};
+          model = data;
+          this.viewModel = model;
 
-      if (model.Status) {
-        this.listRoute = model.Data;
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+          if (model.Status) {
+            this.listRoute = model.Data;
+          } else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, "แจ้งเตือนระบบ", {
+              timeOut: 5000,
+            });
+          }
+        },
+        (err) => {
+          this.spinner.hide();
+          this.toastr.error(err.message, "แจ้งเตือนระบบ", { timeOut: 5000 });
+        }
+      );
   }
 
   backToMain() {
@@ -648,7 +798,7 @@ export class ReportSummaryComponent implements OnInit {
     this.isTimeSheetPage = false;
     // this.read();
 
-    window.scroll(0,0);
+    window.scroll(0, 0);
     // this.model = {};
     // this.models = [];
     // this.listModel = [];
@@ -656,49 +806,48 @@ export class ReportSummaryComponent implements OnInit {
 
   reportModel: any = [];
   exportAsXLSX(): void {
-
     // this.spinner.show();
 
     let model = [];
-    this.viewModel2.forEach(element => {
+    this.viewModel2.forEach((element) => {
       model.push({
-        'Order No.': element.ShipmentNo,
-        'Manifest Date': element.TransportDate,
-        'Manifest': element.TransportNo,
-        'Sale Order (SO)': element.OrderNo,
-        'INV NO': element.InvoiceNo,
-        'INV_DATE': element.InvoiceDate,
-        'Appointment Date': element.OrderEstimate,
-        'Owner Name': element.CustomerName,
-        'Customer Code': element.ShiptoCode,
-        'Customer Name': element.ShiptoName,
-        'Ship to': element.ShiptoAdress,
-        'License Plate': element.Vehicle,
-        'Truck Type': element.VehicleType,
-        'Route': element.Route,
-        'SubRoute': element.SubRoute,
-        'Transport By': element.Transport,
-        'Driver Name': element.DriverName,
-        'Helper Name': element.HelperName,
-        'Total Drop': element.NumDrop,
-        'Total Carton': element.Qty.toFixed(2),
-        'Weight (kg)': element.Weight.toFixed(2),
-        'Cubic meter': element.CBM.toFixed(2),
-        'Date (In)': element.DatIn,
-        'Time (In)': element.TimeIn,
-        'Date (Out)': element.DateOut,
-        'Time (Out)': element.TimeOut,
-        'Latitude & Longitude In': element.LatitudeLongitudeIn,
-        'Delivery Status': element.OTDelivery,
-        'POD  Status': element.OTBillReturn,
-        'POD Return to Bang Na DC': element.AdminReturnDate,
-        'Order Status': element.OrderStatus ?? '',
-        'Closure Reason': element.ClosureReason ?? '',
+        "Order No.": element.ShipmentNo,
+        "Manifest Date": element.TransportDate,
+        Manifest: element.TransportNo,
+        "Sale Order (SO)": element.OrderNo,
+        "INV NO": element.InvoiceNo,
+        INV_DATE: element.InvoiceDate,
+        "Appointment Date": element.OrderEstimate,
+        "Owner Name": element.CustomerName,
+        "Customer Code": element.ShiptoCode,
+        "Customer Name": element.ShiptoName,
+        "Ship to": element.ShiptoAdress,
+        "License Plate": element.Vehicle,
+        "Truck Type": element.VehicleType,
+        Route: element.Route,
+        SubRoute: element.SubRoute,
+        "Transport By": element.Transport,
+        "Driver Name": element.DriverName,
+        "Helper Name": element.HelperName,
+        "Total Drop": element.NumDrop,
+        "Total Carton": element.Qty.toFixed(2),
+        "Weight (kg)": element.Weight.toFixed(2),
+        "Cubic meter": element.CBM.toFixed(2),
+        "Date (In)": element.DateIn,
+        "Time (In)": element.TimeIn,
+        "Date (Out)": element.DateOut,
+        "Time (Out)": element.TimeOut,
+        "Latitude & Longitude In": element.LatitudeLongitudeIn,
+        "Delivery Status": element.OTDelivery,
+        "POD  Status": element.OTBillReturn,
+        "POD Return to Bang Na DC": element.AdminReturnDate,
+        "Order Status": element.OrderStatus ?? "",
+        "Closure Reason": element.ClosureReason ?? "",
       });
     });
 
-    debugger
-    this.excelService.exportAsExcelFile(model, 'Summary Report');
+    debugger;
+    this.excelService.exportAsExcelFile(model, "Summary Report");
 
     // let criteria = {
     //   "userinformation": this.serviceProviderService.userinformation,
@@ -717,7 +866,6 @@ export class ReportSummaryComponent implements OnInit {
     //     // this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
     //     // this.read();
     //     this.reportModel = model.Data
-
 
     //     // const dialogRef = this.dialog.open(DocLogDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'Doc Log Report', listData: this.reportModel, listDataSearch: this.reportModel } });
 
@@ -739,69 +887,141 @@ export class ReportSummaryComponent implements OnInit {
     //   this.spinner.hide();
     //   this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     // });
-
-
   }
 
   exportAsXLSX2(): void {
     this.spinner.show();
 
-    let code = 'AC001';
-    let zdocNum = 'AC002';
-    let firstName = 'ลลิตา';
-    let dateFrom = '01/06/2022';
-    let lastName = 'ลลิตา';
-    let dateTo = '01/06/2022';
-
+    let code = "AC001";
+    let zdocNum = "AC002";
+    let firstName = "ลลิตา";
+    let dateFrom = "01/06/2022";
+    let lastName = "ลลิตา";
+    let dateTo = "01/06/2022";
 
     let excelModel = [];
     excelModel.push(
-      { 'Code': 'First Name', [this.model.Code]: this.model.FirstName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date From', [' ' + this.model.DocNum]: moment(this.model.DateFrom).format('DD-MM-YYYY'), '        ': '', '         ': '' },
-      { 'Code': 'Last Name', [this.model.Code]: this.model.LastName, ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': 'Date To', [' ' + this.model.DocNum]: moment(this.model.DateTo).format('DD-MM-YYYY'), '        ': '', '         ': '' },
-      { 'Code': '', [this.model.Code]: '', ' ': '', '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '', 'Doc Num': '', [' ' + this.model.DocNum]: '', '        ': '', '         ': '' },
-      { 'Code': 'Date', [this.model.Code]: 'Start Time', ' ': 'Hour', '  ': 'End Time', '   ': 'Activity Type', '    ': 'Financial Project', '     ': 'Cost Center', '      ': 'Stage', '       ': 'Break', 'Doc Num': 'Nonbillable Time', [' ' + this.model.DocNum]: 'Effective Time', '        ': 'Billable Time', '         ': 'Detail' });
+      {
+        Code: "First Name",
+        [this.model.Code]: this.model.FirstName,
+        " ": "",
+        "  ": "",
+        "   ": "",
+        "    ": "",
+        "     ": "",
+        "      ": "",
+        "       ": "",
+        "Doc Num": "Date From",
+        [" " + this.model.DocNum]: moment(this.model.DateFrom).format(
+          "DD-MM-YYYY"
+        ),
+        "        ": "",
+        "         ": "",
+      },
+      {
+        Code: "Last Name",
+        [this.model.Code]: this.model.LastName,
+        " ": "",
+        "  ": "",
+        "   ": "",
+        "    ": "",
+        "     ": "",
+        "      ": "",
+        "       ": "",
+        "Doc Num": "Date To",
+        [" " + this.model.DocNum]: moment(this.model.DateTo).format(
+          "DD-MM-YYYY"
+        ),
+        "        ": "",
+        "         ": "",
+      },
+      {
+        Code: "",
+        [this.model.Code]: "",
+        " ": "",
+        "  ": "",
+        "   ": "",
+        "    ": "",
+        "     ": "",
+        "      ": "",
+        "       ": "",
+        "Doc Num": "",
+        [" " + this.model.DocNum]: "",
+        "        ": "",
+        "         ": "",
+      },
+      {
+        Code: "Date",
+        [this.model.Code]: "Start Time",
+        " ": "Hour",
+        "  ": "End Time",
+        "   ": "Activity Type",
+        "    ": "Financial Project",
+        "     ": "Cost Center",
+        "      ": "Stage",
+        "       ": "Break",
+        "Doc Num": "Nonbillable Time",
+        [" " + this.model.DocNum]: "Effective Time",
+        "        ": "Billable Time",
+        "         ": "Detail",
+      }
+    );
 
-
-    this.models.forEach(element => {
-      excelModel.push(
-        { 'Code': element.Date, [this.model.Code]: element.StartTimeText, ' ': element.U_HMC_Hour, '  ': element.EndTimeText, '   ': element.ActType, '    ': element.FiProject, '     ': element.CostCenter, '      ': element.U_HMC_Stage, '       ': element.BreakText, 'Doc Num': element.NonBillTmText, [' ' + this.model.DocNum]: element.EffectTmText, '        ': element.BillableTmText, '         ': element.U_HMC_Detail }
-      );
+    this.models.forEach((element) => {
+      excelModel.push({
+        Code: element.Date,
+        [this.model.Code]: element.StartTimeText,
+        " ": element.U_HMC_Hour,
+        "  ": element.EndTimeText,
+        "   ": element.ActType,
+        "    ": element.FiProject,
+        "     ": element.CostCenter,
+        "      ": element.U_HMC_Stage,
+        "       ": element.BreakText,
+        "Doc Num": element.NonBillTmText,
+        [" " + this.model.DocNum]: element.EffectTmText,
+        "        ": element.BillableTmText,
+        "         ": element.U_HMC_Detail,
+      });
     });
-    this.excelService.exportAsExcelFile(excelModel, 'timesheet-report');
+    this.excelService.exportAsExcelFile(excelModel, "timesheet-report");
     // this.excelService.exportAsExcelFile(this.listModel, 'user-log-report');
     this.spinner.hide();
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.listDetailModel, event.previousIndex, event.currentIndex);
+    moveItemInArray(
+      this.listDetailModel,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 
   clear() {
-    this.criteriaModel = { apptDate: '' };
+    this.criteriaModel = { apptDate: "" };
   }
 
   statusTransportColor(param) {
     switch (param) {
-      case 'C':
-        return '#E16E5B'
-      case 'D':
-        return '#F7E884'
-      case 'L':
-        return '#F7E884'
-      case 'O':
-        return '#B6B6B6'
-      case 'P':
-        return '#79D58B'
-      case 'R':
-        return '#79D58B'
-      case 'S':
-        return '#66A5D9'
-      case 'W':
-        return '#B6B6B6'
+      case "C":
+        return "#E16E5B";
+      case "D":
+        return "#F7E884";
+      case "L":
+        return "#F7E884";
+      case "O":
+        return "#B6B6B6";
+      case "P":
+        return "#79D58B";
+      case "R":
+        return "#79D58B";
+      case "S":
+        return "#66A5D9";
+      case "W":
+        return "#B6B6B6";
       default:
         break;
     }
-
   }
 
   numberWithCommas(x) {
