@@ -12,7 +12,7 @@ export class ServiceProviderService {
   // server: string = 'http://202.44.230.195/sino-api/-test';
   server: string = "http://202.44.230.195/sino-api/";
 
-  version: string = "2023.06.2201";
+  version: string = "2023.07.1801";
 
   userinformation: any = {
     UserId: localStorage.getItem("token_epod_20221006") ?? "",
