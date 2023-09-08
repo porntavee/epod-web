@@ -320,6 +320,14 @@
                             <th>Carton</th>
                             <th>Weight(kg.)</th>
                             <th>สาเหตุการปิดงาน</th>
+                            <th>Date (In)</th>
+                            <th>Time (In)</th>
+                            <th>Date (Out)</th>
+                            <th>Time (Out)</th>
+                            <th>Latitude & Longitude</th>
+                            <th>Delivery Status</th>
+                            <th>POD Status</th>
+                            <th>POD Return to Bang Na DC</th>
 
                         </tr>
                     </thead>
@@ -360,7 +368,7 @@
                             <td class="min-width-100">
                                 {{i.OrderType}}
                             </td>
-                            
+
                             <td class="min-width-100">
                                 {{i.OrderNo}}
                             </td>
@@ -406,6 +414,15 @@
                             <td class="min-width-150">
                                 {{i.ReasonClose}}
                             </td>
+
+                            <td class="min-width-150">{{i.DeliveryCheckInDate}}</td>
+                            <td class="min-width-150">{{i.DeliveryCheckInTime}}</td>
+                            <td class="min-width-150">{{i.DeliveryCheckOutDate}}</td>
+                            <td class="min-width-150">{{i.DeliveryCheckOutTime}}</td>
+                            <td class="min-width-150">{{i.DeliveryCheckInLocation}}</td>
+                            <td class="min-width-150">{{i.DeliveryStatus}}</td>
+                            <td class="min-width-150">{{i.OTBillReturn}}</td>
+                            <td class="min-width-150">{{i.AdminReturnDate}}</td>
 
                         </tr>
                     </tbody>

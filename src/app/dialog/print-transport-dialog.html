@@ -82,7 +82,7 @@
                 {{data.DriverFirstName}} {{data.DriverLastName}}
             </td>
             <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
-                Customer Order No : <br>(เลขที่ใบสั่งสินค้า)
+                Old Order Key : <br>(เลขที่ใบสั่งสินค้าเดิม)
             </td>
             <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
 
@@ -104,10 +104,10 @@
         </tr>
         <tr>
             <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
-                Request Delivery Date : <br>(วันที่นัดส่งสินค้า)
+                Create Date : <br>(วันที่สร้างใบคุม)
             </td>
             <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
-
+                {{data.CreateDate.toString().replace('T', ' ')}}
             </td>
             <td style="width: 25%; font-size: 12px; text-align: left; border: 1px solid rgb(231, 231, 231)">
                 Route Code : <br>(เส้นทางการจัดส่ง)
@@ -121,15 +121,15 @@
     <div>
         <table style="width: 100%; font-size: 10px;">
             <tr style="border: 1px solid black; background-color: gray;">
-                <th style="border: 1px solid black;">Totalcartons<br>(จำนวนสินค้า)</th>
-                <th style="border: 1px solid black;">QtyReturn<br>(จำนวนสินค้าคืน)</th>
+                <th style="border: 1px solid black;">TotalBills<br>(จำนวนบิล)</th>
+                <th style="border: 1px solid black;">TotalCartons<br>(จำนวนสินค้า)</th>
                 <th style="border: 1px solid black;">DocReturn<br>(คืนเอกสาร)</th>
                 <th style="border: 1px solid black;">Customer Signature<br>(คืนเอกสาร)</th>
                 <th style="border: 1px solid black;">LFL<br>(รายมือชื่อผู้จัดส่งสินค้า)</th>
             </tr>
             <tr style="border: 1px solid black;">
                 <td style="border: 1px solid black; width: 50px; text-align: center;">{{data.items.length}}</td>
-                <td style="border: 1px solid black; width: 150px;"></td>
+                <td style="border: 1px solid black; width: 150px; text-align: center;">{{data.Qty}}</td>
                 <td style="border: 1px solid black; width: 150px;"></td>
                 <td style="border: 1px solid black; width: 150px;"></td>
                 <td style="border: 1px solid black; width: 100px;"></td>
@@ -137,7 +137,7 @@
         </table>
     </div>
     <br>
-    <div style="min-height: 540px;">
+    <div style="min-height: 500px;">
         <table style="width: 100%; font-size: 10px;">
             <tr style="border: 1px solid black; background-color: rgb(231, 231, 231);">
                 <th style="border: 1px solid black;">Invoice No.</th>
@@ -146,7 +146,7 @@
                 <th style="border: 1px solid black;">Ship To</th>
                 <th style="border: 1px solid black;">Weight</th>
                 <th style="border: 1px solid black;">ShippedQty</th>
-                <th style="border: 1px solid black;">Uom</th>
+                <th style="border: 1px solid black;">Carton</th>
             </tr>
             <tr *ngFor="let i of data.items; let idx = index" style="border: 1px solid black;">
                 <td *ngIf="i != undefined" style="border: 1px solid black; width: 50px; width: 10%; text-align: center">{{i.InvoiceNo}}</td>

@@ -119,6 +119,7 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
         this.viewModel = model;
         if (model.Status) {
 
+          debugger
           param.items = model.Data
           // this.listModel = model.Data;
 

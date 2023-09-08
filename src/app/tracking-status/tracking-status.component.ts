@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, JobStatusDialog, JobOrderStatusDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
-import{ GlobalConstants } from '../shared/global-constants';
+import { GlobalConstants } from '../shared/global-constants';
 
 @Component({
   selector: 'app-tracking-status',
@@ -121,7 +121,7 @@ export class TrackingStatusComponent implements OnInit {
   listTransport: any = [];
   headerModel: any = {};
   criteriaModel: any = {}; //ค้นหา
-  criteriaModelStatus:any={};
+  criteriaModelStatus: any = {};
   title: string = 'เพิ่มข้อมูล';
   model: any = {}; //ข้อมูล Form
   models: any = []; //ข้อมูลในตารางหน้า Form
@@ -145,7 +145,7 @@ export class TrackingStatusComponent implements OnInit {
 
   timelineModel: any = {};
 
-  
+
 
   constructor(public dialog: MatDialog,
     private serviceProviderService: ServiceProviderService,
@@ -160,7 +160,7 @@ export class TrackingStatusComponent implements OnInit {
     // this.criteriaModel.startDate = moment(startDate.setDate(startDate.getDate() - 7)).format('YYYYMMDD');
     this.criteriaModelStatus.startDate = moment(startDate).format('YYYYMMDD');
     this.criteriaModelStatus.endDate = moment(endDate).format('YYYYMMDD');
-    
+
     this.readAll();
     this.readRoute();
     this.readTransport();
@@ -196,7 +196,7 @@ export class TrackingStatusComponent implements OnInit {
         // });
 
         this.listModel = model.Data;
-        
+
       }
       else {
         this.listModel = [];
@@ -223,7 +223,7 @@ export class TrackingStatusComponent implements OnInit {
   }
 
   viewModel2: any = [];
-  read(task='') {
+  read(task = '') {
     this.spinner.show();
 
     this.p = 1;
@@ -231,7 +231,7 @@ export class TrackingStatusComponent implements OnInit {
     let criteria = {
       // Summary Status.
       "InvoiceDateStart": this.verifyDateTime(this.criteriaModelStatus.startDate, 'InvoiceDateStart'),
-      "InvoiceDateEnd":this.verifyDateTime(this.criteriaModelStatus.endDate, 'InvoiceDateEnd'),
+      "InvoiceDateEnd": this.verifyDateTime(this.criteriaModelStatus.endDate, 'InvoiceDateEnd'),
       // Filter.
       "userinformation": this.serviceProviderService.userinformation,
       "TransportId": this.verifySring(this.criteriaModel.TransportId),
@@ -242,7 +242,7 @@ export class TrackingStatusComponent implements OnInit {
       "OrderEstimate": this.verifyDateTime(this.criteriaModel.OrderEstimate, 'OrderEstimate'),
       "InvoiceNo": this.verifySring(this.criteriaModel.InvoiceNo),
     }
-    criteria = {...this.criteriaModel, ...criteria};
+    criteria = { ...this.criteriaModel, ...criteria };
 
     let json = JSON.stringify(criteria);
 
@@ -260,7 +260,7 @@ export class TrackingStatusComponent implements OnInit {
         return;
       }
     }
-    
+
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
@@ -283,7 +283,42 @@ export class TrackingStatusComponent implements OnInit {
           // }
         });
 
+        debugger
+
+        // 2023-09-06T13:16:47.847
+        model.Data.forEach(element => {
+
+          element.DeliveryCheckInTime =
+            element.DeliveryCheckInDate != null
+              ? element.DeliveryCheckInDate.substr(11, 8)
+              : element.DeliveryCheckInDate ?? "";
+
+          element.DeliveryCheckInDate = element.DeliveryCheckInDate != null
+            ? element.DeliveryCheckInDate.substr(8, 2) +
+            "-" +
+            element.DeliveryCheckInDate.substr(5, 2) +
+            "-" +
+            element.DeliveryCheckInDate.substr(0, 4)
+            : element.DeliveryCheckInDate ?? "";
+
+          element.DeliveryCheckOutTime =
+            element.DeliveryCheckOutDate != null
+              ? element.DeliveryCheckOutDate.substr(11, 8)
+              : element.DeliveryCheckOutDate ?? "";
+
+          element.DeliveryCheckOutDate = element.DeliveryCheckOutDate != null
+            ? element.DeliveryCheckOutDate.substr(8, 2) +
+            "-" +
+            element.DeliveryCheckOutDate.substr(5, 2) +
+            "-" +
+            element.DeliveryCheckOutDate.substr(0, 4)
+            : element.DeliveryCheckOutDate ?? "";
+
+        });
+
         this.viewModel2 = model.Data;
+
+
       }
       else {
         this.viewModel2 = [];
@@ -307,7 +342,7 @@ export class TrackingStatusComponent implements OnInit {
     return dateObj;
   }
 
-  readAll(){
+  readAll() {
     this.readSumStatus();
     this.read();
   }
@@ -383,7 +418,7 @@ export class TrackingStatusComponent implements OnInit {
       if (model.Status) {
 
         this.listDetailModel = model.Data;
-        
+
         // this.headerModel.InvoiceDate = moment(model.Data[0].InvoiceDate).format('DD-MM-YYYY');
         // this.headerModel.OrderEstimate = moment(model.Data[0].OrderEstimate).format('DD-MM-YYYY');
         // this.headerModel.OwnerDescription = model.Data[0].OwnerCode + ' - ' + model.Data[0].OwnerName;
@@ -587,9 +622,10 @@ export class TrackingStatusComponent implements OnInit {
       disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'Transport',
+      data: {
+        title: 'Transport',
         listData: this.listTransport,
-        listDataSearch: this.listTransport 
+        listDataSearch: this.listTransport
       }
     });
 
@@ -726,13 +762,13 @@ export class TrackingStatusComponent implements OnInit {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
     const dialogRef = this.dialog.open(RouteDialog, {
       disableClose: false,
-      height: '400px', 
-      width: '800px', 
+      height: '400px',
+      width: '800px',
       data: { title: 'เส้นทางหลัก', listData: this.listRoute, listDataSearch: this.listRoute }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
+
       if (result != undefined) {
         this.criteriaModel.RouteId = result.Id;
         this.criteriaModel.RouteCode = result.Code;
@@ -798,7 +834,7 @@ export class TrackingStatusComponent implements OnInit {
 
     // let json = JSON.stringify(criteria);
     this.serviceProviderService.post('api/Masters/GetRoute', criteria).subscribe(data => {
-    
+
       let model: any = {};
       model = data;
       this.viewModel = model;
@@ -823,7 +859,7 @@ export class TrackingStatusComponent implements OnInit {
     this.isTimeSheetPage = false;
     // this.read();
 
-    window.scroll(0,0);
+    window.scroll(0, 0);
     // this.model = {};
     // this.models = [];
     // this.listModel = [];
@@ -985,12 +1021,12 @@ export class TrackingStatusComponent implements OnInit {
     window.open('https://www.google.com/maps/search/?api=1&query=' + arr[0] + '%2C' + arr[1], '_blank');
   }
 
-  timerModel: any = { displayMinute: '15', autoRefresh: false};
+  timerModel: any = { displayMinute: '15', autoRefresh: false };
   displayMinuteTmp: any;
   msSinceEpoch: any;
   timeLater: any;
   showNextTime: any;
- 
+
   autoRefresh() {
     // console.log('autoRefresh', this.timerModel.autoRefresh);
     if (this.timerModel.autoRefresh) {
@@ -1005,13 +1041,13 @@ export class TrackingStatusComponent implements OnInit {
 
       // console.log(this.timerModel.displayMinute + ' minute later Refresh Data Next Time', this.showNextTime);
       // console.log('autoRefresh is true displayMinute', this.timerModel.displayMinute);
-      
+
       GlobalConstants.interValtimer = setInterval(() => {
         let iToday = new Date();
 
         // console.log(moment(iToday).format('YYYY-MM-DD HH:mm:ss'), moment(this.timeLater).format('YYYY-MM-DD HH:mm:ss'));
         if (moment(iToday).format('YYYY-MM-DD HH:mm:ss') == moment(this.timeLater).format('YYYY-MM-DD HH:mm:ss')) {
-          
+
           // Check if timeLater date is greater than time later change endDate.
           if ((moment(this.timeLater).format('YYYYMMDD') > moment(today).format('YYYYMMDD'))) {
             this.criteriaModelStatus.startDate = moment(this.timeLater).format('YYYYMMDD');

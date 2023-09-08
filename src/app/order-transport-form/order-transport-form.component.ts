@@ -9,7 +9,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialog, DriverDialog, JobStatusDialog, BillStatusDialog, RegionDialog, RouteDialog,
   RoutingDialog, ShipToDialog, StatusDialog, SubRoutingDialog, TransportNoDialog, TypeOfWorkDialog,
-  VehicleDialog } from '../dialog/dialog';
+  VehicleDialog, 
+  PrintTransportDialog} from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { Logger } from '../shared/logger.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
@@ -1532,6 +1533,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
             this.toastr.success("สร้างงานขนส่งเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
             this.id = this.criteriaModel.TransportNo;
             this.read();
+
+            if (this.criteriaModel.TransportTypeDescription == 'x-dock')
+            {
+              //print
+              this.printAlert(model);
+            }
             // this.listModel = model.Data;
             // this.router.navigate(['order-transport']);
           } else {
@@ -1555,6 +1562,59 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       this.spinner.hide();
       this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
     });
+  }
+
+  printAlert(param) {
+
+    debugger
+    let criteria = {
+      "TransportNo": param.TransportNo
+    }
+    criteria = {...this.criteria, ...criteria};
+
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+        this.spinner.hide();
+
+        let model: any = data;
+        this.viewModel = model;
+        if (model.Status) {
+
+          debugger
+          param.items = model.Data
+          // this.listModel = model.Data;
+
+          // model.Data.forEach(element => {
+          //   element.OrderEstimateStr = this.verifyDate(element.OrderEstimate);
+          //   element.InvoiceDateStr = this.verifyDate(element.InvoiceDate);
+          // });
+
+          const dialogRef = this.dialog.open(PrintTransportDialog, { disableClose: false, height: '160px', width: '300px', data: param });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+            if (result) {
+              // this.confirm();
+            }
+            else {
+              return;
+            }
+          });
+        } else {
+          this.spinner.hide();
+          // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
+        this.spinner.hide();
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
+
+
+    // if (this.criteriaModel.ReturnNo == '') {
+
+    // }
+    // else {
+    //   // this.confirm();
+    // }
   }
 
   close() {

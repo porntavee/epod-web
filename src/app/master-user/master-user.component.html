@@ -261,12 +261,12 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col l4 s12 p-0 mtm-20">
-                    <citxt (cModel)="headerModel.HubDescription = $event" [label]="'HUB'" [data]="headerModel.HubDescription" [readonly]="true" (click)="chooseTransportShipTo()">
+                <div class="col l4 s12 p-0 mtm-20" (click)="chooseTransportShipTo()">
+                    <citxt (cModel)="headerModel.HubDescription = $event" [label]="'HUB'" [data]="headerModel.HubDescription" [readonly]="true">
                     </citxt>
                 </div>
-                <div class="col l4 s12 p-0 mtm-20">
-                    <citxt (cModel)="headerModel.TransportDescription = $event" [label]="'บริษัทขนส่ง'" [data]="headerModel.TransportDescription" [readonly]="true" (click)="chooseTransport()">
+                <div class="col l4 s12 p-0 mtm-20" (click)="chooseTransport()">
+                    <citxt (cModel)="headerModel.TransportDescription = $event" [label]="'บริษัทขนส่ง'" [data]="headerModel.TransportDescription" [readonly]="true">
                     </citxt>
                 </div>
             </div>
