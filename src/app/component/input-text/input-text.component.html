@@ -3,25 +3,13 @@
 </div>
 <div class="col l8 s8 p-0 pl-2" *ngIf="!readonly">
     <div class="input-field">
-        <input class="validate input-not-readonly {{class}}"
-            [(ngModel)]="data"
-            (ngModelChange)="emit($event)"
-            name="data"
-            id="data" 
-            type="{{type}}"
-            [disabled]="readonly">
+        <input class="validate input-not-readonly {{class}}" [(ngModel)]="data" (ngModelChange)="emit($event)" name="data" id="data" type="{{type}}" [readonly]="readonly">
         <!-- <label for="data" [ngClass]="{ 'active': data != '' }">{{label}}</label> -->
     </div>
 </div>
 <div class="col l8 s8 p-0 pl-2" *ngIf="readonly">
     <div class="input-field">
-        <input class="validate input-readonly {{class}}"
-            [(ngModel)]="data" 
-            (ngModelChange)="emit($event)" 
-            name="data" 
-            id="data" 
-            type="{{type}}" 
-            [disabled]="readonly">
+        <input class="validate input-readonly {{class}}" [(ngModel)]="data" (ngModelChange)="emit($event)" name="data" id="data" type="{{type}}" [readonly]="readonly">
         <!-- <label for="data" [ngClass]="{ 'active': data != '' }">{{label}}</label> -->
     </div>
 </div>

@@ -11,7 +11,7 @@
             <ccb *ngIf="!data.IsHub" (cModel)="criteriaModel.IsHub = $event" [label]="'HUB'" [data]="criteriaModel.IsHub"></ccb>
         </div>
         <div class="col l4">
-
+            <cbtnl [label]="'Clear'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
         </div>
         <div class="col l3 s12 p-0">
             <cbtnl [label]="'Find'" [color]="'blue'" [icon]="'search'" (click)="read()"></cbtnl>

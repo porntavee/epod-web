@@ -264,6 +264,10 @@ export class RouteDialog implements AfterContentChecked {
             this.data.listData = this.data.listDataSearch
     }
 
+    clear() {
+        this.dialogRef.close({Id:'', Code:'', Description: ''});
+    }
+
     cancel() {
         this.dialogRef.close(undefined);
     }
@@ -452,6 +456,10 @@ export class ShipToDialog implements AfterContentChecked {
         }, err => {
             this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
         });
+    }
+
+    clear() {
+        this.dialogRef.close({Id: '', Code: '', CustomerName: ''});
     }
 
     filter() {
