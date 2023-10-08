@@ -98,6 +98,8 @@ export class OrderComponent implements OnInit, AfterContentChecked {
       // Logger.info('master-order', 'render', _criteria, this.isDebugMode)
       this.spinner.hide();
 
+      debugger
+
       let model: any = data;
       this.viewModel = model;
       if (model.Status) {

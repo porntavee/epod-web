@@ -140,20 +140,50 @@ export class ReturnDocumentComponent implements OnInit {
       model = data;
       this.viewModel = model;
 
+      debugger
+
       if (model.Status) {
 
-        model.Data.forEach(element => {
+        if (model.Data.length == 0)
+        {
 
-          let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
+          let criteria: any = {};
+          criteria.userinformation = this.serviceProviderService.userinformation;
+          criteria.OrderNo = this.criteriaModel.DocNo;
+      
+          this.serviceProviderService.post('api/Transport/GetOrder', criteria).subscribe(data => {
+            this.spinner.hide();
+            let model: any = {};
+            model = data;
+            this.viewModel = model;
+      
+            debugger
+      
+            if (model.Status) {
+              alert('เอกสารนี้สถานะ : ' + model.Data[0].OrderStatusDesc);
+            }
+          
+          }, err => {
+            this.spinner.hide();
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          });
 
-          if (dup.length == 0) {
-            element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
-            element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
-            this.listModel.push(element);
-          }
+        
+        }
+        else
+        {
+          model.Data.forEach(element => {
 
-        });
-
+            let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
+  
+            if (dup.length == 0) {
+              element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
+              element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
+              this.listModel.push(element);
+            }
+  
+          });
+        }
 
         this.criteriaModel.InvoiceNo = '';
         this.criteriaModel.DocNo = '';

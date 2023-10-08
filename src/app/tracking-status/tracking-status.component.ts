@@ -314,6 +314,12 @@ export class TrackingStatusComponent implements OnInit {
             element.DeliveryCheckOutDate.substr(0, 4)
             : element.DeliveryCheckOutDate ?? "";
 
+
+            element.AdminReturnDate =
+            element.AdminReturnDate != null
+              ? element.AdminReturnDate.substr(11, 8)
+              : element.AdminReturnDate ?? "";
+
         });
 
         this.viewModel2 = model.Data;
