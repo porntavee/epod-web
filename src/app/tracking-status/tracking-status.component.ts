@@ -315,10 +315,15 @@ export class TrackingStatusComponent implements OnInit {
             : element.DeliveryCheckOutDate ?? "";
 
 
-            element.AdminReturnDate =
-            element.AdminReturnDate != null
-              ? element.AdminReturnDate.substr(11, 8)
-              : element.AdminReturnDate ?? "";
+            element.AdminReturnDate = element.AdminReturnDate != null
+            ? element.AdminReturnDate.substr(8, 2) +
+            "-" +
+            element.AdminReturnDate.substr(5, 2) +
+            "-" +
+            element.AdminReturnDate.substr(0, 4)
+            : element.AdminReturnDate ?? "";
+
+
 
         });
 
