@@ -75,8 +75,6 @@ export class ReturnDocumentComponent implements OnInit {
         return;
       }
 
-      debugger
-
       if (this.criteriaModel.InvoiceNo != '' && this.criteriaModel.InvoiceNo != undefined)
         this.criteriaModel.InvoiceNo = this.criteriaModel.InvoiceNo.substring(2, this.criteriaModel.InvoiceNo.length - 1);
 
@@ -144,50 +142,59 @@ export class ReturnDocumentComponent implements OnInit {
 
       if (model.Status) {
 
-        if (model.Data.length == 0)
-        {
+        if (model.Data.length == 0) {
 
           let criteria: any = {};
           criteria.userinformation = this.serviceProviderService.userinformation;
           criteria.OrderNo = this.criteriaModel.DocNo;
-      
-          this.serviceProviderService.post('api/Transport/GetOrder', criteria).subscribe(data => {
+          criteria.TransportNo = this.criteriaModel.TransportNo;
+
+          this.serviceProviderService.post('api/Transport/GetTransportHeader', criteria).subscribe(data => {
             this.spinner.hide();
             let model: any = {};
             model = data;
             this.viewModel = model;
-      
+
             debugger
-      
+
             if (model.Status) {
-              alert('เอกสารนี้สถานะ : ' + model.Data[0].OrderStatusDesc);
+              alert('ไม่สามารถทำการคืนเอกสารได้ เนื่องจากสถานะ : ' + model.Data[0].TransportStatusDesc);
             }
-          
+
+            this.criteriaModel.InvoiceNo = '';
+            this.criteriaModel.DocNo = '';
+            this.criteriaModel.TransportNo = '';
+
           }, err => {
             this.spinner.hide();
             this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+
+            this.criteriaModel.InvoiceNo = '';
+            this.criteriaModel.DocNo = '';
+            this.criteriaModel.TransportNo = '';
           });
 
-        
+
         }
-        else
-        {
+        else {
           model.Data.forEach(element => {
 
             let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
-  
+
             if (dup.length == 0) {
               element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
               element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
               this.listModel.push(element);
             }
-  
+
           });
+
+          this.criteriaModel.InvoiceNo = '';
+          this.criteriaModel.DocNo = '';
+          this.criteriaModel.TransportNo = '';
         }
 
-        this.criteriaModel.InvoiceNo = '';
-        this.criteriaModel.DocNo = '';
-        this.criteriaModel.TransportNo = '';
+
       }
       else {
         // this.listModel = [];
