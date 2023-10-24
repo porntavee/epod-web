@@ -1355,6 +1355,8 @@ export class PrintTransportDialog {
             const date = new Date();
             this.printDate = moment(date.setDate(date.getDate())).format('DD-MM-YYYY');
 
+            this.data.printDate = this.printDate;
+
         // this.calPage = Math.ceil(data.List.length / 20);
 
         // let x: any = [];
@@ -1394,6 +1396,10 @@ export class PrintTransportDialog {
 
     }
 
+    printx() {
+        window.print();
+    }
+
     checkLastPage() {
         return false;
     }
@@ -1403,7 +1409,8 @@ export class PrintTransportDialog {
     }
 
     ok() {
-        this.dialogRef.close(true);
+        debugger
+        this.dialogRef.close(this.data);
     }
 }
 

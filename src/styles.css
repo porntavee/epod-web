@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+
 /* * {
     font-family: Arial, sans-serif;
     font-size: 1rem;
@@ -7,182 +8,186 @@
 
 html,
 body {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  font-size: 12px !important;
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: #ff7514;
+    font-size: 12px !important;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background: #ff7514;
 }
 
 span {
-  font-size: 12px !important;
+    font-size: 12px !important;
 }
 
 a {
-  font-size: 12px !important;
+    font-size: 12px !important;
 }
 
 label {
-  font-size: 12px !important;
+    font-size: 12px !important;
 }
 
 input {
-  font-size: 12px !important;
-  color: #9e9e9e !important;
+    font-size: 12px !important;
+    color: #9e9e9e !important;
 }
+
 
 /* .btn { padding: 0 1rem !important; } */
 
 table.bordered th,
 table.bordered td {
-  height: 50px;
-  padding: 5px !important;
-  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    height: 50px;
+    padding: 5px !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
 
 td,
 th {
-  display: table-cell;
-  padding: 5px 5px;
-  text-align: left;
-  vertical-align: middle;
-  border-radius: 2px;
+    display: table-cell;
+    padding: 5px 5px;
+    text-align: left;
+    vertical-align: middle;
+    border-radius: 2px;
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
 
 .mat-calendar-content {
-  padding: 0 18px 8px 18px !important;
-  outline: none !important;
+    padding: 0 18px 8px 18px !important;
+    outline: none !important;
 }
 
 .center {
-  text-align: center;
-  border: 3px solid green;
-  width: 30px;
+    text-align: center;
+    border: 3px solid green;
+    width: 30px;
 }
 
 .w10 {
-  text-align: center;
-  width: 10px;
+    text-align: center;
+    width: 10px;
 }
 
 .w20 {
-  text-align: center;
-  width: 20px;
+    text-align: center;
+    width: 20px;
 }
 
 .w30 {
-  text-align: center;
-  width: 30px;
+    text-align: center;
+    width: 30px;
 }
 
 .w50 {
-  text-align: center;
-  width: 50px;
+    text-align: center;
+    width: 50px;
 }
 
 .w75 {
-  text-align: center;
-  width: 75px;
+    text-align: center;
+    width: 75px;
 }
 
 .w100 {
-  text-align: center;
-  width: 100px;
+    text-align: center;
+    width: 100px;
 }
 
 .w150 {
-  text-align: center;
-  width: 150px;
+    text-align: center;
+    width: 150px;
 }
 
 .w200 {
-  text-align: center;
-  width: 200px;
+    text-align: center;
+    width: 200px;
 }
 
 .w250 {
-  text-align: center;
-  width: 250px;
+    text-align: center;
+    width: 250px;
 }
 
 .w300 {
-  text-align: center;
-  width: 300px;
+    text-align: center;
+    width: 300px;
 }
 
 .w350 {
-  text-align: center;
-  width: 350px;
+    text-align: center;
+    width: 350px;
 }
 
 .w400 {
-  text-align: center;
-  width: 400px;
+    text-align: center;
+    width: 400px;
 }
 
 .w450 {
-  text-align: center;
-  width: 450px;
+    text-align: center;
+    width: 450px;
 }
 
 .w600 {
-  text-align: center;
-  width: 600px;
+    text-align: center;
+    width: 600px;
 }
 
 .w1000 {
-  text-align: center;
-  width: 1000px;
+    text-align: center;
+    width: 1000px;
 }
 
 p {
-  margin: 0px 0px !important;
+    margin: 0px 0px !important;
 }
 
 .cut-text {
-  white-space: nowrap;
-  width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px 0px !important;
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0px 0px !important;
 }
 
 .header-icon {
-  position: relative;
-  float: left;
-  font-size: 2.5em !important;
+    position: relative;
+    float: left;
+    font-size: 2.5em !important;
 }
+
 
 /* DDPM */
 
 .background-sidebar {
-  background: #4dace4 !important;
+    background: #4dace4 !important;
 }
 
 .background-header {
-  background: linear-gradient(45deg, #4dace4, #4dace4) !important;
+    background: linear-gradient(45deg, #4dace4, #4dace4) !important;
 }
 
 .background-footer {
-  background: linear-gradient(45deg, #4dace4, #4dace4) !important;
+    background: linear-gradient(45deg, #4dace4, #4dace4) !important;
 }
 
 .sidenav li a.active {
-  margin: 0;
-  color: #fff;
-  background: linear-gradient(45deg, #4dace4, #4dace4) !important;
-  /* box-shadow: 3px 3px 20px 0 rgba(255, 110, 64, .5); */
-  box-shadow: 3px 3px 20px 0 rgba(105, 105, 105, 0.5) !important;
+    margin: 0;
+    color: #fff;
+    background: linear-gradient(45deg, #4dace4, #4dace4) !important;
+    /* box-shadow: 3px 3px 20px 0 rgba(255, 110, 64, .5); */
+    box-shadow: 3px 3px 20px 0 rgba(105, 105, 105, 0.5) !important;
 }
 
+
 /* DOPA */
+
 
 /* .background-sidebar {
     background: #04385D !important;
@@ -201,422 +206,436 @@ p {
 } */
 
 .ct-menu-btn {
-  padding-left: 40px !important;
+    padding-left: 40px !important;
 }
 
 .card-panel-header {
-  background-color: lavender;
-  /* margin: .5rem 0 1rem 0; */
-  padding: 10px;
-  transition: box-shadow 0.25s;
-  border-radius: 2px;
-  margin-bottom: 0px;
-  vertical-align: text-top;
-  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
-    0 1px 5px 0 rgb(0 0 0 / 20%);
+    background-color: lavender;
+    /* margin: .5rem 0 1rem 0; */
+    padding: 10px;
+    transition: box-shadow 0.25s;
+    border-radius: 2px;
+    margin-bottom: 0px;
+    vertical-align: text-top;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
 
 .card-panel-header span {
-  /* position: relative; 
+    /* position: relative; 
     float:left;  */
-  font-size: 1em;
-  padding-left: 10px;
-  padding-top: 10px;
+    font-size: 1em;
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
 .card-panel-body {
-  background-color: #fff;
-  /* margin: .5rem 0 1rem 0; */
-  padding: 10px;
-  transition: box-shadow 0.25s;
-  border-radius: 2px;
-  margin-bottom: 0px;
-  vertical-align: text-top;
-  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
-    0 1px 5px 0 rgb(0 0 0 / 20%);
+    background-color: #fff;
+    /* margin: .5rem 0 1rem 0; */
+    padding: 10px;
+    transition: box-shadow 0.25s;
+    border-radius: 2px;
+    margin-bottom: 0px;
+    vertical-align: text-top;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
+
 
 /* ------------Start Tracking Status--------- */
 
 .wait-driver-license {
-  height: 120px !important;
-  margin-right: 10px !important;
-  margin-left: 10px !important;
-  background-color: #b6b6b6 !important;
+    height: 120px !important;
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+    background-color: #b6b6b6 !important;
 }
 
 .pending-approval,
 .wait-driver-receiving {
-  height: 120px !important;
-  margin-right: 10px !important;
-  background-color: #b6b6b6 !important;
+    height: 120px !important;
+    margin-right: 10px !important;
+    background-color: #b6b6b6 !important;
 }
 
 .during-receiving {
-  height: 120px !important;
-  margin-right: 10px !important;
-  background-color: #e7e884 !important;
+    height: 120px !important;
+    margin-right: 10px !important;
+    background-color: #e7e884 !important;
 }
 
 .fs-20-w-700 {
-  font-size: 20px !important;
-  font-weight: 700 !important;
+    font-size: 20px !important;
+    font-weight: 700 !important;
 }
 
 .p-10 img {
-  margin: 5px;
-  padding: 10px !important;
-  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    margin: 5px;
+    padding: 10px !important;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
 
 .padding-right-20 {
-  padding-right: 20px !important;
+    padding-right: 20px !important;
 }
+
 
 /* -------------End Tracking Status---------- */
 
 .material-icons {
-  font-family: "Material Icons";
+    font-family: "Material Icons";
 }
 
 .-mt15 {
-  margin-top: -15px !important;
+    margin-top: -15px !important;
 }
 
 .text-right {
-  text-align: right;
+    text-align: right;
 }
 
 .text-center {
-  text-align: center;
+    text-align: center;
 }
+
 
 /* OHM css Clean code. */
 
 .card-panel-header,
 .table-panel-header {
-  padding: 2px !important;
-  margin-bottom: 0px !important;
-  background-color: lavender !important;
-  vertical-align: text-top !important;
+    padding: 2px !important;
+    margin-bottom: 0px !important;
+    background-color: lavender !important;
+    vertical-align: text-top !important;
 }
 
 .card-panel-header-span,
 .table-panel-header-span {
-  position: relative !important;
-  float: left !important;
-  font-size: 1em !important;
-  font-weight: 800;
-  color: #6b6f82 !important;
-  padding-left: 20px !important;
-  padding-top: 10px !important;
-  margin-bottom: 5px !important;
+    position: relative !important;
+    float: left !important;
+    font-size: 1em !important;
+    font-weight: 800;
+    color: #6b6f82 !important;
+    padding-left: 20px !important;
+    padding-top: 10px !important;
+    margin-bottom: 5px !important;
 }
 
 .overflow-x {
-  overflow-x: auto !important;
+    overflow-x: auto !important;
 }
 
 .cursor-pointer {
-  cursor: pointer !important;
+    cursor: pointer !important;
 }
 
 .reset-padding {
-  padding: 0px !important;
+    padding: 0px !important;
 }
 
 .pl-20px {
-  padding-left: 20px !important;
+    padding-left: 20px !important;
 }
 
 .mb-5px {
-  margin-bottom: 5px !important;
+    margin-bottom: 5px !important;
 }
 
 .mt-0px {
-  margin-top: 0px !important;
+    margin-top: 0px !important;
 }
 
 .pl-5px {
-  padding-left: 5px !important;
+    padding-left: 5px !important;
 }
 
 .mt-10px {
-  margin-top: 10px !important;
+    margin-top: 10px !important;
 }
 
 .mtm-10 {
-  margin-top: -10px !important;
+    margin-top: -10px !important;
 }
 
 .mtm-20 {
-  margin-top: -20px !important;
+    margin-top: -20px !important;
 }
 
 .mtm-30 {
-  margin-top: -30px !important;
+    margin-top: -30px !important;
 }
 
 .ml-85 {
-  margin-left: 85px !important;
+    margin-left: 85px !important;
 }
 
 .ml-130 {
-  margin-left: 130px !important;
+    margin-left: 130px !important;
 }
 
 .ml-225 {
-  margin-left: 225px !important;
+    margin-left: 225px !important;
 }
 
 .min-width-20 {
-  min-width: 20px !important;
+    min-width: 20px !important;
 }
 
 .min-width-30 {
-  min-width: 30px !important;
+    min-width: 30px !important;
 }
 
 .min-width-40 {
-  min-width: 40px !important;
+    min-width: 40px !important;
 }
 
 .min-width-60 {
-  min-width: 30px !important;
+    min-width: 30px !important;
 }
 
 .min-width-100 {
-  min-width: 100px !important;
+    min-width: 100px !important;
 }
 
 .min-width-120 {
-  min-width: 120px !important;
+    min-width: 120px !important;
 }
 
 .min-width-150 {
-  min-width: 150px !important;
+    min-width: 150px !important;
 }
 
 .min-width-200 {
-  min-width: 200px !important;
+    min-width: 200px !important;
 }
 
 .min-width-280 {
-  min-width: 280px !important;
+    min-width: 280px !important;
 }
 
 .min-width-250 {
-  min-width: 250px !important;
+    min-width: 250px !important;
 }
 
 .min-width-300 {
-  min-width: 300px !important;
+    min-width: 300px !important;
 }
 
 .min-width-400 {
-  min-width: 400px !important;
+    min-width: 400px !important;
 }
 
 .min-width-500 {
-  min-width: 500px !important;
+    min-width: 500px !important;
 }
 
 .min-width-600 {
-  min-width: 600px !important;
+    min-width: 600px !important;
 }
 
 .min-width-800 {
-  min-width: 600px !important;
+    min-width: 600px !important;
 }
 
 .custom-button {
-  margin-right: 10px !important;
-  margin-bottom: 7px !important;
+    margin-right: 10px !important;
+    margin-bottom: 7px !important;
 }
 
 .custom-button-icon {
-  position: relative !important;
-  float: left !important;
-  font-size: 1.5em !important;
-  margin-right: 5px !important;
+    position: relative !important;
+    float: left !important;
+    font-size: 1.5em !important;
+    margin-right: 5px !important;
 }
 
 .mat-typography h2.login {
-  margin: 0px !important;
+    margin: 0px !important;
 }
 
 .ml-4.version-span {
-  position: relative !important;
-  font-weight: 600 !important;
-  font-size: 16px !important;
-  margin-left: -10px !important;
-  font-size: 1.4em !important;
-  text-shadow: 2px 2px white, 1px 1px #333;
+    position: relative !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    margin-left: -10px !important;
+    font-size: 1.4em !important;
+    text-shadow: 2px 2px white, 1px 1px #333;
 }
 
 .status-color-C {
-  background-color: #e16e5b;
+    background-color: #e16e5b;
 }
 
 .status-color-D,
 .status-color-L {
-  background-color: #f7e884;
+    background-color: #f7e884;
 }
 
 .status-color-O {
-  background-color: #b6b6b6;
+    background-color: #b6b6b6;
 }
 
 .status-color-P,
 .status-color-R {
-  background-color: #79d58b;
+    background-color: #79d58b;
 }
 
 .status-color-S,
 .status-color-H {
-  background-color: #66a5d9;
+    background-color: #66a5d9;
 }
 
 .status-color-W {
-  background-color: #b6b6b6;
+    background-color: #b6b6b6;
 }
 
 .status-color-F {
-  background-color: #ebb146;
+    background-color: #ebb146;
 }
 
 .status-color-M {
-  background-color: #ff9800;
+    background-color: #ff9800;
 }
 
 .status-box {
-  height: 42px !important;
-  padding-top: 10px !important;
+    height: 42px !important;
+    padding-top: 10px !important;
 }
+
 
 /* show scrollbar always */
 
 ::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 7px;
+    -webkit-appearance: none;
+    width: 7px;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .filter-fixed-top {
-  position: fixed;
-  z-index: 997;
-  top: 84px;
-  width: 85% !important;
+    position: fixed;
+    z-index: 997;
+    top: 84px;
+    width: 85% !important;
 }
 
 @media (min-width: 768px) {
-  .filter-fixed-top {
-    width: 70% !important;
-  }
+    .filter-fixed-top {
+        width: 70% !important;
+    }
 }
 
 @media (min-width: 992px) {
-  .filter-fixed-top {
-    width: 70% !important;
-  }
+    .filter-fixed-top {
+        width: 70% !important;
+    }
 }
 
 @media (min-width: 1200px) {
-  .filter-fixed-top {
-    width: 78% !important;
-  }
+    .filter-fixed-top {
+        width: 78% !important;
+    }
 }
 
 @media (min-width: 1400px) {
-  .filter-fixed-top {
-    width: 82% !important;
-  }
+    .filter-fixed-top {
+        width: 82% !important;
+    }
 }
 
 @media (min-width: 1600px) {
-  .filter-fixed-top {
-    width: 84% !important;
-  }
+    .filter-fixed-top {
+        width: 84% !important;
+    }
 }
 
 @media (min-width: 1900px) {
-  .filter-fixed-top {
-    width: 86% !important;
-  }
+    .filter-fixed-top {
+        width: 86% !important;
+    }
 }
 
 @media (min-width: 2200px) {
-  .filter-fixed-top {
-    width: 88% !important;
-  }
+    .filter-fixed-top {
+        width: 88% !important;
+    }
 }
 
 .dfix {
-  line-height: 40px;
-  background-color: #f2f4f8;
-  position: fixed;
-  z-index: 990;
-  top: 60px;
+    line-height: 40px;
+    background-color: #f2f4f8;
+    position: fixed;
+    z-index: 990;
+    top: 60px;
 }
 
 .ms-1 {
-  margin-left: 1rem !important;
+    margin-left: 1rem !important;
 }
 
 .ms-2 {
-  margin-left: 2rem !important;
+    margin-left: 2rem !important;
 }
 
 .top-485 {
-  position: relative;
-  margin-top: 465px !important;
+    position: relative;
+    margin-top: 465px !important;
 }
 
 .top-280 {
-  position: relative;
-  margin-top: 280px !important;
+    position: relative;
+    margin-top: 280px !important;
 }
 
 .top-290 {
-  position: relative;
-  margin-top: 290px !important;
+    position: relative;
+    margin-top: 290px !important;
 }
 
 .top-310 {
-  position: relative;
-  margin-top: 310px !important;
+    position: relative;
+    margin-top: 310px !important;
 }
 
 .dialog-min-max-height {
-  min-height: 300px !important;
-  max-height: 200px !important;
+    min-height: 300px !important;
+    max-height: 200px !important;
 }
 
 .dialog-position {
-  position: sticky !important;
-  top: 0 !important;
-  background-color: white;
-  z-index: 999;
+    position: sticky !important;
+    top: 0 !important;
+    background-color: white;
+    z-index: 999;
 }
 
 .freez-table {
-  text-align: left;
-  position: relative;
+    text-align: left;
+    position: relative;
 }
 
 .freez-th {
-  background: white;
-  position: sticky;
-  top: 0;
-  z-index: 999;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 999;
 }
 
 #managerTable {
-  max-height: 500px;
-  overflow: auto;
+    max-height: 500px;
+    overflow: auto;
+}
+
+@media print {
+    table {
+        border: solid #000 !important;
+        border-width: 1px 0 0 1px !important;
+    }
+    th,
+    td {
+        border: solid #000 !important;
+        border-width: 0 1px 1px 0 !important;
+    }
 }

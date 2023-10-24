@@ -7,10 +7,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, DriverDialog, JobStatusDialog, BillStatusDialog, RegionDialog, RouteDialog,
+import {
+  ConfirmDialog, DriverDialog, JobStatusDialog, BillStatusDialog, RegionDialog, RouteDialog,
   RoutingDialog, ShipToDialog, StatusDialog, SubRoutingDialog, TransportNoDialog, TypeOfWorkDialog,
-  VehicleDialog, 
-  PrintTransportDialog} from '../dialog/dialog';
+  VehicleDialog,
+  PrintTransportDialog
+} from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { Logger } from '../shared/logger.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
@@ -53,7 +55,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   formModel: any = {};
   listFormModel: any = [];
   listFormModelTmp: any = [];
-  tmpChecked : any = [];
+  tmpChecked: any = [];
 
   itemSelected = false;
   id: any = '';
@@ -77,11 +79,11 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       this.id = model.id;
     });
 
-    this.criteria =  {
-      "userinformation": this.serviceProviderService.userinformation 
+    this.criteria = {
+      "userinformation": this.serviceProviderService.userinformation
     }
 
-    
+
 
     const date = new Date();
     this.criteriaModel.TransportDateString = moment(date.setDate(date.getDate())).format('YYYYMMDD');
@@ -106,82 +108,82 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     // Setting header model.
     for (const key in model) {
       this.criteriaModel[key] = model[key];
-    } 
+    }
   }
 
   viewModel: any;
   read() {
     this.spinner.show();
-    
+
     let criteria = {
       "TransportNo": this.id
     }
-    criteria = {...this.criteria, ...criteria};
+    criteria = { ...this.criteria, ...criteria };
 
     console.log('criteria', criteria);
 
     this.serviceProviderService.post('api/Transport/GetTransportHeader', criteria)
-    .subscribe(data => {
-      this.spinner.hide();
-
-      let model: any = data;
-      this.viewModel = model;
-      if (model.Status) {
-        this.showChooseHub = (model.Data[0].TransportTypeId == 'NM' 
-          // || model.Data[0].TransportTypeId == 'OT' 
-          || model.Data[0].TransportTypeId == 'SP'
-          || model.Data[0].TransportTypeId == 'SV') ? false : true;
-        this.criteriaModel = model.Data[0];
-        let criteria = {
-          OrderStatus: model.Data[0].StatusCode,
-          TransportDescription: model.Data[0].Transport,
-          ReceiveFromDescription: model.Data[0].ReceiveFromName,
-          RouteDescription: model.Data[0].Route,
-          TransportTypeDescription: model.Data[0].TransportType,
-          SubRouteDescription: model.Data[0].SubRoute,
-          TransportShiptoDescription: model.Data[0].TransportShitptoName,
-          DriverDescription: model.Data[0].DriverFirstName,
-          Plant: model.Data[0].Plant,
-          TransportShiptoAddress: model.Data[0].TransportShitptoAddress,
-          VehicleDescription: model.Data[0].Vehicle,
-          VehicleTypeDescription: model.Data[0].VehicleType,
-          TransportDateString: moment(model.Data[0].TransportDate).format('YYYYMMDD')
-        }
-        this.criteriaModel = {...this.criteriaModel, ...criteria};
-      } else {
+      .subscribe(data => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
 
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        let model: any = data;
+        this.viewModel = model;
+        if (model.Status) {
+          this.showChooseHub = (model.Data[0].TransportTypeId == 'NM'
+            // || model.Data[0].TransportTypeId == 'OT' 
+            || model.Data[0].TransportTypeId == 'SP'
+            || model.Data[0].TransportTypeId == 'SV') ? false : true;
+          this.criteriaModel = model.Data[0];
+          let criteria = {
+            OrderStatus: model.Data[0].StatusCode,
+            TransportDescription: model.Data[0].Transport,
+            ReceiveFromDescription: model.Data[0].ReceiveFromName,
+            RouteDescription: model.Data[0].Route,
+            TransportTypeDescription: model.Data[0].TransportType,
+            SubRouteDescription: model.Data[0].SubRoute,
+            TransportShiptoDescription: model.Data[0].TransportShitptoName,
+            DriverDescription: model.Data[0].DriverFirstName,
+            Plant: model.Data[0].Plant,
+            TransportShiptoAddress: model.Data[0].TransportShitptoAddress,
+            VehicleDescription: model.Data[0].Vehicle,
+            VehicleTypeDescription: model.Data[0].VehicleType,
+            TransportDateString: moment(model.Data[0].TransportDate).format('YYYYMMDD')
+          }
+          this.criteriaModel = { ...this.criteriaModel, ...criteria };
+        } else {
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
+        this.spinner.hide();
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
 
     debugger
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria)
-    .subscribe(data => {
-      this.spinner.hide();
-
-      let model: any = data;
-      this.viewModel = model;
-      if (model.Status) {
-
-        this.listModel = model.Data;
-
-        model.Data.forEach(element => {
-          element.OrderEstimateStr = this.verifyDate(element.OrderEstimate);
-          element.InvoiceDateStr = this.verifyDate(element.InvoiceDate);
-        });
-      } else {
+      .subscribe(data => {
         this.spinner.hide();
-        // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
 
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        let model: any = data;
+        this.viewModel = model;
+        if (model.Status) {
+
+          this.listModel = model.Data;
+
+          model.Data.forEach(element => {
+            element.OrderEstimateStr = this.verifyDate(element.OrderEstimate);
+            element.InvoiceDateStr = this.verifyDate(element.InvoiceDate);
+          });
+        } else {
+          this.spinner.hide();
+          // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
+        this.spinner.hide();
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   //use
@@ -189,24 +191,24 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     let criteria = {
       "Code": ""
     }
-    criteria = {...this.criteria, ...criteria};
+    criteria = { ...this.criteria, ...criteria };
 
     // let json = JSON.stringify(criteria);
     this.serviceProviderService.post('api/Masters/GetTransport', criteria)
-    .subscribe(data => {
-      let model: any = data;
-      this.viewModel = model;
-      if (model.Status) {
-        this.listTransport = model.Data;
-      } else {
-        this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
+      .subscribe(data => {
+        let model: any = data;
+        this.viewModel = model;
+        if (model.Status) {
+          this.listTransport = model.Data;
+        } else {
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
 
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+      }, err => {
+        this.spinner.hide();
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   //use
@@ -214,25 +216,25 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     let criteria = {
       "Code": ""
     }
-    criteria = {...this.criteria, ...criteria};
+    criteria = { ...this.criteria, ...criteria };
 
     // let json = JSON.stringify(criteria);
     this.serviceProviderService.post('api/Masters/GetRoute', criteria)
-    .subscribe(data => {
-      let model: any = data;
-      this.viewModel = model;
+      .subscribe(data => {
+        let model: any = data;
+        this.viewModel = model;
 
-      if (model.Status) {
-        this.listRoute = model.Data;
-      } else {
+        if (model.Status) {
+          this.listRoute = model.Data;
+        } else {
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   //use
@@ -241,43 +243,44 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       "Code": "",
       "RouteId": this.criteriaModel.routeId,
     }
-    criteria = {...this.criteria, ...criteria};
+    criteria = { ...this.criteria, ...criteria };
 
     // let json = JSON.stringify(criteria);
     this.serviceProviderService.post('api/Masters/GetSubRoute', criteria)
-    .subscribe(data => {
-      let model: any = data;
-      this.viewModel = model;
+      .subscribe(data => {
+        let model: any = data;
+        this.viewModel = model;
 
-      if (model.Status) {
-        this.listSubRoute = model.Data;
+        if (model.Status) {
+          this.listSubRoute = model.Data;
 
-        //ต้องเอาไปใส่ใน app.module ที่ declarations
-        const dialogRef = this.dialog.open(RouteDialog, { 
-          disableClose: false, 
-          height: '400px',
-          width: '800px',
-          data: { title: 'Sub Route', listData: this.listSubRoute, listDataSearch: this.listSubRoute } });
+          //ต้องเอาไปใส่ใน app.module ที่ declarations
+          const dialogRef = this.dialog.open(RouteDialog, {
+            disableClose: false,
+            height: '400px',
+            width: '800px',
+            data: { title: 'Sub Route', listData: this.listSubRoute, listDataSearch: this.listSubRoute }
+          });
 
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
 
-          if (result != undefined) {
-            this.criteriaModel.SubRouteId = result.Id;
-            this.criteriaModel.SubRouteCode = result.Code;
-            this.criteriaModel.SubRouteDescription = result.Code + ' - ' + result.Description;
-          }
-        });
+            if (result != undefined) {
+              this.criteriaModel.SubRouteId = result.Id;
+              this.criteriaModel.SubRouteCode = result.Code;
+              this.criteriaModel.SubRouteDescription = result.Code + ' - ' + result.Description;
+            }
+          });
 
-      } else {
+        } else {
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   //use
@@ -285,60 +288,60 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     let criteria = {
       "Code": ""
     }
-    criteria = {...this.criteria, ...criteria};
+    criteria = { ...this.criteria, ...criteria };
 
     this.serviceProviderService.post('api/Masters/GetVehicleType', criteria)
-    .subscribe(data => {
-      let model: any = data;
-      this.viewModel = model;
-      if (model.Status) {
-        this.listVehicleType = model.Data;
-      } else {
+      .subscribe(data => {
+        let model: any = data;
+        this.viewModel = model;
+        if (model.Status) {
+          this.listVehicleType = model.Data;
+        } else {
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+      }, err => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   readActivityType() {
     this.serviceProviderService.post('api/B1/GetActivityType', this.criteria)
-    .subscribe(data => {
-      let model: any = data;
-      this.viewModel = model;
+      .subscribe(data => {
+        let model: any = data;
+        this.viewModel = model;
 
-      if (model.Status) {
-        this.listActivityType = model.Data;
-      } else {
+        if (model.Status) {
+          this.listActivityType = model.Data;
+        } else {
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   readFinancialProject() {
     this.serviceProviderService.post('api/B1/GetFinancialProject', this.criteria)
-    .subscribe(data => {
-      let model: any = data;
-      this.viewModel = model;
+      .subscribe(data => {
+        let model: any = data;
+        this.viewModel = model;
 
-      if (model.Status) {
-        this.listFinancialProject = model.Data;
-      } else {
+        if (model.Status) {
+          this.listFinancialProject = model.Data;
+        } else {
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   readCostCenter() {
@@ -346,26 +349,26 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     let criteriaEmp = {
       "empID": this.model.UserID
     }
-    criteriaEmp = {...this.criteria, ...criteriaEmp};
+    criteriaEmp = { ...this.criteria, ...criteriaEmp };
 
     this.serviceProviderService.post('api/B1/Employees', criteriaEmp)
-    .subscribe(data => {
-      // this.spinner.hide();
-      let model: any = data;
-      // this.viewModel = model;
-
-      if (model.Status) {
-        this.costCenter = model.Data[0].CostCenter;
-
-      } else {
+      .subscribe(data => {
         // this.spinner.hide();
-        // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
+        let model: any = data;
+        // this.viewModel = model;
 
-    }, err => {
-      // this.spinner.hide();
-      // this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        if (model.Status) {
+          this.costCenter = model.Data[0].CostCenter;
+
+        } else {
+          // this.spinner.hide();
+          // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
+        // this.spinner.hide();
+        // this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   editTimeSheet(param) {
@@ -384,35 +387,35 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       let criteria = {
         "AbsEntry": this.model.AbsEntry,
       }
-      criteria = {...this.criteria, ...criteria};
+      criteria = { ...this.criteria, ...criteria };
 
       this.serviceProviderService.post('api/TimeSheet/GetTimeSheetDetail', criteria)
-      .subscribe(data => {
-        // this.spinner.hide();
-        let model: any = {};
-        model = data;
-        // this.viewModel = model;
+        .subscribe(data => {
+          // this.spinner.hide();
+          let model: any = {};
+          model = data;
+          // this.viewModel = model;
 
-        if (model.Status) {
-          this.models = model.Data;
+          if (model.Status) {
+            this.models = model.Data;
 
-          this.models.forEach(element => {
-            element.ActType = element.ActType.toString();
+            this.models.forEach(element => {
+              element.ActType = element.ActType.toString();
 
-            let endTime = (parseFloat(element.EndTimeText.substr(0, 2)) * 60) + parseFloat(element.EndTimeText.substr(3, 5));
-            let startTime = (parseFloat(element.StartTimeText.substr(0, 2)) * 60) + parseFloat(element.StartTimeText.substr(3, 5));
-            element.U_HMC_Hour = (endTime - startTime) / 60;
-          });
+              let endTime = (parseFloat(element.EndTimeText.substr(0, 2)) * 60) + parseFloat(element.EndTimeText.substr(3, 5));
+              let startTime = (parseFloat(element.StartTimeText.substr(0, 2)) * 60) + parseFloat(element.StartTimeText.substr(3, 5));
+              element.U_HMC_Hour = (endTime - startTime) / 60;
+            });
 
-        } else {
+          } else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+
+        }, err => {
           this.spinner.hide();
-          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        }
-
-      }, err => {
-        this.spinner.hide();
-        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      });
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
     }
 
     this.isMainPage = false;
@@ -474,24 +477,24 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     }
 
     this.serviceProviderService.post('api/TimeSheet/UpdateTimeSheet', criteria)
-    .subscribe(data => {
-      this.spinner.hide();
-      let model: any = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        // this.read();
-        this.backToMain();
-      } else {
+      .subscribe(data => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
+        let model: any = data;
+        this.viewModel = model;
 
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        if (model.Status) {
+          this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          // this.read();
+          this.backToMain();
+        } else {
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
+        this.spinner.hide();
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   delete() {
@@ -550,25 +553,25 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       }
 
       this.serviceProviderService.post('api/TimeSheet/DelTimeSheetLine', criteria)
-      .subscribe(data => {
-        this.spinner.hide();
-        let model: any = {};
-        model = data;
-        this.viewModel = model;
-
-        if (model.Status) {
-          this.editTimeSheet(this.model);
+        .subscribe(data => {
           this.spinner.hide();
-          this.toastr.success('Delete Success.', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        } else {
-          this.spinner.hide();
-          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        }
+          let model: any = {};
+          model = data;
+          this.viewModel = model;
 
-      }, err => {
-        this.spinner.hide();
-        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      });
+          if (model.Status) {
+            this.editTimeSheet(this.model);
+            this.spinner.hide();
+            this.toastr.success('Delete Success.', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          } else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
     }
     else {
       this.models.splice(idx, 1);
@@ -685,15 +688,15 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       param.BillableTmText = moment.utc(billTotalHour * 3600 * 1000).format('HH:mm')
   }
 
-   // Set Header Model.
-   private setFormOrCriteriaModel(model, type): any {
+  // Set Header Model.
+  private setFormOrCriteriaModel(model, type): any {
     // Set model.
     Object.keys(model).forEach((key) => {
-        if (type == 'form') {
-          this.formModel[key] = model[key];;
-        } else {
-          this.criteriaModel[key] = model[key];
-        }
+      if (type == 'form') {
+        this.formModel[key] = model[key];;
+      } else {
+        this.criteriaModel[key] = model[key];
+      }
     });
   }
 
@@ -703,9 +706,10 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'Transport',
+      data: {
+        title: 'Transport',
         listData: this.listTransport,
-        listDataSearch: this.listTransport 
+        listDataSearch: this.listTransport
       }
     });
 
@@ -723,18 +727,18 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.setFormOrCriteriaModel(_formModel, 'form');
         console.log('chooseTransportFilter->', this.formModel);
         // this.formModel = {...this.formModel, ..._formModel};
-        
+
       }
     });
   }
 
-  
+
   chooseHubFilter() {
     const dialogRef = this.dialog.open(ShipToDialog, {
       disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'สถานที่', IsHub :'Y' }
+      data: { title: 'สถานที่', IsHub: 'Y' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -755,7 +759,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'สถานะขนส่ง' } 
+      data: { title: 'สถานะขนส่ง' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -803,7 +807,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     dialogRef.afterClosed().subscribe(result => {
       console.log('chooseShipToFilter', result);
       if (result != undefined) {
-        
+
         this.formModel.ShiptoId = result.Id;
         this.formModel.ShiptoCode = result.Code;
         this.formModel.ShiptoName = result.CustomerName;
@@ -828,11 +832,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   //use
   chooseTransport() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(RouteDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'Transport', listData: this.listTransport, listDataSearch: this.listTransport } });
+      data: { title: 'Transport', listData: this.listTransport, listDataSearch: this.listTransport }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
 
@@ -844,31 +849,32 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     });
   }
 
-    //use
-    chooseTransportNo() {
-      //ต้องเอาไปใส่ใน app.module ที่ declarations
-      const dialogRef = this.dialog.open(TransportNoDialog, { 
-        disableClose: false,
-        height: '400px',
-        width: '800px',
-        data: { title: 'Transport No.' } 
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-  
-        if (result != undefined) {
-          this.criteriaModel.transportNo = result.TransportNo;
-        }
-      });
-    }
-
-  chooseRoute() {
-    const dialogRef = this.dialog.open(RoutingDialog, { 
-      disableClose: false, 
+  //use
+  chooseTransportNo() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(TransportNoDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'เส้นทางหลัก' } });
+      data: { title: 'Transport No.' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result != undefined) {
+        this.criteriaModel.transportNo = result.TransportNo;
+      }
+    });
+  }
+
+  chooseRoute() {
+    const dialogRef = this.dialog.open(RoutingDialog, {
+      disableClose: false,
+      height: '400px',
+      width: '800px',
+      data: { title: 'เส้นทางหลัก' }
+    });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
@@ -889,16 +895,17 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   }
 
   chooseSubRoute() {
-    if(this.criteriaModel.RouteId == '' || this.criteriaModel.RouteId == undefined){
+    if (this.criteriaModel.RouteId == '' || this.criteriaModel.RouteId == undefined) {
       this.toastr.error('กรุณาระบุเส้นทางหลัก', 'แจ้งเตือนระบบ', { timeOut: 5000 });
       return;
     }
 
-    const dialogRef = this.dialog.open(SubRoutingDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(SubRoutingDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'เส้นทางย่อย' ,RouteId : this.criteriaModel.RouteId} });
+      data: { title: 'เส้นทางย่อย', RouteId: this.criteriaModel.RouteId }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -916,11 +923,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   }
 
   chooseRegion() {
-    const dialogRef = this.dialog.open(RegionDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(RegionDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'โซน' } });
+      data: { title: 'โซน' }
+    });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
@@ -939,11 +947,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   //use
   chooseReceiveFrom() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(ShipToDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'สถานที่รับสินค้า', IsHub : false } });
+      data: { title: 'สถานที่รับสินค้า', IsHub: false }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -960,11 +969,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   //use
   chooseTransportShipTo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(ShipToDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'สถานที่ส่งสินค้า / HUB', IsHub : (this.criteriaModel.TransportTypeId == "XD" )} });
+      data: { title: 'สถานที่ส่งสินค้า / HUB', IsHub: (this.criteriaModel.TransportTypeId == "XD") }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -982,11 +992,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   //use
   chooseShipTo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(ShipToDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'Ship to' } });
+      data: { title: 'Ship to' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -1003,11 +1014,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   //use
   chooseTypeOfWork() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TypeOfWorkDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(TypeOfWorkDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'สถานะเอกสาร' } });
+      data: { title: 'สถานะเอกสาร' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       Logger.info('order-transport', 'chooseTypeOfWork-result.Code', result.Code, this.isDebugMode);
@@ -1016,7 +1028,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.criteriaModel.TransportTypeId = result.Code;
         this.criteriaModel.TransportTypeDescription = result.Code + ' - ' + result.Description;
 
-        this.showChooseHub = (result.Code == 'XD' || result.Code == 'OT') ? true : false; 
+        this.showChooseHub = (result.Code == 'XD' || result.Code == 'OT') ? true : false;
       }
     });
   }
@@ -1026,11 +1038,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   //use
   chooseStatus() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(JobStatusDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(JobStatusDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'สถานะเอกสาร' } });
+      data: { title: 'สถานะเอกสาร' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -1045,11 +1058,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   //use
   chooseDriver() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(DriverDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(DriverDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'คนขับ' } });
+      data: { title: 'คนขับ' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -1065,7 +1079,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.criteriaModel.VehicleId = result.VehicleId;
         this.criteriaModel.VehicleCode = result.VehicleCode;
         this.criteriaModel.VehicleDescription = result.Vehicle;
-      
+
         //VehicleType
         this.criteriaModel.VehicleTypeId = result.VehicleTypeId;
         this.criteriaModel.VehicleTypeCode = result.VehicleTypeCode;
@@ -1077,11 +1091,12 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   //use
   chooseVehicle() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(VehicleDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(VehicleDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'ทะเบียนรถ' } });
+      data: { title: 'ทะเบียนรถ' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -1090,7 +1105,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         this.criteriaModel.VehicleId = result.Id;
         this.criteriaModel.VehicleCode = result.Code;
         this.criteriaModel.VehicleDescription = result.Description;
-      
+
         this.criteriaModel.VehicleTypeId = result.VehicleTypeId;
         this.criteriaModel.VehicleTypeCode = result.VehicleTypeCode;
         this.criteriaModel.VehicleTypeDescription = result.VehicleType;
@@ -1101,15 +1116,16 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   //use
   chooseVehicleType() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(RouteDialog, { 
-      disableClose: false, 
+    const dialogRef = this.dialog.open(RouteDialog, {
+      disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'Truck Type', listData: this.listVehicleType, listDataSearch: this.listVehicleType } });
+      data: { title: 'Truck Type', listData: this.listVehicleType, listDataSearch: this.listVehicleType }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      
+
       if (result != undefined) {
 
         this.criteriaModel.VehicleTypeId = result.Id;
@@ -1131,32 +1147,32 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
     // let json = JSON.stringify(criteria);
     this.serviceProviderService.post('api/B1/GetStage', criteria)
-    .subscribe(data => {
-      let model: any = data;
-      this.viewModel = model;
+      .subscribe(data => {
+        let model: any = data;
+        this.viewModel = model;
 
 
-      if (model.Status) {
-        this.listStage = model.Data;
+        if (model.Status) {
+          this.listStage = model.Data;
 
-        // const dialogRef = this.dialog.open(StageDialog, { disableClose: false, height: '400px',width: '800px',data: { title: 'Stage', listData: this.listStage, listDataSearch: this.listStage } });
+          // const dialogRef = this.dialog.open(StageDialog, { disableClose: false, height: '400px',width: '800px',data: { title: 'Stage', listData: this.listStage, listDataSearch: this.listStage } });
 
-        // dialogRef.afterClosed().subscribe(result => {
-        //   console.log(`Dialog result: ${result}`);
+          // dialogRef.afterClosed().subscribe(result => {
+          //   console.log(`Dialog result: ${result}`);
 
-        //   if (result != undefined) {
-        //     param.U_HMC_Stage = result.U_HMC_Stage;
-        //   }
-        // });
-      } else {
+          //   if (result != undefined) {
+          //     param.U_HMC_Stage = result.U_HMC_Stage;
+          //   }
+          // });
+        } else {
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
-
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   reportModel: any = [];
@@ -1172,36 +1188,36 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     let json = JSON.stringify(criteria);
 
     this.serviceProviderService.post('/api/B1/getTimeSheetLog', criteria)
-    .subscribe(data => {
-      this.spinner.hide();
-      let model: any = data;
-      // this.viewModel = model;
-
-      if (model.Status) {
-        // this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        // this.read();
-        this.reportModel = model.Data
-
-
-        // const dialogRef = this.dialog.open(DocLogDialog, { disableClose: false, height: '400px',width: '800px',data: { title: 'Doc Log Report', listData: this.reportModel, listDataSearch: this.reportModel } });
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //   console.log(`Dialog result: ${result}`);
-
-        //   if (result != undefined) {
-        //      this.excelService.exportAsExcelFile(result, 'doc-log-report');
-        //   }
-        // });
-
-      } else {
+      .subscribe(data => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
+        let model: any = data;
+        // this.viewModel = model;
 
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        if (model.Status) {
+          // this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          // this.read();
+          this.reportModel = model.Data
+
+
+          // const dialogRef = this.dialog.open(DocLogDialog, { disableClose: false, height: '400px',width: '800px',data: { title: 'Doc Log Report', listData: this.reportModel, listDataSearch: this.reportModel } });
+
+          // dialogRef.afterClosed().subscribe(result => {
+          //   console.log(`Dialog result: ${result}`);
+
+          //   if (result != undefined) {
+          //      this.excelService.exportAsExcelFile(result, 'doc-log-report');
+          //   }
+          // });
+
+        } else {
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
+        this.spinner.hide();
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
 
 
   }
@@ -1218,34 +1234,35 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
 
     let excelModel = [];
-    excelModel.push({ 
-        'Code': 'First Name', [this.model.Code]: this.model.FirstName, ' ': '',
-        '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '',
-        'Doc Num': 'Date From', [' ' + this.model.DocNum]: moment(this.model.DateFrom).format('DD-MM-YYYY'),
-        '        ': '', '         ': '' 
-      }, { 'Code': 'Last Name', [this.model.Code]: this.model.LastName, ' ': '',
-        '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '',
-        'Doc Num': 'Date To', [' ' + this.model.DocNum]: moment(this.model.DateTo).format('DD-MM-YYYY'),
-        '        ': '', '         ': ''
-      }, {
-        'Code': '', [this.model.Code]: '', ' ': '', '  ': '', '   ': '', '    ': '',
-        '     ': '', '      ': '', '       ': '', 'Doc Num': '', [' ' + this.model.DocNum]: '',
-        '        ': '', '         ': ''
-      }, {
-        'Code': 'Date', [this.model.Code]: 'Start Time', ' ': 'Hour', '  ': 'End Time',
-        '   ': 'Activity Type', '    ': 'Financial Project', '     ': 'Cost Center',
-        '      ': 'Stage', '       ': 'Break', 'Doc Num': 'Nonbillable Time',
-        [' ' + this.model.DocNum]: 'Effective Time', '        ': 'Billable Time',
-        '         ': 'Detail' 
-      });
+    excelModel.push({
+      'Code': 'First Name', [this.model.Code]: this.model.FirstName, ' ': '',
+      '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '',
+      'Doc Num': 'Date From', [' ' + this.model.DocNum]: moment(this.model.DateFrom).format('DD-MM-YYYY'),
+      '        ': '', '         ': ''
+    }, {
+      'Code': 'Last Name', [this.model.Code]: this.model.LastName, ' ': '',
+      '  ': '', '   ': '', '    ': '', '     ': '', '      ': '', '       ': '',
+      'Doc Num': 'Date To', [' ' + this.model.DocNum]: moment(this.model.DateTo).format('DD-MM-YYYY'),
+      '        ': '', '         ': ''
+    }, {
+      'Code': '', [this.model.Code]: '', ' ': '', '  ': '', '   ': '', '    ': '',
+      '     ': '', '      ': '', '       ': '', 'Doc Num': '', [' ' + this.model.DocNum]: '',
+      '        ': '', '         ': ''
+    }, {
+      'Code': 'Date', [this.model.Code]: 'Start Time', ' ': 'Hour', '  ': 'End Time',
+      '   ': 'Activity Type', '    ': 'Financial Project', '     ': 'Cost Center',
+      '      ': 'Stage', '       ': 'Break', 'Doc Num': 'Nonbillable Time',
+      [' ' + this.model.DocNum]: 'Effective Time', '        ': 'Billable Time',
+      '         ': 'Detail'
+    });
 
     this.models.forEach(element => {
-      excelModel.push({ 
-          'Code': element.Date, [this.model.Code]: element.StartTimeText, ' ': element.U_HMC_Hour,
-          '  ': element.EndTimeText, '   ': element.ActType, '    ': element.FiProject, '     ': element.CostCenter,
-          '      ': element.U_HMC_Stage, '       ': element.BreakText,
-          'Doc Num': element.NonBillTmText, [' ' + this.model.DocNum]: element.EffectTmText,
-          '        ': element.BillableTmText, '         ': element.U_HMC_Detail 
+      excelModel.push({
+        'Code': element.Date, [this.model.Code]: element.StartTimeText, ' ': element.U_HMC_Hour,
+        '  ': element.EndTimeText, '   ': element.ActType, '    ': element.FiProject, '     ': element.CostCenter,
+        '      ': element.U_HMC_Stage, '       ': element.BreakText,
+        'Doc Num': element.NonBillTmText, [' ' + this.model.DocNum]: element.EffectTmText,
+        '        ': element.BillableTmText, '         ': element.U_HMC_Detail
       });
     });
     this.excelService.exportAsExcelFile(excelModel, 'timesheet-report');
@@ -1254,9 +1271,9 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   }
 
   add() {
-    if(this.criteriaModel.TransportStatus == 'A' 
-    || this.criteriaModel.TransportStatus == 'O' 
-    || this.criteriaModel.TransportStatus== undefined) {
+    if (this.criteriaModel.TransportStatus == 'A'
+      || this.criteriaModel.TransportStatus == 'O'
+      || this.criteriaModel.TransportStatus == undefined) {
       this.isMainPage = false;
       this.isFormPage = true;
 
@@ -1279,7 +1296,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
         if (dup.length == 0) {
           element.Process = 'CREATE';
-          
+
           this.listModel.push(element);
         }
       }
@@ -1315,19 +1332,19 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         // console.log('criteria', criteria);
         if (criteria.TransportNo != '' && criteria.OrderNo != '') {
           this.serviceProviderService.post('api/Transport/DeleteTransportItem', criteria)
-          .subscribe(data => {
-            this.spinner.hide();
-            let model: any = {};
-            model = data;
-            if (model.Status) {
-              this.toastr.success("ลบรายการเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
-              // this.read();
-            }
+            .subscribe(data => {
+              this.spinner.hide();
+              let model: any = {};
+              model = data;
+              if (model.Status) {
+                this.toastr.success("ลบรายการเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+                // this.read();
+              }
 
-          }, err => {
-            this.spinner.hide();
-            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-          });
+            }, err => {
+              this.spinner.hide();
+              this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            });
         } else {
           this.listFormModel.filter(x => x.OrderNo == this.listModel[idx].OrderNo).forEach(element => {
             element.isSelected = false;
@@ -1345,8 +1362,8 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
   }
 
   clearModel() {
-     // Clear formModel.
-     this.formModel = {
+    // Clear formModel.
+    this.formModel = {
       OrderDateStart: this.verifyDateTime(''),
       OrderDateEnd: this.verifyDateTime(''),
       InvoiceDate: this.verifyDateTime('')
@@ -1367,11 +1384,11 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
   removeObjectElementByKeyValue(arr, InvoiceNo) {
     const objWithIdIndex = arr.findIndex((obj) => obj.InvoiceNo === InvoiceNo);
-  
+
     if (objWithIdIndex > -1) {
       arr.splice(objWithIdIndex, 1);
     }
-  
+
     return arr;
   }
 
@@ -1391,7 +1408,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
     this.spinner.show();
     this.currentPage = 1;
-    
+
     let _form = {
       userinformation: this.serviceProviderService.userinformation,
       Process: 'TRANSPORT',
@@ -1408,44 +1425,44 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     }
 
     this.serviceProviderService.post('api/Transport/GetOrder', _form)
-    .subscribe(data => {
-      this.spinner.hide();
-      let model: any = data;
-      this.viewModel = model;
-
-      // console.log('readOrder->this.listFormModel', this.listFormModel);
-
-      this.tmpChecked = this.listFormModel.filter(c => c.isSelected == true);
-      // console.log('tmpChecked', this.tmpChecked);
-
-      if (model.Status) {
-        model.Data.forEach(element => {
-          Object.keys(element).forEach((key) => {
-            if (key.includes('InvoiceDate') || key.includes('OrderEstimate')) {
-              element[key + 'Str'] = this.verifyDate(element[key])
-            }
-          });
-        });
-
-        let tmp = new Set(this.tmpChecked.map(t => t.InvoiceNo));
-        this.listFormModel = [...this.tmpChecked, ...model.Data.filter(d => !tmp.has(d.InvoiceNo))];
-        // console.log('this.listFormModel', this.listFormModel);
-        // console.log('this.listModel', this.listModel);
-        if (this.listModel.length > 0) {
-          this.listModel.forEach(element => {
-            this.listFormModel = this.removeObjectElementByKeyValue(this.listFormModel, element.InvoiceNo);
-          });
-        }
-      } else {
-        this.listFormModel = this.tmpChecked;
+      .subscribe(data => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
+        let model: any = data;
+        this.viewModel = model;
 
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        // console.log('readOrder->this.listFormModel', this.listFormModel);
+
+        this.tmpChecked = this.listFormModel.filter(c => c.isSelected == true);
+        // console.log('tmpChecked', this.tmpChecked);
+
+        if (model.Status) {
+          model.Data.forEach(element => {
+            Object.keys(element).forEach((key) => {
+              if (key.includes('InvoiceDate') || key.includes('OrderEstimate')) {
+                element[key + 'Str'] = this.verifyDate(element[key])
+              }
+            });
+          });
+
+          let tmp = new Set(this.tmpChecked.map(t => t.InvoiceNo));
+          this.listFormModel = [...this.tmpChecked, ...model.Data.filter(d => !tmp.has(d.InvoiceNo))];
+          // console.log('this.listFormModel', this.listFormModel);
+          // console.log('this.listModel', this.listModel);
+          if (this.listModel.length > 0) {
+            this.listModel.forEach(element => {
+              this.listFormModel = this.removeObjectElementByKeyValue(this.listFormModel, element.InvoiceNo);
+            });
+          }
+        } else {
+          this.listFormModel = this.tmpChecked;
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
+        this.spinner.hide();
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   checkUncheckAll() {
@@ -1472,11 +1489,11 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
       return false;
     }
     if (this.criteriaModel.TransportTypeId == 'XD') {
-      if (this.criteriaModel.TransportShiptoId == null 
-        || this.criteriaModel.TransportShiptoId == '' 
-        || this.criteriaModel.TransportShiptoId == undefined){
-          this.toastr.warning('Type of Work เป็น X Dock กรุณาระบุสถานที่ส่งสินค้า', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-          return
+      if (this.criteriaModel.TransportShiptoId == null
+        || this.criteriaModel.TransportShiptoId == ''
+        || this.criteriaModel.TransportShiptoId == undefined) {
+        this.toastr.warning('Type of Work เป็น X Dock กรุณาระบุสถานที่ส่งสินค้า', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        return
       }
 
     }
@@ -1499,69 +1516,85 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     let json = JSON.stringify(this.criteriaModel);
 
     this.serviceProviderService.post('api/Transport/CreateTransport', this.criteriaModel)
-    .subscribe(data => {
-      this.spinner.hide();
-      let model: any = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.criteriaModel.TransportNo = model.Data;
-        this.toastr.success("สร้างใบคุมเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
-
-        let item: any = {};
-        item.userinformation = this.serviceProviderService.userinformation;
-        item.TTRANSPORTDS = [];
-
-        this.listModel.forEach(element => {
-          item.TTRANSPORTDS.push({
-            "TransportNo": model.Data,
-            "OrderNo": element.OrderNo,
-            "OrderStatus": "O",
-            "ShiptoId": this.criteriaModel.TransportTypeId == "XD" ? this.criteriaModel.TransportShiptoId : ""
-          })
-        });
-
-        this.serviceProviderService.post('api/Transport/CreateTransportIem', item)
-        .subscribe(data => {
-          // this.spinner.hide();
-          let model: any = {};
-          model = data;
-          // this.viewModel = model;
-
-          if (model.Status) {
-            // this.criteriaModel.TransportNo = model.Data;
-            this.toastr.success("สร้างงานขนส่งเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            this.id = this.criteriaModel.TransportNo;
-            this.read();
-
-            if (this.criteriaModel.TransportTypeDescription == 'x-dock')
-            {
-              //print
-              this.printAlert(model);
-            }
-            // this.listModel = model.Data;
-            // this.router.navigate(['order-transport']);
-          } else {
-            // this.listModel = [];
-            this.spinner.hide();
-            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-          }
-
-        }, err => {
-          this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        });
-        // this.listModel = model.Data;
-      } else {
-        // this.listModel = [];
+      .subscribe(data => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
+        let model: any = data;
+        this.viewModel = model;
 
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        if (model.Status) {
+          this.criteriaModel.TransportNo = model.Data;
+          this.toastr.success("สร้างใบคุมเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+
+          let item: any = {};
+          item.userinformation = this.serviceProviderService.userinformation;
+          item.TTRANSPORTDS = [];
+
+          this.listModel.forEach(element => {
+            item.TTRANSPORTDS.push({
+              "TransportNo": model.Data,
+              "OrderNo": element.OrderNo,
+              "OrderStatus": "O",
+              "ShiptoId": this.criteriaModel.TransportTypeId == "XD" ? this.criteriaModel.TransportShiptoId : ""
+            })
+          });
+
+          this.serviceProviderService.post('api/Transport/CreateTransportIem', item)
+            .subscribe(data => {
+              // this.spinner.hide();
+              let model: any = {};
+              model = data;
+              // this.viewModel = model;
+
+              if (model.Status) {
+                // this.criteriaModel.TransportNo = model.Data;
+                this.toastr.success("สร้างงานขนส่งเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+                this.id = this.criteriaModel.TransportNo;
+                this.read();
+
+
+                // check x-dock
+                this.serviceProviderService.post('api/Transport/CheckOrderX_Dock', item)
+                  .subscribe(data => {
+                    let model2: any = {};
+                    model2 = data;
+                    if (model.Data.length > 0) {
+                      this.printAlert(model);
+                    } else {
+                      this.spinner.hide();
+                      this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+                    }
+                  }, err => {
+                    this.spinner.hide();
+                    this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+                  });
+
+                // if (this.criteriaModel.TransportTypeDescription == 'x-dock') {
+                //   //print
+                //   this.printAlert(model);
+                // }
+                // this.listModel = model.Data;
+                // this.router.navigate(['order-transport']);
+              } else {
+                // this.listModel = [];
+                this.spinner.hide();
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+              }
+
+            }, err => {
+              this.spinner.hide();
+              this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            });
+          // this.listModel = model.Data;
+        } else {
+          // this.listModel = [];
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
+        this.spinner.hide();
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   printAlert(param) {
@@ -1570,43 +1603,43 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     let criteria = {
       "TransportNo": param.TransportNo
     }
-    criteria = {...this.criteria, ...criteria};
+    criteria = { ...this.criteria, ...criteria };
 
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+      this.spinner.hide();
+
+      let model: any = data;
+      this.viewModel = model;
+      if (model.Status) {
+
+        debugger
+        param.items = model.Data
+        // this.listModel = model.Data;
+
+        // model.Data.forEach(element => {
+        //   element.OrderEstimateStr = this.verifyDate(element.OrderEstimate);
+        //   element.InvoiceDateStr = this.verifyDate(element.InvoiceDate);
+        // });
+
+        const dialogRef = this.dialog.open(PrintTransportDialog, { disableClose: false, height: '160px', width: '300px', data: param });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+          if (result) {
+            // this.confirm();
+          }
+          else {
+            return;
+          }
+        });
+      } else {
         this.spinner.hide();
+        // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
 
-        let model: any = data;
-        this.viewModel = model;
-        if (model.Status) {
-
-          debugger
-          param.items = model.Data
-          // this.listModel = model.Data;
-
-          // model.Data.forEach(element => {
-          //   element.OrderEstimateStr = this.verifyDate(element.OrderEstimate);
-          //   element.InvoiceDateStr = this.verifyDate(element.InvoiceDate);
-          // });
-
-          const dialogRef = this.dialog.open(PrintTransportDialog, { disableClose: false, height: '160px', width: '300px', data: param });
-          dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-            if (result) {
-              // this.confirm();
-            }
-            else {
-              return;
-            }
-          });
-        } else {
-          this.spinner.hide();
-          // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        }
-
-      }, err => {
-        this.spinner.hide();
-        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      });
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
 
 
     // if (this.criteriaModel.ReturnNo == '') {
@@ -1638,34 +1671,34 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
         let criteria = {
           "userinformation": this.serviceProviderService.userinformation,
-          "TransportNo": this.criteriaModel.TransportNo ,
-          "Process": 'ADMINCLOSEJOB' ,
+          "TransportNo": this.criteriaModel.TransportNo,
+          "Process": 'ADMINCLOSEJOB',
         }
 
         this.serviceProviderService.post('api/Transport/AdminCloseJob', criteria)
-        .subscribe(data => {
-          this.spinner.hide();
-          let model: any = {};
-          model = data;
-          this.viewModel = model;
-
-          if (model.Status) {
+          .subscribe(data => {
             this.spinner.hide();
-            this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            this.read();
-            // this.backToMain();
-          } else {
-            this.spinner.hide();
-            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-          }
+            let model: any = {};
+            model = data;
+            this.viewModel = model;
 
-        }, err => {
-          this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        });
+            if (model.Status) {
+              this.spinner.hide();
+              this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+              this.read();
+              // this.backToMain();
+            } else {
+              this.spinner.hide();
+              this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+
+          }, err => {
+            this.spinner.hide();
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          });
       }
     });
-    
+
   }
 
   edit() {
@@ -1675,67 +1708,66 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     this.criteriaModel.TransportDate = moment(this.criteriaModel.TransportDateString).format('YYYY-MM-DDT00:00:00');
 
     this.serviceProviderService.post('api/Transport/CreateTransport', this.criteriaModel)
-    .subscribe(data => {
-      this.spinner.hide();
-      let model: any = data;
-      this.viewModel = model;
-
-      if (model.Status) {
-        this.criteriaModel.TransportNo = model.Data;
-        this.toastr.success("อัพเดทใบคุมเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
-
-        let item: any = {};
-        item.userinformation = this.serviceProviderService.userinformation;
-        item.TTRANSPORTDS = [];
-
-        this.listModel.forEach(element => {
-          if(element.Process =='CREATE')
-          {
-            item.TTRANSPORTDS.push({
-              "TransportNo": model.Data,
-              "OrderNo": element.OrderNo,
-              "Process": element.Process,
-              "ShiptoId": this.criteriaModel.TransportTypeId == "XD" ? this.criteriaModel.TransportShiptoId : ""
-            })
-          }
-
-        });
-
-        this.serviceProviderService.post('api/Transport/CreateTransportIem', item)
-        .subscribe(data => {
-          // this.spinner.hide();
-          let model: any = {};
-          model = data;
-          // this.viewModel = model;
-
-          if (model.Status) {
-            // this.criteriaModel.TransportNo = model.Data;
-            this.toastr.success("อัพเดทงานขนส่งเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            this.id = this.criteriaModel.TransportNo;
-            this.read();
-            // this.listModel = model.Data;
-            // this.router.navigate(['order-transport']);
-          } else {
-            // this.listModel = [];
-            this.spinner.hide();
-            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-          }
-
-        }, err => {
-          this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        });
-        // this.listModel = model.Data;
-      } else {
-        // this.listModel = [];
+      .subscribe(data => {
         this.spinner.hide();
-        this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      }
+        let model: any = data;
+        this.viewModel = model;
 
-    }, err => {
-      this.spinner.hide();
-      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-    });
+        if (model.Status) {
+          this.criteriaModel.TransportNo = model.Data;
+          this.toastr.success("อัพเดทใบคุมเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+
+          let item: any = {};
+          item.userinformation = this.serviceProviderService.userinformation;
+          item.TTRANSPORTDS = [];
+
+          this.listModel.forEach(element => {
+            if (element.Process == 'CREATE') {
+              item.TTRANSPORTDS.push({
+                "TransportNo": model.Data,
+                "OrderNo": element.OrderNo,
+                "Process": element.Process,
+                "ShiptoId": this.criteriaModel.TransportTypeId == "XD" ? this.criteriaModel.TransportShiptoId : ""
+              })
+            }
+
+          });
+
+          this.serviceProviderService.post('api/Transport/CreateTransportIem', item)
+            .subscribe(data => {
+              // this.spinner.hide();
+              let model: any = {};
+              model = data;
+              // this.viewModel = model;
+
+              if (model.Status) {
+                // this.criteriaModel.TransportNo = model.Data;
+                this.toastr.success("อัพเดทงานขนส่งเสร็จสิ้น", 'แจ้งเตือนระบบ', { timeOut: 5000 });
+                this.id = this.criteriaModel.TransportNo;
+                this.read();
+                // this.listModel = model.Data;
+                // this.router.navigate(['order-transport']);
+              } else {
+                // this.listModel = [];
+                this.spinner.hide();
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+              }
+
+            }, err => {
+              this.spinner.hide();
+              this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            });
+          // this.listModel = model.Data;
+        } else {
+          // this.listModel = [];
+          this.spinner.hide();
+          this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        }
+
+      }, err => {
+        this.spinner.hide();
+        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      });
   }
 
   confirm() {
@@ -1756,30 +1788,30 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
 
         let criteria = {
           "userinformation": this.serviceProviderService.userinformation,
-          "TransportNo": this.criteriaModel.TransportNo ,
-          "TransportStatus": 'O' ,
+          "TransportNo": this.criteriaModel.TransportNo,
+          "TransportStatus": 'O',
         }
 
         this.serviceProviderService.post('api/Transport/UpdateTransportStatus', criteria)
-        .subscribe(data => {
-          this.spinner.hide();
-          let model: any = {};
-          model = data;
-          this.viewModel = model;
-
-          if (model.Status) {
+          .subscribe(data => {
             this.spinner.hide();
-            this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-            this.backToMain();
-          } else {
-            this.spinner.hide();
-            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-          }
+            let model: any = {};
+            model = data;
+            this.viewModel = model;
 
-        }, err => {
-          this.spinner.hide();
-          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        });
+            if (model.Status) {
+              this.spinner.hide();
+              this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+              this.backToMain();
+            } else {
+              this.spinner.hide();
+              this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+
+          }, err => {
+            this.spinner.hide();
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          });
       }
     });
   }
@@ -1822,7 +1854,7 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
         return 'status-color-C'
       case 'D':
         return 'status-color-D'
-      case 'L': 
+      case 'L':
         return 'status-color-L'
       case 'O':
         return 'status-color-O'
