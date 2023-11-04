@@ -1348,6 +1348,11 @@ export class PrintTransportDialog {
     printDate: any = '';
     printIndex: any = 0;
 
+    dataPage1: any = [];
+    dataPage2: any = [];
+
+    isOnePage = true;
+
 
     constructor(
         public dialogRef: MatDialogRef<PrintTransportDialog>,
@@ -1357,31 +1362,63 @@ export class PrintTransportDialog {
 
             this.data.printDate = this.printDate;
 
-        // this.calPage = Math.ceil(data.List.length / 20);
+        this.calPage = Math.ceil(data.items.length / 18);
 
-        // let x: any = [];
+        let x: any = [];
+        for (let index = 0; index < 18; index++) {
+            x.push(data.items[index]);
+        }
+        this.dataPage1.push(x);
+        x = [];
+
+        for (let index = 1; index < this.calPage; index++) {
+            x.push(data.items[8 + (index * 10)]); // 8+(1*10) = 18
+            x.push(data.items[9 + (index * 10)]); // 9+(1*10) = 19
+            x.push(data.items[10 + (index * 10)]); // 10+(1*10) = 20
+            x.push(data.items[11 + (index * 10)]); // 11+(1*10) = 21
+            x.push(data.items[12 + (index * 10)]); // 12+(1*10) = 22
+            x.push(data.items[13 + (index * 10)]); // 13+(1*10) = 23
+            x.push(data.items[14 + (index * 10)]); // 14+(1*10) = 24
+            x.push(data.items[15 + (index * 10)]); // 15+(1*10) = 25
+            x.push(data.items[16 + (index * 10)]); // 16+(1*10) = 26
+            x.push(data.items[17 + (index * 10)]); // 17+(1*10) = 27
+
+            this.dataPage2.push(x);
+            x = [];
+        }
+
+        debugger
+
+        for (let index = 0; index < this.calPage; index++) {
+            this.dataPage.push(x);
+        }
+
+        if (this.calPage > 1)
+            this.isOnePage = false;
+
+
         // for (let index = 0; index < this.calPage; index++) {
-        //     x.push(data.List[0 + (index * 20)]); // 0+(0*10)= 0     0+(1*10)= 10
-        //     x.push(data.List[1 + (index * 20)]); // 1+(0*10)= 1     1+(1*10)= 11
-        //     x.push(data.List[2 + (index * 20)]); // 2+(0*10)= 2
-        //     x.push(data.List[3 + (index * 20)]);
-        //     x.push(data.List[4 + (index * 20)]);
-        //     x.push(data.List[5 + (index * 20)]);
-        //     x.push(data.List[6 + (index * 20)]);
-        //     x.push(data.List[7 + (index * 20)]);
-        //     x.push(data.List[8 + (index * 20)]);
-        //     x.push(data.List[9 + (index * 20)]);
+        //     x.push(data.items[0 + (index * 10)]); // 0+(0*10)= 0     0+(1*10)= 10
+        //     x.push(data.items[1 + (index * 10)]); // 1+(0*10)= 1     1+(1*10)= 11
+        //     x.push(data.items[2 + (index * 10)]); // 2+(0*10)= 2
+        //     x.push(data.items[3 + (index * 10)]);
+        //     x.push(data.items[4 + (index * 10)]);
+        //     x.push(data.items[5 + (index * 10)]);
+        //     x.push(data.items[6 + (index * 10)]);
+        //     x.push(data.items[7 + (index * 10)]);
+        //     x.push(data.items[8 + (index * 10)]);
+        //     x.push(data.items[9 + (index * 10)]);
 
-        //     x.push(data.List[10 + (index * 20)]); // 0+(0*10)= 0     0+(1*10)= 10
-        //     x.push(data.List[11 + (index * 20)]); // 1+(0*10)= 1     1+(1*10)= 11
-        //     x.push(data.List[12 + (index * 20)]); // 2+(0*10)= 2
-        //     x.push(data.List[13 + (index * 20)]);
-        //     x.push(data.List[14 + (index * 20)]);
-        //     x.push(data.List[15 + (index * 20)]);
-        //     x.push(data.List[16 + (index * 20)]);
-        //     x.push(data.List[17 + (index * 20)]);
-        //     x.push(data.List[18 + (index * 20)]);
-        //     x.push(data.List[19 + (index * 20)]);
+        //     // x.push(data.List[10 + (index * 20)]); // 0+(0*10)= 0     0+(1*10)= 10
+        //     // x.push(data.List[11 + (index * 20)]); // 1+(0*10)= 1     1+(1*10)= 11
+        //     // x.push(data.List[12 + (index * 20)]); // 2+(0*10)= 2
+        //     // x.push(data.List[13 + (index * 20)]);
+        //     // x.push(data.List[14 + (index * 20)]);
+        //     // x.push(data.List[15 + (index * 20)]);
+        //     // x.push(data.List[16 + (index * 20)]);
+        //     // x.push(data.List[17 + (index * 20)]);
+        //     // x.push(data.List[18 + (index * 20)]);
+        //     // x.push(data.List[19 + (index * 20)]);
 
         //     this.dataPage.push(x);
         //     x = [];
