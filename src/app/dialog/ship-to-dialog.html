@@ -10,7 +10,7 @@
         <div class="col l4 s12 mtm-10">
             <ccb *ngIf="!data.IsHub" (cModel)="criteriaModel.IsHub = $event" [label]="'HUB'" [data]="criteriaModel.IsHub"></ccb>
         </div>
-        <div class="col l4" [hidden]="isHideClear">
+        <div class="col l4" *ngIf="isClear">
             <cbtnl [label]="'Clear'" [color]="'red'" [icon]="'clear'" (click)="clear()"></cbtnl>
         </div>
         <div class="col l3 s12 p-0">

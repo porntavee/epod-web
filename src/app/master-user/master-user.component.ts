@@ -252,7 +252,7 @@ export class MasterUserComponent implements OnInit, AfterContentChecked {
       disableClose: false,
       height: '400px',
       width: '800px',
-      data: { title: 'สถานที่',IsHub :'Y' }
+      data: { title: 'สถานที่',IsHub :'Y', isClear: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
