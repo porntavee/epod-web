@@ -159,7 +159,11 @@ export class ReturnDocumentComponent implements OnInit {
             debugger
 
             if (model.Status) {
-              alert('ไม่สามารถทำการคืนเอกสารได้ เนื่องจากสถานะ : ' + model.Data[0].OrderStatusDesc);
+
+              if (model.Data.length == 0)
+                alert('ไม่พบเอกสาร');
+              else
+                alert('ไม่สามารถทำการคืนเอกสารได้ เนื่องจากสถานะ : ' + model.Data[0].OrderStatusDesc);
             }
 
             this.criteriaModel.InvoiceNo = '';
