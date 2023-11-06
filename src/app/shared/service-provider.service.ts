@@ -50,7 +50,7 @@ export class ServiceProviderService {
     return this.http.post(this.server + url, param, httpOptions);
   }
 
-  postNotification(param) {
+  postNotification(param, token) {
     const httpOptions = {
       headers: new HttpHeaders({
         Accept: "application/json",
@@ -60,8 +60,9 @@ export class ServiceProviderService {
       }),
     };
 
+    // to: "/topics/all",
     let body = {
-      to: "/topics/all",
+      to: token,
       notification: {
         android_channel_id: "high_importance_channel",
         body: "แจ้งเตือนอนุมัติงาน",

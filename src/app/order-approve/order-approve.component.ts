@@ -202,7 +202,7 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        // this.noti(this.headerModel.TransportNo);
+        this.noti(this.headerModel.TransportNo, this.headerModel.Token);
         this.backToMain();
       }
       else {
@@ -727,8 +727,8 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
 
   }
 
-  noti(param) {
-    this.serviceProviderService.postNotification(param).subscribe(data => {
+  noti(param, token) {
+    this.serviceProviderService.postNotification(param, token).subscribe(data => {
       
     }, err => {
       
