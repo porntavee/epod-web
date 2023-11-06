@@ -76,7 +76,7 @@
     <div class="col l3 s12 pl-0" style="background-color:white;">
         <div style="width: 100%; height: 200px;">
             <ngx-charts-gauge [scheme]="colorScheme" [min]="0" [max]="100" [results]="fleet" [legend]="false" [legendPosition]="legendPosition" [units]="" [showText]="true" [showAxis]="true" [legendTitle]="fleetModel.OnTheMove_Percent.toFixed(0) + '% Fleet Efficiency'"
-                [smallSegments]="5" (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+                [smallSegments]="5" (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)" [showText]="false">
             </ngx-charts-gauge>
         </div>
         <div style="width: 100%; height: 70px; background-color: white; padding-left: 10px;">
