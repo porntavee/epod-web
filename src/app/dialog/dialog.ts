@@ -425,8 +425,13 @@ export class ShipToDialog implements AfterContentChecked {
 
     criteriaModel: any = {};
 
+    isHideClear = false;
 
     read() {
+
+        if (this.data.isHideClear != null)
+            this.isHideClear = this.data.isHideClear;
+
         if (this.data.IsHub || this.criteriaModel.IsHub) {
             this.criteriaModel.IsHub = true;
         } else {

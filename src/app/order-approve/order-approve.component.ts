@@ -192,13 +192,14 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
     let json = JSON.stringify(criteria);
 
     // console.log(json);
-
+    debugger
     this.serviceProviderService.post('api/Transport/ApproveTransport', criteria).subscribe(data => {
       this.spinner.hide();
       let model: any = {};
       model = data;
       this.viewModel = model;
 
+      debugger
       if (model.Status) {
         this.spinner.hide();
         this.toastr.success('บันทึกเสร็จสิ้น', 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -410,7 +411,7 @@ export class OrderApproveComponent implements OnInit, AfterContentChecked {
   //use
   chooseShipTo() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานที่รับ-ส่งสินค้า' } });
+    const dialogRef = this.dialog.open(ShipToDialog, { disableClose: false, height: '400px', width: '800px', data: { title: 'สถานที่รับ-ส่งสินค้า', isHideClear: true } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
