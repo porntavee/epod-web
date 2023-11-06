@@ -67,21 +67,37 @@ export class DashboardComponent implements OnInit {
       this.fleet.push(
         {
           "name": "Total Fleet",
-          "value": model.Data[0].TotalFleet.toFixed(0)
+          "value": 100
         },
         {
           "name": "On the Move",
-          "value": model.Data[0].OnTheMove.toFixed(0)
+          "value": model.Data[0].OnTheMove_Percent.toFixed(0)
         },
         {
           "name": "Pending",
-          "value": model.Data[0].TotalFleet.toFixed(0) - (model.Data[0].OnTheMove + model.Data[0].InMaintenance.toFixed(0))
+          "value": 100 - (model.Data[0].OnTheMove_Percent + model.Data[0].InMaintenance_Percent.toFixed(0))
         },
         {
           "name": "In Maintenance",
-          "value": model.Data[0].InMaintenance.toFixed(0)
-        }
-        );
+          "value": model.Data[0].InMaintenance_Percent.toFixed(0)
+        });
+
+        // {
+        //   "name": "Total Fleet",
+        //   "value": model.Data[0].TotalFleet.toFixed(0)
+        // },
+        // {
+        //   "name": "On the Move",
+        //   "value": model.Data[0].OnTheMove_Percent.toFixed(0)
+        // },
+        // {
+        //   "name": "Pending",
+        //   "value": model.Data[0].TotalFleet.toFixed(0) - (model.Data[0].OnTheMove + model.Data[0].InMaintenance.toFixed(0))
+        // },
+        // {
+        //   "name": "In Maintenance",
+        //   "value": model.Data[0].InMaintenance_Percent.toFixed(0)
+        // }
 
       // model.Data.forEach(element => {
       //   this.deliveryByCountry.push(
