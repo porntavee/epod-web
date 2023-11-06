@@ -146,10 +146,11 @@ export class ReturnDocumentComponent implements OnInit {
 
           let criteria: any = {};
           criteria.userinformation = this.serviceProviderService.userinformation;
-          criteria.OrderNo = this.criteriaModel.DocNo;
+          criteria.InvoiceNo = this.criteriaModel.InvoiceNo; 
           criteria.TransportNo = this.criteriaModel.TransportNo;
+          criteria.DocNo = this.criteriaModel.DocNo;
 
-          this.serviceProviderService.post('api/Transport/GetTransportHeader', criteria).subscribe(data => {
+          this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
             this.spinner.hide();
             let model: any = {};
             model = data;
@@ -158,7 +159,7 @@ export class ReturnDocumentComponent implements OnInit {
             debugger
 
             if (model.Status) {
-              alert('ไม่สามารถทำการคืนเอกสารได้ เนื่องจากสถานะ : ' + model.Data[0].TransportStatusDesc);
+              alert('ไม่สามารถทำการคืนเอกสารได้ เนื่องจากสถานะ : ' + model.Data[0].OrderStatusDesc);
             }
 
             this.criteriaModel.InvoiceNo = '';
