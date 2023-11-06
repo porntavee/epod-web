@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
         },
         {
           "name": "Pending",
-          "value": 100 - (model.Data[0].OnTheMove_Percent + model.Data[0].InMaintenance_Percent.toFixed(0))
+          "value": 100 - (model.Data[0].OnTheMove_Percent.toFixed(0) + model.Data[0].InMaintenance_Percent.toFixed(0))
         },
         {
           "name": "In Maintenance",
