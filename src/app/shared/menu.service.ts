@@ -48,7 +48,8 @@ export class MenuService {
         { 'name': 'Dashboard', 'routing': '/dashboard', 'data': '', 'type': 'N', 'isActive': false, 'isShow': this.category?.dashboard },
         { 'name': 'Transport Manifest Report', 'routing': '/transport-manifest-report', 'data': '', 'type': 'N', 'isActive': false, 'isShow': this.category?.transportManifestReport },
         { 'name': 'Summary Report', 'routing': '/summary-report', 'data': '', 'type': 'N', 'isActive': false, 'isShow': this.category?.summaryReport },
-        { 'name': 'Customer Report', 'routing': '/customer-report', 'data': '', 'type': 'N', 'isActive': false, 'isShow': this.category?.customerReport }
+        { 'name': 'Customer Report', 'routing': '/customer-report', 'data': '', 'type': 'N', 'isActive': false, 'isShow': this.category?.customerReport },
+        { 'name': 'Driver Performance Report', 'routing': '/driver-performance-report', 'data': '', 'type': 'N', 'isActive': false, 'isShow': this.category?.customerReport }
       ]
     },
     {

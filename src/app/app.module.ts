@@ -124,6 +124,7 @@ import { ReportCustomerComponent } from './report-customer/report-customer.compo
 import { MasterVehicleComponent } from './master-vehicle/master-vehicle.component';
 import { NgxPrintModule } from "ngx-print";
 import { NgxBarcodeModule } from "ngx-barcode";
+import { ReportDriverPerformanceComponent } from './report-driver-performance/report-driver-performance.component';
 
 @NgModule({
   declarations: [
@@ -239,7 +240,8 @@ import { NgxBarcodeModule } from "ngx-barcode";
     CloseJobDialog,
     CountryDialog,
     ConfirmReasonDialog,
-    PrintTransportDialog
+    PrintTransportDialog,
+    ReportDriverPerformanceComponent
   ],
   imports: [
     BrowserModule,

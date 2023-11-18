@@ -44,6 +44,7 @@ import { ReturnHubComponent } from './return-hub/return-hub.component';
 import { ReportTransportManifestComponent } from './report-transport-manifest/report-transport-manifest.component';
 import { ReportSummaryComponent } from './report-summary/report-summary.component';
 import { ReportCustomerComponent } from './report-customer/report-customer.component';
+import { ReportDriverPerformanceComponent } from './report-driver-performance/report-driver-performance.component';
 
 
 const routes: Routes = [
@@ -92,6 +93,7 @@ const routes: Routes = [
   { path: 'transport-manifest-report', component: ReportTransportManifestComponent },
   { path: 'summary-report', component: ReportSummaryComponent },
   { path: 'customer-report', component: ReportCustomerComponent },
+  { path: 'driver-performance-report', component: ReportDriverPerformanceComponent },
 
 
 ];
