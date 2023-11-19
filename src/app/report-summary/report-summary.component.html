@@ -109,6 +109,9 @@
                             <th>POD Return to Bang Na DC</th>
                             <th>Order Status</th>
                             <th>Closure Reason</th>
+                            <th>ตำแหน่งสถานที่ส่งสินค้า</th>
+                            <th>ตำแหน่ง Check In ส่งสินค้า</th>
+                            <th>ตำแหน่ง Check Out ส่งสินค้า</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -305,6 +308,21 @@
                             <td>
                                 <div class="w100">
                                     {{i.ClosureReason}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.DeliveryLocation}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.DeliveryCheckInLocation}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{i.DeliveryCheckOutLocation}}
                                 </div>
                             </td>
                         </tr>

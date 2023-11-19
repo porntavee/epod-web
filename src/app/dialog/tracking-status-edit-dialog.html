@@ -1,0 +1,73 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content style="min-height: 300px; max-height: 300px;">
+    <!-- <p *ngFor="let i of data.listData">
+        {{i.PrjName}}
+    </p> -->
+
+    <!-- <table>
+        <thead style="position: sticky; top: 0; background-color: white; z-index: 999;">
+            <tr>
+                <th>Id</th>
+                <th>Code</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of data.listData; let idx = index" (click)="ok(i)">
+                <td>{{i.Id}}</td>
+                <td>{{i.Code}}</td>
+                <td>{{i.Description}}</td>
+            </tr>
+        </tbody>
+    </table> -->
+    <div class="row">
+        <div class="col l6 s12 p-0">
+            <citxt [class]="'text-center'" (cModel)="data.invoiceNo = $event" [label]="'Invoice/Doc No.'" [data]="data.invoiceNo" [readonly]="true"></citxt>
+        </div>
+        <!-- <div class="col l3 s12 p-0">
+            <cdp (cModel)="criteriaModel.returnDate = $event" [label]="'Return Date'" [data]="criteriaModel.returnDate">
+            </cdp>
+        </div> -->
+        <!-- <div class="col l2 s12 ms-2">
+            <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="readAll()">
+            </cbtn>
+        </div> -->
+    </div>
+    <div class="row">
+        <div class="col l6 s12 p-0">
+            <cdp (cModel)="criteriaModel.actualDate = $event" [label]="'Actual Date'" [data]="criteriaModel.actualDate">
+            </cdp>
+        </div>
+        <div class="col l6 s12 p-0">
+            <cdp (cModel)="criteriaModel.returnDate = $event" [label]="'Return Date'" [data]="criteriaModel.returnDate">
+            </cdp>
+        </div>
+        <!-- <div class="col l2 s12 ms-2">
+            <cbtn [label]="'เรียกดู'" [color]="'blue'" [icon]="''" (click)="readAll()">
+            </cbtn>
+        </div> -->
+    </div>
+
+    <div class="row">
+        <!-- <div class="col l4 s12">
+            <citxt (cModel)="criteriaModel.Code = $event" [label]="'Code'" [data]="criteriaModel.Code"></citxt>
+        </div>
+        <div class="col l4 s12">
+            <citxt (cModel)="criteriaModel.FirstName = $event" [label]="'Name'" [data]="criteriaModel.FirstName"></citxt>
+        </div> -->
+        <!-- <div class="col l1">
+
+        </div> -->
+        <div class="col l12 s12 p-0 text-center">
+            <cbtn [label]="'บันทึก'" [color]="'blue'" [icon]="'save'" (click)="ok(criteriaModel)"></cbtn>
+            <cbtn [label]="'กลับ'" [color]="'grey'" [icon]="''" (click)="cancel()"></cbtn>
+        </div>
+    </div>
+</div>
+<!-- <div mat-dialog-actions>
+    <div class="col s6 m6 l12 text-center"></div>
+    <div class="col s6 m6 l12 text-center">
+        <a class="mb-6 btn blue lighten-1" style="margin-right: 10px;" (click)="ok()">ยืนยัน</a>
+        <a class="mb-6 btn red lighten-1" (click)="cancel()">ยกเลิก</a>
+    </div>
+</div> -->

@@ -156,7 +156,7 @@ export class ReportSummaryComponent implements OnInit {
     private toastr: ToastrService,
     private differs: KeyValueDiffers,
     private excelService: ExcelService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const startDate = new Date();
@@ -177,14 +177,14 @@ export class ReportSummaryComponent implements OnInit {
       userinformation: this.serviceProviderService.userinformation,
       BeginDate:
         this.criteriaModel.startDate != undefined &&
-        this.criteriaModel.startDate != "Invalid date"
+          this.criteriaModel.startDate != "Invalid date"
           ? moment(this.criteriaModel.startDate).format(
-              "YYYY-MM-DD 00:00:00.000"
-            )
+            "YYYY-MM-DD 00:00:00.000"
+          )
           : undefined,
       EndDate:
         this.criteriaModel.endDate != undefined &&
-        this.criteriaModel.endDate != "Invalid date"
+          this.criteriaModel.endDate != "Invalid date"
           ? moment(this.criteriaModel.endDate).format("YYYY-MM-DD 00:00:00.000")
           : undefined,
     };
@@ -231,12 +231,12 @@ export class ReportSummaryComponent implements OnInit {
       userinformation: this.serviceProviderService.userinformation,
       InvoiceDateStart:
         this.criteriaModel.startDate != undefined &&
-        this.criteriaModel.startDate != "Invalid date"
+          this.criteriaModel.startDate != "Invalid date"
           ? moment(this.criteriaModel.startDate).format("YYYY-MM-DD")
           : undefined,
       InvoiceDateEnd:
         this.criteriaModel.endDate != undefined &&
-        this.criteriaModel.endDate != "Invalid date"
+          this.criteriaModel.endDate != "Invalid date"
           ? moment(this.criteriaModel.endDate).format("YYYY-MM-DD")
           : undefined,
     };
@@ -287,10 +287,10 @@ export class ReportSummaryComponent implements OnInit {
               element.DateIn =
                 element.DateIn != null
                   ? element.DateIn.substr(8, 2) +
-                    "-" +
-                    element.DateIn.substr(5, 2) +
-                    "-" +
-                    element.DateIn.substr(0, 4)
+                  "-" +
+                  element.DateIn.substr(5, 2) +
+                  "-" +
+                  element.DateIn.substr(0, 4)
                   : element.DateIn ?? "";
               element.TimeIn =
                 element.TimeIn != null
@@ -299,10 +299,10 @@ export class ReportSummaryComponent implements OnInit {
               element.DateOut =
                 element.DateOut != null
                   ? element.DateOut.substr(8, 2) +
-                    "-" +
-                    element.DateOut.substr(5, 2) +
-                    "-" +
-                    element.DateOut.substr(0, 4)
+                  "-" +
+                  element.DateOut.substr(5, 2) +
+                  "-" +
+                  element.DateOut.substr(0, 4)
                   : element.DateOut ?? "";
               element.TimeOut =
                 element.TimeOut != null
@@ -314,12 +314,16 @@ export class ReportSummaryComponent implements OnInit {
               element.AdminReturnDate =
                 element.AdminReturnDate != null
                   ? element.AdminReturnDate.substr(8, 2) +
-                    "-" +
-                    element.AdminReturnDate.substr(5, 2) +
-                    "-" +
-                    element.AdminReturnDate.substr(0, 4)
+                  "-" +
+                  element.AdminReturnDate.substr(5, 2) +
+                  "-" +
+                  element.AdminReturnDate.substr(0, 4)
                   : element.AdminReturnDate ?? "";
 
+
+              element.DeliveryLocation = element.DeliveryLocation ?? "";
+              element.DeliveryCheckInLocation = element.DeliveryCheckInLocation ?? "";
+              element.DeliveryCheckOutLocation = element.DeliveryCheckOutLocation ?? "";
               //D P R S
               // var strDeliveryStatus = "DPRS";
               // if (strDeliveryStatus.includes(String(element.OrderStatus))) {
@@ -843,6 +847,9 @@ export class ReportSummaryComponent implements OnInit {
         "POD Return to Bang Na DC": element.AdminReturnDate,
         "Order Status": element.OrderStatus ?? "",
         "Closure Reason": element.ClosureReason ?? "",
+        "DeliveryLocation": element.DeliveryLocation ?? "",
+        "DeliveryCheckInLocation": element.DeliveryCheckInLocation ?? "",
+        "DeliveryCheckOutLocation": element.DeliveryCheckOutLocation ?? ""
       });
     });
 

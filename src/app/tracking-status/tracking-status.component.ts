@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, JobStatusDialog, JobOrderStatusDialog } from '../dialog/dialog';
+import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, JobStatusDialog, JobOrderStatusDialog, TrackingStatusEditDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 import { GlobalConstants } from '../shared/global-constants';
@@ -1081,6 +1081,47 @@ export class TrackingStatusComponent implements OnInit {
       clearInterval(GlobalConstants.interValtimer);
       // console.log('autoRefresh is false displayMinute', this.timerModel.displayMinute);
     }
+  }
+
+  edit() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(TrackingStatusEditDialog, { disableClose: false, height: '300px', width: '600px', data: { title: 'แก้ไขข้อมูล', invoiceNo: this.headerModel.InvoiceNo } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('TypeOfWorkDialog result: ', result)
+
+      if (result != undefined) {
+
+        let criteria = {
+          "userinformation": this.serviceProviderService.userinformation,
+          "TransportNo": this.headerModel.TransportNo,
+          "OrderNo": this.headerModel.InvoiceNo,
+          "DeliveryCheckInDate": moment(result.actualDate).format('YYYY-MM-DDT00:00:00'),
+          "DriverReturnDate": moment(result.returnDate).format('YYYY-MM-DDT00:00:00'),
+        }
+
+        this.serviceProviderService.post('api/Transport/UpdateTrackingStatus', criteria).subscribe(data => {
+          // this.spinner.hide();
+          let model: any = {};
+          model = data;
+          // this.viewModel = model;
+    
+          debugger
+          if (model.Status) {
+            this.spinner.hide();
+            this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+          else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+    
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+      }
+    });
   }
 
 }

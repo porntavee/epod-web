@@ -1533,3 +1533,66 @@ export class CountryDialog implements AfterContentChecked {
         this.changeDetector.detectChanges();
     }
 }
+
+@Component({
+    selector: 'tracking-status-edit-dialog',
+    templateUrl: 'tracking-status-edit-dialog.html',
+})
+export class TrackingStatusEditDialog implements AfterContentChecked {
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        public dialogRef: MatDialogRef<RouteDialog>,
+        private serviceProviderService: ServiceProviderService,
+        private toastr: ToastrService,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        // this.read();
+    }
+
+    criteriaModel: any = {};
+
+    read() {
+        let criteria = {
+            "userinformation": this.serviceProviderService.userinformation,
+            "Code": ""
+        }
+
+        // let json = JSON.stringify(criteria);
+        this.serviceProviderService.post('api/Masters/GetTransportType', criteria).subscribe(data => {
+            let model: any = {};
+            model = data;
+
+            if (model.Status) {
+                this.data.listData = model.Data;
+            }
+            else {
+                this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            }
+        }, err => {
+            this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+    }
+
+    filter() {
+        //   if ((this.criteriaModel.Code != undefined && this.criteriaModel.Code != '') && (this.criteriaModel.FirstName != undefined && this.criteriaModel.FirstName != ''))
+        // this.data.listData = this.data.listDataSearch.filter(c => c.Code.includes(this.criteriaModel.Code) && c.firstName.includes(this.criteriaModel.FirstName));
+        if (this.criteriaModel.Code != undefined && this.criteriaModel.Code != '')
+            this.data.listData = this.data.listDataSearch.filter(c => c.Code.includes(this.criteriaModel.Code));
+        //   else if (this.criteriaModel.FirstName != undefined && this.criteriaModel.FirstName != '')
+        // this.data.listData = this.data.listDataSearch.filter(c => c.firstName.includes(this.criteriaModel.FirstName));
+        else
+            this.data.listData = this.data.listDataSearch
+    }
+
+    cancel() {
+        this.dialogRef.close(undefined);
+    }
+
+    ok(param) {
+        this.dialogRef.close(param);
+    }
+
+    // Fixing "Expression has changed after it was checked"
+    public ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
+}

@@ -103,7 +103,7 @@ import { OrderTransportComponent } from './order-transport/order-transport.compo
 import { OrderTransportFormComponent } from './order-transport-form/order-transport-form.component';
 import { ConfirmDialog, DriverDialog, AdminReturnDialog, GroupUserDialog, RouteDialog , RoutingDialog ,SubRoutingDialog,RegionDialog
   , ShipToDialog, StatusDialog, TransportNoDialog, TypeOfWorkDialog, VehicleDialog ,ProvinceDialog,DistrictDialog
-  ,JobStatusDialog , BillStatusDialog, DocReturnDialog,MasterDataDialog,LocationAddressDataDialog, UploadOrderDialog,JobOrderStatusDialog, PrintDialog, CloseJobDialog, CountryDialog, ConfirmReasonDialog, PrintTransportDialog} from "./dialog/dialog";
+  ,JobStatusDialog , BillStatusDialog, DocReturnDialog,MasterDataDialog,LocationAddressDataDialog, UploadOrderDialog,JobOrderStatusDialog, PrintDialog, CloseJobDialog, CountryDialog, ConfirmReasonDialog, PrintTransportDialog, TrackingStatusEditDialog} from "./dialog/dialog";
 import { OrderComponent } from './order/order.component';
 import { OrderFormComponent } from './order-form/order-form.component';
 import { MasterUserComponent } from './master-user/master-user.component';
@@ -241,7 +241,8 @@ import { ReportDriverPerformanceComponent } from './report-driver-performance/re
     CountryDialog,
     ConfirmReasonDialog,
     PrintTransportDialog,
-    ReportDriverPerformanceComponent
+    ReportDriverPerformanceComponent,
+    TrackingStatusEditDialog
   ],
   imports: [
     BrowserModule,
