@@ -1546,6 +1546,10 @@ export class TrackingStatusEditDialog implements AfterContentChecked {
         private toastr: ToastrService,
         @Inject(MAT_DIALOG_DATA) public data: any) {
         // this.read();
+        this.criteriaModel.actualDate = data.actualDate;
+        this.criteriaModel.returnDate = data.driverReturnDate;
+        this.criteriaModel.OrderNo = data.orderNo;
+        this.criteriaModel.TransportNo = data.transportNo;
     }
 
     criteriaModel: any = {};
