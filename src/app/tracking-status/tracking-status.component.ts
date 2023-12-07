@@ -315,7 +315,7 @@ export class TrackingStatusComponent implements OnInit {
             : element.DeliveryCheckOutDate ?? "";
 
 
-            element.AdminReturnDate = element.AdminReturnDate != null
+          element.AdminReturnDate = element.AdminReturnDate != null
             ? element.AdminReturnDate.substr(8, 2) +
             "-" +
             element.AdminReturnDate.substr(5, 2) +
@@ -429,7 +429,7 @@ export class TrackingStatusComponent implements OnInit {
       if (model.Status) {
 
         this.listDetailModel = model.Data;
-        let str = JSON.stringify(this.listDetailModel );
+        let str = JSON.stringify(this.listDetailModel);
 
         debugger
 
@@ -1094,19 +1094,21 @@ export class TrackingStatusComponent implements OnInit {
 
   edit() {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TrackingStatusEditDialog, { disableClose: false, height: '300px', width: '600px', data: { title: 'แก้ไขข้อมูล', invoiceNo: this.headerModel.InvoiceNo, orderNo: this.headerModel.OrderNo, transportNo: this.headerModel.TransportNo, actualDate: this.headerModel.DeliveryCheckInDate, driverReturnDate: this.headerModel.DriverReturnDate  } });
+    const dialogRef = this.dialog.open(TrackingStatusEditDialog, { disableClose: false, height: '300px', width: '600px', data: { title: 'แก้ไขข้อมูล', invoiceNo: this.headerModel.InvoiceNo, orderNo: this.headerModel.OrderNo, transportNo: this.headerModel.TransportNo, actualDate: this.headerModel.DeliveryCheckInDate, driverReturnDate: this.headerModel.DriverReturnDate } });
 
+    debugger
     dialogRef.afterClosed().subscribe(result => {
       console.log('TypeOfWorkDialog result: ', result)
 
       if (result != undefined) {
 
+        debugger
         let criteria = {
           "userinformation": this.serviceProviderService.userinformation,
           "TransportNo": this.headerModel.TransportNo,
           "OrderNo": this.headerModel.OrderNo,
-          "DeliveryCheckInDate": moment(result.actualDate).format('YYYY-MM-DDT00:00:00'),
-          "DriverReturnDate": moment(result.returnDate).format('YYYY-MM-DDT00:00:00'),
+          "DeliveryCheckInDate": result.actualDate == "Invalid date" ? "" : moment(result.actualDate).format('YYYY-MM-DDT00:00:00'),
+          "DriverReturnDate": result.returnDate == "Invalid date" ? "" : moment(result.returnDate).format('YYYY-MM-DDT00:00:00'),
         }
 
         let str = JSON.stringify(criteria);
@@ -1116,7 +1118,7 @@ export class TrackingStatusComponent implements OnInit {
           let model: any = {};
           model = data;
           // this.viewModel = model;
-    
+
           if (model.Status) {
             this.spinner.hide();
             this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
@@ -1127,7 +1129,7 @@ export class TrackingStatusComponent implements OnInit {
             this.spinner.hide();
             this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
           }
-    
+
         }, err => {
           this.spinner.hide();
           this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
