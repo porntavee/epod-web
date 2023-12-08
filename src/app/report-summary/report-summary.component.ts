@@ -841,15 +841,16 @@ export class ReportSummaryComponent implements OnInit {
         "Time (In)": element.TimeIn,
         "Date (Out)": element.DateOut,
         "Time (Out)": element.TimeOut,
+        "DeliveryLocation": element.DeliveryLocation ?? "",
+        "DeliveryCheckInLocation": element.DeliveryCheckInLocation ?? "",
+        "DeliveryCheckOutLocation": element.DeliveryCheckOutLocation ?? "",
         "Latitude & Longitude In": element.LatitudeLongitudeIn,
         "Delivery Status": element.OTDelivery,
         "POD  Status": element.OTBillReturn,
         "POD Return to Bang Na DC": element.AdminReturnDate,
         "Order Status": element.OrderStatus ?? "",
-        "Closure Reason": element.ClosureReason ?? "",
-        "DeliveryLocation": element.DeliveryLocation ?? "",
-        "DeliveryCheckInLocation": element.DeliveryCheckInLocation ?? "",
-        "DeliveryCheckOutLocation": element.DeliveryCheckOutLocation ?? ""
+        "Closure Reason": element.ClosureReason ?? ""
+       
       });
     });
 
