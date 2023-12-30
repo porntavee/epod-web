@@ -9,8 +9,9 @@ export class ServiceProviderService {
   // ng build --base-href "/epod/" --prod --aot --output-hashing=all
   // ng build --prod --aot --output-hashing=all
 
-  server: string = "http://202.44.230.195/test-sino-api/";
-  // server: string = "http://202.44.230.195/sino-api/";
+  // server: string = "http://202.44.230.195/test-sino-api/";
+  server: string = "http://202.44.230.195/sino-api/";
+  reportServer: string = "http://202.44.230.195/report-api/";
 
   version: string = "2023.07.1801";
 
@@ -48,6 +49,27 @@ export class ServiceProviderService {
     // options.headers = headers;
     param.Version = this.version;
     return this.http.post(this.server + url, param, httpOptions);
+  }
+
+  postReport(url, param) {
+    // param.profileCode = this.utilities.getUserLocalStorage().profileCode;
+    param.organization = [];
+    param.permission = 'all';
+
+    let headers = new HttpHeaders();
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Access-Control-Allow-Methods', 'POST');
+    // headers.append('Authorization', 'Bearer' + this.utilities.getUserLocalStorage().token)
+
+    // let options = new RequestOptions();
+    // options.headers = headers;
+    // param.organization = JSON.parse(localStorage.getItem('organization'));
+    return this.http.post(this.reportServer + url, param, {
+      headers: headers,
+      responseType: 'arraybuffer',
+    });
   }
 
   postNotification(param, token) {

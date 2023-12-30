@@ -36,10 +36,10 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
     private differs: KeyValueDiffers,
     private excelService: ExcelService,
     public changeDetector: ChangeDetectorRef) {
-      this.criteria =  {
-        "userinformation": this.serviceProviderService.userinformation 
-      }
-     }
+    this.criteria = {
+      "userinformation": this.serviceProviderService.userinformation
+    }
+  }
 
   ngOnInit(): void {
     const date = new Date();
@@ -111,72 +111,72 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
     let criteria = {
       "TransportNo": param.TransportNo
     }
-    criteria = {...this.criteria, ...criteria};
+    criteria = { ...this.criteria, ...criteria };
 
     this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+      this.spinner.hide();
+
+      let model: any = data;
+      this.viewModel = model;
+      if (model.Status) {
+
+        debugger
+        param.items = model.Data
+        // this.listModel = model.Data;
+
+        // model.Data.forEach(element => {
+        //   element.OrderEstimateStr = this.verifyDate(element.OrderEstimate);
+        //   element.InvoiceDateStr = this.verifyDate(element.InvoiceDate);
+        // });
+
+        const dialogRef = this.dialog.open(PrintTransportDialog, { disableClose: false, height: '160px', width: '300px', data: param });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+          if (result) {
+            // this.confirm();
+            debugger
+            this.data = result;
+
+            this.isPrint = true;
+            // window.print();
+
+            setTimeout(() => {
+              var divToPrint = document.getElementById('componentID');
+              var htmlToPrint = '' +
+                '<style type="text/css">' +
+                'table th, table td {' +
+                'border:1px solid #000;' +
+                'padding:0.5em;' +
+                '}' +
+                '</style>';
+              htmlToPrint += divToPrint.outerHTML;
+              const newWin = window.open("");
+              newWin.document.write(htmlToPrint);
+              newWin.print();
+              newWin.close();
+
+              // const printContent = document.getElementById("componentID");
+              // const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+              // WindowPrt.document.write(printContent.innerHTML);
+              // WindowPrt.document.close();
+              // WindowPrt.focus();
+              // WindowPrt.print();
+              // WindowPrt.close();
+            }, 500);
+          }
+          else {
+            return;
+          }
+        });
+      } else {
         this.spinner.hide();
+        // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
 
-        let model: any = data;
-        this.viewModel = model;
-        if (model.Status) {
-
-          debugger
-          param.items = model.Data
-          // this.listModel = model.Data;
-
-          // model.Data.forEach(element => {
-          //   element.OrderEstimateStr = this.verifyDate(element.OrderEstimate);
-          //   element.InvoiceDateStr = this.verifyDate(element.InvoiceDate);
-          // });
-
-          const dialogRef = this.dialog.open(PrintTransportDialog, { disableClose: false, height: '160px', width: '300px', data: param });
-          dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-            if (result) {
-              // this.confirm();
-              debugger
-              this.data = result;
-
-              this.isPrint = true;
-              // window.print();
-
-              setTimeout(() => {
-                var divToPrint = document.getElementById('componentID');
-                var htmlToPrint = '' +
-                    '<style type="text/css">' +
-                    'table th, table td {' +
-                    'border:1px solid #000;' +
-                    'padding:0.5em;' +
-                    '}' +
-                    '</style>';
-                htmlToPrint += divToPrint.outerHTML;
-                const newWin = window.open("");
-                newWin.document.write(htmlToPrint);
-                newWin.print();
-                newWin.close();
-
-                // const printContent = document.getElementById("componentID");
-                // const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-                // WindowPrt.document.write(printContent.innerHTML);
-                // WindowPrt.document.close();
-                // WindowPrt.focus();
-                // WindowPrt.print();
-                // WindowPrt.close();
-              }, 500);
-            }
-            else {
-              return;
-            }
-          });
-        } else {
-          this.spinner.hide();
-          // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-        }
-
-      }, err => {
-        this.spinner.hide();
-        this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
-      });
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
 
 
     // if (this.criteriaModel.ReturnNo == '') {
@@ -185,6 +185,108 @@ export class OrderTransportComponent implements OnInit, AfterContentChecked {
     // else {
     //   // this.confirm();
     // }
+  }
+
+  printReport(param) {
+
+    debugger
+    let criteria = {
+      "TransportNo": param.TransportNo
+    }
+    criteria = { ...this.criteria, ...criteria };
+
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+      this.spinner.hide();
+
+      let model: any = data;
+      this.viewModel = model;
+      if (model.Status) {
+
+
+        param.items = model.Data
+
+        let obj: any = {};
+        this.spinner.show();
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        var time = String(today.getHours()).padStart(2, '0') + String(today.getMinutes()).padStart(2, '0') + String(today.getSeconds());
+        var totaltoday = dd + mm + yyyy + '_' + time;
+
+        var link = document.createElement('a');
+
+
+        let header = [{
+          totalBill: param.items.length.toString(),
+          totalCarton: param.Qty.toString(),
+          docReturn: '',
+          customerSignature: '',
+          driverName: ''
+        }];
+
+        let detail = [];
+
+        param.items.forEach(c => {
+          detail.push({
+            invoiceNo: c.InvoiceNo,
+            customerCode: c.ShiptoCode,
+            customerName: c.ShiptoName,
+            shipTo: c.ShiptoAdress,
+            weight: c.Weight.toString(),
+            cbm: c.CBM.toString(),
+            carton: c.Qty.toString()
+          });
+        });
+
+
+        let jsonhead = JSON.stringify(header);
+        // let jsondetail = JSON.stringify(detail);
+
+
+        this.serviceProviderService.postReport('api/report/getReport', {
+          reportName: 'DELIVERYMANIFEST',
+          header: header,
+          detail: detail,
+          transportName: param.Transport,
+          driverName: param.DriverLastName,
+          createDate: param.CreateDate.toString().replace('T', ' ').substring(8, 2) + '/' + param.CreateDate.toString().replace('T', ' ').substring(6, 2) + '/' + param.CreateDate.toString().replace('T', ' ').substring(0, 4),
+          transportNo: param.TransportNo,
+          routeCode: param.Route
+        }).subscribe(data => {
+
+          let blob = new Blob([data], { type: "application/pdf" });
+          let url = window.URL.createObjectURL(blob);
+          var name = "Delivery Manifest " + totaltoday;
+          link.href = url;
+          link.download = name;
+          link.click();
+          link.remove();
+        }, err => {
+
+          this.spinner.hide();
+        });
+
+        this.spinner.hide();
+
+
+
+      } else {
+        this.spinner.hide();
+        // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+
+
+
+
+
+
+
   }
 
   verifyDate(date: any): any {
