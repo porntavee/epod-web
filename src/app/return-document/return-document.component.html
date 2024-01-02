@@ -117,6 +117,8 @@
                             <th>ที่อยู่ผู้รับ</th>
                             <th>Invoice Date</th>
                             <th>Appt. Date</th>
+                            <th>Actual Arrive</th>
+                            <th>Driver Return</th>
                             <th>CBM</th>
                             <th>Carton</th>
                             <th>Weight (kg.)</th>
@@ -189,7 +191,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="w100">
+                                <div class="w100" (click)="edit()">
                                     {{i.InvoiceNo}}
                                 </div>
                             </td>
@@ -231,6 +233,16 @@
                             <td>
                                 <div class="w100">
                                     {{i.OrderEstimate}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{formatDate(i.DeliveryCheckInDate)}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w100">
+                                    {{formatDate(i.DriverReturnDate)}}
                                 </div>
                             </td>
                             <td>

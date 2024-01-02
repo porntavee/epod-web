@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, DocReturnDialog, PrintDialog, ConfirmReasonDialog } from '../dialog/dialog';
+import { ConfirmDialog, TransportNoDialog, ShipToDialog, StatusDialog, TypeOfWorkDialog, RouteDialog, VehicleDialog, DriverDialog, DocReturnDialog, PrintDialog, ConfirmReasonDialog, TrackingStatusEditDialog } from '../dialog/dialog';
 import { ExcelService } from '../shared/excel.service';
 import { ServiceProviderService } from '../shared/service-provider.service';
 
@@ -742,5 +742,66 @@ export class ReturnDocumentComponent implements OnInit {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
+  }
+
+  edit() {
+    //ต้องเอาไปใส่ใน app.module ที่ declarations
+    const dialogRef = this.dialog.open(TrackingStatusEditDialog, { disableClose: false, height: '300px', width: '600px', data: { title: 'แก้ไขข้อมูล', invoiceNo: this.headerModel.InvoiceNo, orderNo: this.headerModel.OrderNo, transportNo: this.headerModel.TransportNo, actualDate: this.headerModel.DeliveryCheckInDate, driverReturnDate: this.headerModel.DriverReturnDate } });
+
+    debugger
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('TypeOfWorkDialog result: ', result)
+
+      if (result != undefined) {
+
+        debugger
+        let criteria = {
+          "userinformation": this.serviceProviderService.userinformation,
+          "TransportNo": this.headerModel.TransportNo,
+          "OrderNo": this.headerModel.OrderNo,
+          "DeliveryCheckInDate": result.actualDate == "Invalid date" ? "" : moment(result.actualDate).format('YYYY-MM-DDT00:00:00'),
+          "DriverReturnDate": result.returnDate == "Invalid date" ? "" : moment(result.returnDate).format('YYYY-MM-DDT00:00:00'),
+        }
+
+        let str = JSON.stringify(criteria);
+
+        this.serviceProviderService.post('api/Transport/UpdateTrackingStatus', criteria).subscribe(data => {
+          // this.spinner.hide();
+          let model: any = {};
+          model = data;
+          // this.viewModel = model;
+
+          if (model.Status) {
+            this.spinner.hide();
+            this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
+            debugger
+            // this.readDetail(result);
+            this.read('Enter');
+          }
+          else {
+            this.spinner.hide();
+            this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+          }
+
+        }, err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+        });
+      }
+    });
+  }
+
+  formatDateTime(param) {
+    if (param == '' || param == undefined)
+      return '';
+    else
+      return moment(param).format('DD/MM/YYYY HH:mm:ss');
+  }
+
+  formatDate(param) {
+    if (param == '' || param == undefined)
+      return '';
+    else
+      return moment(param).format('DD/MM/YYYY');
   }
 }
