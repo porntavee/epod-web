@@ -744,11 +744,10 @@ export class ReturnDocumentComponent implements OnInit {
     return parts.join(".");
   }
 
-  edit() {
+  edit(param) {
     //ต้องเอาไปใส่ใน app.module ที่ declarations
-    const dialogRef = this.dialog.open(TrackingStatusEditDialog, { disableClose: false, height: '300px', width: '600px', data: { title: 'แก้ไขข้อมูล', invoiceNo: this.headerModel.InvoiceNo, orderNo: this.headerModel.OrderNo, transportNo: this.headerModel.TransportNo, actualDate: this.headerModel.DeliveryCheckInDate, driverReturnDate: this.headerModel.DriverReturnDate } });
+    const dialogRef = this.dialog.open(TrackingStatusEditDialog, { disableClose: false, height: '300px', width: '600px', data: { title: 'แก้ไขข้อมูล', invoiceNo: param.InvoiceNo, orderNo: param.OrderNo, transportNo: param.TransportNo, actualDate: param.DeliveryCheckInDate, driverReturnDate: param.DriverReturnDate } });
 
-    debugger
     dialogRef.afterClosed().subscribe(result => {
       console.log('TypeOfWorkDialog result: ', result)
 
@@ -795,13 +794,13 @@ export class ReturnDocumentComponent implements OnInit {
     if (param == '' || param == undefined)
       return '';
     else
-      return moment(param).format('DD/MM/YYYY HH:mm:ss');
+      return moment(param).format('DD-MM-YYYY HH:mm:ss');
   }
 
   formatDate(param) {
     if (param == '' || param == undefined)
       return '';
     else
-      return moment(param).format('DD/MM/YYYY');
+      return moment(param).format('DD-MM-YYYY');
   }
 }
