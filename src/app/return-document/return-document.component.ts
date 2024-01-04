@@ -146,7 +146,7 @@ export class ReturnDocumentComponent implements OnInit {
 
           let criteria: any = {};
           criteria.userinformation = this.serviceProviderService.userinformation;
-          criteria.InvoiceNo = this.criteriaModel.InvoiceNo; 
+          criteria.InvoiceNo = this.criteriaModel.InvoiceNo;
           criteria.TransportNo = this.criteriaModel.TransportNo;
           criteria.DocNo = this.criteriaModel.DocNo;
 
@@ -155,6 +155,22 @@ export class ReturnDocumentComponent implements OnInit {
             let model: any = {};
             model = data;
             this.viewModel = model;
+
+            // model.Data.forEach(element => {
+
+            //   let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
+
+            //   if (dup.length == 0) {
+            //     element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
+            //     element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
+            //     this.listModel.push(element);
+            //   }
+            //   else {
+            //     element.DeliveryCheckInDate = moment(element.DeliveryCheckInDate).format('DD-MM-YYYY');
+            //     element.DriverReturnDate = moment(element.DriverReturnDate).format('DD-MM-YYYY');
+            //   }
+
+            // });
 
             debugger
 
@@ -190,6 +206,10 @@ export class ReturnDocumentComponent implements OnInit {
               element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
               element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
               this.listModel.push(element);
+            }
+            else {
+              dup[0].DeliveryCheckInDate = element.DeliveryCheckInDate;
+              dup[0].DriverReturnDate = element.DriverReturnDate;
             }
 
           });
