@@ -122,7 +122,7 @@ export class ReturnDocumentComponent implements OnInit {
 
   readTransport(param) {
 
-    if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '' && this.criteriaModel.DocNo == '') {
+    if (this.criteriaModel.InvoiceNo == '' && this.criteriaModel.TransportNo == '' && this.criteriaModel.DocNo == '' && this.criteriaModel.PopupTransportNo == '') {
       this.toastr.error('กรุณาระบุเงื่อนไขเอกสาร', 'แจ้งเตือนระบบ', { timeOut: 5000 });
       return;
     }
@@ -166,17 +166,17 @@ export class ReturnDocumentComponent implements OnInit {
                 alert('ไม่สามารถทำการคืนเอกสารได้ เนื่องจากสถานะ : ' + model.Data[0].OrderStatusDesc);
             }
 
-            this.criteriaModel.InvoiceNo = '';
-            this.criteriaModel.DocNo = '';
-            this.criteriaModel.TransportNo = '';
+            // this.criteriaModel.InvoiceNo = '';
+            // this.criteriaModel.DocNo = '';
+            // this.criteriaModel.TransportNo = '';
 
           }, err => {
             this.spinner.hide();
             this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
 
-            this.criteriaModel.InvoiceNo = '';
-            this.criteriaModel.DocNo = '';
-            this.criteriaModel.TransportNo = '';
+            // this.criteriaModel.InvoiceNo = '';
+            // this.criteriaModel.DocNo = '';
+            // this.criteriaModel.TransportNo = '';
           });
 
 
@@ -194,9 +194,9 @@ export class ReturnDocumentComponent implements OnInit {
 
           });
 
-          this.criteriaModel.InvoiceNo = '';
-          this.criteriaModel.DocNo = '';
-          this.criteriaModel.TransportNo = '';
+          // this.criteriaModel.InvoiceNo = '';
+          // this.criteriaModel.DocNo = '';
+          // this.criteriaModel.TransportNo = '';
         }
 
 
@@ -775,7 +775,8 @@ export class ReturnDocumentComponent implements OnInit {
             this.toastr.success('บันทึกสำเร็จ', 'แจ้งเตือนระบบ', { timeOut: 5000 });
             debugger
             // this.readDetail(result);
-            this.read('Enter');
+            // this.read({ key: 'Enter'});
+            this.readTransport(this.criteriaModel);
           }
           else {
             this.spinner.hide();
