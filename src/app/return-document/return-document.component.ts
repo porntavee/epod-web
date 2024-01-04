@@ -756,8 +756,8 @@ export class ReturnDocumentComponent implements OnInit {
         debugger
         let criteria = {
           "userinformation": this.serviceProviderService.userinformation,
-          "TransportNo": this.headerModel.TransportNo,
-          "OrderNo": this.headerModel.OrderNo,
+          "TransportNo": param.TransportNo,
+          "OrderNo": param.OrderNo,
           "DeliveryCheckInDate": result.actualDate == "Invalid date" ? "" : moment(result.actualDate).format('YYYY-MM-DDT00:00:00'),
           "DriverReturnDate": result.returnDate == "Invalid date" ? "" : moment(result.returnDate).format('YYYY-MM-DDT00:00:00'),
         }
