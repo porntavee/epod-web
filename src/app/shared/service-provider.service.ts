@@ -23,7 +23,7 @@ export class ServiceProviderService {
     Version: "22.11.01.01",
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   get(url) {
     return this.http.get(this.server + url);
@@ -69,6 +69,26 @@ export class ServiceProviderService {
     return this.http.post(this.reportServer + url, param, {
       headers: headers,
       responseType: 'arraybuffer',
+    });
+  }
+
+  postPreviewReport(url, param) {
+    // param.profileCode = this.utilities.getUserLocalStorage().profileCode;
+    param.organization = [];
+    param.permission = 'all';
+
+    let headers = new HttpHeaders();
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Access-Control-Allow-Methods', 'POST');
+    // headers.append('Authorization', 'Bearer' + this.utilities.getUserLocalStorage().token)
+
+    // let options = new RequestOptions();
+    // options.headers = headers;
+    // param.organization = JSON.parse(localStorage.getItem('organization'));
+    return this.http.post(this.reportServer + url, param, {
+      headers: headers
     });
   }
 
