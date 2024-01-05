@@ -1448,11 +1448,11 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           this.listFormModel = [...this.tmpChecked, ...model.Data.filter(d => !tmp.has(d.InvoiceNo))];
           // console.log('this.listFormModel', this.listFormModel);
           // console.log('this.listModel', this.listModel);
-          if (this.listModel.length > 0) {
-            this.listModel.forEach(element => {
-              this.listFormModel = this.removeObjectElementByKeyValue(this.listFormModel, element.InvoiceNo);
-            });
-          }
+          // if (this.listModel.length > 0) {
+          //   this.listModel.forEach(element => {
+          //     this.listFormModel = this.removeObjectElementByKeyValue(this.listFormModel, element.InvoiceNo);
+          //   });
+          // }
         } else {
           this.listFormModel = this.tmpChecked;
           this.spinner.hide();
