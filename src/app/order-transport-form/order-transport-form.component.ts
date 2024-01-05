@@ -1292,13 +1292,15 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     // console.log('this.listFormModel', this.listFormModel);
     // console.log('this.listModel', this.listModel);
     this.listFormModel.forEach(element => {
-      if (element.isSelected) {
+      if (element.isSelected === true) {
         let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
         if (dup.length == 0) {
           element.Process = 'CREATE';
 
           this.listModel.push(element);
         }
+      } else {
+        this.listModel = this.removeObjectElementByKeyValue(this.listModel, element.InvoiceNo);
       }
     });
 
@@ -1448,11 +1450,11 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
           this.listFormModel = [...this.tmpChecked, ...model.Data.filter(d => !tmp.has(d.InvoiceNo))];
           // console.log('this.listFormModel', this.listFormModel);
           // console.log('this.listModel', this.listModel);
-          if (this.listModel.length > 0) {
-            this.listModel.forEach(element => {
-              this.listFormModel = this.removeObjectElementByKeyValue(this.listFormModel, element.InvoiceNo);
-            });
-          }
+          // if (this.listModel.length > 0) {
+          //   this.listModel.forEach(element => {
+          //     this.listFormModel = this.removeObjectElementByKeyValue(this.listFormModel, element.InvoiceNo);
+          //   });
+          // }
         } else {
           this.listFormModel = this.tmpChecked;
           this.spinner.hide();
