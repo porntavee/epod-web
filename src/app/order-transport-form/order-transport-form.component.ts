@@ -1292,13 +1292,15 @@ export class OrderTransportFormComponent implements OnInit, AfterContentChecked 
     // console.log('this.listFormModel', this.listFormModel);
     // console.log('this.listModel', this.listModel);
     this.listFormModel.forEach(element => {
-      if (element.isSelected) {
+      if (element.isSelected === true) {
         let dup = this.listModel.filter(c => c.InvoiceNo == element.InvoiceNo);
         if (dup.length == 0) {
           element.Process = 'CREATE';
 
           this.listModel.push(element);
         }
+      } else {
+        this.listModel = this.removeObjectElementByKeyValue(this.listModel, element.InvoiceNo);
       }
     });
 
