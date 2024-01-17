@@ -301,6 +301,14 @@ export class ReturnTransactionComponent implements OnInit {
   // }];
 
 
+  
+
+  numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+  }
+
   print(param) {
     this.readTransport(param);
   }
@@ -366,9 +374,103 @@ export class ReturnTransactionComponent implements OnInit {
     });
   }
 
-  numberWithCommas(x) {
-    var parts = x.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
+  previewReport(param) {
+
+    debugger
+    let criteria: any = {};
+    // this.spinner.show();
+
+    criteria.userinformation = this.serviceProviderService.userinformation;
+    // criteria.Process = 'ADMIN_RETRURN';
+    criteria.ReturnNo = param.ReturnNo;
+
+    this.serviceProviderService.post('api/Transport/GetTransportDetail', criteria).subscribe(data => {
+      this.spinner.hide();
+
+      let model: any = data;
+      this.viewModel = model;
+      if (model.Status) {
+
+        model.Data.forEach(element => {
+
+          element.OrderEstimate = moment(element.TransportDate).format('DD-MM-YYYY');
+          element.InvoiceDateStr = moment(element.InvoiceDate).format('DD-MM-YYYY');
+
+        });
+
+        // param.items = model.Data
+
+        let obj: any = {};
+        this.spinner.show();
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        var time = String(today.getHours()).padStart(2, '0') + String(today.getMinutes()).padStart(2, '0') + String(today.getSeconds());
+        var totaltoday = dd + mm + yyyy + '_' + time;
+
+        var link = document.createElement('a');
+
+        let detail = [];
+
+        let rowNum = 1;
+        model.Data.forEach(c => {
+          detail.push({
+            orderNo: c.ReturnNo ,
+            seq: rowNum++,
+            transportNo: c.TransportNo,
+            soNo: c.OrderNo,
+            invoiceNo: c.InvoiceNo,
+            invoiceDate: c.InvoiceDate.toString().replace('T', ''),
+            shipTo: c.ShiptoName,
+            returnDate: c.OrderEstimate
+          });
+        });
+
+        debugger
+        // let jsonhead = JSON.stringify(header);
+        // let jsondetail = JSON.stringify(detail);
+
+
+        this.serviceProviderService.postPreviewReport('api/report/previewReport', {
+          reportName: 'PREVIEWRETURNTRANSACTION',
+          returnTransaction: detail
+        }).subscribe(data => {
+
+          debugger
+          let model:any = {};
+          model = data;
+
+          // http://202.44.230.195/report-api/ReportGenerator//DeliveryManifest_bb33005f-aae7-46aa-b5ab-75fac2dd0c31.pdf
+          //window.location.href = 'http://202.44.230.195/report-api/' + data;
+
+          window.open('http://202.44.230.195/report-api/' + data, '_blank');
+          // let blob = new Blob([data], { type: "application/pdf" });
+          // let url = window.URL.createObjectURL(blob);
+          // var name = "รายงาน" + totaltoday;
+          // link.href = url;
+          // link.download = name;
+          // link.click();
+          // link.remove();
+        }, err => {
+
+          this.spinner.hide();
+        });
+
+        this.spinner.hide();
+
+
+
+      } else {
+        this.spinner.hide();
+        // this.toastr.error(model.Message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+      }
+
+    }, err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'แจ้งเตือนระบบ', { timeOut: 5000 });
+    });
+
+
   }
 }
