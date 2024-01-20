@@ -17,14 +17,14 @@
     <!-- {{data.title}} <br> -->
     <!-- {{data.ReturnNo}} -->
     <!-- {{calPage}} -->
-    <button style="background-color: transparent; border-width: 0px !important;" printSectionId="print-section" ngxPrint>
+    <!-- <button style="background-color: transparent; border-width: 0px !important;" printSectionId="print-section" ngxPrint>
         <a class="btn waves-effect waves-light light-blue custom-button">Original</a>
     </button>
     <button style="background-color: transparent; border-width: 0px !important;" printSectionId="print-section2" ngxPrint>
         <a class="btn waves-effect waves-light red custom-button">Copy</a>
-    </button>
-    <!-- <cbtn [label]="'original'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn> -->
-    <!-- <cbtn [label]="'copy'" [color]="'red'" [icon]="''" (click)="cancel()"></cbtn> -->
+    </button> -->
+    <cbtn [label]="'original'" [color]="'blue'" [icon]="''" (click)="okOriginal()"></cbtn>
+    <cbtn [label]="'copy'" [color]="'red'" [icon]="''" (click)="okCopy()"></cbtn>
 </div>
 <!-- <div mat-dialog-actions>
     <cbtn [label]="'ยืนยัน'" [color]="'blue'" [icon]="''" (click)="ok()"></cbtn>

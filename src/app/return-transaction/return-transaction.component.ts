@@ -365,8 +365,14 @@ export class ReturnTransactionComponent implements OnInit {
     const dialogRef = this.dialog.open(PrintDialog, { disableClose: false, height: '160px', width: '300px', data: param });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      if (result) {
+      debugger
+      if (result == 'Original') {
         // this.confirm();
+        debugger
+        this.previewReport(param, result);
+      }
+      else if (result == 'Copy') {
+        this.previewReport(param, result);
       }
       else {
         return;
@@ -374,7 +380,7 @@ export class ReturnTransactionComponent implements OnInit {
     });
   }
 
-  previewReport(param) {
+  previewReport(param, reportType) {
 
     debugger
     let criteria: any = {};
@@ -421,7 +427,7 @@ export class ReturnTransactionComponent implements OnInit {
             transportNo: c.TransportNo,
             soNo: c.OrderNo,
             invoiceNo: c.InvoiceNo,
-            invoiceDate: c.InvoiceDate.toString().replace('T', ''),
+            invoiceDate: c.InvoiceDateStr,
             shipTo: c.ShiptoName,
             returnDate: c.OrderEstimate
           });
@@ -434,7 +440,8 @@ export class ReturnTransactionComponent implements OnInit {
 
         this.serviceProviderService.postPreviewReport('api/report/previewReport', {
           reportName: 'PREVIEWRETURNTRANSACTION',
-          returnTransaction: detail
+          returnTransaction: detail,
+          reportType: reportType
         }).subscribe(data => {
 
           debugger
